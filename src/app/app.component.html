@@ -1,0 +1,19 @@
+<h1 class="text-3xl font-bold underline text-yellow">Hello, {{ title }}</h1>
+<p>Congratulations! Your app is running. 🎉</p>
+<div class="bg-midnight" style="text-align:center">
+  <apx-chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [xaxis]="chartOptions.xaxis!"
+    [title]="chartOptions.title!"
+  ></apx-chart>
+</div>
+<div class="example-button-row">
+  <button mat-raised-button>Basic</button>
+  <button mat-raised-button color="primary" class="text-green">Primary</button>
+  <button mat-raised-button color="accent">Accent</button>
+  <button mat-raised-button color="warn">Warn</button>
+  <button mat-raised-button disabled>Disabled</button>
+  <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
+</div>
+<router-outlet><router-outlet />
