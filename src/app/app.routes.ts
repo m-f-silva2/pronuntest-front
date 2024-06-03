@@ -4,10 +4,12 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { IslandsComponent } from './modules/games/islands/islands.component';
 import { LevelsComponent } from './modules/games/levels/levels.component';
 import { ActivitiesComponent } from './modules/games/activities/activities.component';
+import { AppComponent } from './app.component';
 
 export const routes: Routes = [
-    { path: '', component: AuthComponent},
-    { path: 'auth', component: AuthComponent},
+    { path: 'auth',
+      loadChildren: () => import('./modules/auth/auth.routes')
+    },
     { path: 'dashboard', component: DashboardComponent},
     { path: 'games', component: IslandsComponent},
     { path: 'games/island/:island', component: LevelsComponent },
