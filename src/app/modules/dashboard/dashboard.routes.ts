@@ -1,14 +1,15 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { SpeechTerapyComponent } from './components/speech-terapy/speech-terapy.component';
-import { AdminComponent } from './components/admin/admin.component';
+import { SpeechTherapyComponent } from './pages/speech-therapy/speech-therapy.component';
+import { AdminComponent } from './pages/admin/admin.component';
+
 
 export default [
   { path: '', component: DashboardComponent,
     children: [
-      { path: 'speech-therapy', component: SpeechTerapyComponent },
+      { path: 'speech-therapy', component: SpeechTherapyComponent },
       { path: 'admin', component: AdminComponent },
-      { path: '**', component: SpeechTerapyComponent },
+      { path: '**', component: SpeechTherapyComponent },
     ]
   },
 ] as Routes;
