@@ -5,7 +5,7 @@ export default [
   {
     path: 'dashboard',
     component: LayoutComponent,
-    loadChildren: () => import('../dashboard/dashboard.component').then((m) => m.DashboardComponent),
+    loadChildren: () => import('../dashboard/dashboard.routes'),
   },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: 'error/404' },
