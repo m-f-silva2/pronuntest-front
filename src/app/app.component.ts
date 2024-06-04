@@ -10,6 +10,7 @@ import {
   NgApexchartsModule,
   ApexOptions
 } from "ng-apexcharts";
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ export class AppComponent {
   title = 'pronuntest-front';
   chartOptions : ApexOptions;
 
-  constructor() {
+  constructor(public themeService: ThemeService) {
     this.chartOptions = {
       series: [
         {

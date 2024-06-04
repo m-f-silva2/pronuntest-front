@@ -7,7 +7,7 @@ import { AngularSvgIconModule, SvgIconComponent, SvgIconRegistryService } from '
   standalone: true,
   imports: [AngularSvgIconModule, RouterOutlet],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+  styleUrl: './auth.component.scss'
 })
 
 export class AuthComponent implements OnInit {

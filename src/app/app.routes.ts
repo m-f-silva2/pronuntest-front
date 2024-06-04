@@ -7,11 +7,7 @@ import { ActivitiesComponent } from './modules/games/activities/activities.compo
 import { AppComponent } from './app.component';
 
 export const routes: Routes = [
-    { path: 'auth',
-      loadChildren: () => import('./modules/auth/auth.routes')
-    },
-    { path: 'dashboard', component: DashboardComponent},
-    { path: 'games', component: IslandsComponent},
-    { path: 'games/island/:island', component: LevelsComponent },
-    { path: 'games/island/:island/:level', component: ActivitiesComponent },
+    { path: 'auth', loadChildren: () => import('./modules/auth/auth.routes')},
+    { path: 'dashboard', loadChildren: () => import('./modules/dashboard/dashboard.routes')},
+    { path: 'games', loadChildren: () => import('./modules/games/games.routes')},
 ];
