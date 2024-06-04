@@ -1,0 +1,145 @@
+<!--<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red">
+    <animate attributeName="cx" from="50" to="150" dur="2s" begin="0s" repeatCount="indefinite" />
+  </circle>
+</svg>-
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!- Fondo -
+  <rect width="100%" height="100%" fill="skyblue" />
+
+  <!- Definición de ondas -
+  <circle cx="100" cy="100" r="40" fill="lightblue" opacity="0.5">
+    <animate 
+      attributeName="r"
+      from="40"
+      to="50"
+      dur="1s"
+      begin="0s"
+      repeatCount="indefinite" />
+    <animate 
+      attributeName="opacity"
+      from="0.5"
+      to="0"
+      dur="1s"
+      begin="0s"
+      repeatCount="indefinite" />
+  </circle>
+  <circle cx="100" cy="100" r="30" fill="lightblue" opacity="0.5">
+    <animate 
+      attributeName="r"
+      from="30"
+      to="40"
+      dur="1s"
+      begin="0.2s"
+      repeatCount="indefinite" />
+    <animate 
+      attributeName="opacity"
+      from="0.5"
+      to="0"
+      dur="1s"
+      begin="0.2s"
+      repeatCount="indefinite" />
+  </circle>
+  <circle cx="100" cy="100" r="20" fill="lightblue" opacity="0.5">
+    <animate 
+      attributeName="r"
+      from="20"
+      to="30"
+      dur="1s"
+      begin="0.4s"
+      repeatCount="indefinite" />
+    <animate 
+      attributeName="opacity"
+      from="0.5"
+      to="0"
+      dur="1s"
+      begin="0.4s"
+      repeatCount="indefinite" />
+  </circle>
+</svg>-
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!- Definición de los troncos -
+  <rect x="85" y="150" width="10" height="30" fill="saddlebrown" />
+  <rect x="105" y="150" width="10" height="30" fill="saddlebrown" />
+
+  <!- Llama principal -
+  <path d="M100,150 Q90,120 100,100 Q110,120 100,150" fill="orange">
+    <animate
+      attributeName="d"
+      values="
+        M100,150 Q90,120 100,100 Q110,120 100,150;
+        M100,150 Q85,125 100,105 Q115,125 100,150;
+        M100,150 Q90,120 100,100 Q110,120 100,150"
+      dur="1s"
+      repeatCount="indefinite" />
+    <animate
+      attributeName="fill"
+      values="orange;red;yellow;orange"
+      dur="1s"
+      repeatCount="indefinite" />
+  </path>
+
+  <!- Llama secundaria -
+  <path d="M100,150 Q95,130 100,120 Q105,130 100,150" fill="red">
+    <animate
+      attributeName="d"
+      values="
+        M100,150 Q95,130 100,120 Q105,130 100,150;
+        M100,150 Q90,135 100,125 Q110,135 100,150;
+        M100,150 Q95,130 100,120 Q105,130 100,150"
+      dur="1s"
+      repeatCount="indefinite" />
+    <animate
+      attributeName="fill"
+      values="red;orange;yellow;red"
+      dur="1s"
+      repeatCount="indefinite" />
+  </path>
+
+  <- Llama pequeña -
+  <path d="M100,150 Q98,135 100,130 Q102,135 100,150" fill="yellow">
+    <animate
+      attributeName="d"
+      values="
+        M100,150 Q98,135 100,130 Q102,135 100,150;
+        M100,150 Q95,140 100,135 Q105,140 100,150;
+        M100,150 Q98,135 100,130 Q102,135 100,150"
+      dur="1s"
+      repeatCount="indefinite" />
+    <animate
+      attributeName="fill"
+      values="yellow;orange;red;yellow"
+      dur="1s"
+      repeatCount="indefinite" />
+  </path>
+</svg>-
+
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <- Llama de la fogata -
+  <path d="M100,150 Q95,120 100,100 Q105,120 100,150" fill="red">
+    <animate
+      attributeName="d"
+      values="
+        M100,150 Q95,120 100,100 Q105,120 100,150;
+        M100,150 Q90,130 100,120 Q110,130 100,150;
+        M100,150 Q95,120 100,100 Q105,120 100,150"
+      dur="1s"
+      repeatCount="indefinite" />
+    <animate
+      attributeName="fill"
+      values="orange;red;yellow;orange"
+      dur="1s"
+      repeatCount="indefinite" />
+  </path>
+</svg>-->
+
+<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tronco del árbol -->
+  <rect x="90" y="200" width="20" height="100" fill="brown" />
+
+  <!-- Hojas del árbol -->
+  <circle cx="100" cy="150" r="50" fill="green" />
+  <circle cx="70" cy="120" r="40" fill="green" />
+  <circle cx="130" cy="120" r="40" fill="green" />
+</svg>
+

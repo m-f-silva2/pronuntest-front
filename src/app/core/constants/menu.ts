@@ -3,19 +3,25 @@ import { MenuItem } from '../models/menu.model';
 export class Menu {
   public static pages: MenuItem[] = [
     {
-      group: 'Base',
+      group: 'Sección',
       separator: false,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
-          label: 'Dashboard',
-          route: '/dashboard',
-          children: [
-            { label: 'Nfts', route: '/dashboard/nfts' },
-            // { label: 'Podcast', route: '/dashboard/podcast' },
-          ],
+          icon: 'assets/icons/heroicons/outline/home.svg',
+          label: 'Inicio',
+          route: '/',
         },
         {
+          //icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+          icon: 'assets/icons/heroicons/outline/users.svg',
+          label: 'Pacientes',
+          route: '/dashboard/pacientes',
+          /*children: [
+            { label: 'Nfts', route: '/dashboard/nfts' },
+            // { label: 'Podcast', route: '/dashboard/podcast' },
+          ],*/
+        },
+        /*{
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',
           label: 'Auth',
           route: '/auth',
@@ -35,31 +41,37 @@ export class Menu {
             { label: '404', route: '/errors/404' },
             { label: '500', route: '/errors/500' },
           ],
-        },
+        },*/
       ],
     },
-    {
-      group: 'Collaboration',
+    /*{
+      group: 'Información',
       separator: true,
       items: [
         {
-          icon: 'assets/icons/heroicons/outline/download.svg',
-          label: 'Download',
-          route: '/download',
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/gift.svg',
-          label: 'Gift Card',
-          route: '/gift',
+          icon: 'assets/icons/heroicons/outline/information-circle.svg',
+          label: 'Quienes somos',
+          route: '/info-somos',
         },
         {
           icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Users',
-          route: '/users',
-        },
+          label: 'Aliados',
+          route: '/info-aliados',
+        }
       ],
     },
     {
+      group: 'Colaboración',
+      separator: true,
+      items: [
+        {
+          icon: 'assets/icons/heroicons/outline/upload-file.svg',
+          label: 'Recolección de audios',
+          route: 'www.google.com',
+        },
+      ],
+    },
+    /*{
       group: 'Config',
       separator: false,
       items: [
@@ -84,6 +96,6 @@ export class Menu {
           ],
         },
       ],
-    },
+    },*/
   ];
 }
