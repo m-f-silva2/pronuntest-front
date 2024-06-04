@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 76.2px;
+        fill: #fff;
+        font-family: "Lucida Handwriting";
+        font-style: italic;
+      }
+    </style>
+  </defs>
+  <text id="P" class="cls-1" x="0.5" y="57.5">P</text>
+</svg>
