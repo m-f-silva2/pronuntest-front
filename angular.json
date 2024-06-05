@@ -65,6 +65,9 @@
               "buildTarget": "pronuntest-front:build:development"
             }
           },
+          "options": {
+            "port": 4204
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

@@ -38,21 +38,6 @@ importers:
       '@angular/router':
         specifier: ^17.3.0
         version: 17.3.10(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(@angular/platform-browser@17.3.10(@angular/animations@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6)))(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6)))(rxjs@7.8.1)
-      '@ngneat/svg-icon':
-        specifier: ^7.1.6
-        version: 7.1.6(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))
-      '@tailwindcss/aspect-ratio':
-        specifier: ^0.4.0
-        version: 0.4.2(tailwindcss@3.4.3)
-      '@tailwindcss/forms':
-        specifier: ^0.5.2
-        version: 0.5.7(tailwindcss@3.4.3)
-      '@tailwindcss/typography':
-        specifier: ^0.5.4
-        version: 0.5.13(tailwindcss@3.4.3)
-      angular-svg-icon:
-        specifier: ^17.0.0
-        version: 17.0.0(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1)
       apexcharts:
         specifier: ^3.49.1
         version: 3.49.1
@@ -62,9 +47,6 @@ importers:
       rxjs:
         specifier: ~7.8.0
         version: 7.8.1
-      tailwind-scrollbar:
-        specifier: ^3.1.0
-        version: 3.1.0(tailwindcss@3.4.3)
       tslib:
         specifier: ^2.3.0
         version: 2.6.2
@@ -1363,11 +1345,6 @@ packages:
   '@material/typography@15.0.0-canary.7f224ddd4.0':
     resolution: {integrity: sha512-kBaZeCGD50iq1DeRRH5OM5Jl7Gdk+/NOfKArkY4ksBZvJiStJ7ACAhpvb8MEGm4s3jvDInQFLsDq3hL+SA79sQ==}
 
-  '@ngneat/svg-icon@7.1.6':
-    resolution: {integrity: sha512-mJpkXeNx5EQAhFyHYRp2D2VxIiuCAydaIT2uNU4ol3+/whsTO9g66Zt6gi43DU67Q6g8S/SmQWMkBth+tr3akA==}
-    peerDependencies:
-      '@angular/common': '>= 15.2.0'
-
   '@ngtools/webpack@17.3.8':
     resolution: {integrity: sha512-CjSVVa/9fzMpEDQP01SC4colKCbZwj7vUq0H2bivp8jVsmd21x9Fu0gDBH0Y9NdfAIm4eGZvmiZKMII3vIOaYQ==}
     engines: {node: ^18.13.0 || >=20.9.0, npm: ^6.11.0 || ^7.5.6 || >=8.0.0, yarn: '>= 1.13.0'}
@@ -1539,21 +1516,6 @@ packages:
 
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
-
-  '@tailwindcss/aspect-ratio@0.4.2':
-    resolution: {integrity: sha512-8QPrypskfBa7QIMuKHg2TA7BqES6vhBrDLOv8Unb6FcFyd3TjKbc6lcmb9UPQHxfl24sXoJ41ux/H7qQQvfaSQ==}
-    peerDependencies:
-      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
-
-  '@tailwindcss/forms@0.5.7':
-    resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
-
-  '@tailwindcss/typography@0.5.13':
-    resolution: {integrity: sha512-ADGcJ8dX21dVVHIwTRgzrcunY6YY9uSlAHHGVKvkA+vLc5qLwEszvKts40lx7z0qc4clpjclwLeK5rVCV2P/uw==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders'
 
   '@tufjs/canonical-json@2.0.0':
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
@@ -1760,13 +1722,6 @@ packages:
 
   ajv@8.15.0:
     resolution: {integrity: sha512-15BTtQUOsSrmHCy+B4VnAiJAJxJ8IFgu6fcjFQF3jQYZ78nLSQthlFg4ehp+NLIyfvFgOlxNsjKIEhydtFPVHQ==}
-
-  angular-svg-icon@17.0.0:
-    resolution: {integrity: sha512-cTHz79nzVcfUSBPwclFRwvAsWYbo3rRTse45lnzmHdCV0GjTLUNE3C1yQwBAnHqlH4eN0sl+mbVpZh8YeJxYug==}
-    peerDependencies:
-      '@angular/common': '>=17.0.0'
-      '@angular/core': '>=17.0.0'
-      rxjs: '>=6.6.3'
 
   ansi-colors@4.1.3:
     resolution: {integrity: sha512-/6w/C21Pm1A7aZitlI5Ni/2J6FFQN8i1Cvz3kHABAAbw93v/NlvKdVOqz7CCWz/3iv/JplRSEEZ83XION15ovw==}
@@ -2948,17 +2903,8 @@ packages:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  lodash.castarray@4.4.0:
-    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
-
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
-
-  lodash.isplainobject@4.0.6:
-    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
-
-  lodash.merge@4.6.2:
-    resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -3051,10 +2997,6 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
-
-  mini-svg-data-uri@1.4.4:
-    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==}
-    hasBin: true
 
   minimalistic-assert@1.0.1:
     resolution: {integrity: sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==}
@@ -3473,10 +3415,6 @@ packages:
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
-
-  postcss-selector-parser@6.0.10:
-    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
-    engines: {node: '>=4'}
 
   postcss-selector-parser@6.1.0:
     resolution: {integrity: sha512-UMz42UD0UY0EApS0ZL9o1XnLhSTtvvvLe5Dc2H2O56fvRZi+KulDyf5ctDhhtYJBGKStV2FL1fy6253cmLgqVQ==}
@@ -3968,12 +3906,6 @@ packages:
     resolution: {integrity: sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==}
     engines: {node: '>=0.10'}
 
-  tailwind-scrollbar@3.1.0:
-    resolution: {integrity: sha512-pmrtDIZeHyu2idTejfV59SbaJyvp1VRjYxAjZBH0jnyrPRo6HL1kD5Glz8VPagasqr6oAx6M05+Tuw429Z8jxg==}
-    engines: {node: '>=12.13.0'}
-    peerDependencies:
-      tailwindcss: 3.x
-
   tailwindcss@3.4.3:
     resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
     engines: {node: '>=14.0.0'}
@@ -4365,7 +4297,7 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.1703.8(chokidar@3.6.0)
-      '@angular-devkit/build-webpack': 0.1703.8(chokidar@3.6.0)(webpack-dev-server@4.15.1(webpack@5.90.3))(webpack@5.90.3(esbuild@0.20.1))
+      '@angular-devkit/build-webpack': 0.1703.8(chokidar@3.6.0)(webpack-dev-server@4.15.1(webpack@5.90.3(esbuild@0.20.1)))(webpack@5.90.3(esbuild@0.20.1))
       '@angular-devkit/core': 17.3.8(chokidar@3.6.0)
       '@angular/compiler-cli': 17.3.10(@angular/compiler@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6)))(typescript@5.4.5)
       '@babel/core': 7.24.0
@@ -4425,7 +4357,7 @@ snapshots:
       watchpack: 2.4.0
       webpack: 5.90.3(esbuild@0.20.1)
       webpack-dev-middleware: 6.1.2(webpack@5.90.3(esbuild@0.20.1))
-      webpack-dev-server: 4.15.1(webpack@5.90.3)
+      webpack-dev-server: 4.15.1(webpack@5.90.3(esbuild@0.20.1))
       webpack-merge: 5.10.0
       webpack-subresource-integrity: 5.1.0(webpack@5.90.3(esbuild@0.20.1))
     optionalDependencies:
@@ -4451,12 +4383,12 @@ snapshots:
       - utf-8-validate
       - webpack-cli
 
-  '@angular-devkit/build-webpack@0.1703.8(chokidar@3.6.0)(webpack-dev-server@4.15.1(webpack@5.90.3))(webpack@5.90.3(esbuild@0.20.1))':
+  '@angular-devkit/build-webpack@0.1703.8(chokidar@3.6.0)(webpack-dev-server@4.15.1(webpack@5.90.3(esbuild@0.20.1)))(webpack@5.90.3(esbuild@0.20.1))':
     dependencies:
       '@angular-devkit/architect': 0.1703.8(chokidar@3.6.0)
       rxjs: 7.8.1
       webpack: 5.90.3(esbuild@0.20.1)
-      webpack-dev-server: 4.15.1(webpack@5.90.3)
+      webpack-dev-server: 4.15.1(webpack@5.90.3(esbuild@0.20.1))
     transitivePeerDependencies:
       - chokidar
 
@@ -6179,11 +6111,6 @@ snapshots:
       '@material/theme': 15.0.0-canary.7f224ddd4.0
       tslib: 2.6.2
 
-  '@ngneat/svg-icon@7.1.6(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))':
-    dependencies:
-      '@angular/common': 17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1)
-      tslib: 2.6.2
-
   '@ngtools/webpack@17.3.8(@angular/compiler-cli@17.3.10(@angular/compiler@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6)))(typescript@5.4.5))(typescript@5.4.5)(webpack@5.90.3(esbuild@0.20.1))':
     dependencies:
       '@angular/compiler-cli': 17.3.10(@angular/compiler@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6)))(typescript@5.4.5)
@@ -6357,23 +6284,6 @@ snapshots:
       '@sigstore/protobuf-specs': 0.3.2
 
   '@socket.io/component-emitter@3.1.2': {}
-
-  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.3)':
-    dependencies:
-      tailwindcss: 3.4.3
-
-  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.3)':
-    dependencies:
-      mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.4.3
-
-  '@tailwindcss/typography@0.5.13(tailwindcss@3.4.3)':
-    dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.3
 
   '@tufjs/canonical-json@2.0.0': {}
 
@@ -6635,13 +6545,6 @@ snapshots:
       fast-uri: 2.3.0
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
-
-  angular-svg-icon@17.0.0(@angular/common@17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1))(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1):
-    dependencies:
-      '@angular/common': 17.3.10(@angular/core@17.3.10(rxjs@7.8.1)(zone.js@0.14.6))(rxjs@7.8.1)
-      '@angular/core': 17.3.10(rxjs@7.8.1)(zone.js@0.14.6)
-      rxjs: 7.8.1
-      tslib: 2.6.2
 
   ansi-colors@4.1.3: {}
 
@@ -7937,13 +7840,7 @@ snapshots:
     dependencies:
       p-locate: 6.0.0
 
-  lodash.castarray@4.4.0: {}
-
   lodash.debounce@4.0.8: {}
-
-  lodash.isplainobject@4.0.6: {}
-
-  lodash.merge@4.6.2: {}
 
   lodash@4.17.21: {}
 
@@ -8039,8 +7936,6 @@ snapshots:
       schema-utils: 4.2.0
       tapable: 2.2.1
       webpack: 5.90.3(esbuild@0.20.1)
-
-  mini-svg-data-uri@1.4.4: {}
 
   minimalistic-assert@1.0.1: {}
 
@@ -8461,11 +8356,6 @@ snapshots:
     dependencies:
       postcss: 8.4.38
       postcss-selector-parser: 6.1.0
-
-  postcss-selector-parser@6.0.10:
-    dependencies:
-      cssesc: 3.0.0
-      util-deprecate: 1.0.2
 
   postcss-selector-parser@6.1.0:
     dependencies:
@@ -9025,10 +8915,6 @@ snapshots:
 
   symbol-observable@4.0.0: {}
 
-  tailwind-scrollbar@3.1.0(tailwindcss@3.4.3):
-    dependencies:
-      tailwindcss: 3.4.3
-
   tailwindcss@3.4.3:
     dependencies:
       '@alloc/quick-lru': 5.2.0
@@ -9067,7 +8953,7 @@ snapshots:
       mkdirp: 1.0.4
       yallist: 4.0.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.20.1)(webpack@5.90.3):
+  terser-webpack-plugin@5.3.10(esbuild@0.20.1)(webpack@5.90.3(esbuild@0.20.1)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -9221,7 +9107,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  webpack-dev-middleware@5.3.4(webpack@5.90.3):
+  webpack-dev-middleware@5.3.4(webpack@5.90.3(esbuild@0.20.1)):
     dependencies:
       colorette: 2.0.20
       memfs: 3.5.3
@@ -9240,7 +9126,7 @@ snapshots:
     optionalDependencies:
       webpack: 5.90.3(esbuild@0.20.1)
 
-  webpack-dev-server@4.15.1(webpack@5.90.3):
+  webpack-dev-server@4.15.1(webpack@5.90.3(esbuild@0.20.1)):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -9270,7 +9156,7 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 5.3.4(webpack@5.90.3)
+      webpack-dev-middleware: 5.3.4(webpack@5.90.3(esbuild@0.20.1))
       ws: 8.17.0
     optionalDependencies:
       webpack: 5.90.3(esbuild@0.20.1)
@@ -9316,7 +9202,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.20.1)(webpack@5.90.3)
+      terser-webpack-plugin: 5.3.10(esbuild@0.20.1)(webpack@5.90.3(esbuild@0.20.1))
       watchpack: 2.4.0
       webpack-sources: 3.2.3
     transitivePeerDependencies:
