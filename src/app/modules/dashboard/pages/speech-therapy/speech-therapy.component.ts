@@ -4,17 +4,19 @@ import { NftDualCardComponent } from '../nft/nft-dual-card/nft-dual-card.compone
 import { NftSingleCardComponent } from '../nft/nft-single-card/nft-single-card.component';
 import { NftAuctionsTableComponent } from '../nft/nft-auctions-table/nft-auctions-table.component';
 import { NftChartCardComponent } from '../nft/nft-chart-card/nft-chart-card.component';
+import { SpeechTherapyService } from './speech-therapy.service';
+import { BarChartComponent } from '../nft/bar-chart/bar-chart.component';
 
 @Component({
   selector: 'app-speech-therapy',
   standalone: true,
-  imports: [NftHeaderComponent,NftDualCardComponent,NftSingleCardComponent,NftChartCardComponent,NftAuctionsTableComponent,],
+  imports: [NftHeaderComponent,NftDualCardComponent,NftSingleCardComponent,NftChartCardComponent,NftAuctionsTableComponent,BarChartComponent],
   templateUrl: './speech-therapy.component.html',
   styleUrl: './speech-therapy.component.css'
 })
 export class SpeechTherapyComponent {
   nft: Array<any> = [];
-  constructor(){
+  constructor(private _speechTherapyService: SpeechTherapyService){
     this.nft = [
       {
         id: 34356771,
@@ -42,5 +44,20 @@ export class SpeechTherapyComponent {
         image: './assets/images/img-03.jpg',
       },
     ];
+
+  }
+
+  async ngOnInit(){
+    const data = await this._speechTherapyService.getTest()
+    console.log('>> >>  data:', data);
+
+    /* this._speechTherapyService.test.bind((res: any) => {
+        console.log('>> >>  res:', res);
+    }) */
+  }
+
+  change(){
+    console.log('>> >>  :', this._speechTherapyService.test().test);
+    this._speechTherapyService.test.set({test: 'hola'})
   }
 }
