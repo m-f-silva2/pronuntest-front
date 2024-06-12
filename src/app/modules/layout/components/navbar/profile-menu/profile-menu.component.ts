@@ -92,6 +92,11 @@ export class ProfileMenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  public logoup(){
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+  }
+
   public toggleMenu(): void {
     this.isOpen = !this.isOpen;
   }

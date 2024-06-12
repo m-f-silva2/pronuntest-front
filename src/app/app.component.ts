@@ -1,12 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
 import {
-  ChartComponent,
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexTitleSubtitle,
   NgApexchartsModule,
   ApexOptions
 } from "ng-apexcharts";
@@ -18,7 +12,6 @@ import { ThemeService } from './core/services/theme.service';
   imports: [
     RouterOutlet, 
     NgApexchartsModule,
-    MatButtonModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

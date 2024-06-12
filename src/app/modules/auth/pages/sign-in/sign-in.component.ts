@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,7 +19,18 @@ export class SignInComponent implements OnInit {
   submitted = false;
   passwordTextType!: boolean;
 
-  constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router) {}
+  constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService) {
+
+    const token = this._authService.getToken()
+    if(!token) return
+
+    this._authService.validate(token).subscribe(res => {
+      if(res === true){
+        this._router.navigate(['/dashboard']);
+      }
+    })
+
+  }
 
   onClick() {
     console.log('Button clicked');
@@ -27,7 +39,7 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500)]],
     });
   }
 
@@ -47,7 +59,11 @@ export class SignInComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this._authService.login(this.form.getRawValue()).subscribe(res => {
+      this._authService.setToken(res.token)
+      this._authService.setRole(res.role)
+      this._router.navigate(['/dashboard']);
+    })
 
-    this._router.navigate(['/dashboard']);
   }
 }

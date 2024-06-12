@@ -22,9 +22,6 @@ export class BarChartComponent implements OnInit, OnDestroy {
     const data = [2100, 3200, 3200, 2400, 2400, 1800, 1800, 2400, 2400, 3200, 3200, 3000, 3000, 3250, 3250];
 
     this.chartOptions = {
-      title: {
-        text: 'holi'
-      },
       series: [
         {
           name: 'Etherium',

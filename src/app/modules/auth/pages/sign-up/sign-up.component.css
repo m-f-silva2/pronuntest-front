@@ -1,0 +1,8 @@
+.custom-select {
+    margin: 0;
+}
+
+.custom-select .mat-mdc-text-field-wrapper {
+    margin: 0;
+    padding: 0 !important;
+}
