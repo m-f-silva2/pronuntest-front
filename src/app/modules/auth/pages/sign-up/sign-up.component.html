@@ -1,4 +1,4 @@
-<form class="my-10 space-y-6">
+<form class="my-10 space-y-6" [formGroup]="form" (submit)="handleSubmit($event)">
     <div class="text-center">
       <h2 class="mb-1 text-3xl font-semibold text-foreground">Crear cuenta<span class="text-primary">!</span></h2>
     </div>
@@ -15,17 +15,46 @@
       <p class="mx-4 mb-0 text-center text-sm text-muted-foreground">o</p>
     </div>
   
-    <div class="space-y-3 text-left">
+    <div class="space-y-4 text-left">
       <div class="relative">
-        <input type="text" id="email" class="peer block" placeholder=" " />
+        <input type="text" id="name" class="peer block" placeholder=" " formControlName="name"/>
+        <label
+          for="name"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-background px-2 text-sm text-muted-foreground duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary">
+          Nombre
+        </label>
+      </div>
+      
+      <div class="relative">
+        <input type="number" id="age" class="peer block" placeholder=" " formControlName="age"/>
+        <label
+          for="age"
+          class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-background px-2 text-sm text-muted-foreground duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary">
+          Edad
+        </label>
+      </div>
+      
+      <div class="relative">
+        <select class="peer block mt-6" id="gender" formControlName="gender">
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+        </select>
+        <label for="gender" class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-background px-2 text-sm text-muted-foreground duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary">Genero</label>
+      </div>
+
+
+      <div class="relative">
+        <input type="text" id="email" class="peer block" placeholder=" " formControlName="email"/>
         <label
           for="email"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-background px-2 text-sm text-muted-foreground duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary">
-          Email
+          Correo
         </label>
       </div>
+
+
       <div class="relative">
-        <input type="password" id="password" class="peer block" placeholder=" " />
+        <input type="password" id="password" class="peer block" placeholder=" " formControlName="password"/>
         <label
           for="password"
           class="absolute top-2 left-1 z-10 origin-[0] -translate-y-4 scale-95 transform bg-background px-2 text-sm text-muted-foreground duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-95 peer-focus:px-2 peer-focus:text-primary">
@@ -36,6 +65,7 @@
           <svg-icon src="assets/icons/heroicons/outline/eye.svg" [svgClass]="'h-5 w-5 hidden'"> </svg-icon>
         </span>
       </div>
+      
       <!-- Password Meeter -->
       <div class="grid grid-cols-4 gap-2">
         <div class="h-1 rounded-sm bg-muted"></div>
@@ -54,6 +84,7 @@
           Confirmar Contraseña
         </label>
       </div>
+
     </div>
   
     <div class="flex items-center justify-between space-x-3">

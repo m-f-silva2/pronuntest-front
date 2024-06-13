@@ -1,0 +1,51 @@
+import { HttpClient, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.auth;
+  /* apimxHeader: HttpHeaders; */
+  
+  constructor(private _httpClient: HttpClient){
+    /* this.apimxHeader = new HttpHeaders({
+      'Ocp-Apim-Subscription-Key':
+      environment.apimxKeys.xkeyx,
+    }); */
+  }
+
+  setRole(role: string) {
+      localStorage.setItem('role', role )
+  }
+  getRole(): Observable<any> {
+    return of(localStorage.getItem('role') ?? undefined)
+  }
+
+  setToken(token: string){
+    localStorage.setItem('token', token )
+  }  
+
+  getToken(): string | undefined {
+    return localStorage.getItem('token') ?? undefined
+  }
+
+  
+  login(login: any): Observable<any> {
+      return this._httpClient.post<any>(`${this.apiUrl}/login`, login,
+      {
+        /* headers: this.apimxHeader, */
+      });
+  }
+
+  validate(token: any): Observable<any> {
+      return this._httpClient.post<any>(`${this.apiUrl}/validate`, { token: token},
+      {
+        /* headers: this.apimxHeader, */
+      })
+  }
+
+}

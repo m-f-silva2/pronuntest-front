@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileMenuComponent } from './profile-menu.component';
+import { NftHeaderComponent } from './nft-header.component';
 
-describe('ProfileMenuComponent', () => {
-  let component: ProfileMenuComponent;
-  let fixture: ComponentFixture<ProfileMenuComponent>;
+describe('NftHeaderComponent', () => {
+  let component: NftHeaderComponent;
+  let fixture: ComponentFixture<NftHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [ProfileMenuComponent],
+    imports: [NftHeaderComponent],
 }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileMenuComponent);
+    fixture = TestBed.createComponent(NftHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
