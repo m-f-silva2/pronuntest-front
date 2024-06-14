@@ -1,0 +1,39 @@
+<div class="flex-col rounded-lg bg-background px-8 py-8 sm:flex-row h-full">
+  <!-- Card Header -->
+  <div class="mb-2 flex items-center justify-between">
+    <div class="flex-col">
+      <div class="flex items-center space-x-1 gap-4">
+        <span class="text-lg font-semibold text-muted-foreground">{{data.title}}</span>
+        @if (data.options) {
+        <div class="relative">
+          <select class="peer block min-w-24" id="gender" (change)="handleSelectSerie($event.target)">
+            @for (item of data.options; track $index) {
+              <option [value]="$index">{{item}}</option>
+            }
+          </select>
+        </div>
+      }
+      </div>
+      <!-- <span class="text-sm text-muted-foreground">Subtitle</span> -->
+    </div>
+    <div class="cursor-pointer rounded-sm bg-card px-1 py-1 text-center text-xs text-muted-foreground hover:bg-muted hover:text-foreground">
+      <svg-icon src="assets/icons/heroicons/outline/dots-horizontal.svg" [svgClass]="'h-3 w-3'"></svg-icon>
+    </div>
+  </div>
+
+  <apx-chart class="h-full"
+    [plotOptions]="data.chart.plotOptions!"
+    [dataLabels]="data.chart.dataLabels!"
+    [series]="series"
+    [chart]="data.chart.chart!"
+    [legend]="data.chart.legend!"
+    [fill]="data.chart.fill!"
+    [stroke]="data.chart.stroke!"
+    [xaxis]="data.chart.xaxis!"
+    [yaxis]="data.chart.yaxis!"
+    [states]="data.chart.states!"
+    [tooltip]="data.chart.tooltip!"
+    
+    [grid]="data.chart.grid!">
+  </apx-chart>
+</div>
