@@ -38,8 +38,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500)]],
+      email: ['', [Validators.required, Validators.email, Validators.pattern('fono@mail.com')]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('fono123'), Validators.maxLength(1500)]],
     });
   }
 
@@ -54,11 +54,12 @@ export class SignInComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     const { email, password } = this.form.value;
-
     // stop here if form is invalid
     if (this.form.invalid) {
+      console.log('>> >invalido d:', email, password);
       return;
     }
+    console.log('>> >>  email, password:', email, password);
     this._authService.login(this.form.getRawValue()).subscribe(res => {
       this._authService.setToken(res.token)
       this._authService.setRole(res.role)
