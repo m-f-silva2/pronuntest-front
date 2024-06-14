@@ -35,7 +35,7 @@ export class SignUpComponent {
     event.preventDefault()
     if (this.form.invalid) {
       return;
-    }
+    }    
     localStorage.setItem('token', JSON.stringify(this.form.getRawValue()) )
   }
 }
