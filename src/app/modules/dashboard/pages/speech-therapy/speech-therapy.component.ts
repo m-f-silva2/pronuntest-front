@@ -6,16 +6,69 @@ import { NftAuctionsTableComponent } from '../nft/nft-auctions-table/nft-auction
 import { NftChartCardComponent } from '../nft/nft-chart-card/nft-chart-card.component';
 import { SpeechTherapyService } from './speech-therapy.service';
 import { BarChartComponent } from '../nft/bar-chart/bar-chart.component';
+import { MultiChartComponent } from '../nft/multi-chart/multi-chart.component';
+import { ChartOptions } from 'src/app/shared/models/chart-options';
 
 @Component({
   selector: 'app-speech-therapy',
   standalone: true,
-  imports: [NftHeaderComponent,NftDualCardComponent,NftSingleCardComponent,NftChartCardComponent,NftAuctionsTableComponent,BarChartComponent],
+  imports: [NftHeaderComponent,NftDualCardComponent,NftSingleCardComponent,NftChartCardComponent,NftAuctionsTableComponent,BarChartComponent, MultiChartComponent ],
   templateUrl: './speech-therapy.component.html',
   styleUrl: './speech-therapy.component.css'
 })
 export class SpeechTherapyComponent {
   nft: Array<any> = [];
+  repetsF: { chart: Partial<ChartOptions>, title: string, options?: string[] } = {title: 'Fonemas completados', chart: {
+    series: [
+      {
+        name: 'Fonemas',
+        data: [3,2,1,1,2,3,3,1,3,1],
+      },
+    ],
+    chart: {
+      fontFamily: 'inherit',
+      type: 'bar',
+      height: 270,
+      /* toolbar: {
+        show: false,
+      }, */
+      sparkline: {
+        enabled: false,
+      },
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: 'top',
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      style: {
+        fontSize: '12px',
+        colors: ["#B1CCE0"]
+      }
+    },
+    xaxis: {
+      type: 'category',
+      categories: ['Camila Perez','Josefa Sanchez','Andrea Jimenez','Alejandro Martinez','Mario Gomez','Nicolas Lopez','Andrea Correa','Jhon Casanova','Diego Urrutia','Carol Uchoa'],
+    },
+    tooltip: {
+      theme: 'light',
+      y: {
+        formatter: function (val) {
+          return val + '$';
+        },
+      },
+    },
+    colors: ['#FFFFFF'], //line colors
+  }
+
+  }
+  
+
   constructor(private _speechTherapyService: SpeechTherapyService){
     this.nft = [
       {

@@ -19,7 +19,8 @@ export class BarChartComponent implements OnInit, OnDestroy {
 
   constructor(private themeService: ThemeService) {
     let baseColor = '#FFFFFF';
-    const data = [2100, 3200, 3200, 2400, 2400, 1800, 1800, 2400, 2400, 3200, 3200, 3000, 3000, 3250, 3250];
+    const data = [10,10,10,6,8,10,9,8,8,9,8,9,8,8,8,8,7];
+    const labels = [ 'pa','pe','pi','po','pu','pollo','pulpo','pie','palo','mapa','papa','pelo','pila','lupa','puma','pino','pan']
 
     this.chartOptions = {
       series: [
@@ -31,12 +32,12 @@ export class BarChartComponent implements OnInit, OnDestroy {
       chart: {
         fontFamily: 'inherit',
         type: 'bar',
-        height: 210,
-        toolbar: {
+        height: 270,
+        /* toolbar: {
           show: false,
-        },
+        }, */
         sparkline: {
-          enabled: true,
+          enabled: false,
         },
       },
       plotOptions: {
@@ -49,23 +50,23 @@ export class BarChartComponent implements OnInit, OnDestroy {
       },
       dataLabels: {
         enabled: true,
-        offsetY: -20,
-        formatter: function (val) {
+        /* offsetY: -20, */
+        /* formatter: function (val) {
           return (Number(val)/100) + "%";
-        },
+        }, */
         style: {
           fontSize: '12px',
           colors: ["#B1CCE0"]
         }
       },
-      fill: {
+      /* fill: {
         type: 'gradient',
         gradient: {
           opacityFrom: 1,
           opacityTo: 1,
           stops: [2],
         },
-      },
+      }, */
       /* stroke: {
         curve: 'smooth',
         show: true,
@@ -73,9 +74,10 @@ export class BarChartComponent implements OnInit, OnDestroy {
         colors: [baseColor], // line color
       }, */
       xaxis: {
-        /* categories: categories, */
-        labels: {
-          show: false,
+        type: 'category',
+        categories: labels,
+        /* labels: {
+          show: true,
         },
         crosshairs: {
           position: 'front',
@@ -87,7 +89,7 @@ export class BarChartComponent implements OnInit, OnDestroy {
         },
         tooltip: {
           enabled: true,
-        },
+        }, */
       },
       tooltip: {
         theme: 'light',
