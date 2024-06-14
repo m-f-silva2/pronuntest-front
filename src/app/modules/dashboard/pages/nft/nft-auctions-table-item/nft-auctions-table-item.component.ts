@@ -11,7 +11,18 @@ import { Nft } from '../models/nft';
     imports: [AngularSvgIconModule, CurrencyPipe],
 })
 export class NftAuctionsTableItemComponent implements OnInit {
-  @Input() auction = <Nft>{};
+  @Input() auction = <{
+    name: string,
+    other: string,
+    image: string,
+    avatar: string,
+    id: number|string,
+    gender: string,
+    age: number,
+    condition: string,
+    date_admission: string,
+    progress_now: string
+  }>{};
 
   constructor() {}
 

@@ -6,27 +6,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ThemeService } from '../../../../../core/services/theme.service';
 
 @Component({
-  selector: '[app-multi-chart]',
-  templateUrl: './multi-chart.component.html',
+  selector: '[app-pie-chart]',
+  templateUrl: './pie-chart.component.html',
   standalone: true,
   imports: [AngularSvgIconModule, NgApexchartsModule],
 })
-export class MultiChartComponent implements OnInit, OnDestroy {
-  @Input() data: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups?: boolean }  = <any>{};
+export class PieChartComponent implements OnInit, OnDestroy {
+  @Input() data: { chart: Partial<ChartOptions>, title: string, options?: string[] }  = <any>{};
   optionSelected = 0
-  series: any[] = []
+  serie: any[] = []
   constructor(private themeService: ThemeService) {
     effect(() => {
-      if(this.data.chart.plotOptions?.bar?.borderRadius){
-        this.data.chart.plotOptions!.bar!.borderRadius = 9-((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options?0:1) ))*0.2)
-      }
-
-      if(this.data.isGroups){
-        this.series = this.data.chart.series!
-      }else{
-        this.series = [ this.data.chart.series![this.optionSelected] ]
-      }
-
+      this.serie = this.data.chart.series![this.optionSelected].data
       /** change chart theme */
       let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
       primaryColor = this.HSLToHex(primaryColor);
@@ -41,12 +32,7 @@ export class MultiChartComponent implements OnInit, OnDestroy {
 
   handleSelectSerie(option: any){
     this.optionSelected = option.value
-    
-    if(this.data.isGroups){
-      this.series = this.data.chart.series!
-    }else{
-      this.series = [ this.data.chart.series![this.optionSelected] ]
-    }
+    this.serie = this.data.chart.series![this.optionSelected].data
   }
 
   private HSLToHex(color: string): string {

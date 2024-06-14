@@ -23,17 +23,12 @@
 
   <apx-chart class="h-full"
     [plotOptions]="data.chart.plotOptions!"
-    [dataLabels]="data.chart.dataLabels!"
-    [series]="series"
+    [series]="serie"
     [chart]="data.chart.chart!"
     [legend]="data.chart.legend!"
-    [fill]="data.chart.fill!"
-    [stroke]="data.chart.stroke!"
-    [xaxis]="data.chart.xaxis!"
-    [yaxis]="data.chart.yaxis!"
-    [states]="data.chart.states!"
+    [labels]="data.chart.xaxis!.categories"
     [tooltip]="data.chart.tooltip!"
     
-    [grid]="data.chart.grid!">
+    >
   </apx-chart>
 </div>
