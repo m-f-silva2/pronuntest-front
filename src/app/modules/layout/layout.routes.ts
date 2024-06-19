@@ -1,7 +1,12 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
+import { HomeComponent } from './home/home.component';
 
 export default [
+  {
+    path: 'home',
+    component: HomeComponent
+  },
   {
     path: 'dashboard',
     component: LayoutComponent,
