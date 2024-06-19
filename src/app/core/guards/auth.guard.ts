@@ -9,7 +9,9 @@ export const AuthGuard: CanActivateFn = (route, state): Observable<boolean | Url
   return inject(AuthService).getRole().pipe(
     switchMap((roleData) => {
       const localUrl = state.url.split('/')[1]
-      if (localUrl === 'dashboard' && roleData === 'user') {
+      if (localUrl === 'home') {
+        return of(true)
+      }else if (localUrl === 'dashboard' && roleData === 'user') {
         return of(true)
       } else if (localUrl === 'pacientes' && roleData === 'patient') {
         return of(true)
