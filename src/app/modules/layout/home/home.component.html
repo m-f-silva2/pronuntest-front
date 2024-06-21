@@ -34,19 +34,51 @@
     <!--Hero
     style="background: linear-gradient(90deg, #2b4554 0%, #767ba2 100%)"
     -->
-    <div class="py-20 bg-cover bg-no-repeat bg-fixed"
-        style="background-image: url(https://media.vanityfair.com/photos/5ce426151c0b0773cacd1121/master/pass/star-wars-feature-vf-2019-summer-embed-05.jpg)">
+    <div class="py-72 bg-cover bg-no-repeat bg-fixed
+        before:content-[''] 
+        before:absolute 
+        before:-top-20
+        before:bg-[linear-gradient(0deg,#000000ff,#00000055,#00000000,#00000000,#00000000,#00000000)]
+        before:w-full
+        before:h-screen
+        before:z-20
+    
+    "
+        style="background-image: url(assets/images/home-header.webp)">
         <div class="container m-auto text-center px-6 opacity-100">
             <h2 class="text-4xl font-bold mb-2 text-white">Echo Base...I've got something!</h2>
-            <h3 class="text-2xl mb-8 text-gray-200">Not much, but it could be a life form. This is Rouge Two. this is
-                Rouge Two. Captain Solo, so you copy?</h3>
+            <h3 class="text-2xl mb-8 text-gray-200">Not much, but it could be a life form. This is Rouge Two. this is Rouge Two. Captain Solo, so you copy?</h3>
             <button
-                class="bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all">Commander
+                class="bg-white font-bold rounded-full py-4 px-8 shadow-lg upeprcase tracking-wider hover:border-transparent hover:text-blue-500 hover:bg-gray-800 transition-all">Commander
                 Skywalker, do you copy?</button>
         </div>
     </div>
 
     <!-- Features -->
+    <section class="container mx-auto px-6 p-10">
+        <h2 class="text-4xl font-bold text-center text-gray-800 mb-20">Login</h2>
+        <div class="cards flex flex-row w-full justify-around">
+
+            <a href="./auth/login?role=patient" class="block w-80 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <img class="-mt-20 -ml-20" src="assets/icons/logo.svg" alt="" srcset="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Jugar</h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">Iniciar sesión y pon en practica los fonemas</p>
+            </a>
+            <a href="./auth/login?role=parent" class="block w-80 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <img class="-mt-20 -ml-20" src="assets/icons/logo.svg" alt="" srcset="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Padres</h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">Iniciar sesión para supervisar su progreso </p>
+            </a>
+            <a href="./auth/login?role=professional" class="block w-80 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <img class="-mt-20 -ml-20" src="assets/icons/logo.svg" alt="" srcset="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Profesional</h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">Iniciar sesión como profesional de fonoaudiología</p>
+            </a>
+            
+        </div>
+    </section>
+
+
     <section class="container mx-auto px-6 p-10">
         <h2 class="text-4xl font-bold text-center text-gray-800 mb-8">Artoo!</h2>
         <div class="flex items-center flex-wrap mb-20">
@@ -54,7 +86,7 @@
                 <h4 class="text-3xl text-gray-800 font-bold mb-3">Vortex</h4>
                 <p class="text-gray-600 mb-8">Their primary target will be the power generators. Prepare to open the
                     shield. Sir, Rebel ships are coming into our sector. Good. Our first catch of the day. Stand by, ion
-                    control....Fire! The first transport is away.</p>
+                    control....bFire! The first transport is away.</p>
             </div>
             <div class="w-full md:w-1/2">
                 <img class="rounded-lg" src="https://pbs.twimg.com/media/CR45LOXVEAADG5E.jpg" alt="Vortex" />
