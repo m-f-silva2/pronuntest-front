@@ -18,8 +18,19 @@ export class SignInComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   passwordTextType!: boolean;
+  role: string = ''
+  roles: any = {
+    patient: 'A Jugar',
+    parent: 'Hola Padres',
+    professional: 'Bienvenido Profesional'
+  }
 
   constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService) {
+
+    let _role = this._router.parseUrl(this._router.url).queryParams['role']
+    if(_role){
+      this.role = this.roles[_role]
+    }
 
     const token = this._authService.getToken()
     if(!token) return
