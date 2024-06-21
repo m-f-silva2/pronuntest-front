@@ -4,10 +4,11 @@ import { NftDualCardComponent } from '../nft/nft-dual-card/nft-dual-card.compone
 import { NftSingleCardComponent } from '../nft/nft-single-card/nft-single-card.component';
 import { NftAuctionsTableComponent } from '../nft/nft-auctions-table/nft-auctions-table.component';
 import { NftChartCardComponent } from '../nft/nft-chart-card/nft-chart-card.component';
-import { SpeechTherapyService } from './speech-therapy.service';
+
 import { PieChartComponent } from '../nft/pie-chart/pie-chart.component';
 import { MultiChartComponent } from '../nft/multi-chart/multi-chart.component';
 import { ChartOptions } from 'src/app/shared/models/chart-options';
+import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
 
 @Component({
   selector: 'app-speech-therapy',
@@ -199,14 +200,14 @@ export class SpeechTherapyComponent {
       colors: ['#FFFFFF'],
     }
   }
-
+  
   completF: { chart: Partial<ChartOptions>, title: string, options?: string[] } = {
     title: 'Fonemas completados', 
     chart: {
       series: [
         {
           name: 'Fonemas',
-          data: [10,10,10,6,8,10,9,8,8,9,8,9,8,8,8,8,7],
+          data: [],//[10,10,10,6,8,10,9,8,8,9,8,9,8,8,8,8,7],
         },
       ],
       chart: {
@@ -237,7 +238,7 @@ export class SpeechTherapyComponent {
       },
       xaxis: {
         type: 'category',
-        categories: ['pa','pe','pi','po','pu','pollo','pulpo','pie','palo','mapa','papa','pelo','pila','lupa','puma','pino','pan'],
+        categories: [],//['pa','pe','pi','po','pu','pollo','pulpo','pie','palo','mapa','papa','pelo','pila','lupa','puma','pino','pan'],
       },
       tooltip: {
         theme: 'light',
@@ -280,18 +281,41 @@ export class SpeechTherapyComponent {
         image: './assets/images/img-03.jpg',
       },
     ];
+    
 
   }
+  
+  ngOnInit(): void {
+    this.obtenerDatosGrafico();
+  }
 
-  async ngOnInit() {
+
+  obtenerDatosGrafico() {
+    this._speechTherapyService.dataGraphic("db").subscribe(
+      res => {
+         // Imprime la respuesta en la consola
+        // Aquí puedes manejar los datos como los necesites
+        console.log("funcion 1",this.completF.chart.series![0].data,this.completF.chart.xaxis?.categories);
+        this.completF.chart.series![0].data = res.data;
+        this.completF.chart.xaxis!.categories = res.categories;
+        console.log("funcion",this.completF.chart.series![0].data,this.completF.chart.xaxis?.categories);
+      },
+      error => {
+        console.error('Error al obtener los datos del gráfico:', error);
+        // Aquí puedes manejar el error de manera adecuada
+      }
+    );
+  }
+
+  /*async ngOnInit() {
     const data = await this._speechTherapyService.getTest()
 
     /* this._speechTherapyService.test.bind((res: any) => {
         console.log('>> >>  res:', res);
-    }) */
+    }) /
   }
 
   change() {
     this._speechTherapyService.test.set({ test: 'hola' })
-  }
+  }*/
 }
