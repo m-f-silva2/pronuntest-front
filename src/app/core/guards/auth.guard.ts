@@ -16,8 +16,7 @@ export const AuthGuard: CanActivateFn = (route, state): Observable<boolean | Url
       } else if (localUrl === 'pacientes' && roleData === 'patient') {
         return of(true)
       } else {
-        console.log('>> auth.guard >> :', 1)
-        const urlTree = router.parseUrl('/auth/login');
+        const urlTree = router.parseUrl('/home');
         localStorage.clear()
         return of(urlTree);
       }
