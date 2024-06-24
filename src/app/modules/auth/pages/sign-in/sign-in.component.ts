@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { ROLES } from 'src/app/core/constants/roles';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,6 +19,7 @@ export class SignInComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   passwordTextType!: boolean;
+  roleDB: string = ''
   role: string = ''
   roles: any = {
     patient: 'A Jugar',
@@ -30,6 +32,7 @@ export class SignInComponent implements OnInit {
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
     if(_role){
       this.role = this.roles[_role]
+      this.roleDB = _role
     }
 
     const token = this._authService.getToken()
@@ -49,8 +52,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email, Validators.pattern('fono@mail.com')]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('fono123'), Validators.maxLength(1500)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500)]],
     });
   }
 
@@ -67,14 +70,29 @@ export class SignInComponent implements OnInit {
     const { email, password } = this.form.value;
     // stop here if form is invalid
     if (this.form.invalid) {
-      console.log('>> >invalido d:', email, password);
+      console.error('>> >invalido d:', email, password);
       return;
     }
-    console.log('>> >>  email, password:', email, password);
-    this._authService.login(this.form.getRawValue()).subscribe(res => {
-      this._authService.setToken(res.token)
-      this._authService.setRole(res.role)
-      this._router.navigate(['/dashboard']);
+    
+    const data = this.form.getRawValue()
+    data['role'] = this.roleDB
+    this._authService.login(data).subscribe({
+      next: (res) => {
+        if(!res.token) return
+        this._authService.setToken(res.token)
+        this._authService.setRole(res.role)
+
+        if(ROLES.professional == res.role) {
+          this._router.navigate(['/dashboard']);
+        }else if(ROLES.patient == res.role) {
+          this._router.navigate(['/games']);
+        }
+
+
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
     })
 
   }
