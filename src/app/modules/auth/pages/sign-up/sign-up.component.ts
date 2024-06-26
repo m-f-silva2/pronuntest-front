@@ -54,7 +54,9 @@ export class SignUpComponent {
     })
   }
 
-  handleSubmit(event: any){ 
+  handleSubmit(event: any){
+
+    
     event.preventDefault()
     const pass = event.target[7].value
     if (this.form.invalid || !pass || this.form.controls.users_password.value !== pass) {
@@ -64,20 +66,29 @@ export class SignUpComponent {
     
     this.form.controls.city_id.setValue(Number(this.form.controls.city_id.value))
     const data = this.form.getRawValue()
-
+    
+    this._toastService.toast.set({ type: 'loading'})
+    
     this._authService.signup(data).subscribe({
       next: (res) => {
         if(res.isError) return
 
+        this._toastService.toast.set(undefined)
+      
         this._toastService.toast.set({ type: 's', timeS: 1.5, title: "Exitoso", message: "Usuario registrado con exito!", end: () => { 
           this._toastService.toast.set(undefined)
           let _role = this._router.parseUrl(this._router.url).queryParams['role']
           this._router.navigateByUrl('/auth/sign-in?role='+_role)
         }})
-
+        
       },
-      error(err) {
+      error: (err) => {
         console.error('>> >>  :', err);
+        this._toastService.toast.set(undefined)
+      
+        this._toastService.toast.set({ type: 'w', timeS: 1.5, title: "Error", message: "Error al resgistrar el usuario", end: () => { 
+          this._toastService.toast.set(undefined)
+        }})
       },
     })
     

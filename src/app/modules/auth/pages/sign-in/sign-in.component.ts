@@ -38,9 +38,15 @@ export class SignInComponent implements OnInit {
     const token = this._authService.getToken()
     if(!token) return
 
-    this._authService.validate(token).subscribe(res => {
-      if(res === true){
-        this._router.navigate(['/dashboard']);
+    const dataRole: { [key: string]: any } = { 
+      "admin":       {code: 1,page: '/admin'},
+      "professional":{code: 2,page: '/dashboard'},
+      "parent":      {code: 3,page: '/dashboard'},
+      "patient":     {code: 4,page: '/games'},
+    }
+    this._authService.validateAndRole(token).subscribe(res => {
+      if(res){
+        this._router.navigate([dataRole[res.role].page]);
       }
     })
 
