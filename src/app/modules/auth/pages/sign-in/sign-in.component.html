@@ -106,7 +106,7 @@
     <!-- Sign-up -->
     <div class="flex items-center text-sm text-muted-foreground">
       ¿No eres miembro?
-      <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small">
+      <app-button [routerLink]="['/','auth','sign-up']" [queryParams]="{role: roleTextCode}" impact="none" tone="primary" shape="rounded" size="small">
         Crear cuenta
       </app-button>
     </div>

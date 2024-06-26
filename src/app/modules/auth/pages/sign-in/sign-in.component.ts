@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   passwordTextType!: boolean;
-  roleDB: string = ''
+  roleTextCode: string = ''
   role: string = ''
   roles: any = {
     patient: 'A Jugar',
@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit {
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
     if(_role){
       this.role = this.roles[_role]
-      this.roleDB = _role
+      this.roleTextCode = _role
     }
 
     const token = this._authService.getToken()
@@ -75,7 +75,7 @@ export class SignInComponent implements OnInit {
     }
     
     const data = this.form.getRawValue()
-    data['role'] = this.roleDB
+    data['role'] = this.roleTextCode
     this._authService.login(data).subscribe({
       next: (res) => {
         if(!res.token) return
@@ -87,8 +87,6 @@ export class SignInComponent implements OnInit {
         }else if(ROLES.patient == res.role) {
           this._router.navigate(['/games']);
         }
-
-
       },
       error(err) {
         console.error('>> >>  :', err);
