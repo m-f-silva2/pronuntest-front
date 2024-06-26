@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {
-  NgApexchartsModule,
-  ApexOptions
-} from "ng-apexcharts";
+import { NgApexchartsModule, ApexOptions } from "ng-apexcharts";
 import { ThemeService } from './core/services/theme.service';
+import { ToastService } from './core/services/toast/toast.service';
+import { ToastComponent } from './core/services/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet, 
-    NgApexchartsModule,
-  ],
+  imports: [RouterOutlet, NgApexchartsModule, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -20,7 +16,8 @@ export class AppComponent {
   title = 'pronuntest-front';
   chartOptions : ApexOptions;
 
-  constructor(public themeService: ThemeService) {
+  constructor(public themeService: ThemeService, public _toastService: ToastService) {
+    
     this.chartOptions = {
       series: [
         {

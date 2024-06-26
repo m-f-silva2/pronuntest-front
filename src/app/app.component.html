@@ -18,3 +18,4 @@
 <div>
   <router-outlet></router-outlet>
 </div>
+@if (_toastService.toast()) {<toast [data]="_toastService.toast()"></toast>} 

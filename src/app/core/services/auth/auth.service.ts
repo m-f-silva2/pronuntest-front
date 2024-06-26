@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -36,6 +36,12 @@ export class AuthService {
   
   login(login: any): Observable<any> {
       return this._httpClient.post<any>(`${this.apiUrl}/login`, login,
+      {
+        /* headers: this.apimxHeader, */
+      });
+  }
+  signup(data: any): Observable<any> {
+      return this._httpClient.post<any>(`${this.apiUrl}/signup`, data,
       {
         /* headers: this.apimxHeader, */
       });
