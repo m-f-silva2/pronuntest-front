@@ -19,7 +19,6 @@ export const AuthGuard: CanActivateFn = (route, state): Observable<boolean | Url
         return of(true)
       } else {
         const urlTree = router.parseUrl('/home');
-        localStorage.clear()
         return of(urlTree);
       }
     }),

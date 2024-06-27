@@ -28,6 +28,8 @@ export class SignUpComponent {
     users_status: FormControl,
   }>
   roleId = 4
+  roleTextCode: 'patient'|'professional'|'parent'|'' = ''
+
 
   constructor(private formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService, private _toastService: ToastService) {
 
@@ -36,8 +38,9 @@ export class SignUpComponent {
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
     if(_role){
       this.roleId = roles[_role]
+      this.roleTextCode = _role
     }else{
-      this._router.navigateByUrl('/auth/sign-up?role=patient')
+      this._router.navigateByUrl('/home')
     }
 
     this.form = this.formBuilder.group({
@@ -53,8 +56,21 @@ export class SignUpComponent {
       users_status: ['active', []],
     })
   }
+  
+  ngAfterViewInit(){
+    const roles: { [key: string]: number } = { "admin": 1,"professional": 2,"parent": 3,"patient": 4 }
+    
+    let _role = this._router.parseUrl(this._router.url).queryParams['role']
+    console.log('>> >>  _role sigup:', _role);
+    if(_role){
+      this.roleId = roles[_role]
+      this.roleTextCode = _role
+    }else{
+      this._router.navigateByUrl('/home')
+    }
+  }
 
-  handleSubmit(event: any){ 
+  handleSubmit(event: any){
     event.preventDefault()
     const pass = event.target[7].value
     if (this.form.invalid || !pass || this.form.controls.users_password.value !== pass) {
@@ -64,20 +80,29 @@ export class SignUpComponent {
     
     this.form.controls.city_id.setValue(Number(this.form.controls.city_id.value))
     const data = this.form.getRawValue()
-
+    
+    this._toastService.toast.set({ type: 'loading'})
+    
     this._authService.signup(data).subscribe({
       next: (res) => {
         if(res.isError) return
 
+        this._toastService.toast.set(undefined)
+      
         this._toastService.toast.set({ type: 's', timeS: 1.5, title: "Exitoso", message: "Usuario registrado con exito!", end: () => { 
           this._toastService.toast.set(undefined)
           let _role = this._router.parseUrl(this._router.url).queryParams['role']
           this._router.navigateByUrl('/auth/sign-in?role='+_role)
         }})
-
+        
       },
-      error(err) {
+      error: (err) => {
         console.error('>> >>  :', err);
+        this._toastService.toast.set(undefined)
+      
+        this._toastService.toast.set({ type: 'w', timeS: 1.5, title: "Error", message: "Error al resgistrar el usuario", end: () => { 
+          this._toastService.toast.set(undefined)
+        }})
       },
     })
     

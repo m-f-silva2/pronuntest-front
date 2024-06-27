@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
   form!: FormGroup;
   submitted = false;
   passwordTextType!: boolean;
-  roleTextCode: string = ''
+  roleTextCode: 'patient' | 'professional' | 'parent' | '' = ''
   role: string = ''
   roles: any = {
     patient: 'A Jugar',
@@ -30,20 +30,39 @@ export class SignInComponent implements OnInit {
   constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService) {
 
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
-    if(_role){
+    if (_role) {
       this.role = this.roles[_role]
       this.roleTextCode = _role
+    } else {
+      this._router.navigateByUrl('/home')
     }
 
     const token = this._authService.getToken()
-    if(!token) return
+    if (!token) return
 
-    this._authService.validate(token).subscribe(res => {
-      if(res === true){
-        this._router.navigate(['/dashboard']);
+    const dataRole: { [key: string]: any } = {
+      "admin": { code: 1, page: '/admin' },
+      "professional": { code: 2, page: '/dashboard' },
+      "parent": { code: 3, page: '/dashboard' },
+      "patient": { code: 4, page: '/games' },
+    }
+    this._authService.validateAndRole(token).subscribe(res => {
+      if (res) {
+        this._router.navigate([dataRole[res.role].page]);
       }
     })
 
+  }
+
+  ngAfterViewInit() {
+    let _role = this._router.parseUrl(this._router.url).queryParams['role']
+    console.log('>> >>  _rolesigin:', _role);
+    if (_role) {
+      this.role = this.roles[_role]
+      this.roleTextCode = _role
+    } else {
+      this._router.navigateByUrl('/home')
+    }
   }
 
   onClick() {
@@ -73,18 +92,18 @@ export class SignInComponent implements OnInit {
       console.error('>> >invalido d:', email, password);
       return;
     }
-    
+
     const data = this.form.getRawValue()
     data['role'] = this.roleTextCode
     this._authService.login(data).subscribe({
       next: (res) => {
-        if(!res.token) return
+        if (!res.token) return
         this._authService.setToken(res.token)
         this._authService.setRole(res.role)
 
-        if(ROLES.professional == res.role) {
+        if (ROLES.professional == res.role) {
           this._router.navigate(['/dashboard']);
-        }else if(ROLES.patient == res.role) {
+        } else if (ROLES.patient == res.role) {
           this._router.navigate(['/games']);
         }
       },

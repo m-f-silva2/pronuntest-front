@@ -1,4 +1,14 @@
 <form class="my-10 space-y-6" [formGroup]="form" (submit)="handleSubmit($event)">
+  <div class="cards flex flex-row w-full justify-around">
+    @if(roleTextCode == 'patient'){
+      <img class="w-52" src="assets/images/patient-login.webp" alt="" srcset="">
+    }@else if (roleTextCode == 'parent') {
+      <img class="w-52" src="assets/images/parents-login.webp" alt="" srcset="">
+    }@else if (roleTextCode == 'professional') {
+      <img class="w-52" src="assets/images/professionals-login.webp" alt="" srcset="">
+    }
+  </div>
+
     <div class="text-center">
       <h2 class="mb-1 text-3xl font-semibold text-foreground">Crear cuenta<span class="text-primary">!</span></h2>
     </div>
@@ -159,7 +169,7 @@
     <!-- Sign-up -->
     <div class="flex items-center text-sm text-muted-foreground">
       Tienes una cuenta?
-      <app-button routerLink="/auth/sign-in" impact="none" tone="primary" shape="rounded" size="small">
+      <app-button [routerLink]="['/','auth','sign-in']" [queryParams]="{role: roleTextCode}" impact="none" tone="primary" shape="rounded" size="small">
         Iniciar Sesión
       </app-button>
     </div>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface IToast {type: 's'|'i' | 'w'|'loading', timeS?: number, title?: string, message?: string, end: () => void } 
+export interface IToast {type: 's'|'i'|'w'|'loading', timeS?: number, title?: string, message?: string, end?: () => void } 
 
 @Component({
   selector: 'toast',
@@ -25,7 +25,7 @@ export class ToastComponent {
   ngOnChanges(){
     if(!this.data?.timeS) return
     setTimeout(() => {
-      this.data?.end()
+      this.data?.end!()
     }, this.data?.timeS*1000);
   }
 }

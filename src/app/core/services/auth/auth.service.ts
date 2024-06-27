@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -47,11 +47,18 @@ export class AuthService {
       });
   }
 
-  validate(token: any): Observable<any> {
+  validateAndRole(token: any): Observable<any> {
       return this._httpClient.post<any>(`${this.apiUrl}/validate`, { token: token},
       {
         /* headers: this.apimxHeader, */
-      })
+      }).pipe(
+        tap(res =>{
+          if(!res){
+            localStorage.clear()
+          }
+        }),
+
+      )
   }
 
 }
