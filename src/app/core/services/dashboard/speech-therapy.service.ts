@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SpeechTherapyService {
 
-  apiUrl = environment.baseApiBD + '/api';
+  apiUrl = environment.baseApiBD;
   /* apimxHeader: HttpHeaders; */
   
   constructor(private _httpClient: HttpClient){
@@ -25,6 +25,16 @@ export class SpeechTherapyService {
       .pipe(
         catchError(this.handleError) // Manejo de errores opcional
       );
+  }
+
+  dataGraphics(graphic: {graphic: string, valueToSearch: any} ): Observable<any> {
+    const url = `${this.apiUrl}/graphic`;
+    console.log(url);
+    return this._httpClient.post<any>(url, graphic)
+      .pipe(
+        catchError(this.handleError) // Manejo de errores opcional
+      );
+    
   }
 
 

@@ -291,7 +291,8 @@ export class SpeechTherapyComponent {
 
 
   obtenerDatosGrafico() {
-    this._speechTherapyService.dataGraphic("db").subscribe(
+    /*
+    this._speechTherapyService.dataGraphic("graphic").subscribe(
       res => {
          // Imprime la respuesta en la consola
         // Aquí puedes manejar los datos como los necesites
@@ -305,6 +306,19 @@ export class SpeechTherapyComponent {
         // Aquí puedes manejar el error de manera adecuada
       }
     );
+    */
+    let data: { graphic: string; valueToSearch: any } = { graphic: 'g-1', valueToSearch: null };
+    this._speechTherapyService.dataGraphics(data).subscribe({
+      next: (res) => {
+        console.log("res",res);
+        this.completF.chart.series![0].data = res.data;
+        this.completF.chart.xaxis!.categories = res.categories;
+        console.log("CHART",this.completF.chart);
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    })
   }
 
   /*async ngOnInit() {
