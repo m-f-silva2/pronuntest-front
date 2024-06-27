@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, effect } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges, effect } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ChartOptions } from '../../../../../shared/models/chart-options';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -12,19 +12,20 @@ import { ThemeService } from '../../../../../core/services/theme.service';
   imports: [AngularSvgIconModule, NgApexchartsModule],
 })
 export class MultiChartComponent implements OnInit, OnDestroy {
-  @Input() data: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups?: boolean }  = <any>{};
+  @Input('data') data: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups?: boolean } = <any>{};
   optionSelected = 0
   series: any[] = []
+
   constructor(private themeService: ThemeService) {
     effect(() => {
-      if(this.data.chart.plotOptions?.bar?.borderRadius){
-        this.data.chart.plotOptions!.bar!.borderRadius = 9-((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options?0:1) ))*0.2)
+      if (this.data.chart.plotOptions?.bar?.borderRadius) {
+        this.data.chart.plotOptions!.bar!.borderRadius = 9 - ((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options ? 0 : 1))) * 0.2)
       }
 
-      if(this.data.isGroups){
+      if (this.data.isGroups) {
         this.series = this.data.chart.series!
-      }else{
-        this.series = [ this.data.chart.series![this.optionSelected] ]
+      } else {
+        this.series = [this.data.chart.series![this.optionSelected]]
       }
 
       /** change chart theme */
@@ -39,13 +40,38 @@ export class MultiChartComponent implements OnInit, OnDestroy {
     });
   }
 
-  handleSelectSerie(option: any){
-    this.optionSelected = option.value
-    
-    if(this.data.isGroups){
+  ngOnChanges(changes: SimpleChanges) {
+    const currentValue = changes['data'].currentValue
+    this.data = currentValue
+
+    if (this.data.chart.plotOptions?.bar?.borderRadius) {
+      this.data.chart.plotOptions!.bar!.borderRadius = 9 - ((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options ? 0 : 1))) * 0.2)
+    }
+
+    if (this.data.isGroups) {
       this.series = this.data.chart.series!
-    }else{
-      this.series = [ this.data.chart.series![this.optionSelected] ]
+    } else {
+      this.series = [this.data.chart.series![this.optionSelected]]
+    }
+
+    /** change chart theme */
+    let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+    primaryColor = this.HSLToHex(primaryColor);
+    this.data.chart.tooltip = {
+      theme: this.themeService.theme().mode,
+    };
+    this.data.chart.colors = [primaryColor];
+
+  }
+
+
+  handleSelectSerie(option: any) {
+    this.optionSelected = option.value
+
+    if (this.data.isGroups) {
+      this.series = this.data.chart.series!
+    } else {
+      this.series = [this.data.chart.series![this.optionSelected]]
     }
   }
 
@@ -74,7 +100,7 @@ export class MultiChartComponent implements OnInit, OnDestroy {
     return `#${f(0)}${f(8)}${f(4)}`;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 }

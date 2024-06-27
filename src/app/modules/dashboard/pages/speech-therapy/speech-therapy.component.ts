@@ -309,11 +309,13 @@ export class SpeechTherapyComponent {
     */
     let data: { graphic: string; valueToSearch: any } = { graphic: 'g-1', valueToSearch: null };
     this._speechTherapyService.dataGraphics(data).subscribe({
-      next: (res) => {
-        console.log("res",res);
-        this.completF.chart.series![0].data = res.data;
-        this.completF.chart.xaxis!.categories = res.categories;
-        console.log("CHART",this.completF.chart);
+      next: (res: {isError: boolean, res: { isl_lev_str_requirement: string[], num_users_completed: number[] }}) => {
+        if(res.isError) return
+
+          this.completF.chart.series![0].name = 'Fonemas';
+          this.completF.chart.series![0].data = res.res.num_users_completed;
+          this.completF.chart.xaxis!.categories = res.res.isl_lev_str_requirement;
+          this.completF = {...this.completF}
       },
       error(err) {
         console.error('>> >>  :', err);
