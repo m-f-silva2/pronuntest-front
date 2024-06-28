@@ -16,11 +16,12 @@
       <thead class="text-xs uppercase text-muted-foreground">
         <tr>
           <th class="py-3 text-left">Nombre</th>
+          <th class="py-3 text-right">Identificación</th>
           <th class="py-3 text-right">Género</th>
           <th class="py-3 text-right">Edad</th>
           <th class="py-3 text-right">Condición</th>
-          <th class="py-3 text-right">Fecha de ingreso</th>
-          <th class="py-3 text-right">Progreso actual</th>
+          <!--<th class="py-3 text-right">Fecha de ingreso</th>-->
+          <!--<th class="py-3 text-right">Progreso actual</th>-->
           
         </tr>
       </thead>
@@ -28,7 +29,7 @@
       <!--Table body-->
       <tbody>
         <tr
-          *ngFor="let auction of activeAuction"
+          *ngFor="let auction of data"
           [auction]="auction"
           nft-auctions-table-item
           class="border-b border-dashed border-border hover:bg-card"></tr>

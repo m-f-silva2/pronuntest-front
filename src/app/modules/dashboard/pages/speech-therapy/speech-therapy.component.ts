@@ -9,6 +9,7 @@ import { PieChartComponent } from '../nft/pie-chart/pie-chart.component';
 import { MultiChartComponent } from '../nft/multi-chart/multi-chart.component';
 import { ChartOptions } from 'src/app/shared/models/chart-options';
 import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
+import { DataItem, OrganizedData, Table } from 'src/app/core/models/interfaces-graphics';
 
 @Component({
   selector: 'app-speech-therapy',
@@ -19,13 +20,14 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
 })
 export class SpeechTherapyComponent {
   nft: Array<any> = [];
-  precisionVS: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups: true } = {
+  precisionPhonemeVS: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups: true } = {
     isGroups: true,
-    title: 'Exactitud fonema por paciente: Mejor vs peor',
+    title: '',
+    //options:['Mejor', 'Peor'],
     chart: {
       series: [
-        { name: 'Mejor', data: [90,85,95,80,90,95,85,90,90,95]},
-        { name: 'Peor',  data: [70,65,70,60,70,75,70,75,65,75]},
+        { name: '', data: []},
+        { name: '', data: []}
       ],
       chart: {
         fontFamily: 'inherit',
@@ -55,7 +57,57 @@ export class SpeechTherapyComponent {
       },
       xaxis: {
         type: 'category',
-        categories: ['Camila Perez', 'Josefa Sanchez', 'Andrea Jimenez', 'Alejandro Martinez', 'Mario Gomez', 'Nicolas Lopez', 'Andrea Correa', 'Jhon Casanova', 'Diego Urrutia', 'Carol Uchoa'],
+        categories: [],
+      },
+      tooltip: {
+        theme: 'light',
+        y: {
+          formatter: function (val) {
+            return val + '$';
+          },
+        },
+      },
+      colors: ['#FFFFFF'],
+    }
+  }
+  precisionUserVS: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups: true } = {
+    isGroups: true,
+    title: '',
+    //options:['Mejor', 'Peor'],
+    chart: {
+      series: [
+        { name: '', data: []},
+        { name: '', data: []}
+      ],
+      chart: {
+        fontFamily: 'inherit',
+        type: 'bar',
+        height: 270,
+        toolbar: {
+          show: false,
+        },
+        sparkline: {
+          enabled: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4.9,
+          dataLabels: {
+            position: 'top',
+          },
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '12px',
+          colors: ["#B1CCE0"]
+        }
+      },
+      xaxis: {
+        type: 'category',
+        categories: [],
       },
       tooltip: {
         theme: 'light',
@@ -136,9 +188,12 @@ export class SpeechTherapyComponent {
       colors: ['#FFFFFF'],
     }
   }
+  
+  table: Table[] = [];
 
   repetsF: { chart: Partial<ChartOptions>, title: string, options?: string[] } = {
-    title: 'Repetición de fonemas', options:['pa','pe','pi','po','pu','pollo','pulpo','pie','palo','mapa','papa','pelo','pila','lupa','puma','pino','pan'],
+    title: 'Repetición de fonemas', 
+    options:['pa','pe','pi','po','pu','pollo','pulpo','pie','palo','mapa','papa','pelo','pila','lupa','puma','pino','pan'],
     chart: {
       series: [
         { name: 'pa', data: [2,1,1,1,1,1,1,1,1,1] },
@@ -286,41 +341,146 @@ export class SpeechTherapyComponent {
   }
   
   ngOnInit(): void {
-    this.obtenerDatosGrafico();
+    
+    this.getDataGraphic();
   }
 
+  updateDataGraphic(graphic: string, title: string, data: any, categories: any){
+    //this.completF.chart.series![0].name = 'Fonemas';
+    //console.log("graphic",graphic);
+    if(graphic == 'g-1'){
+      this.completF.title = title;
+      this.completF.chart.series![0].data = data;
+      this.completF.chart.xaxis!.categories = categories;
+      this.completF = {...this.completF};
+    }else if(graphic == 'g-2'){
+      this.precisionPhonemeVS.title = title;
+      this.precisionPhonemeVS.chart.series![0].name = "Mejor";
+      this.precisionPhonemeVS.chart.series![0].data = data[0];
+      this.precisionPhonemeVS.chart.series![1].name = "Peor";
+      this.precisionPhonemeVS.chart.series![1].data = data[1];
+      this.precisionPhonemeVS.chart.xaxis!.categories = categories;
+      this.precisionPhonemeVS = {...this.precisionPhonemeVS};
+    }else if(graphic == 'g-3'){
+      this.precisionUserVS.title = title;
+      this.precisionUserVS.chart.series![0].name = "Mejor";
+      this.precisionUserVS.chart.series![0].data = data[0];
+      this.precisionUserVS.chart.series![1].name = "Peor";
+      this.precisionUserVS.chart.series![1].data = data[1];
+      this.precisionUserVS.chart.xaxis!.categories = categories;
+      this.precisionUserVS = {...this.precisionUserVS};
+    }else if(graphic == 'g-4'){
+      console.log("intentos", data, categories);
+    }else if(graphic == 'g-5'){
+      console.log("tabla", data, categories);
+    }
+  }
 
-  obtenerDatosGrafico() {
-    /*
-    this._speechTherapyService.dataGraphic("graphic").subscribe(
-      res => {
-         // Imprime la respuesta en la consola
-        // Aquí puedes manejar los datos como los necesites
-        console.log("funcion 1",this.completF.chart.series![0].data,this.completF.chart.xaxis?.categories);
-        this.completF.chart.series![0].data = res.data;
-        this.completF.chart.xaxis!.categories = res.categories;
-        console.log("funcion",this.completF.chart.series![0].data,this.completF.chart.xaxis?.categories);
-      },
-      error => {
-        console.error('Error al obtener los datos del gráfico:', error);
-        // Aquí puedes manejar el error de manera adecuada
+  
+  organizeData(data: DataItem[], keyField: keyof DataItem): OrganizedData {
+    return data.reduce((acc: OrganizedData, item: DataItem) => {
+      const key = item[keyField] as string;
+      
+      if (!acc[key]) {
+        acc[key] = {
+          phoneme: [],
+          users_name: [],
+          users_id: [],
+          best: [],
+          worst: [],
+          intents: [],
+          type_game: []
+        };
       }
-    );
-    */
-    let data: { graphic: string; valueToSearch: any } = { graphic: 'g-1', valueToSearch: null };
-    this._speechTherapyService.dataGraphics(data).subscribe({
-      next: (res: {isError: boolean, res: { isl_lev_str_requirement: string[], num_users_completed: number[] }}) => {
-        if(res.isError) return
+      
+      acc[key].phoneme.push(item.phoneme);
+      acc[key].users_name.push(item.users_name);
+      acc[key].users_id.push(item.users_id);
+      acc[key].best.push(item.best);
+      acc[key].worst.push(item.worst);
+      acc[key].intents.push(item.intents);
+      acc[key].type_game.push(item.type_game);
+      
+      return acc;
+    }, {});
+  }
 
-          this.completF.chart.series![0].name = 'Fonemas';
-          this.completF.chart.series![0].data = res.res.num_users_completed;
-          this.completF.chart.xaxis!.categories = res.res.isl_lev_str_requirement;
-          this.completF = {...this.completF}
+  getDataGraphic() {
+    /*GRAFICA 1 */
+    this._speechTherapyService.dataGraphics({ graphic: 'g-1', valueToSearch: null }).subscribe({
+      next: (res: {isError: boolean, res: { phoneme: string[], num_users_completed: number[] }}) => {
+        if(res.isError) return
+        
+        var title = "Fonemas completados";
+        this.updateDataGraphic('g-1', title, res.res.num_users_completed, res.res.phoneme)
       },
       error(err) {
         console.error('>> >>  :', err);
       },
-    })
+    });
+    /*setTimeout(() => {
+      this.updateDataGraphic('g-2', [1], ["uno"]);
+    }, 2000);*/
+
+    /*GRAFICAS 2 Y 3 */
+    this._speechTherapyService.dataGraphics({ graphic: 'g-2', valueToSearch: null }).subscribe({
+      next: (res: {isError: boolean, res: []}) => {
+        if(res.isError) return
+        
+        // Organize by phoneme
+        const organizedDataG2 = this.organizeData(res.res, 'phoneme');
+        const keys = Object.keys(organizedDataG2);
+        const title1 = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
+        this.updateDataGraphic('g-2', title1, [organizedDataG2[keys[0]].best, organizedDataG2[keys[0]].worst], organizedDataG2[keys[0]].users_name);
+        
+        // Organize by users_name
+        const organizedDataG3 = this.organizeData(res.res, 'users_name');
+        const keysG3 = Object.keys(organizedDataG3);
+        const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].users_name[0]} por fonemas: Mejor intento vs peor intento`;
+        this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst], organizedDataG3[keysG3[0]].phoneme);
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    });
+    /*GRAFICA 4 */
+    this._speechTherapyService.dataGraphics({ graphic: 'g-4', valueToSearch: null }).subscribe({
+      next: (res: {isError: boolean, res: []}) => {
+        if(res.isError) return
+        
+        //console.log("res",res.res);
+        // Organize by phoneme
+        const organizedDataByPhoneme:OrganizedData = this.organizeData(res.res, 'phoneme');
+        //console.log("phonme",organizedDataByPhoneme['fonema pa'].type_game);
+        //const organizedDataG4 = {...organizedDataByPhoneme}
+        const organizedDataG4 = Object.keys(organizedDataByPhoneme).reduce((acc: any, key: string) => {
+          //console.log("orggg", organizedDataByPhoneme[key]);
+          //acc[key] = this.organizeData(organizedDataByPhoneme[key], 'users_name');
+          return acc;
+        }, {});
+        const keys = Object.keys(organizedDataG4);
+        const title = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
+        //console.log("organized",organizedDataG4);
+        //this.updateDataGraphic('g-4', title, [organizedDataG4[keys[0]].best, organizedDataG4[keys[0]].worst], organizedDataG4[keys[0]].users_name);
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    });
+
+    /*TABLA 1*/
+    this._speechTherapyService.dataGraphics({ graphic: 'g-5', valueToSearch: null }).subscribe({
+      next: (res: {isError: boolean, res: []}) => {
+        if(res.isError) return
+        
+        this.table = res.res;
+        const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    });
+
   }
 
   /*async ngOnInit() {

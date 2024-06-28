@@ -29,14 +29,12 @@ export class SpeechTherapyService {
 
   dataGraphics(graphic: {graphic: string, valueToSearch: any} ): Observable<any> {
     const url = `${this.apiUrl}/graphic`;
-    console.log(url);
     return this._httpClient.post<any>(url, graphic)
       .pipe(
         catchError(this.handleError) // Manejo de errores opcional
       );
     
   }
-
 
   validate(token: any): Observable<any> {
       return this._httpClient.post<any>(`${this.apiUrl}/validate`, { token: token},
