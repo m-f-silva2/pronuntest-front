@@ -26,6 +26,7 @@ export class SignInComponent implements OnInit {
     parent: 'Hola Padres',
     professional: 'Bienvenido Profesional'
   }
+  error = ''
 
   constructor(private readonly _formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService) {
 
@@ -107,7 +108,8 @@ export class SignInComponent implements OnInit {
           this._router.navigate(['/games']);
         }
       },
-      error(err) {
+      error: (err) => {
+        this.error = 'Error al iniciar sesión'
         console.error('>> >>  :', err);
       },
     })
