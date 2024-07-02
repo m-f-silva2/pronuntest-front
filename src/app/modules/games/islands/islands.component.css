@@ -1,0 +1,11 @@
+
+@media (max-width: 845px) {
+    
+    .isla{
+        height: auto !important;
+        width: 100%;
+    }
+    .isla img {
+        width: 100%;
+    }
+}
