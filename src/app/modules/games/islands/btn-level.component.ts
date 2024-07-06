@@ -21,8 +21,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   </div>`
 })
 export class BtnLevelComponent {
-  @Input() data: { state: 'block' | 'unlock', level?: number } = { state: 'block' }
-  @Output() _handleClick = new EventEmitter<{ state: 'block' | 'unlock', level?: number }>()
+  @Input() data: { state: 'block' | 'unlock', island?: number, level?: number } = { state: 'block' }
+  @Output() _handleClick = new EventEmitter<{ state: 'block' | 'unlock', island?: number, level?: number }>()
 
   handleClick() {
     this._handleClick.emit(this.data);

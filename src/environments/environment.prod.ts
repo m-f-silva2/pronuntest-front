@@ -3,6 +3,7 @@ export const environment = {
     appVersion: '0.0.23',
     baseApiBD: 'https://pronuntest-backend.vercel.app/api',
     apimUrlModules: {
-        auth: 'auth'
+        auth: 'auth',
+        games: 'games'
     }
 }
