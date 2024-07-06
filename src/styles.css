@@ -162,3 +162,8 @@
     padding-right: 0.5rem;
   }
 }
+
+@font-face {
+  font-family: 'knight-warrior';
+  src: url('/assets/knight-warrior.otf') format('truetype');
+}
