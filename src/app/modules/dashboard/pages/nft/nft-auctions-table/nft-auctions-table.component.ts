@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NftAuctionsTableItemComponent } from '../nft-auctions-table-item/nft-auctions-table-item.component';
 import { NgFor } from '@angular/common';
-import { Nft } from '../models/nft';
 import { Table } from 'src/app/core/models/interfaces-graphics';
 
 @Component({
@@ -27,7 +26,7 @@ export class NftAuctionsTableComponent implements OnInit {
   }[] = [];
 
   constructor() {
-    this.activeAuction = [
+    /*this.activeAuction = [
       {
         id: 1346771,
         name: 'Camila Perez',
@@ -93,7 +92,7 @@ export class NftAuctionsTableComponent implements OnInit {
         age: 4,
         condition: 'Estable',
       },
-    ];
+    ];*/
   }
 
   ngOnInit(): void {}
