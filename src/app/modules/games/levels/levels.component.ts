@@ -2,11 +2,12 @@ import { Component, Input } from '@angular/core';
 import { Breadcrumb, LevelBreadcrumb } from 'src/app/core/models/breadcrumb.model';
 import { BreadcrumbComponent} from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { LevelInfoComponent } from '../components/level/level-info/level-info.component';
+import { Game1Component } from '../components/level/game-1/game-1.component';
 
 @Component({
   selector: 'app-levels',
   standalone: true,
-  imports: [BreadcrumbComponent, LevelInfoComponent],
+  imports: [BreadcrumbComponent, LevelInfoComponent, Game1Component],
   templateUrl: './levels.component.html',
   styleUrl: './levels.component.css'
 })
