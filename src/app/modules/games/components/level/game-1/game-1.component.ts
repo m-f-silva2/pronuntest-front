@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { LevelService } from '../../../levels/levels.service';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 
 @Component({
   selector: 'app-game-1',
   standalone: true,
-  imports: [],
+  imports: [ButtonComponent],
   templateUrl: './game-1.component.html',
   styleUrl: './game-1.component.css'
 })
