@@ -10,6 +10,13 @@ import { environment } from 'src/environments/environment';
 export class LevelService {
   _levelStructure = new BehaviorSubject<LevelStructure|undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
+  dataGames = {
+    islands: [
+      { levels: [{games: [0]},{games: [1]},{games: [2]},{games: [3]},{games: [4]}] },
+      { levels: [{games: [0]},{games: [1]},{games: [2]},{games: [3]},{games: [4]}] },
+      { levels: [{games: [0]},{games: [1]},{games: [2]},{games: [3]},{games: [4]}] },
+    ]
+  }
   /* apimxHeader: HttpHeaders; */
   
   constructor(private _httpClient: HttpClient){
@@ -23,8 +30,7 @@ export class LevelService {
     return this._levelStructure.asObservable()
   }
 
-  getDataGame(island: string, level: string): Observable<LevelStructure> {
-      console.log('>> >> island  level :', island ,level);
+  getDataGame(island: number, level: string): Observable<LevelStructure> {
       const data = {
         isl_lev_str_id: level,
         isl_id: island,
