@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LevelInfoComponent } from './level-info.component';
+import { InfoGameComponent } from './info-game.component';
 
-describe('LevelInfoComponent', () => {
-  let component: LevelInfoComponent;
-  let fixture: ComponentFixture<LevelInfoComponent>;
+describe('InfoGameComponent', () => {
+  let component: InfoGameComponent;
+  let fixture: ComponentFixture<InfoGameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LevelInfoComponent]
+      imports: [InfoGameComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LevelInfoComponent);
+    fixture = TestBed.createComponent(InfoGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

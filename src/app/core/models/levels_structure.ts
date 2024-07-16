@@ -1,6 +1,6 @@
 export interface LevelStructure {
   isl_lev_str_id?: string,
-  isl_id?: string,
+  isl_id?: number,
   typ_act_id?: string,
   isl_lev_str_difficulty?: string,
   isl_lev_str_requirement?: string,
