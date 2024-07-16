@@ -42,6 +42,7 @@ export class ProfileMenuComponent implements OnInit {
       title: 'Your Profile',
       icon: './assets/icons/heroicons/outline/user-circle.svg',
       link: '/profile',
+      email: 'youemail@gmail.com',
     },
     {
       title: 'Settings',
