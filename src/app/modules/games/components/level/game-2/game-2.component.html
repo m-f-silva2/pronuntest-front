@@ -1,13 +1,13 @@
 <main class="w-full h-full">
-    <header class="bg-white/40 border-b-2 border-b-white/20 py-2 px-6 flex gap-4"> 
+    <header class="bg-white/40 border-b-2 border-b-white/20 py-2 px-6 flex gap-4">
         <div class="rounded-lg py-2 px-3 bg-blue-400/30 border-b-white/20 text-cyan-700">
             <span>Isla</span> {{levelStructure?.isl_id}}
         </div>
         <div class="rounded-lg py-2 px-3 bg-blue-400/30 border-b-white/20 text-cyan-700">
-            <span>Nivel</span>  {{levelStructure?.isl_lev_str_id}}
+            <span>Nivel</span> {{levelStructure?.isl_lev_str_id}}
         </div>
     </header>
-    
+
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsEvent($event)" [data]="sections[section]"></app-level-info>
     }@else {
@@ -17,9 +17,19 @@
             flex flex-col gap-6 justify-evenly items-center px-16
             ">
             <h3 class="text-center font-bold text-4xl text-red-800">VAMOS A PRONUNCIAR LA PALABRA POLLO</h3>
-            <div class="bg-white/50 hover:bg-red-600/60 rounded-full ">
+
+            <div class="bg-white/50 hover:bg-red-600/60 rounded-full " (click)="startRecording()">
                 <img src="assets/images/microphone.svg" alt="" srcset="">
             </div>
+            {{this.countRecording}}
+
+            @if (audioUrl) {
+                <div>
+                    <audio [src]="audioUrl" controls></audio>
+                </div>
+            }
+
+
 
             <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsEvent({value: '0', type: 'previous'})">
                 <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
