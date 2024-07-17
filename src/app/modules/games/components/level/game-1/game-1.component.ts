@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { LevelService } from '../../../levels/levels.service';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
@@ -23,6 +23,8 @@ export class Game1Component {
     previous: undefined
   }]
   section = 0
+  @ViewChild('audio') audio: ElementRef<HTMLAudioElement> | undefined;
+
   
   constructor(private _levelService: LevelService, private router: Router) {
     this._levelService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
@@ -39,5 +41,9 @@ export class Game1Component {
     }else{
       this.section = Number(event.value)
     }
+  }
+
+  handlePlay(){
+    this.audio?.nativeElement.play()
   }
 }
