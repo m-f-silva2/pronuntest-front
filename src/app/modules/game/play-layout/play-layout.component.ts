@@ -2,25 +2,24 @@ import { Component, Input } from '@angular/core';
 import { Breadcrumb, LevelBreadcrumb } from 'src/app/core/models/breadcrumb.model';
 import { BreadcrumbComponent} from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { RouterOutlet } from '@angular/router';
-import { LevelService } from './levels.service';
+import { GameService } from './game.service';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { Subject, takeUntil } from 'rxjs';
-import { Game1Component } from './components/games/game-1/game-1.component';
 
 @Component({
-  selector: 'app-levels',
+  selector: 'app-play-layout',
   standalone: true,
-  imports: [BreadcrumbComponent, Game1Component, RouterOutlet],
-  templateUrl: './levels.component.html',
-  styleUrl: './levels.component.css'
+  imports: [BreadcrumbComponent, RouterOutlet],
+  templateUrl: './play-layout.component.html',
+  styleUrl: './play-layout.component.css'
 })
-export class LevelsComponent {
+export class PlayLayoutComponent {
   @Input() levelBreadcrumb = [<LevelBreadcrumb>{}];
   level = [<Breadcrumb>{}];
   levelStructure: LevelStructure | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _levelService: LevelService){
+  constructor(public _gameService: GameService){
     this.levelBreadcrumb =[{
       island_name: 'games',
       island_url: '/games',
@@ -29,9 +28,12 @@ export class LevelsComponent {
     }];
     this.addBreadcrum()
 
-    this._levelService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.levelStructure = res
     })
+  }
+  createArrayFromNumber(num: number): number[] {
+    return Array.from({ length: num }, (_, i) => i);
   }
 
   addBreadcrum() {

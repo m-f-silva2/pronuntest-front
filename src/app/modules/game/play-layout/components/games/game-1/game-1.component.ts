@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
-import { IDataGame, LevelService } from '../../../levels.service';
+import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,40 +26,18 @@ export class Game1Component {
   countRecording = 0
   dataGames: IDataGame
 
-  constructor(private _levelService: LevelService, private ref: ChangeDetectorRef, private router: Router) {
-    this.dataGames = this._levelService.dataGames
+  constructor(private _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
+    this.dataGames = this._gameService.dataGames
 
-    this._levelService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.levelStructure = res
     })
   }
 
-  btnsEvent(event: { value?: string | undefined; type: string; }) {
-    if(event.type === 'nextLevel'){
-      const level = Number(event.value)
-      const validate = this._levelService.dataGames.islands[this.levelStructure!.isl_id!-1].levels[level]
-      if(!validate) return
-
-      const gamePosRoute = this.dataGames.islands[this.levelStructure!.isl_id!-1].levels[level-1].games[1].gameNum
-      //Existe juego siguiente en este nivel?
-      if(!this.dataGames.islands[this.levelStructure!.isl_id!-1].levels[level-1].games[gamePosRoute]){
-        //Existe nivel siguiente en esta isla?
-        if(!this.dataGames.islands[this.levelStructure!.isl_id!-1].levels[level]){
-          this.router.navigateByUrl(`/games/island/${this.levelStructure!.isl_id!}/level/${level+1}/game/0`)
-        }else{
-          //Sino ir a las islas
-          this.router.navigateByUrl(`/games/island`) //TODO: ${this.levelStructure!.isl_id!}
-        }
-        return
-      }
-
-
-      this.router.navigateByUrl(`/games/island/${this.levelStructure!.isl_id!}/level/${level}/game/${gamePosRoute}`)
-    }else{
-      this.section = Number(event.value)
-    }
-
-    /* this.section = Number(event.value) */
+  btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {
+    const direction = (typeDirection === 'endNext' || typeDirection === 'next')? 1:-1
+    this._gameService.navegationGame(direction, typeDirection)
+    this.section += direction
   }
 
 

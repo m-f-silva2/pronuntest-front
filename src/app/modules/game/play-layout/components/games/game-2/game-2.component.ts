@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
-import { LevelService } from '../../../levels.service';
+import { GameService } from '../../../game.service';
 
 @Component({
   selector: 'app-game-2',
@@ -25,14 +25,16 @@ export class Game2Component {
   section = 0
   countRecording = 0
 
-  constructor(private _levelService: LevelService, private ref: ChangeDetectorRef) {
-    this._levelService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+  constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
+    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.levelStructure = res
     })
   }
 
-  btnsEvent(event: { value?: string | undefined; type: string; }) {
-    this.section = Number(event.value)
+  btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {
+    const direction = (typeDirection === 'endNext' || typeDirection === 'next')? 1:-1
+    this._gameService.navegationGame(direction, typeDirection)
+    this.section += direction
   }
 
 

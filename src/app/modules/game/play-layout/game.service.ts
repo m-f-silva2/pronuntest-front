@@ -19,10 +19,10 @@ export interface IDataGame {
 @Injectable({
   providedIn: 'root'
 })
-export class LevelService {
+export class GameService {
   _levelStructure = new BehaviorSubject<LevelStructure | undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
-  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0 }
+  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0}
 
   dataGames: IDataGame = {
     islands: [
@@ -112,7 +112,7 @@ export class LevelService {
     return this._levelStructure.asObservable()
   }
 
-  getDataGame(island: number, level: string): Observable<LevelStructure> {
+  getDataGame(island: number, level: string, gameNum: number): Observable<LevelStructure> {
     const data = {
       isl_lev_str_id: level,
       isl_id: island,
@@ -124,6 +124,18 @@ export class LevelService {
     this.currentGame.posGame = 0
     this.currentGame.posIsland = (data.isl_id-1)
     this.currentGame.posLevel = Number(level)-1
+
+    let countSections = 0
+    this.currentGame.progress = 0
+    this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posIsland].games.forEach((game, indexGame) => {
+      countSections += game.sections.length
+      
+      if(indexGame < gameNum){
+        this.currentGame.progress++
+      }
+    })
+    this.currentGame.goal = countSections
+
     this._levelStructure.next(data)
     return of(data)
     //return this._httpClient.get<any>(`${this.apiUrl}/game`,

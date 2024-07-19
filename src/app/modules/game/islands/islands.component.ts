@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { BtnLevelComponent } from './btn-level.component';
 import { Router } from '@angular/router';
-import { IDataGame, LevelService } from '../play-layout/levels.service';
+import { IDataGame, GameService } from '../play-layout/game.service';
 
 @Component({
   selector: 'app-islands',
@@ -20,8 +20,8 @@ export class IslandsComponent {
   ]
   dataGames: IDataGame
 
-  constructor(private _route: Router, private _levelService: LevelService){
-    this.dataGames = this._levelService.dataGames
+  constructor(private _route: Router, public _gameService: GameService){
+    this.dataGames = this._gameService.dataGames
   }
 
   handleBtnLevel(event: { state: 'block'|'unlock', island?: number, level?: number }){

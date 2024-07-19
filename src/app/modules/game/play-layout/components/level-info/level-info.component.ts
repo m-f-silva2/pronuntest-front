@@ -9,11 +9,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class LevelInfoComponent {
   @Input() data?: {title?: string, subtitle?: string, image?: string, next?: string, previous?: string }
-  @Output() btnsEvent = new EventEmitter<{value?: string, type: 'endNext'|'previous'|'firstPrevious'|'next'}>();
+  @Output() btnsEvent = new EventEmitter<'endNext'|'previous'|'firstPrevious'|'next'>();
 
   constructor(){}
 
-  handleBtn(value: string|undefined, type: 'endNext'|'previous'|'firstPrevious'|'next') {
-    this.btnsEvent.emit({value: value, type: type})
+  handleBtn(typeDirection: 'endNext'|'previous'|'firstPrevious'|'next') {
+    this.btnsEvent.emit(typeDirection)
   }
 }
