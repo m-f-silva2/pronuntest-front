@@ -5,11 +5,13 @@ import { RouterOutlet } from '@angular/router';
 import { GameService } from './game.service';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { Subject, takeUntil } from 'rxjs';
+import { HeaderComponent } from './components/header/header.component';
+
 
 @Component({
   selector: 'app-play-layout',
   standalone: true,
-  imports: [BreadcrumbComponent, RouterOutlet],
+  imports: [BreadcrumbComponent, RouterOutlet, HeaderComponent],
   templateUrl: './play-layout.component.html',
   styleUrl: './play-layout.component.css'
 })
@@ -32,9 +34,7 @@ export class PlayLayoutComponent {
       this.levelStructure = res
     })
   }
-  createArrayFromNumber(num: number): number[] {
-    return Array.from({ length: num }, (_, i) => i);
-  }
+  
 
   addBreadcrum() {
     this.level.push({

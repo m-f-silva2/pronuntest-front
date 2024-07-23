@@ -1,1 +1,33 @@
-<p>header works!</p>
+<header class="py-2 px-6 flex gap-4 items-center">
+                        
+    <div class="  flex items-center justify-center">
+        <img src="assets/images/isla-ico.svg" alt="Isla" title="Isla"
+        class="w-16 py-2 px-3 bg-cyan-400 border-b-white/20 rounded-full border-cyan-200 border-4 z-0"
+        (click)="goIslands()"
+        >
+        
+        <div class="text-cyan-100 bg-cyan-400 border-cyan-200 border-4 rounded-r-lg w-16 -ml-3 text-end pr-2">
+            {{levelStructure?.isl_id}}
+        </div>
+    </div>
+    
+    <div class="  flex items-center justify-center">
+        <img src="assets/images/star.svg" alt="Nivel" title="Nivel"
+        class="w-16 py-2 px-3 bg-cyan-400 border-b-white/20 rounded-full border-cyan-200 border-4 z-0" >
+        
+        <div class="text-cyan-100 bg-cyan-400 border-cyan-200 border-4 rounded-r-lg w-16 -ml-3 text-end pr-2">
+            {{levelStructure?.isl_lev_str_id}}
+        </div>
+    </div>
+
+    <div class="w-full" id="score">
+        <div class="score-container">
+            <div class="score-container-2 ">
+                <div class="score-item "></div>
+                @for (item of createArrayFromNumber(_gameService.currentGame.goal); track $index) {
+                    <div class="score-item {{($index<_gameService.currentGame.progress)?'opacity-100':'opacity-0'}}"></div>
+                }
+            </div>
+        </div>
+    </div>
+</header>

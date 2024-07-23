@@ -25,7 +25,6 @@ export class IslandsComponent {
   }
 
   handleBtnLevel(event: { state: 'block'|'unlock', island?: number, level?: number }){
-    const gamePosRoute = this.dataGames.islands[event.island!-1].levels[event.level!-1].games[0].gameNum
-    this._route.navigateByUrl(`/games/island/${event.island}/level/${event.level}/game/${gamePosRoute}`)
+    this._route.navigateByUrl(`/games/island/${event.island}/level/${event.level}/gamePos/1`)
   }
 }
