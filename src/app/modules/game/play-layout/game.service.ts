@@ -30,7 +30,7 @@ export class GameService {
         levels: [
           {
             games: [
-              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
+              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar 
               { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego grabar
             ]
           },
@@ -83,27 +83,29 @@ export class GameService {
   /* componetes games (sections), level-info; next (end, normal), previous (first, normal)   */
   navegationGame(direction: number, type: 'endNext'|'firstPrevious'|'previous'|'next') {
     
+    // === Si es una sección de un juego ===
     if(type === 'next' || type === 'previous'){
-      this.currentGame.progress = this.currentGame.progress + direction
+      this.currentGame.progress += direction
       return
     }
-
-    const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
-    //Existe juego siguiente en este nivel?
     
+    // === Si es una sección de los extremos de juego ===
+    const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
+    
+    //Existe juego siguiente en este nivel?
     if (nextGameExist) {
-      this.currentGame.posGame = this.currentGame.posGame + direction
-      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${this.currentGame.posLevel+1}/game/${nextGameExist.gameNum}`)
+      this.currentGame.posGame += direction
+      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${this.currentGame.posLevel+1}/gamePos/${this.currentGame.posGame+1}`)
       return
     //Existe nivel siguiente en esta isla?
     } else if ( this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel+direction]  ) {
-      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${(this.currentGame.posLevel+1) + direction}/game/1`)
+      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${(this.currentGame.posLevel+direction) + direction}/gamePos/1`)
       this.currentGame.posLevel = this.currentGame.posLevel + direction
       this.currentGame.posGame = 0
       this.currentGame.progress = 0
       return
     }
-    //Sino ir a las islas
+    //== Si el ultimo juego y nivel: ir a las islas
     this.router.navigateByUrl(`/games/island`) //TODO: ${this.levelStructure!.isl_id!}
 
   }
@@ -112,7 +114,7 @@ export class GameService {
     return this._levelStructure.asObservable()
   }
 
-  getDataGame(island: number, level: string, gameNum: number): Observable<LevelStructure> {
+  getDataGame(island: number, level: string, gamePos: number): Observable<LevelStructure> {
     const data = {
       isl_lev_str_id: level,
       isl_id: island,
@@ -121,7 +123,7 @@ export class GameService {
       isl_lev_str_requirement: '',
       isl_lev_str_description: '',
     }
-    this.currentGame.posGame = 0
+    this.currentGame.posGame = gamePos
     this.currentGame.posIsland = (data.isl_id-1)
     this.currentGame.posLevel = Number(level)-1
 
@@ -130,7 +132,7 @@ export class GameService {
     this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posIsland].games.forEach((game, indexGame) => {
       countSections += game.sections.length
       
-      if(indexGame < gameNum){
+      if(indexGame < gamePos){
         this.currentGame.progress++
       }
     })

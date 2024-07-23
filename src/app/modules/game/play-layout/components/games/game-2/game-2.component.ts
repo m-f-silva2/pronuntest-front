@@ -16,8 +16,8 @@ export class Game2Component {
   levelStructure: LevelStructure | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
-    title: 'VAMOS A PRONUNCIAR LA PALABRA POLLO',
-    subtitle: undefined,
+    title: 'EXHALAR AIRE POR LA BOCA',
+    subtitle: 'Expulsa el aire por la boca para que el barco llegue a la meta',
     image: 'string',
     next: '1',
     previous: undefined
