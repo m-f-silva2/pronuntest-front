@@ -16,7 +16,7 @@ export class Game0Component {
   levelStructure: LevelStructure | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
-    title: 'VAMOS A ESCUCHAR SONIDOS DE LA LETRA P',
+    title: 'VAMOS A ESCUCHAR SONIDOS DE LA LETRA M',
     subtitle: 'El sonido de la letra p es igual cuando escuchamos reventar un globo',
     image: 'string',
     next: '1',

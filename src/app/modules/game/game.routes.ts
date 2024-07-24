@@ -18,9 +18,9 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   const params = state.url.split('/')
   const island = params[3]
   const level = params[5]
-  const game = params[7]
+  const gamePos  = params[7]
 
-  return levelService.getDataGame(Number(island), level, Number(game)).pipe(
+  return levelService.getDataGame(Number(island), level, Number(gamePos)-1).pipe(
       // Error here means the requested contact is not available
       catchError((error) => {
           // Log the error
@@ -41,32 +41,32 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
 export default [
   { path: 'island', component: IslandsComponent },
   
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/game/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/game/2', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
 
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/game/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/game/3', component: Game2Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/2', component: Game2Component, resolve: {gameResolver} }, ] },
 
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/3/game/4', component: Game3Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: Game3Component, resolve: {gameResolver} }, ] },
   
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/game/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/game/5', component: Game4Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/2', component: Game4Component, resolve: {gameResolver} }, ] },
 
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/game/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/game/2', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/game/6', component: Game5Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/3', component: Game5Component, resolve: {gameResolver} }, ] },
   
-  /* { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/1/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/5/game/', component: Game1Component, resolve: {gameResolver} }, ] },
+  /* { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
   
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/1/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/2/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/3/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/4/game/', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/5/game/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
  */
 
   { path: '**', component: IslandsComponent },
