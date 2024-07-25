@@ -11,6 +11,7 @@ import { ChartOptions } from 'src/app/shared/models/chart-options';
 import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
 import { DataItem, OrganizedData, Table } from 'src/app/core/models/interfaces-graphics';
 import { CommonModule } from '@angular/common';
+import { MapComponent } from '../../components/map/map.component';
 
 @Component({
   selector: 'app-speech-therapy',
@@ -23,7 +24,8 @@ import { CommonModule } from '@angular/common';
     NftChartCardComponent, 
     NftAuctionsTableComponent, 
     PieChartComponent, 
-    MultiChartComponent],
+    MultiChartComponent,
+    MapComponent],
   templateUrl: './speech-therapy.component.html',
   styleUrl: './speech-therapy.component.css'
 })

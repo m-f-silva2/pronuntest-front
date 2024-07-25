@@ -1,0 +1,11 @@
+{
+    "/api": {
+      "target": "http://18.230.209.54:5000",
+      "secure": false,
+      "changeOrigin": true,
+      "headers": {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp"
+      }
+    }
+  }

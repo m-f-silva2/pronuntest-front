@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { BtnLevelComponent } from './btn-level.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IDataGame, GameService } from '../play-layout/game.service';
 
 @Component({
   selector: 'app-islands',
   standalone: true,
-  imports: [BtnLevelComponent],
+  imports: [BtnLevelComponent, RouterLink],
   templateUrl: './islands.component.html',
   styleUrl: './islands.component.css'
 })
