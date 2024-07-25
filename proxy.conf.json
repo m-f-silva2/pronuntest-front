@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://18.230.209.54:5000",
+      "target": "https://pronuntest-backend.vercel.app",
       "secure": false,
       "changeOrigin": true,
       "headers": {
