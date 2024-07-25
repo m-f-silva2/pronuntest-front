@@ -11,6 +11,7 @@ import { Game3Component } from './play-layout/components/games/game-3/game-3.com
 import { Game4Component } from './play-layout/components/games/game-4/game-4.component';
 import { Game5Component } from './play-layout/components/games/game-5/game-5.component';
 import { PlayLayoutComponent } from './play-layout/play-layout.component';
+import { HomeComponent } from './home/home.component';
 
 const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const levelService = inject(GameService);
@@ -39,6 +40,7 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
 };
 
 export default [
+  { path: '', component: HomeComponent },
   { path: 'island', component: IslandsComponent },
   
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
