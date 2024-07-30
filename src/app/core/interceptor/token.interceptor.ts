@@ -28,7 +28,7 @@ export const tokenInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
             headers: req.headers.set('Authorization', 'Bearer ' + authService.getToken()),
         });
     }
-
+    
     // Response
     return next(newReq).pipe(
         catchError((error) => {
