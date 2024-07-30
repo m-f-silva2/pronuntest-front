@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
@@ -14,7 +14,6 @@ import { GameService } from '../../../game.service';
 })
 export class Game2Component {
   levelStructure: LevelStructure | undefined
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
     title: 'EXHALAR AIRE POR LA BOCA',
     subtitle: 'Expulsa el aire por la boca para que el barco llegue a la meta',
@@ -24,6 +23,9 @@ export class Game2Component {
   }]
   section = 0
   countRecording = 0
+  goal = 90
+  @ViewChild('boat') boat!: ElementRef;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
     this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
@@ -31,51 +33,69 @@ export class Game2Component {
     })
   }
 
-  btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {
-    const direction = (typeDirection === 'endNext' || typeDirection === 'next')? 1:-1
+  btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
+    const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.startRecording()
+    }, 2000);
+  }
+
 
   private mediaRecorder: MediaRecorder | null = null;
-  private audioChunks: Blob[] = [];
   public isRecording = false;
   public audioUrl: string | null = null;
+  frequency: number = 0
 
+  audioContext!: AudioContext;
   async startRecording() {
+    this.audioContext = new AudioContext();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    this.mediaRecorder = new MediaRecorder(stream);
-    this.audioChunks = [];
+    const analyser = this.audioContext.createAnalyser();
+    const source = this.audioContext.createMediaStreamSource(stream);
+    source.connect(analyser);
 
-    this.mediaRecorder.ondataavailable = (event) => {
-      this.audioChunks.push(event.data);
-    };
+    const intervalId = setInterval(() => {
+      analyser.smoothingTimeConstant = 0.3;
+      analyser.fftSize = 1024;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteFrequencyData(dataArray);
 
-    this.mediaRecorder.onstop = () => {
-      const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
-      this.audioUrl = URL.createObjectURL(audioBlob);
-      setTimeout(() => {
-        this.ref.markForCheck();
-        console.log('>> game-2.component >> :', )
-      }, 200);
-    };
-
-    this.mediaRecorder.start();
-    this.isRecording = true;
-
-    setTimeout(() => {
-      this.stopRecording()
-      this.countRecording = 0
-    }, 6000);
-
-    this.countRecording = 1
-    setInterval(() => {
-      if(this.countRecording === 0){ return }
-      this.countRecording++
-    }, 1000);
-    
+      let values = 0;
+      let length = dataArray.length;
+      for (let i = 0; i < length; i++) {
+        values += dataArray[i];
+      }
+      let average = values / length;
+      if (average > 29) {
+        const aux = Math.round(average / 10);
+        setTimeout(() => {
+          this.moveBoat(aux)
+          if(this.frequency > this.goal){
+            analyser.disconnect()
+            source.disconnect()
+            clearInterval(intervalId);
+            return
+          }
+        }, 200);
+      }
+    }, 200);
   }
+
+  async moveBoat(num: number) {
+    for (let i = 0; i < num; i++) {
+      this.boat.nativeElement.style.bottom = (this.frequency + i) + '%'
+      this.ref.detectChanges()
+      await this.sleep(20);
+    }
+    this.frequency += num
+  }
+  sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   stopRecording() {
     if (this.mediaRecorder) {

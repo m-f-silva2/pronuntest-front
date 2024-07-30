@@ -37,7 +37,7 @@ export class SignInComponent implements OnInit {
     } else {
       this._router.navigateByUrl('/home')
     }
-
+    
     const token = this._authService.getToken()
     if (!token) return
 
@@ -57,7 +57,6 @@ export class SignInComponent implements OnInit {
 
   ngAfterViewInit() {
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
-    console.log('>> >>  _rolesigin:', _role);
     if (_role) {
       this.role = this.roles[_role]
       this.roleTextCode = _role

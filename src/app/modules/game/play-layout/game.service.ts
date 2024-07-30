@@ -115,15 +115,16 @@ export class GameService {
   }
 
   getDataGame(island: number, level: string, gamePos: number): Observable<LevelStructure> {
+    /* TEMP DATA */
     const data = {
-      isl_lev_str_id: level,
-      isl_id: island,
+      isl_lev_str_id: level||'1',
+      isl_id: island||1,
       typ_act_id: '',
       isl_lev_str_difficulty: '',
       isl_lev_str_requirement: '',
       isl_lev_str_description: '',
     }
-    this.currentGame.posGame = gamePos
+    this.currentGame.posGame = gamePos||1
     this.currentGame.posIsland = (data.isl_id-1)
     this.currentGame.posLevel = Number(level)-1
 
@@ -137,16 +138,17 @@ export class GameService {
       }
     })
     this.currentGame.goal = countSections
+    /* END TEMP DATA */
 
-    this._levelStructure.next(data)
-    return of(data)
-    //return this._httpClient.get<any>(`${this.apiUrl}/game`,
-    //{
-    //  /* headers: this.apimxHeader, */
-    //}).pipe(
-    //  tap(res =>{
-    //  }),
-    //)
+    return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`,
+      {
+        /* headers: this.apimxHeader, */
+      }).pipe(
+        tap(res =>{
+          console.log('>> >>  res:', res);
+          this._levelStructure.next(data)
+      }),
+    )
   }
 
 }

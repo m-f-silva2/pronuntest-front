@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { IslandsComponent } from './islands/islands.component';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError } from 'rxjs';
 import { Game1Component } from './play-layout/components/games/game-1/game-1.component';
 import { Game2Component } from './play-layout/components/games/game-2/game-2.component';
 
@@ -22,26 +22,18 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   const gamePos  = params[7]
 
   return levelService.getDataGame(Number(island), level, Number(gamePos)-1).pipe(
-      // Error here means the requested contact is not available
       catchError((error) => {
-          // Log the error
           console.error(error);
-
-          // Get the parent url
           const parentUrl = state.url.split('/').slice(0, -1).join('/');
-
-          // Navigate to there
           router.navigateByUrl(parentUrl);
-
-          // Throw an error
-          return throwError(error);
+          throw new Error(error);
       }),
   );
 };
 
 export default [
   { path: '', component: HomeComponent },
-  { path: 'island', component: IslandsComponent },
+  { path: 'island', component: IslandsComponent, resolve: {gameResolver} },
   
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
