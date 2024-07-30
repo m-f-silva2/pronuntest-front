@@ -3,7 +3,7 @@ import { Breadcrumb, LevelBreadcrumb } from 'src/app/core/models/breadcrumb.mode
 import { BreadcrumbComponent} from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { RouterOutlet } from '@angular/router';
 import { GameService } from './game.service';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { Subject, takeUntil } from 'rxjs';
 import { HeaderComponent } from './components/header/header.component';
 
@@ -18,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 export class PlayLayoutComponent {
   @Input() levelBreadcrumb = [<LevelBreadcrumb>{}];
   level = [<Breadcrumb>{}];
-  levelStructure: LevelStructure | undefined
+  sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(public _gameService: GameService){
@@ -30,8 +30,8 @@ export class PlayLayoutComponent {
     }];
     this.addBreadcrum()
 
-    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     })
   }
   

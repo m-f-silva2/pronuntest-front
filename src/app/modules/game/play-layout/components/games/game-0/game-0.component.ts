@@ -1,9 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { Router } from '@angular/router';
 import { IDataGame, GameService } from '../../../game.service';
+
 
 @Component({
   selector: 'app-game-0',
@@ -13,7 +14,7 @@ import { IDataGame, GameService } from '../../../game.service';
   styleUrl: './game-0.component.css'
 })
 export class Game0Component {
-  levelStructure: LevelStructure | undefined
+  sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
     title: 'VAMOS A ESCUCHAR SONIDOS DE LA LETRA M',
@@ -30,8 +31,8 @@ export class Game0Component {
   constructor(private _gameService: GameService, private router: Router){
     this.dataGames = this._gameService.dataGames
   
-    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     })
   }
   

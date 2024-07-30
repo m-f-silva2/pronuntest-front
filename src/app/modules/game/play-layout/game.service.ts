@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { environment } from 'src/environments/environment';
 
 export interface IDataGame {
@@ -20,7 +20,8 @@ export interface IDataGame {
   providedIn: 'root'
 })
 export class GameService {
-  _levelStructure = new BehaviorSubject<LevelStructure | undefined>(undefined)
+  _sumaryActivities = new BehaviorSubject<SumaryActivities[] | undefined>(undefined)
+  _sumaryActivity = new BehaviorSubject<SumaryActivities | undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
   currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0}
 
@@ -110,43 +111,38 @@ export class GameService {
 
   }
 
-  get levelStructure$() {
-    return this._levelStructure.asObservable()
+  get sumaryActivities$() {
+    return this._sumaryActivities.asObservable()
+  }
+  get sumaryActivity$() {
+    return this._sumaryActivity.asObservable()
   }
 
-  getDataGame(island: number, level: string, gamePos: number): Observable<LevelStructure> {
-    /* TEMP DATA */
-    const data = {
-      isl_lev_str_id: level||'1',
-      isl_id: island||1,
-      typ_act_id: '',
-      isl_lev_str_difficulty: '',
-      isl_lev_str_requirement: '',
-      isl_lev_str_description: '',
-    }
-    this.currentGame.posGame = gamePos||1
-    this.currentGame.posIsland = (data.isl_id-1)
-    this.currentGame.posLevel = Number(level)-1
-
-    let countSections = 0
-    this.currentGame.progress = 0
-    this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posIsland].games.forEach((game, indexGame) => {
-      countSections += game.sections.length
-      
-      if(indexGame < gamePos){
-        this.currentGame.progress++
-      }
-    })
-    this.currentGame.goal = countSections
-    /* END TEMP DATA */
+  getDataGame(island: number, level: string, gamePos: number): Observable<SumaryActivities[]> {
 
     return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`,
       {
         /* headers: this.apimxHeader, */
       }).pipe(
-        tap(res =>{
-          console.log('>> >>  res:', res);
-          this._levelStructure.next(data)
+        tap((_sumaryActivities: SumaryActivities[]) =>{
+          this.currentGame.posGame = gamePos||1
+          this.currentGame.posIsland = (_sumaryActivities[0].isl_id! -1) //TODO: _sumaryActivities[0]
+          this.currentGame.posLevel = Number(level)-1
+          
+          let countSections = 0
+          this.currentGame.progress = 0
+          this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posIsland].games.forEach((game, indexGame) => {
+            countSections += game.sections.length
+            
+            if(indexGame < gamePos){
+              this.currentGame.progress++
+            }
+          })
+          this.currentGame.goal = countSections 
+          
+          console.log('>> >>  getDataGame res:', _sumaryActivities);
+          this._sumaryActivity.next(_sumaryActivities[0])
+          this._sumaryActivities.next(_sumaryActivities)
       }),
     )
   }

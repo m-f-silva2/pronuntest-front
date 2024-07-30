@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrl: './game-1.component.css'
 })
 export class Game1Component {
-  levelStructure: LevelStructure | undefined
+  sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
     title: 'VAMOS A PRONUNCIAR LA PALABRA POLLO',
@@ -29,8 +29,8 @@ export class Game1Component {
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
 
-    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     })
   }
 
