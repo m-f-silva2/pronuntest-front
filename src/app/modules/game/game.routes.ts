@@ -21,7 +21,7 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   const level = params[5]
   const gamePos  = params[7]
 
-  return levelService.getDataGame(Number(island), level, Number(gamePos)-1).pipe(
+  return levelService.getDataGame(Number(island??1), Number(level??1), Number(gamePos??1)-1).pipe(
       catchError((error) => {
           console.error(error);
           const parentUrl = state.url.split('/').slice(0, -1).join('/');

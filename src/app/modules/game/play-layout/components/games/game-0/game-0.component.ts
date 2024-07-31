@@ -25,6 +25,7 @@ export class Game0Component {
   }]
   dataGames: IDataGame
   section = 0
+  isCompleted = false
   @ViewChild('audio') audio: ElementRef<HTMLAudioElement> | undefined;
 
   
@@ -38,11 +39,14 @@ export class Game0Component {
   
   btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {
     const direction = (typeDirection === 'endNext' || typeDirection === 'next')? 1:-1
-    this._gameService.navegationGame(direction, typeDirection)
-    this.section += direction
+    if((this.isCompleted && typeDirection === 'endNext') || typeDirection === 'next'){
+      this._gameService.navegationGame(direction, typeDirection)
+      this.section += direction
+    }
   }
-
+  
   handlePlay(){
     this.audio?.nativeElement.play()
+    this.isCompleted = true
   }
 }

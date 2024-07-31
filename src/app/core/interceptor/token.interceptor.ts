@@ -40,7 +40,7 @@ export const tokenInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
                 // Reload the app
                 location.reload();
             }
-            throw new Error(error);
+            throw new Error(JSON.stringify(error));
         }),
     );
 };
