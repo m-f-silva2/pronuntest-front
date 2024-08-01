@@ -33,6 +33,8 @@ export class SpeechTherapyComponent {
   nft: Array<any> = [];
   fonemas: string[] = ['a', 'e', 'i', 'o', 'u', 'p']; // Lista de items
   activo: string = 'a'; // Inicialmente activo el primer ítem (a)
+  points: { points: [[number, number]] } = {points: [[-74.0722, 4.7111]]};
+
   precisionPhonemeVS: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups: true } = {
     isGroups: true,
     title: '',
@@ -390,6 +392,9 @@ export class SpeechTherapyComponent {
       console.log("intentos", data, categories);
     }else if(graphic == 'g-5'){
       console.log("tabla", data, categories);
+    }else if(graphic == 'm-1'){
+      console.log("mapa", data, categories);
+      this.points
     }
   }
 
@@ -492,6 +497,19 @@ export class SpeechTherapyComponent {
         
         this.table = res.res;
         const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    });
+
+    /*MAPA 1*/
+    this._speechTherapyService.dataGraphics({ graphic: 'm-1', valueToSearch: null }).subscribe({
+      next: (res: {isError: boolean, res: []}) => {
+        if(res.isError) return
+        
+        this.table = res.res;
+        const title = `Mapa`;
       },
       error(err) {
         console.error('>> >>  :', err);
