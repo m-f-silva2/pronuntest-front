@@ -10,16 +10,29 @@ import { MultiChartComponent } from '../nft/multi-chart/multi-chart.component';
 import { ChartOptions } from 'src/app/shared/models/chart-options';
 import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
 import { DataItem, OrganizedData, Table } from 'src/app/core/models/interfaces-graphics';
+import { CommonModule } from '@angular/common';
+import { MapComponent } from '../../components/map/map.component';
 
 @Component({
   selector: 'app-speech-therapy',
   standalone: true,
-  imports: [NftHeaderComponent, NftDualCardComponent, NftSingleCardComponent, NftChartCardComponent, NftAuctionsTableComponent, PieChartComponent, MultiChartComponent],
+  imports: [
+    CommonModule,
+    NftHeaderComponent, 
+    NftDualCardComponent, 
+    NftSingleCardComponent, 
+    NftChartCardComponent, 
+    NftAuctionsTableComponent, 
+    PieChartComponent, 
+    MultiChartComponent,
+    MapComponent],
   templateUrl: './speech-therapy.component.html',
   styleUrl: './speech-therapy.component.css'
 })
 export class SpeechTherapyComponent {
   nft: Array<any> = [];
+  fonemas: string[] = ['a', 'e', 'i', 'o', 'u', 'p']; // Lista de items
+  activo: string = 'a'; // Inicialmente activo el primer ítem (a)
   precisionPhonemeVS: { chart: Partial<ChartOptions>, title: string, options?: string[], isGroups: true } = {
     isGroups: true,
     title: '',
@@ -343,6 +356,10 @@ export class SpeechTherapyComponent {
   ngOnInit(): void {
     
     this.getDataGraphic();
+  }
+
+  activarFonema(fonema: string) {
+    this.activo = fonema;
   }
 
   updateDataGraphic(graphic: string, title: string, data: any, categories: any){

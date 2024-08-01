@@ -4,11 +4,12 @@ import { NgApexchartsModule, ApexOptions } from "ng-apexcharts";
 import { ThemeService } from './core/services/theme.service';
 import { ToastService } from './core/services/toast/toast.service';
 import { ToastComponent } from './core/services/toast/toast.component';
+import { TextToAudioComponent } from './text-to-audio/text-to-audio.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgApexchartsModule, ToastComponent],
+  imports: [RouterOutlet, NgApexchartsModule, ToastComponent, TextToAudioComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

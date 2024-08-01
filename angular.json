@@ -71,7 +71,8 @@
             }
           },
           "options": {
-            "port": 4204
+            "port": 4204,
+            "proxyConfig": "proxy.conf.json"
           },
           "defaultConfiguration": "development"
         },

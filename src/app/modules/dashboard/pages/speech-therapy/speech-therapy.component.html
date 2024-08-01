@@ -2,13 +2,26 @@
   <!-- Header -->
   <app-nft-header></app-nft-header>
   <!-- end Header -->
-   
+  <div class="mb-1 flex justify-between">
+    <div class="grid grid-cols-3 gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 p-2">
+      <h1 class="text-lg font-semibold">Fonemas:</h1>
+      <button *ngFor="let fonema of fonemas" 
+              (click)="activarFonema(fonema)" 
+              [ngClass]="{'bg-blue-500 text-white': activo === fonema, 'bg-gray-300': activo !== fonema}"
+              class="px-1 py-1 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
+        {{ fonema }}
+      </button>
+    </div>
+    
+  </div>
+  
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
     <div app-multi-chart [data]="completF" class="md:col-span-2"></div>
     <div app-multi-chart [data]="precisionPhonemeVS" class="md:col-span-2"></div>
     <div app-multi-chart [data]="precisionUserVS" class="md:col-span-2"></div>
     <div app-multi-chart [data]="repetsF" class="md:col-span-2"></div>
-
+    <app-map class="md:col-span-4 xl:col-span-4 w-full"></app-map>
+    
     <!--<div app-pie-chart [data]="precision" class="md:col-span-2"></div>-->
     <div nft-auctions-table [data]="table" class="md:col-span-4 xl:col-span-4 w-full"></div>
     <!-- <div nft-dual-card [nft]="nft[0]" class="md:col-span-2"></div> -->
