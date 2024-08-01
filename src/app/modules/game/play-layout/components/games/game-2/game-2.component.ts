@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { GameService } from '../../../game.service';
 
@@ -13,7 +13,7 @@ import { GameService } from '../../../game.service';
 
 })
 export class Game2Component {
-  levelStructure: LevelStructure | undefined
+  sumaryActivity: SumaryActivities | undefined
   sections = [{
     title: 'EXHALAR AIRE POR LA BOCA',
     subtitle: 'Expulsa el aire por la boca para que el barco llegue a la meta',
@@ -28,8 +28,8 @@ export class Game2Component {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
-    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     })
   }
 

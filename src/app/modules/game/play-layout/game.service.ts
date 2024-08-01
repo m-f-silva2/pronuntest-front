@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { BehaviorSubject, Observable, takeUntil, tap } from 'rxjs';
+import { IslandLevel } from 'src/app/core/models/island_level';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { environment } from 'src/environments/environment';
 
 export interface IDataGame {
@@ -20,9 +21,10 @@ export interface IDataGame {
   providedIn: 'root'
 })
 export class GameService {
-  _levelStructure = new BehaviorSubject<LevelStructure | undefined>(undefined)
+  _sumaryActivities = new BehaviorSubject<SumaryActivities[] | undefined>(undefined)
+  _sumaryActivity = new BehaviorSubject<SumaryActivities | undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
-  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0}
+  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0 }
 
   dataGames: IDataGame = {
     islands: [
@@ -79,30 +81,88 @@ export class GameService {
     }); */
   }
 
+  get sumaryActivities$() {
+    return this._sumaryActivities.asObservable()
+  }
+  get sumaryActivity$() {
+    return this._sumaryActivity.asObservable()
+  }
+  set sumaryActivities(activities: SumaryActivities[]|undefined) {
+    this._sumaryActivities.next(activities)
+  }
+
 
   /* componetes games (sections), level-info; next (end, normal), previous (first, normal)   */
-  navegationGame(direction: number, type: 'endNext'|'firstPrevious'|'previous'|'next') {
-    
+  navegationGame(direction: number, type: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
     // === Si es una sección de un juego ===
-    if(type === 'next' || type === 'previous'){
+    if (type === 'next' || type === 'previous') {
       this.currentGame.progress += direction
       return
     }
-    
+
     // === Si es una sección de los extremos de juego ===
     const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
-    
+
     //Existe juego siguiente en este nivel?
     if (nextGameExist) {
       this.currentGame.posGame += direction
-      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${this.currentGame.posLevel+1}/gamePos/${this.currentGame.posGame+1}`)
+      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${this.currentGame.posLevel + 1}/gamePos/${this.currentGame.posGame + 1}`)
       return
-    //Existe nivel siguiente en esta isla?
-    } else if ( this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel+direction]  ) {
-      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland+1}/level/${(this.currentGame.posLevel+direction) + direction}/gamePos/1`)
-      this.currentGame.posLevel = this.currentGame.posLevel + direction
-      this.currentGame.posGame = 0
-      this.currentGame.progress = 0
+      //Existe nivel siguiente en esta isla?
+    } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
+      //Aquí finaliza el nivel si es en dirección +1
+      //(Buscar si existe el siguiente nivel) Validar si ya había completado el nivel en db, sino crear
+      const sumaryActivityDB = this._sumaryActivities.getValue()!.find(res => res.isl_id === (this.currentGame.posIsland + 1) && res.isl_lev_id === ((this.currentGame.posLevel + direction) + direction))
+      if (sumaryActivityDB) {
+        this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
+        this.currentGame.posLevel = this.currentGame.posLevel + direction
+        this.currentGame.posGame = 0
+        this.currentGame.progress = 0
+        this._sumaryActivity.next(sumaryActivityDB)
+      } else {
+        //Primero crear la isla nivel
+        this.createIslandLevel({
+          isl_id: this.currentGame.posIsland + 1,
+          isl_lev_str_id: ((this.currentGame.posLevel + direction) + direction).toString(),
+          isl_lev_max_intents: 0,
+          isl_lev_status: '',
+        }).subscribe(resIslandLevel => {
+          //Luego crear el resumen
+          this.createSummary({
+            isl_lev_id: resIslandLevel.res.isl_lev_id,
+            users_id: 1, //FIXME : temporal users_id
+            sum_act_score_game: 0,
+            sum_act_intents: 0,
+            sum_act_best_accuracy_ia: 0,
+            sum_act_worst_accuracy_ia: 0,
+            sum_act_date_created: new Date().toISOString()
+          }).subscribe(resSumary => {
+            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
+            this.currentGame.posLevel = this.currentGame.posLevel + direction
+            this.currentGame.posGame = 0
+            this.currentGame.progress = 0
+
+            const auxSumaryActivities = this._sumaryActivities.getValue()
+            const auxSumaryActivity = {
+              isl_id: this.currentGame.posIsland + 1,
+              isl_lev_str_id: ((this.currentGame.posLevel + direction) + direction).toString(),
+              isl_lev_max_intents: 0,
+              isl_lev_status: '',
+              //
+              isl_lev_id: resIslandLevel.res.isl_lev_id,
+              users_id: 1, //FIXME : temporal users_id
+              sum_act_score_game: 0,
+              sum_act_intents: 0,
+              sum_act_best_accuracy_ia: 0,
+              sum_act_worst_accuracy_ia: 0,
+              sum_act_date_created: new Date().toISOString()
+            }
+            this._sumaryActivity.next(auxSumaryActivity)
+            auxSumaryActivities?.push(auxSumaryActivity)
+            this._sumaryActivities.next(auxSumaryActivities)
+          })
+        })
+      }
       return
     }
     //== Si el ultimo juego y nivel: ir a las islas
@@ -110,43 +170,66 @@ export class GameService {
 
   }
 
-  get levelStructure$() {
-    return this._levelStructure.asObservable()
+  createSummary(sumaryActivities: SumaryActivities): Observable<{ isError: boolean, res: any }> {
+    return this._httpClient.post<any>(`${this.apiUrl}/sumary_activities/create`, sumaryActivities).pipe(
+      tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
+        if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+          //TODO
+      })
+    )
+  }
+  createIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
+    return this._httpClient.post<any>(`${this.apiUrl}/island_levels/create`, islandLevel).pipe(
+      tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
+        if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+          //TODO
+      })
+    )
   }
 
-  getDataGame(island: number, level: string, gamePos: number): Observable<LevelStructure> {
-    /* TEMP DATA */
-    const data = {
-      isl_lev_str_id: level||'1',
-      isl_id: island||1,
-      typ_act_id: '',
-      isl_lev_str_difficulty: '',
-      isl_lev_str_requirement: '',
-      isl_lev_str_description: '',
-    }
-    this.currentGame.posGame = gamePos||1
-    this.currentGame.posIsland = (data.isl_id-1)
-    this.currentGame.posLevel = Number(level)-1
+  getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: SumaryActivities[] }> {
 
-    let countSections = 0
-    this.currentGame.progress = 0
-    this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posIsland].games.forEach((game, indexGame) => {
-      countSections += game.sections.length
-      
-      if(indexGame < gamePos){
-        this.currentGame.progress++
-      }
-    })
-    this.currentGame.goal = countSections
-    /* END TEMP DATA */
+    return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`).pipe(
+      tap((_sumaryActivitiesRes: { isError: boolean, res: SumaryActivities[] }) => {
+        console.log('>> >>  _sumaryActivitiesRes:', _sumaryActivitiesRes);
+        if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+        this.currentGame.posGame = gamePos || 1
+        this.currentGame.posIsland = (island - 1)
+        this.currentGame.posLevel = (level - 1)
+        let _sumaryActivities = _sumaryActivitiesRes.res
 
-    return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`,
-      {
-        /* headers: this.apimxHeader, */
-      }).pipe(
-        tap(res =>{
-          console.log('>> >>  res:', res);
-          this._levelStructure.next(data)
+        //Si no tiene datos inicializar array por defecto en el primer nivel
+        if (_sumaryActivitiesRes.res.length === 0) {
+          _sumaryActivities = [{
+            sum_act_id: 1,
+            isl_lev_id: 1,
+            users_id: 1,
+            sum_act_score_game: 0,
+            sum_act_intents: 0,
+            sum_act_best_accuracy_ia: 0,
+            sum_act_worst_accuracy_ia: 0,
+            sum_act_date_created: "2024-06-10T17:15:00.000Z",
+            //
+            isl_id: 1,
+            isl_lev_str_id: '1',
+            isl_lev_max_intents: 3,
+            isl_lev_status: "start",
+          }]
+        }
+
+        let countSections = 0
+        this.currentGame.progress = 0
+        this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games.forEach((game, indexGame) => {
+          countSections += game.sections.length
+
+          if (indexGame < gamePos) {
+            this.currentGame.progress++
+          }
+        })
+        this.currentGame.goal = countSections
+
+        this._sumaryActivity.next(_sumaryActivities[0] ?? {})
+        this._sumaryActivities.next(_sumaryActivities)
       }),
     )
   }

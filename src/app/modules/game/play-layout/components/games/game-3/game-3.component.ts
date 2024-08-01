@@ -21,8 +21,8 @@ export class Game3Component {
     previous: undefined
   }]
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
-    /* this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     }) */
   }
   btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {

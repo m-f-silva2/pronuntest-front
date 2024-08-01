@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LevelStructure } from 'src/app/core/models/levels_structure';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { GameService } from '../../game.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,12 +12,12 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  levelStructure: LevelStructure | undefined
+  sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(public _gameService: GameService, private _route: Router){
-    this._gameService.levelStructure$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      this.levelStructure = res
+    this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
+      this.sumaryActivity= res
     })
   }
   createArrayFromNumber(num: number): number[] {
