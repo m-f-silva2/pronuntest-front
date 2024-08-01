@@ -87,7 +87,7 @@ export class GameService {
   get sumaryActivity$() {
     return this._sumaryActivity.asObservable()
   }
-  set sumaryActivities(activities: SumaryActivities[]|undefined) {
+  set sumaryActivities(activities: SumaryActivities[] | undefined) {
     this._sumaryActivities.next(activities)
   }
 
@@ -112,13 +112,17 @@ export class GameService {
     } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
       //Aquí finaliza el nivel si es en dirección +1
       //(Buscar si existe el siguiente nivel) Validar si ya había completado el nivel en db, sino crear
-      const sumaryActivityDB = this._sumaryActivities.getValue()!.find(res => res.isl_id === (this.currentGame.posIsland + 1) && res.isl_lev_id === ((this.currentGame.posLevel + direction) + direction))
-      if (sumaryActivityDB) {
+      const nextSumaryActivityDB = this._sumaryActivities.getValue()?.find(res =>
+        res.isl_id === (this.currentGame.posIsland + 1) && res.isl_lev_str_id?.toString() === ((this.currentGame.posLevel + direction) + direction)?.toString()
+      )
+
+      //Si no existe en db el nivel, crearlo
+      if (nextSumaryActivityDB) {
         this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
         this.currentGame.posLevel = this.currentGame.posLevel + direction
         this.currentGame.posGame = 0
         this.currentGame.progress = 0
-        this._sumaryActivity.next(sumaryActivityDB)
+        this._sumaryActivity.next(nextSumaryActivityDB)
       } else {
         //Primero crear la isla nivel
         this.createIslandLevel({
@@ -128,6 +132,7 @@ export class GameService {
           isl_lev_status: '',
         }).subscribe(resIslandLevel => {
           //Luego crear el resumen
+          console.info('>> 2 resIslandLevel siguiente creado:', resIslandLevel)
           this.createSummary({
             isl_lev_id: resIslandLevel.res.isl_lev_id,
             users_id: 1, //FIXME : temporal users_id
@@ -137,7 +142,8 @@ export class GameService {
             sum_act_worst_accuracy_ia: 0,
             sum_act_date_created: new Date().toISOString()
           }).subscribe(resSumary => {
-            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
+            console.info('>> 2 summary siguiente creado:', resSumary)
+
             this.currentGame.posLevel = this.currentGame.posLevel + direction
             this.currentGame.posGame = 0
             this.currentGame.progress = 0
@@ -160,6 +166,7 @@ export class GameService {
             this._sumaryActivity.next(auxSumaryActivity)
             auxSumaryActivities?.push(auxSumaryActivity)
             this._sumaryActivities.next(auxSumaryActivities)
+            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
           })
         })
       }
@@ -174,7 +181,7 @@ export class GameService {
     return this._httpClient.post<any>(`${this.apiUrl}/sumary_activities/create`, sumaryActivities).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
-          //TODO
+        //TODO
       })
     )
   }
@@ -182,7 +189,7 @@ export class GameService {
     return this._httpClient.post<any>(`${this.apiUrl}/island_levels/create`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
-          //TODO
+        //TODO
       })
     )
   }
@@ -191,7 +198,7 @@ export class GameService {
 
     return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: SumaryActivities[] }) => {
-        console.log('>> >>  _sumaryActivitiesRes:', _sumaryActivitiesRes);
+        
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
         this.currentGame.posGame = gamePos || 1
         this.currentGame.posIsland = (island - 1)
@@ -215,6 +222,29 @@ export class GameService {
             isl_lev_max_intents: 3,
             isl_lev_status: "start",
           }]
+
+          //Primero crear la isla nivel
+          this.createIslandLevel({
+            isl_id: _sumaryActivities[0].isl_id ,
+            isl_lev_str_id: _sumaryActivities[0].isl_lev_str_id ,
+            isl_lev_max_intents: _sumaryActivities[0].isl_lev_max_intents ,
+            isl_lev_status: _sumaryActivities[0].isl_lev_status ,
+          }).subscribe(resIslandLevel => {
+            //Luego crear el resumen
+            console.info('>> 2 islalevel current creado:', resIslandLevel)
+            this.createSummary({
+              isl_lev_id: resIslandLevel.res.isl_lev_id,
+              users_id: 1, //FIXME : temporal users_id
+              sum_act_score_game: 0,
+              sum_act_intents: 0,
+              sum_act_best_accuracy_ia: 0,
+              sum_act_worst_accuracy_ia: 0,
+              sum_act_date_created: new Date().toISOString()
+            }).subscribe(resSumary => {
+              console.info('>> 2 summary current creado:', resSumary)
+            })
+          })
+
         }
 
         let countSections = 0
