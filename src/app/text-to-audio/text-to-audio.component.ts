@@ -53,10 +53,11 @@ export class TextToAudioComponent  implements OnInit {
     document.head.appendChild(linkAppleIcon);
 
     // Insert script tags
+    /*
     const scriptEngine2 = this.renderer.createElement('script');
     scriptEngine2.src = 'assets/godot/coi-serviceworker.min.js';
     scriptEngine2.async = true;
-    document.body.appendChild(scriptEngine2);
+    document.body.appendChild(scriptEngine2);*/
     const scriptEngine = this.renderer.createElement('script');
     scriptEngine.src = 'assets/godot/index.js';
     scriptEngine.async = true;
