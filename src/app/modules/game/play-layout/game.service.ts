@@ -264,4 +264,19 @@ export class GameService {
     )
   }
 
+
+  sendAudio(audio: unknown): Observable<any>{
+    const boundary = "boundary";
+      const headers = {
+        "Content-Type": `multipart/form-data; boundary=${boundary}`
+      };
+
+      console.log('>> >>  audio:', audio);
+    return this._httpClient.post<any>(`http://18.230.209.54:5000/api/word/a`, audio, { headers }).pipe(
+      tap((res: unknown) => {
+        console.log('>> >>  audio res 2:', res);
+      }
+    ))
+  }
+
 }

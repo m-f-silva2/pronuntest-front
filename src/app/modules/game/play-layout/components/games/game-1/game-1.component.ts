@@ -58,8 +58,49 @@ export class Game1Component {
 
     this.mediaRecorder.onstop = () => {
       const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
-      this.audioUrl = URL.createObjectURL(audioBlob);
-      this.ref.markForCheck();
+
+      // Convert Blob to byte array (assuming limited library usage)
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(audioBlob);
+
+      reader.onload = async (event) => {
+        if (event.target && event.target.result) {
+          const buffer = new Uint8Array(event.target.result as ArrayBuffer);
+
+          // Prepare multipart/form-data body (assuming basic functionality)
+          const boundary = "----MyBoundary"; // Replace with a unique boundary
+          let body = "";
+
+          body += `--${boundary}\r\n`;
+          body += `Content-Disposition: form-data; name="recording"; filename="recording.wav"\r\n`;
+          body += `Content-Type: audio/wav\r\n\r\n`;
+          //body += String.fromCharCode.apply(null, buffer); // Convert buffer to string
+          const numbers: number[] = [];
+          for (const byte of buffer) {
+              numbers.push(byte);
+          }
+          body += numbers.join('');
+
+          body += `\r\n--${boundary}--\r\n`;
+
+          // Implement actual HTTP request logic here (replace with your HttpClient usage)
+          this._gameService.sendAudio(body).subscribe({
+            next: (res: any) => {
+              console.log('>> >>  audio res:', res);
+            },
+            error: (error: any) => {
+              console.error('>> >>  audio error:', error);
+            }
+          });
+          
+          this.audioUrl = URL.createObjectURL(audioBlob);
+          this.ref.markForCheck();
+
+        } else {
+          console.error("Error reading audio data");
+        }
+      };
+
     };
 
     this.mediaRecorder.start();
