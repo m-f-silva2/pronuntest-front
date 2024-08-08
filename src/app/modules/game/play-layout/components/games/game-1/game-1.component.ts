@@ -84,7 +84,8 @@ export class Game1Component {
           body += `\r\n--${boundary}--\r\n`;
 
           // Implement actual HTTP request logic here (replace with your HttpClient usage)
-          this._gameService.sendAudio(body).subscribe({
+          //this._gameService.sendAudio(body).subscribe({
+          this._gameService.sendAudio(audioBlob).subscribe({
             next: (res: any) => {
               console.log('>> >>  audio res:', res);
             },
@@ -111,7 +112,7 @@ export class Game1Component {
     setTimeout(() => {
       this.stopRecording()
       this.countRecording = 0
-    }, 6000);
+    }, 2000);
 
     this.countRecording = 1
     setInterval(() => {
