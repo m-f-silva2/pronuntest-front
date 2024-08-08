@@ -280,7 +280,7 @@ export class GameService {
       };
 
       console.log('>> >>  audio:', audio);
-    return this._httpClient.post<any>(`http://18.230.209.54:5000/api/word/a`, audio, { headers }).pipe(
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audio, { headers }).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);
       }
