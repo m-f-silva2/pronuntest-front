@@ -112,7 +112,7 @@ export class Game1Component {
     setTimeout(() => {
       this.stopRecording()
       this.countRecording = 0
-    }, 2000);
+    }, 6000);
 
     this.countRecording = 1
     setInterval(() => {
