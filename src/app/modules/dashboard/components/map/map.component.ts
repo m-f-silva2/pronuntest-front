@@ -35,14 +35,20 @@ export class MapComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if(this.center == undefined){
+      this.center = this.data.points;
+      console.log(this.center,"1");
+    }
     this.generateRandomPoints(this.center, 7)
+    console.log(this.center);
     this.renderMap();
   }
 
   private generateRandomPoints(center: [number, number][], numPoints: number) {
     const randomPoints: [number, number][] = [];
-  
+    console.log(center);
     center.forEach(coord => {
+      
       for (let i = 0; i < numPoints; i++) {
         const randomLon = coord[0] + (Math.random() - 0.5) * 0.01; // Desplazamiento aleatorio en longitud
         const randomLat = coord[1] + (Math.random() - 0.5) * 0.01; // Desplazamiento aleatorio en latitud

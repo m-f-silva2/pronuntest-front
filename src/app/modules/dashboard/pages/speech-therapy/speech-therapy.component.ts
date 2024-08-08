@@ -394,7 +394,7 @@ export class SpeechTherapyComponent {
       console.log("tabla", data, categories);
     }else if(graphic == 'm-1'){
       console.log("mapa", data, categories);
-      this.points
+      //this.points
     }
   }
 
@@ -508,7 +508,7 @@ export class SpeechTherapyComponent {
       next: (res: {isError: boolean, res: []}) => {
         if(res.isError) return
         
-        this.table = res.res;
+        //this.table = res.res;
         const title = `Mapa`;
       },
       error(err) {
