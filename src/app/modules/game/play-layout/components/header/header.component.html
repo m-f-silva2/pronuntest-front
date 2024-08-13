@@ -7,7 +7,7 @@
         >
         
         <div class="font-bold text-cyan-100 bg-cyan-400 border-cyan-200 border-4 rounded-r-lg w-16 -ml-3 text-end pr-2">
-            {{sumaryActivity?.isl_id}}
+            {{_gameService.currentGame.posIsland+1}}
         </div>
     </div>
     
@@ -16,14 +16,14 @@
         class="w-16 py-2 px-3 bg-cyan-400 border-r-white/50 rounded-full border-cyan-200 border-4 z-0" >
         
         <div class="font-bold text-cyan-100 bg-cyan-400 border-cyan-200 border-4 rounded-r-lg w-16 -ml-3 text-end pr-2">
-            {{sumaryActivity?.isl_lev_str_id}}
+            {{_gameService.currentGame.posLevel+1}}
         </div>
     </div>
 
     <div class="w-full" id="score">
         <div class="score-container">
             <div class="score-container-2 ">
-                <div class="score-item "></div>
+                
                 @for (item of createArrayFromNumber(_gameService.currentGame.goal); track $index) {
                     <div class="font-bold score-item {{($index<_gameService.currentGame.progress)?'opacity-100':'opacity-0'}}"></div>
                 }

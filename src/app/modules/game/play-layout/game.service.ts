@@ -91,7 +91,6 @@ export class GameService {
     this._sumaryActivities.next(activities)
   }
 
-
   /* componetes games (sections), level-info; next (end, normal), previous (first, normal)   */
   navegationGame(direction: number, type: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
     // === Si es una sección de un juego ===
@@ -101,25 +100,17 @@ export class GameService {
     }
 
     // === Si es una sección de los extremos de juego ===
-    console.log('>> game.service >> :', 
-      'currentGame.posIsland: ',this.currentGame.posIsland,
-      'currentGame.posLevel: ',this.currentGame.posLevel,
-      'currentGame.posGame + direction: ',this.currentGame.posGame,
-      'direction',direction
-    )
     const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
 
     //Existe juego siguiente en este nivel?
     if (nextGameExist) {
       this.currentGame.posGame += direction
       this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${this.currentGame.posLevel + 1}/gamePos/${this.currentGame.posGame + 1}`)
-      console.log('>> >>  nextGameExist:', `${this.currentGame.posLevel + 1}`);
       return
       //Existe nivel siguiente en esta isla?
     } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
       //Aquí finaliza el nivel si es en dirección +1
       //(Buscar si existe el siguiente nivel) Validar si ya había completado el nivel en db, sino crear
-      console.log('>> >> not nextGameExist:', `${this.currentGame.posLevel + 1}`);
       const nextSumaryActivityDB = this._sumaryActivities.getValue()?.find(res =>
         res.isl_id === (this.currentGame.posIsland + 1) && res.isl_lev_str_id?.toString() === ((this.currentGame.posLevel + direction) + direction)?.toString()
       )
@@ -203,7 +194,6 @@ export class GameService {
   }
 
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: SumaryActivities[] }> {
-
     return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: SumaryActivities[] }) => {
         
@@ -268,6 +258,7 @@ export class GameService {
 
         this._sumaryActivity.next(_sumaryActivities[0] ?? {})
         this._sumaryActivities.next(_sumaryActivities)
+
       }),
     )
   }

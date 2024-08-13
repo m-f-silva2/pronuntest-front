@@ -1,6 +1,5 @@
 .move-boxes {
     margin: 0 auto;
-    width: 325px;
 }
 
 .move-boxes h2 {
@@ -13,15 +12,14 @@
     color: #e56a5a;
 }
 
+.move-boxes .drag img {
+    height: 95px;
+    width: 95px;
+}
 .move-boxes .drag {
-    background-color: #e56a5a;
     border-radius: 5px;
-    border: 2px solid #ffe957;
     cursor: pointer;
-    float: left;
     margin-left: 5px;
-    height: 100px;
-    width: 100px;
     -webkit-transition: background-color 0.25s ease-in;
     -moz-transition: background-color 0.25s ease-in;
     -ms-transition: background-color 0.25s ease-in;
@@ -34,23 +32,26 @@
 }
 
 .move-boxes .drag:hover {
-    background-color: #f94a34;
+    background-color: #f94b3473;
 }
 
 #dropIt {
-    background: #5eced2;
+    background: #5eced221;
+    border: dashed 3px #6e41338c;
     border-radius: 5px;
-    height: 110px;
     margin: 0 auto;
     padding-top: 5px;
-    width: 325px;
+    width: 110px;
+    height: 110px;
 }
 
 #holder {
-    background: #fff;
     border-radius: 5px;
-    height: 110px;
     margin: 0 auto;
     padding-top: 5px;
-    width: 325px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.3rem;
+    justify-content: center;
 }
