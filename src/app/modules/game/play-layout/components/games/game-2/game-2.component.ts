@@ -23,8 +23,15 @@ export class Game2Component {
   }]
   section = 0
   countRecording = 0
-  goal = 90
+  goal = 80
   @ViewChild('boat') boat!: ElementRef;
+  isCompleted = false
+
+  private mediaRecorder: MediaRecorder | null = null;
+  public isRecording = false;
+  frequency: number = 0
+  audioContext!: AudioContext;
+
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
@@ -44,14 +51,7 @@ export class Game2Component {
       this.startRecording()
     }, 2000);
   }
-
-
-  private mediaRecorder: MediaRecorder | null = null;
-  public isRecording = false;
-  public audioUrl: string | null = null;
-  frequency: number = 0
-
-  audioContext!: AudioContext;
+  
   async startRecording() {
     this.audioContext = new AudioContext();
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -79,8 +79,8 @@ export class Game2Component {
           if(this.frequency > this.goal){
             analyser.disconnect()
             source.disconnect()
-            clearInterval(intervalId);
-            return
+            clearInterval(intervalId)
+            this.isCompleted = true
           }
         }, 200);
       }

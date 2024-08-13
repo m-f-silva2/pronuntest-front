@@ -25,6 +25,7 @@ export class Game1Component {
   section = 0
   countRecording = 0
   dataGames: IDataGame
+  isCompleted = false
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
@@ -65,6 +66,8 @@ export class Game1Component {
 
       reader.onload = async (event) => {
         if (event.target && event.target.result) {
+          this.isCompleted = true
+
           const buffer = new Uint8Array(event.target.result as ArrayBuffer);
 
           // Prepare multipart/form-data body (assuming basic functionality)

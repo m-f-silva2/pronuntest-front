@@ -275,16 +275,16 @@ export class GameService {
 
   sendAudio(audio: Blob): Observable<any>{
     const boundary = "boundary";
-    /*const headers = {
+    /* const headers = {
       "Content-Type": `multipart/form-data; boundary=${boundary}`
-    };*/
+    }; */
     const headers = new HttpHeaders({
       "Content-Type": `multipart/form-data; boundary=${boundary}`
     });
     const formData: FormData = new FormData();
     formData.append('recording', audio, 'recording.wav');
 
-    console.log('>> >>  audio:', formData.get('recording'));
+    console.log('>> >>  audio:', formData);
     return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, formData).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);

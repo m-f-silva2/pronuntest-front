@@ -30,4 +30,33 @@ export class Game5Component {
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
   }
+
+
+
+  /* DROP */
+  dragStart(ev: any) {
+    ev.dataTransfer.effectAllowed='move';
+    ev.dataTransfer.setData("Text", ev.currentTarget.getAttribute('id'));
+    ev.dataTransfer.setDragImage(ev.currentTarget,50,50);
+    return true;
+  }
+
+  // these  prevents default behavior of browser
+  dragEnter(event: any) {
+    event.preventDefault();
+    return true;
+  }
+  dragOver(event: any) {
+    event.preventDefault();
+  }
+  
+  // defined for when drop element on target
+  dragDrop(ev: any) {
+    const data = ev.dataTransfer.getData("Text");
+    console.log('>> >>  ev:', ev);
+    ev.target.appendChild(document.getElementById(data));
+    ev.stopPropagation();
+    return false;
+  }
+
 }
