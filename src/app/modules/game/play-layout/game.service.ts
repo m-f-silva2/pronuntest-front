@@ -196,7 +196,7 @@ export class GameService {
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: SumaryActivities[] }> {
     return this._httpClient.get<any>(`${this.apiUrl}/sumary_activities_by_user`).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: SumaryActivities[] }) => {
-        
+
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
         this.currentGame.posGame = (gamePos - 1)
         this.currentGame.posIsland = (island - 1)
@@ -223,10 +223,10 @@ export class GameService {
 
           //Primero crear la isla nivel
           this.createIslandLevel({
-            isl_id: _sumaryActivities[0].isl_id ,
-            isl_lev_str_id: _sumaryActivities[0].isl_lev_str_id ,
-            isl_lev_max_intents: _sumaryActivities[0].isl_lev_max_intents ,
-            isl_lev_status: _sumaryActivities[0].isl_lev_status ,
+            isl_id: _sumaryActivities[0].isl_id,
+            isl_lev_str_id: _sumaryActivities[0].isl_lev_str_id,
+            isl_lev_max_intents: _sumaryActivities[0].isl_lev_max_intents,
+            isl_lev_status: _sumaryActivities[0].isl_lev_status,
           }).subscribe(resIslandLevel => {
             //Luego crear el resumen
             console.info('>> 2 islalevel current creado:', resIslandLevel)
@@ -264,23 +264,28 @@ export class GameService {
   }
 
 
-  sendAudio(audio: Blob): Observable<any>{
-    const boundary = "boundary";
+  sendAudio(audio: string): Observable<any> {
+    /* const boundary = "boundary"; */
     /* const headers = {
       "Content-Type": `multipart/form-data; boundary=${boundary}`
     }; */
-    const headers = new HttpHeaders({
+    /* const headers = new HttpHeaders({
       "Content-Type": `multipart/form-data; boundary=${boundary}`
-    });
-    const formData: FormData = new FormData();
-    formData.append('recording', audio, 'recording.wav');
+    }); */
+    /* const formData: FormData = new FormData();
+    formData.append('recording', audio, 'recording.wav'); */
+    /* const newAudio = audio.split('').map(char => {
+      const hex = char.charCodeAt(0).toString(16).padStart(2, '0');
+      return `\\x${hex.toUpperCase()}`;
+    }).join(''); */
 
-    console.log('>> >>  audio:', formData);
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, formData).pipe(
+    console.log('>> >>  :', audio);
+
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audio).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);
       }
-    ))
+      ))
   }
 
 }

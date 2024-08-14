@@ -48,6 +48,10 @@ export class Game1Component {
   public audioUrl: string | null = null;
 
   async startRecording() {
+    if(this.isRecording){
+      this.stopRecording()
+      return
+    }
 
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     this.mediaRecorder = new MediaRecorder(stream);
@@ -68,27 +72,33 @@ export class Game1Component {
         if (event.target && event.target.result) {
           this.isCompleted = true
 
+          console.log('>> game-1.component >> :', event.target.result)
           const buffer = new Uint8Array(event.target.result as ArrayBuffer);
 
           // Prepare multipart/form-data body (assuming basic functionality)
-          const boundary = "----MyBoundary"; // Replace with a unique boundary
+          const boundary = "boundary"; // Replace with a unique boundary
           let body = "";
 
           body += `--${boundary}\r\n`;
           body += `Content-Disposition: form-data; name="recording"; filename="recording.wav"\r\n`;
           body += `Content-Type: audio/wav\r\n\r\n`;
-          //body += String.fromCharCode.apply(null, buffer); // Convert buffer to string
+          
           const numbers: number[] = [];
           for (const byte of buffer) {
               numbers.push(byte);
           }
-          body += numbers.join('');
+          /* body += numbers.join(''); */
+          body += String.fromCharCode.apply(null, numbers); // Convert buffer to string
+          
 
           body += `\r\n--${boundary}--\r\n`;
 
           // Implement actual HTTP request logic here (replace with your HttpClient usage)
-          //this._gameService.sendAudio(body).subscribe({
-          this._gameService.sendAudio(audioBlob).subscribe({
+          this.audioUrl = URL.createObjectURL(audioBlob);
+          this.ref.markForCheck();
+          
+          
+          this._gameService.sendAudio(body).subscribe({
             next: (res: any) => {
               console.log('>> >>  audio res:', res);
             },
@@ -97,8 +107,6 @@ export class Game1Component {
             }
           });
           
-          this.audioUrl = URL.createObjectURL(audioBlob);
-          this.ref.markForCheck();
 
         } else {
           console.error("Error reading audio data");
@@ -118,18 +126,21 @@ export class Game1Component {
     }, 6000);
 
     this.countRecording = 1
-    setInterval(() => {
+    this.intervalArc = setInterval(() => {
       if (this.countRecording === 0) { return }
       this.countRecording++
       this.setArc({target: {value: 16.66666666*(this.countRecording/100), min: 0, max: 100}})
-    }, 10);
+    }, 10)
 
   }
 
+  intervalArc: any
   stopRecording() {
     if (this.mediaRecorder) {
       this.mediaRecorder.stop();
       this.isRecording = false;
+      this.countRecording = 0
+      
     }
   }
 
