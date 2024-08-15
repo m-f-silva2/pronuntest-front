@@ -264,14 +264,18 @@ export class GameService {
   }
 
 
-  sendAudio(audio: string): Observable<any> {
+  sendAudio(audio: ArrayBuffer): Observable<any> {
     const boundary = "boundary";
     const headers = new HttpHeaders({
       "Content-Type": `multipart/form-data; boundary=${boundary}`,
       "accept": `*/*`
     });
 
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audio, { headers: headers}).pipe(
+    const blob = new Blob([audio], { type: 'audio/wav' });
+
+    console.log('>> >>blob  :', blob);
+
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, blob, { headers: headers}).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);
       }

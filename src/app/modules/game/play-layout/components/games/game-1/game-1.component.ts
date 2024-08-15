@@ -46,7 +46,6 @@ export class Game1Component {
 
 
   private mediaRecorder: MediaRecorder | null = null;
-  private audioChunks: Blob[] = [];
   public isRecording = false;
   public audioUrl: string | null = null;
 
@@ -74,35 +73,16 @@ export class Game1Component {
     await this.sendFile(dataFileArrBuf)
   }
 
-  async startRecording2() {
-    if (this.isRecording) {
-      this.stopRecording()
-      this.isRecording = !this.isRecording
-      return
-    }
-    this.isRecording = !this.isRecording
-
-    const started = await this.wavRecorder.start();
-    if (started) {
-      console.log('Grabación iniciada');
-    } else {
-      console.error('No se pudo iniciar la grabación');
-    }
-  }
-
   intervalArc: any
   async stopRecording() {
-    if (true/* this.mediaRecorder */) {
-      /* this.mediaRecorder.stop(); */
       this.isRecording = false;
       this.countRecording = 0
-
       this.wavRecorder.stop();
-    }
   }
 
   async getWavBlob() {
     const wavBlob = await this.wavRecorder.getBlob()!
+
     if (wavBlob) {
       console.log('Blob WAV obtenido:', wavBlob);
 
@@ -143,11 +123,6 @@ export class Game1Component {
 
     const stream = this.wavRecorder.stream
     this.mediaRecorder = new MediaRecorder(stream);
-    this.audioChunks = [];
-
-    /* this.mediaRecorder.ondataavailable = (event) => {
-      this.audioChunks.push(event.data);
-    }; */
 
     this.mediaRecorder.onstop = () => {
       this.getWavBlob()
@@ -173,27 +148,48 @@ export class Game1Component {
 
   }
 
-  async sendFile(buffer: ArrayBuffer): Promise<any> {
+  concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {
+    // Convertir texto a ArrayBuffer utilizando el encoding especificado
+    const textBeforeBuffer = new TextEncoder().encode(textBefore);
+    const textAfterBuffer = new TextEncoder().encode(textAfter);
+  
+    // Calcular el tamaño total del nuevo buffer
+    const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
+  
+    // Crear un nuevo ArrayBuffer
+    const newBuffer = new ArrayBuffer(totalLength);
+    const newUint8Array = new Uint8Array(newBuffer);
+    const originalBuffer = new Uint8Array(buffer);
+
+    // Copiar los datos al nuevo ArrayBuffer
+    newUint8Array.set(textBeforeBuffer);
+    newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
+    newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
+  
+    return newBuffer;
+  }
+
+  sendFile(buffer: ArrayBuffer) {
     const boundary = "boundary";
     let body = "";
     body += `--${boundary}\r\n`;
     body += `Content-Disposition: form-data; name="recording"; filename="recording.wav"\r\n`;
     body += `Content-Type: audio/wav\r\n\r\n`;
 
-    const audioWAB8Array = new Uint8Array(buffer);
-
-    const numbers: number[] = [];
+    /* const audioWAB8Array = new Uint8Array(buffer); */
+    /* const numbers: number[] = [];
     for (const byte of audioWAB8Array) {
       numbers.push(byte);
-    }
-    /* body += numbers.join(''); */
-    body += String.fromCharCode.apply(null, numbers); // Convert buffer to string
-    body += `\r\n--${boundary}--\r\n`;
+    } */
+   /* body += String.fromCharCode.apply(null, numbers);
+   body += `\r\n--${boundary}--\r\n`; */
 
-    this._gameService.sendAudio(body).subscribe({
+    const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
+    
+
+    this._gameService.sendAudio(blobBody).subscribe({
       next: (res: any) => {
         console.log('>> >>  audio res:', res);
-
       },
       error: (error: any) => {
         console.error('>> >>  audio error:', error);
