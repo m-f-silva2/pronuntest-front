@@ -24,9 +24,13 @@ export const tokenInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
     // catch and delete the access token from the local storage while logging
     // the user out from the app.
     if (authService.getToken()/*  && !AuthUtils.isTokenExpired(authService.accessToken */) {
-        newReq = req.clone({
-            headers: req.headers.set('Authorization', 'Bearer ' + authService.getToken()),
-        });
+        if(req.url !== 'https://pronuntest-back.onrender.com/api/word/a'){
+            console.log('>> >>  req:', req);
+
+            newReq = req.clone({
+                headers: req.headers.set('Authorization', 'Bearer ' + authService.getToken()),
+            });
+        }
     }
     
     // Response

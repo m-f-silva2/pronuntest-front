@@ -265,27 +265,68 @@ export class GameService {
 
 
   sendAudio(audio: string): Observable<any> {
-    /* const boundary = "boundary"; */
-    /* const headers = {
-      "Content-Type": `multipart/form-data; boundary=${boundary}`
-    }; */
-    /* const headers = new HttpHeaders({
-      "Content-Type": `multipart/form-data; boundary=${boundary}`
-    }); */
-    /* const formData: FormData = new FormData();
-    formData.append('recording', audio, 'recording.wav'); */
-    /* const newAudio = audio.split('').map(char => {
-      const hex = char.charCodeAt(0).toString(16).padStart(2, '0');
-      return `\\x${hex.toUpperCase()}`;
-    }).join(''); */
+    const boundary = "boundary";
+    const headers = new HttpHeaders({
+      "Content-Type": `multipart/form-data; boundary=${boundary}`,
+      "accept": `*/*`
+    });
 
-    console.log('>> >>  :', audio);
+    const encoder = new TextEncoder();
+    const utf8Buffer = encoder.encode(audio);
+    
+    const audioArray: number[] = Array.from(utf8Buffer);
 
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audio).pipe(
+
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audioArray, { headers: headers}).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);
       }
       ))
   }
+
+  arrayBufferToWav(arrayBuffer: ArrayBuffer): ArrayBuffer {
+    const view = new DataView(arrayBuffer);
+    const numOfChan = 1; // Número de canales, ajusta según sea necesario
+    const sampleRate = 44100; // Frecuencia de muestreo, ajusta según sea necesario
+    const length = arrayBuffer.byteLength + 44;
+    const bufferArray = new ArrayBuffer(length);
+    const wavView = new DataView(bufferArray);
+  
+    let offset = 0;
+  
+    function setUint16(data: number) {
+      wavView.setUint16(offset, data, true);
+      offset += 2;
+    }
+  
+    function setUint32(data: number) {
+      wavView.setUint32(offset, data, true);
+      offset += 4;
+    }
+  
+    setUint32(0x46464952); // "RIFF"
+    setUint32(length - 8); // file length - 8
+    setUint32(0x45564157); // "WAVE"
+  
+    setUint32(0x20746d66); // "fmt " chunk
+    setUint32(16); // length = 16
+    setUint16(1); // PCM (uncompressed)
+    setUint16(numOfChan);
+    setUint32(sampleRate);
+    setUint32(sampleRate * 2 * numOfChan); // avg. bytes/sec
+    setUint16(numOfChan * 2); // block-align
+    setUint16(16); // 16-bit (hardcoded in this demo)
+  
+    setUint32(0x61746164); // "data" - chunk
+    setUint32(length - offset - 4); // chunk length
+  
+    for (let i = 0; i < arrayBuffer.byteLength; i++) {
+      wavView.setInt8(offset, view.getInt8(i));
+      offset++;
+    }
+  
+    return bufferArray
+  }
+  
 
 }
