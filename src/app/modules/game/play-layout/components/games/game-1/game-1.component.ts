@@ -4,6 +4,7 @@ import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
+import { WavRecorder } from "webm-to-wav-converter";
 
 @Component({
   selector: 'app-game-1',
@@ -26,6 +27,7 @@ export class Game1Component {
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
+  wavRecorder = new WavRecorder();
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
@@ -33,6 +35,7 @@ export class Game1Component {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
+
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -67,38 +70,50 @@ export class Game1Component {
 
   async file(event: any) {
     const file = event.files[0] as File
-    console.log('>> >> mimetype:', file.type);
     const dataFileArrBuf = await this.getFileToArrayBuffer(file)
     await this.sendFile(dataFileArrBuf)
-
   }
 
-  async startRecording() {
+  async startRecording2() {
     if (this.isRecording) {
       this.stopRecording()
+      this.isRecording = !this.isRecording
       return
     }
+    this.isRecording = !this.isRecording
 
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    this.mediaRecorder = new MediaRecorder(stream);
-    this.audioChunks = [];
+    const started = await this.wavRecorder.start();
+    if (started) {
+      console.log('Grabación iniciada');
+    } else {
+      console.error('No se pudo iniciar la grabación');
+    }
+  }
 
-    this.mediaRecorder.ondataavailable = (event) => {
-      this.audioChunks.push(event.data);
-    };
+  intervalArc: any
+  async stopRecording() {
+    if (true/* this.mediaRecorder */) {
+      /* this.mediaRecorder.stop(); */
+      this.isRecording = false;
+      this.countRecording = 0
 
-    this.mediaRecorder.onstop = () => {
-      const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+      this.wavRecorder.stop();
+    }
+  }
+
+  async getWavBlob() {
+    const wavBlob = await this.wavRecorder.getBlob()!
+    if (wavBlob) {
+      console.log('Blob WAV obtenido:', wavBlob);
 
       // Convert Blob to byte array (assuming limited library usage)
       const reader = new FileReader();
-      reader.readAsArrayBuffer(audioBlob);
-
+      reader.readAsArrayBuffer(wavBlob);
       reader.onload = async (event) => {
         if (event.target && event.target.result) {
           this.isCompleted = true
           this.sendFile(event.target.result as ArrayBuffer)
-          this.audioUrl = URL.createObjectURL(audioBlob);
+          this.audioUrl = URL.createObjectURL(wavBlob);
           this.ref.markForCheck();
 
         } else {
@@ -106,6 +121,36 @@ export class Game1Component {
         }
       };
 
+
+      // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
+    } else {
+      console.error('No se pudo obtener el Blob WAV');
+    }
+  }
+
+  async startRecording() {
+    if (this.isRecording) {
+      this.stopRecording()
+      return
+    }
+    const started = await this.wavRecorder.start();
+    if (started) {
+      console.log('Grabación iniciada');
+    } else {
+      console.error('No se pudo iniciar la grabación');
+      return
+    }
+
+    const stream = this.wavRecorder.stream
+    this.mediaRecorder = new MediaRecorder(stream);
+    this.audioChunks = [];
+
+    /* this.mediaRecorder.ondataavailable = (event) => {
+      this.audioChunks.push(event.data);
+    }; */
+
+    this.mediaRecorder.onstop = () => {
+      this.getWavBlob()
     };
 
 
@@ -154,16 +199,6 @@ export class Game1Component {
         console.error('>> >>  audio error:', error);
       }
     });
-  }
-
-  intervalArc: any
-  stopRecording() {
-    if (this.mediaRecorder) {
-      this.mediaRecorder.stop();
-      this.isRecording = false;
-      this.countRecording = 0
-
-    }
   }
 
 
