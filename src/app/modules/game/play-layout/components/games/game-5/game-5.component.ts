@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { Subject } from 'rxjs';
 import { GameService } from '../../../game.service';
@@ -20,6 +20,11 @@ export class Game5Component {
     next: '1',
     previous: undefined
   }]
+  @ViewChild('audio_a') audio_a!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_e') audio_e!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_i') audio_i!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_o') audio_o!: ElementRef<HTMLAudioElement>;
+
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
     /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity= res
@@ -30,8 +35,6 @@ export class Game5Component {
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
   }
-
-
 
   /* DROP */
   dragStart(ev: any) {
@@ -53,10 +56,26 @@ export class Game5Component {
   // defined for when drop element on target
   dragDrop(ev: any) {
     const data = ev.dataTransfer.getData("Text");
-    console.log('>> >>  ev:', ev);
     ev.target.appendChild(document.getElementById(data));
     ev.stopPropagation();
     return false;
+  }
+
+  async handlePlay(key?:string){
+    if(!key){
+      this.audio_a.nativeElement.play()
+      return
+    }
+
+    if(key === 'a'){
+      this.audio_a.nativeElement.play()
+    }else if(key === 'e'){
+      this.audio_e.nativeElement.play()
+    }else if(key === 'i'){
+      this.audio_i.nativeElement.play()
+    }else if(key === 'o'){
+      this.audio_o.nativeElement.play()
+    }
   }
 
 }

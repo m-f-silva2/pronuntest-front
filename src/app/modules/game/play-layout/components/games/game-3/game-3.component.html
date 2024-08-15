@@ -9,60 +9,63 @@
             flex flex-col gap-6 justify-evenly items-center px-16
             ">
             <h3 class="text-center font-bold text-4xl text-red-800">RECORDAR SECUENCIA DE SONIDOS</h3>
-            <div>Reproducir sonido</div>
+            <div>
+                <p>Reproducir sonido</p>
+                <button id="play-video" class="video-play-button" (click)="handlePlay()">
+                    <span></span>
+                </button>
+            </div>
 
-            <div class="grid grid-cols-3 grid-rows-3 bg-yellow-800/60 rounded-3xl border-yellow-950 border-2
-            p-4 gap-1
-                ">
-                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3">
+            <div class="grid grid-cols-3 grid-rows-3 bg-yellow-800/60 rounded-3xl border-yellow-950 border-2 p-4 gap-1">
+                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3" (click)="handlePlay('a')">
                     <div class="rounded-full border-4 border-orange-800 bg-orange-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-blue-500 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-blue-500 rounded-2xl p-3" (click)="handlePlay('e')">
                     <div class="rounded-full border-4 border-lime-800 bg-lime-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3" (click)="handlePlay('i')">
                     <div class="rounded-full border-4 border-orange-600 bg-orange-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-blue-400 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-blue-400 rounded-2xl p-3" (click)="handlePlay('o')">
                     <div class="rounded-full border-4 border-lime-800 bg-lime-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-lime-300 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-lime-300 rounded-2xl p-3" (click)="handlePlay('a')">
                     <div class="rounded-full border-4 border-orange-600 bg-orange-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-blue-500 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-blue-500 rounded-2xl p-3" (click)="handlePlay('m')">
                     <div class="rounded-full border-4 border-lime-800 bg-lime-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-blue-300 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-blue-300 rounded-2xl p-3" (click)="handlePlay('u')">
                     <div class="rounded-full border-4 border-lime-800 bg-lime-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-orange-300 rounded-2xl p-3" (click)="handlePlay('m')">
                     <div class="rounded-full border-4 border-orange-800 bg-orange-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                     </div>
                 </div>
-                <div class="w-20 h-20 bg-blue-300 rounded-2xl p-3">
+                <div class="w-20 h-20 bg-blue-300 rounded-2xl p-3" (click)="handlePlay('i')">
                     <div class="rounded-full border-4 border-orange-900 bg-orange-500 aspect-1 relative">
                         <div class="rounded-xl w-3/4 h-2 bg-white -rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <div class="rounded-xl w-3/4 h-2 bg-white rotate-45 absolute bottom-1/2 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -79,15 +82,25 @@
                             fill="#DBE8EB" />
                     </svg>
                 </button>
-                <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
-                    <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
+                @if(this.isCompleted){
+
+                    <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
+                        <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
                             d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
                             fill="#DBE8EB" />
-                    </svg>
-                </button>
+                        </svg>
+                    </button>
+                }
             </div>
         </div>
     </section>
     }
 </main>
+
+<audio class="hidden" src="assets/audios/m.mp3" #audio_m></audio>
+<audio class="hidden" src="assets/audios/a.mp3" #audio_a></audio>
+<audio class="hidden" src="assets/audios/e.mp3" #audio_e></audio>
+<audio class="hidden" src="assets/audios/i.mp3" #audio_i></audio>
+<audio class="hidden" src="assets/audios/o.mp3" #audio_o></audio>
+<audio class="hidden" src="assets/audios/u.mp3" #audio_u></audio>

@@ -45,7 +45,6 @@ export class Game4Component {
   /* === RECORDING === */
   ngAfterViewInit() {
     setTimeout(() => {
-      console.log('>> >>  start:', );
       this.startRecording()
     }, 2000);
   }
