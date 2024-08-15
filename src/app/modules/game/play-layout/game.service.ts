@@ -271,13 +271,7 @@ export class GameService {
       "accept": `*/*`
     });
 
-    const encoder = new TextEncoder();
-    const utf8Buffer = encoder.encode(audio);
-    
-    const audioArray: number[] = Array.from(utf8Buffer);
-
-
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audioArray, { headers: headers}).pipe(
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, audio, { headers: headers}).pipe(
       tap((res: unknown) => {
         console.log('>> >>  audio res 2:', res);
       }
