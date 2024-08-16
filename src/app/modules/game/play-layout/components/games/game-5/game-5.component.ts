@@ -24,6 +24,7 @@ export class Game5Component {
   @ViewChild('audio_e') audio_e!: ElementRef<HTMLAudioElement>;
   @ViewChild('audio_i') audio_i!: ElementRef<HTMLAudioElement>;
   @ViewChild('audio_o') audio_o!: ElementRef<HTMLAudioElement>;
+  isCompleted = false
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
     /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
@@ -56,8 +57,11 @@ export class Game5Component {
   // defined for when drop element on target
   dragDrop(ev: any) {
     const data = ev.dataTransfer.getData("Text");
-    ev.target.appendChild(document.getElementById(data));
-    ev.stopPropagation();
+    if(data === 'boxA'){
+      ev.target.appendChild(document.getElementById(data));
+      ev.stopPropagation();
+      this.isCompleted = true
+    }
     return false;
   }
 
