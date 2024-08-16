@@ -12,12 +12,14 @@
             
             <section id="html5-drag" class="move-boxes " >  
                 
-                <article id="dropIt" (dragenter)="dragEnter($event)" (drop)="dragDrop($event)" (dragover)="dragOver($event)" class="relative">
-                    <button id="play-video" class="video-play-button absolute opacity-0" (click)="handlePlay()">
+                <div class="relative">
+                    <button id="play-video" class="video-play-button opacity-20 absolute -bottom-6 -z-10 select-none" >
                         <span></span>
                     </button>
-                </article>
-
+                    <article (click)="handlePlay()" id="dropIt" class="z-10" (dragenter)="dragEnter($event)" (drop)="dragDrop($event)" (dragover)="dragOver($event)">
+                    </article>
+                </div>
+                    
                 
                 <p class="opacity-50 mt-4"><i>Toca una caja para escuchar</i></p>
 
@@ -39,13 +41,15 @@
                             fill="#DBE8EB" />
                     </svg>
                 </button>
-                <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
-                    <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
-                            fill="#DBE8EB" />
-                    </svg>
-                </button>
+                @if (isCompleted) {
+                    <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
+                        <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
+                                fill="#DBE8EB" />
+                        </svg>
+                    </button>
+                }
             </div>
 
         </div>

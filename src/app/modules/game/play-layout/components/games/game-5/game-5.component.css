@@ -60,10 +60,9 @@
 
 /* plaly */
 .video-play-button {
-    position: relative;
-    z-index: 10;
-    top: 50%;
+    
     left: 50%;
+    z-index: 10;
     transform: translateX(-50%) translateY(-50%);
     box-sizing: content-box;
     display: block;
@@ -71,6 +70,8 @@
     height: 44px;
     border-radius: 50%;
     padding: 18px 20px 18px 28px;
+    pointer-events: none;
+    user-select: none;
   }
   
   .video-play-button:before {
