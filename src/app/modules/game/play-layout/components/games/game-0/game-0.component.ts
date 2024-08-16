@@ -17,8 +17,8 @@ export class Game0Component {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
-    title: 'VAMOS A ESCUCHAR SONIDOS DE LA LETRA M',
-    subtitle: 'El sonido de la letra p es igual cuando escuchamos reventar un globo',
+    title: 'VAMOS A ESCUCHAR SONIDOS DE LA PALABRA POLLO',
+    subtitle: '',//'El sonido de pa es igual cuando escuchamos reventar un globo',
     image: 'string',
     next: '1',
     previous: undefined

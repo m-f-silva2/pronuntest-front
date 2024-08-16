@@ -15,7 +15,7 @@ export class Game4Component {
   section = 0
   sections = [{
     title: 'INFLAR GLOBO',
-    subtitle: 'Pronunciar la palabra pulpo para inflar el globo',
+    subtitle: 'Exhala aire por la boca para inflar el globo',
     image: 'string',
     next: '1',
     previous: undefined

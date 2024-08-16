@@ -38,13 +38,13 @@ export default [
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
 
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/2', component: Game2Component, resolve: {gameResolver} }, ] },
+  //{ path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game2Component, resolve: {gameResolver} }, ] },
 
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: Game3Component, resolve: {gameResolver} }, ] },
   
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/2', component: Game4Component, resolve: {gameResolver} }, ] },
+  //{ path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game4Component, resolve: {gameResolver} }, ] },
 
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },

@@ -38,7 +38,7 @@ export class GameService {
           },
           {
             games: [
-              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
+              //{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
               { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego barco
             ]
           },
@@ -49,7 +49,7 @@ export class GameService {
           },
           {
             games: [
-              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
+              //{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
               { gameNum: 5, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego inflar-globo
             ]
           },

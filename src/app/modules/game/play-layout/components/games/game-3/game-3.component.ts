@@ -21,15 +21,17 @@ export class Game3Component {
     previous: undefined
   }]
   isCompleted = false
-  @ViewChild('audio_m') audio_m!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pie') audio_pie!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pelo') audio_pelo!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pino') audio_pino!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pollo') audio_pollo!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pan') audio_pan!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_mapa') audio_mapa!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_papa') audio_papa!: ElementRef<HTMLAudioElement>;
   @ViewChild('audio_a') audio_a!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_e') audio_e!: ElementRef<HTMLAudioElement>;
   @ViewChild('audio_i') audio_i!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_o') audio_o!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_u') audio_u!: ElementRef<HTMLAudioElement>;
-  secuenceGoal = ['a', 'e', 'i']
-  secuenceSave:string[] = []
-
+  secuenceGoal = ['pollo', 'pie', 'pelo', 'mapa']
+  secuenceSave:string[] = []    
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
     /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
@@ -45,27 +47,34 @@ export class Game3Component {
 
   async handlePlay(key?:string){
     if(!key){
-        this.audio_a.nativeElement.play()
+        this.audio_pollo.nativeElement.play()
         await this.sleep(1000)
-        this.audio_e.nativeElement.play()
+        this.audio_pie.nativeElement.play()
         await this.sleep(1000)
-        this.audio_i.nativeElement.play()
+        this.audio_pelo.nativeElement.play()
+        await this.sleep(1000)
+        this.audio_mapa.nativeElement.play()
       return
     }
 
-
-    if(key === 'm'){
-      this.audio_m.nativeElement.play()
+    if(key === 'pie'){
+      this.audio_pie.nativeElement.play()
+    }else if(key === 'pelo'){
+      this.audio_pelo.nativeElement.play()
+    }else if(key === 'pino'){
+      this.audio_pino.nativeElement.play()
+    }else if(key === 'pollo'){
+      this.audio_pollo.nativeElement.play()
+    }else if(key === 'pan'){
+      this.audio_pan.nativeElement.play()
+    }else if(key === 'mapa'){
+      this.audio_mapa.nativeElement.play()
+    }else if(key === 'papa'){
+      this.audio_papa.nativeElement.play()
     }else if(key === 'a'){
       this.audio_a.nativeElement.play()
-    }else if(key === 'e'){
-      this.audio_e.nativeElement.play()
     }else if(key === 'i'){
       this.audio_i.nativeElement.play()
-    }else if(key === 'o'){
-      this.audio_o.nativeElement.play()
-    }else if(key === 'u'){
-      this.audio_u.nativeElement.play()
     }
 
     //Logica secuencia

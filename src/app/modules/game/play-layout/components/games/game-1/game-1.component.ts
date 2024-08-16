@@ -17,7 +17,7 @@ export class Game1Component {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections = [{
-    title: 'VAMOS A PRONUNCIAR LA PALABRA POLLO',
+    title: 'VAMOS A PRONUNCIAR SONIDOS DE LA PALABRA POLLO',
     subtitle: undefined,
     image: 'string',
     next: '1',
