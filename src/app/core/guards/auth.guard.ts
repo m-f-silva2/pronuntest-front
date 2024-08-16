@@ -12,8 +12,6 @@ export const AuthGuard: CanActivateFn = (route, state): Observable<boolean | Url
 
     switchMap((roleData) => {
       const localUrl = state.url.split('/')[1]
-
-      console.log('>> >>  roleData:',roleData, localUrl );
       if (localUrl === 'home') {
         return of(true)
       }else if (localUrl === 'dashboard' && (roleData == ROLES.professional || roleData == ROLES.admin)) {

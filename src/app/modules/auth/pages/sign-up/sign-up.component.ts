@@ -61,7 +61,6 @@ export class SignUpComponent {
     const roles: { [key: string]: number } = { "admin": 1,"professional": 2,"parent": 3,"patient": 4 }
     
     let _role = this._router.parseUrl(this._router.url).queryParams['role']
-    console.log('>> >>  _role sigup:', _role);
     if(_role){
       this.roleId = roles[_role]
       this.roleTextCode = _role

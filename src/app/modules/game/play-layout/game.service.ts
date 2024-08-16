@@ -272,12 +272,10 @@ export class GameService {
     });
 
     const blob = new Blob([audio], { type: 'audio/wav' });
-
-    console.log('>> >>blob  :', blob);
-
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, blob, { headers: headers}).pipe(
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, blob, { headers: headers }).pipe(
       tap((res: unknown) => {
-        console.log('>> >>  audio res 2:', res);
+        //TODO: respuesta
+        console.info('>> >>  audio res 2:', res);
       }
       ))
   }
@@ -289,23 +287,23 @@ export class GameService {
     const length = arrayBuffer.byteLength + 44;
     const bufferArray = new ArrayBuffer(length);
     const wavView = new DataView(bufferArray);
-  
+
     let offset = 0;
-  
+
     function setUint16(data: number) {
       wavView.setUint16(offset, data, true);
       offset += 2;
     }
-  
+
     function setUint32(data: number) {
       wavView.setUint32(offset, data, true);
       offset += 4;
     }
-  
+
     setUint32(0x46464952); // "RIFF"
     setUint32(length - 8); // file length - 8
     setUint32(0x45564157); // "WAVE"
-  
+
     setUint32(0x20746d66); // "fmt " chunk
     setUint32(16); // length = 16
     setUint16(1); // PCM (uncompressed)
@@ -314,17 +312,17 @@ export class GameService {
     setUint32(sampleRate * 2 * numOfChan); // avg. bytes/sec
     setUint16(numOfChan * 2); // block-align
     setUint16(16); // 16-bit (hardcoded in this demo)
-  
+
     setUint32(0x61746164); // "data" - chunk
     setUint32(length - offset - 4); // chunk length
-  
+
     for (let i = 0; i < arrayBuffer.byteLength; i++) {
       wavView.setInt8(offset, view.getInt8(i));
       offset++;
     }
-  
+
     return bufferArray
   }
-  
+
 
 }

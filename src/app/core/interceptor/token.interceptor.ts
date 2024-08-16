@@ -25,8 +25,6 @@ export const tokenInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
     // the user out from the app.
     if (authService.getToken()/*  && !AuthUtils.isTokenExpired(authService.accessToken */) {
         if(req.url !== 'https://pronuntest-back.onrender.com/api/word/a'){
-            console.log('>> >>  req:', req);
-
             newReq = req.clone({
                 headers: req.headers.set('Authorization', 'Bearer ' + authService.getToken()),
             });

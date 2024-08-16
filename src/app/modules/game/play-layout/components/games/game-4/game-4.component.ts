@@ -77,7 +77,6 @@ export class Game4Component {
             analyser.disconnect()
             source.disconnect()
             clearInterval(intervalId)
-            console.log('>> game-4.component >> 1:', this.frequency)
             this.isCompleted = true
           }
         }, 200);

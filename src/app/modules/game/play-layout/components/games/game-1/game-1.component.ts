@@ -84,8 +84,6 @@ export class Game1Component {
     const wavBlob = await this.wavRecorder.getBlob()!
 
     if (wavBlob) {
-      console.log('Blob WAV obtenido:', wavBlob);
-
       // Convert Blob to byte array (assuming limited library usage)
       const reader = new FileReader();
       reader.readAsArrayBuffer(wavBlob);
@@ -114,9 +112,7 @@ export class Game1Component {
       return
     }
     const started = await this.wavRecorder.start();
-    if (started) {
-      console.log('Grabación iniciada');
-    } else {
+    if (!started) {
       console.error('No se pudo iniciar la grabación');
       return
     }

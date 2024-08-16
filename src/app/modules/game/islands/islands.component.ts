@@ -24,8 +24,8 @@ export class IslandsComponent {
   constructor(private _route: Router, public _gameService: GameService){
     this.dataGames = this._gameService.dataGames
     this._gameService.sumaryActivities$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      res?.forEach(item => {
-        
+      res?.forEach((item, index) => {
+        this.btns[index].state = 'unlock'
       })
       
       /* this.sumaryActivity */
