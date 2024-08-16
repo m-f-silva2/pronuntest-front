@@ -25,10 +25,10 @@
 
 
                 <article id="holder" (dragenter)="dragEnter($event)" (drop)="dragDrop($event)" (dragover)="dragOver($event)">
-                    <div (click)="handlePlay('a')" class="drag" id="boxA" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
-                    <div (click)="handlePlay('e')" class="drag" id="boxB" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
-                    <div (click)="handlePlay('i')" class="drag" id="boxC" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
-                    <div (click)="handlePlay('o')" class="drag" id="boxD" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
+                    <div (click)="handlePlay('pulpo')" class="drag" id="boxA" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
+                    <div (click)="handlePlay('mapa')" class="drag" id="boxB" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
+                    <div (click)="handlePlay('pollo')" class="drag" id="boxC" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
+                    <div (click)="handlePlay('puma')" class="drag" id="boxD" draggable="true" (dragstart)="dragStart($event)"><img src="assets/images/box.svg" alt=""></div>
                 </article>
             </section>
             
@@ -58,7 +58,7 @@
 </main>
 
 
-<audio class="hidden" src="assets/audios/a.mp3" #audio_a></audio>
-<audio class="hidden" src="assets/audios/e.mp3" #audio_e></audio>
-<audio class="hidden" src="assets/audios/i.mp3" #audio_i></audio>
-<audio class="hidden" src="assets/audios/o.mp3" #audio_o></audio>
+<audio class="hidden" src="assets/audios/fonema_pulpo.mp3" #audio_pulpo></audio>
+<audio class="hidden" src="assets/audios/fonema_mapa.mp3" #audio_mapa></audio>
+<audio class="hidden" src="assets/audios/fonema_pollo.mp3" #audio_pollo></audio>
+<audio class="hidden" src="assets/audios/fonema_puma.mp3" #audio_puma></audio>

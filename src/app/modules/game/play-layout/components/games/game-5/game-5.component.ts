@@ -20,10 +20,10 @@ export class Game5Component {
     next: '1',
     previous: undefined
   }]
-  @ViewChild('audio_a') audio_a!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_e') audio_e!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_i') audio_i!: ElementRef<HTMLAudioElement>;
-  @ViewChild('audio_o') audio_o!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pulpo') audio_pulpo!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_mapa') audio_mapa!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_pollo') audio_pollo!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audio_puma') audio_puma!: ElementRef<HTMLAudioElement>;
   isCompleted = false
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
@@ -67,18 +67,18 @@ export class Game5Component {
 
   async handlePlay(key?:string){
     if(!key){
-      this.audio_a.nativeElement.play()
+      this.audio_pollo.nativeElement.play()
       return
     }
 
-    if(key === 'a'){
-      this.audio_a.nativeElement.play()
-    }else if(key === 'e'){
-      this.audio_e.nativeElement.play()
-    }else if(key === 'i'){
-      this.audio_i.nativeElement.play()
-    }else if(key === 'o'){
-      this.audio_o.nativeElement.play()
+    if(key === 'pulpo'){
+      this.audio_pulpo.nativeElement.play()
+    }else if(key === 'mapa'){
+      this.audio_mapa.nativeElement.play()
+    }else if(key === 'pollo'){
+      this.audio_pollo.nativeElement.play()
+    }else if(key === 'puma'){
+      this.audio_puma.nativeElement.play()
     }
   }
 
