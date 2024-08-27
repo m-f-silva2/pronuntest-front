@@ -19,13 +19,13 @@ export class SignUpComponent {
     role_id: FormControl,
     use_con_hea_id: FormControl,
     city_id: FormControl,
-    users_identification: FormControl,
-    users_name: FormControl,
-    users_age: FormControl,
-    users_gender: FormControl,
-    users_email: FormControl,
-    users_password: FormControl,
-    users_status: FormControl,
+    identification: FormControl,
+    name: FormControl,
+    age: FormControl,
+    gender: FormControl,
+    email: FormControl,
+    password: FormControl,
+    status: FormControl,
   }>
   roleId = 4
   roleTextCode: 'patient'|'professional'|'parent'|'' = ''
@@ -47,13 +47,13 @@ export class SignUpComponent {
       role_id: [this.roleId, []],
       use_con_hea_id: [4, []],
       city_id: [null, [Validators.required]],
-      users_identification: ['', [Validators.required, Validators.minLength(3)]],
-      users_name: ['', [Validators.required, Validators.minLength(3)]],
-      users_age: ['', [Validators.required, Validators.min(4), Validators.max(100) ]],
-      users_gender: ['', [Validators.required]],
-      users_email: ['', [Validators.required, Validators.email]],
-      users_password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500) ]],
-      users_status: ['active', []],
+      identification: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      age: ['', [Validators.required, Validators.min(4), Validators.max(100) ]],
+      gender: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500) ]],
+      status: ['active', []],
     })
   }
   
@@ -72,7 +72,7 @@ export class SignUpComponent {
   handleSubmit(event: any){
     event.preventDefault()
     const pass = event.target[7].value
-    if (this.form.invalid || !pass || this.form.controls.users_password.value !== pass) {
+    if (this.form.invalid || !pass || this.form.controls.password.value !== pass) {
       console.log('>> >> invalido :', this.form.getRawValue());
       return;
     }
