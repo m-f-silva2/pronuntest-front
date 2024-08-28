@@ -7,7 +7,7 @@
         </div>
 
         <div
-            class="border-blue-800 border-[1.4rem] bg-orange-950 w-fit rounded-3xl min-w-52 min-h-52 -skew-x-1 p-8 flex gap-4 justify-center z-0 pt-20 flex-wrap">
+            class="border-blue-800 border-[1.4rem] bg-orange-950 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 pt-20 flex-wrap">
 
             <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
                 <p class="font-bold text-xl text-center mb-2">Vocales</p>
@@ -17,15 +17,17 @@
                     Jugar
                 </a>
             </div>
-            <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                <p class="font-bold text-xl text-center mb-2">Pollo</p>
-                <button
-                    class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
-                    routerLink="/games/island">
-                    Jugar
-                </button>
-            </div>
-            <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
+            @for (item of phonemes; track $index) {
+                <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
+                    <p class="font-bold text-xl text-center mb-2">{{item}}</p>
+                    <button
+                        class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
+                        routerLink="/games/island">
+                        Jugar
+                    </button>
+                </div>
+            }
+            <!-- <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
                 <p class="font-bold text-xl text-center mb-2">Pino</p>
                 <button
                     class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
@@ -33,15 +35,7 @@
                     <img src="assets/images/padlock.svg" alt="">
                     
                 </button>
-            </div>
-            <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                <p class="font-bold text-xl text-center mb-2">Pelo</p>
-                <button
-                    class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
-                    routerLink="/games">
-                    <img src="assets/images/padlock.svg" alt="">
-                </button>
-            </div>
+            </div> -->
 
 
         </div>
