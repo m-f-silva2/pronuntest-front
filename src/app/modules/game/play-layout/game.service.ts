@@ -198,13 +198,21 @@ export class GameService {
   }
 
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: unknown }> {
+    const phoneme = localStorage.getItem('phoneme')
+    if(!phoneme){
+      this.router.navigateByUrl(`/games`)
+      throw new Error()
+    }
 
     const structuresObservers = this.structures.length>0 ? of(this.structures) : this._httpClient.get<any>(`${this.apiUrl}/island_level_structures`)
-
+    let aux_sum_act_id
     return structuresObservers.pipe(
       concatMap((structuresRes: { isError: boolean, res: LevelStructure[] }) => {
         this.structures = structuresRes.res
-        this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme === 'pollo')
+
+        
+        console.log('>> game.service >> :', phoneme)
+        this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme === phoneme)
 
         //Si no existe el resumen local traerlo de la nube
         if (!this._sumaryActivity.getValue()) {
@@ -233,9 +241,20 @@ export class GameService {
         if (_sumaryActivitiesRes2.isError) throw new Error(_sumaryActivitiesRes2.res.toString())
         let _sumaryActivities = _sumaryActivitiesRes2.res
         this._sumaryActivity.next(_sumaryActivities ?? {})
-
+        aux_sum_act_id = _sumaryActivitiesRes2.res.sum_act_id
         //Si el resumen no existe, crearlo
         if (!this._islandLevels.getValue()) {
+          return this._httpClient.get<any>(`${this.apiUrl}/island_level_by_user_phoneme`)
+        } else {
+          return of({ isError: false, res: this._islandLevels.getValue() })
+        }
+      }),
+
+      concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
+        if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
+
+        //Si el resumen no existe, crearlo
+        if (resIslandLevel.res.length === 0) {
           return this.createIslandLevel({
             isl_lev_str_id: this.structure?.isl_lev_str_id,
             intents: 0,
@@ -244,12 +263,14 @@ export class GameService {
             best_accuracy_ia: 0,
             worst_accuracy_ia: 0,
             date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
-            sum_act_id: _sumaryActivitiesRes2.res.sum_act_id,
+            sum_act_id: aux_sum_act_id!,
           })
         } else {
-          return of({ isError: false, res: this._islandLevels.getValue() })
+          return of({ isError: false, res: resIslandLevel })
         }
       }),
+
+
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
 

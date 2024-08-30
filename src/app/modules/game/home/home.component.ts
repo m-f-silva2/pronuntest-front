@@ -12,4 +12,8 @@ export class HomeComponent {
   phonemes = ['pa','pe','pi','po','pu','pie','pollo','pulpo','palo','papa','mapa','pelo','pila','lupa','puma','pino','pan']
   constructor(){
   }
+
+  selectPhoneme(phoneme: string){
+    localStorage.setItem('phoneme', phoneme)
+  }
 }
