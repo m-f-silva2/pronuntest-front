@@ -16,21 +16,22 @@ import { WavRecorder } from "webm-to-wav-converter";
 export class Game1Component {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  sections = [{
-    title: 'VAMOS A PRONUNCIAR SONIDOS DE LA PALABRA POLLO',
-    subtitle: undefined,
-    image: 'string',
-    next: '1',
-    previous: undefined
-  }]
+  sections: any[] = []
   section = 0
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
   wavRecorder = new WavRecorder();
 
-  constructor(private _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
+  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
+    this.sections.push({
+      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA PALABRA "'+this._gameService.currentGame.phoneme+'"',
+      subtitle: undefined,
+      image: 'string',
+      next: '1',
+      previous: undefined
+    })
 
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res

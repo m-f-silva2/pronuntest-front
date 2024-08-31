@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, concatMap, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, concatMap, Observable, of, tap } from 'rxjs';
 import { IslandLevel } from 'src/app/core/models/island_level';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { SumaryActivities } from 'src/app/core/models/sumary_activities';
@@ -26,7 +26,7 @@ export class GameService {
   _sumaryActivity = new BehaviorSubject<SumaryActivities | undefined>(undefined)
   _islandLevels = new BehaviorSubject<IslandLevel[] | undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
-  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0 }
+  currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0, phoneme: '' }
   structures: LevelStructure[] = []
   structure?: LevelStructure
 
@@ -76,7 +76,6 @@ export class GameService {
       },
     ]
   }
-  /* apimxHeader: HttpHeaders; */
 
   constructor(private _httpClient: HttpClient, private router: Router) {
     /* this.apimxHeader = new HttpHeaders({
@@ -97,13 +96,17 @@ export class GameService {
 
   /* componetes games (sections), level-info; next (end, normal), previous (first, normal)   */
   navegationGame(direction: number, type: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
-    // === Si es una sección de un juego ===
+    if (!this.structure) {
+      this.router.navigateByUrl(`/games/island`)
+    }
+
+    // === Si es una sección de un nivel: avanzar en el nivel ===
     if (type === 'next' || type === 'previous') {
       this.currentGame.progress += direction
       return
     }
 
-    // === Si es una sección de los extremos de juego ===
+    // === Si es una sección de los extremos del nivel: avanzar a otro nivel ===
     const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
 
     //Existe juego siguiente en este nivel?
@@ -127,6 +130,40 @@ export class GameService {
         this.currentGame.progress = 0
         this._sumaryActivity.next(nextSumaryActivityDB)
       } else {
+
+        //Buscar nivel en local o db, sino crearlo
+        this.getLevelByUserPhoneLevel(this.currentGame.phoneme, (this.currentGame.posLevel + direction + 1)).subscribe(value => {
+          if (value.isError) throw new Error(value.res.toString())
+          const newStructure = this.structures.find(res => res.code_pos_level == ((this.currentGame.posLevel + direction) + direction))
+
+        
+        this.currentGame.posLevel = this.currentGame.posLevel + direction
+        this.currentGame.posGame = 0
+        this.currentGame.progress = 0
+
+        if (!value.res) {
+            this.createIslandLevel({
+              //:La estructura tiene la isla y el nivel 
+              isl_lev_str_id: newStructure?.isl_lev_str_id,
+              intents: 0,
+              status: 'active',
+              score: 0,
+              best_accuracy_ia: 0,
+              worst_accuracy_ia: 0,
+              date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
+              sum_act_id: this._sumaryActivity.getValue()?.sum_act_id,
+            }).subscribe(res => {
+              this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
+              this.structure = newStructure
+              this._islandLevels.next([res.res, ...this._islandLevels.getValue()!])
+
+            })
+          } else {
+            this.structure = newStructure
+            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
+          }
+        })
+
 
         /* this.createIslandLevel({
           isl_id: this.currentGame.posIsland + 1,
@@ -188,6 +225,7 @@ export class GameService {
       })
     )
   }
+
   createIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
     return this._httpClient.post<any>(`${this.apiUrl}/island_levels/create`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
@@ -197,21 +235,38 @@ export class GameService {
     )
   }
 
+  getLevelByUserPhoneLevel(phoneme: string, codePosLevel: number): Observable<{ isError: boolean, res: IslandLevel }> {
+    return this._httpClient.get<any>(
+      `${this.apiUrl}/island_level_by_user_phoneme?phoneme=${phoneme}&code_pos_level=${codePosLevel}`).pipe(
+        tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
+          if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+          //TODO
+        })
+      )
+  }
+  getAllLevelByUserPhone(phoneme: string): Observable<{ isError: boolean, res: any }> {
+    return this._httpClient.get<any>(
+      `${this.apiUrl}/island_level_all_by_user_phoneme?phoneme=${phoneme}`).pipe(
+        tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
+          if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+          //TODO
+        })
+      )
+  }
+
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: unknown }> {
     const phoneme = localStorage.getItem('phoneme')
-    if(!phoneme){
+    if (!phoneme) {
       this.router.navigateByUrl(`/games`)
       throw new Error()
     }
+    this.currentGame.phoneme = phoneme
 
-    const structuresObservers = this.structures.length>0 ? of(this.structures) : this._httpClient.get<any>(`${this.apiUrl}/island_level_structures`)
+    const structuresObservers = this.structures.length > 0 ? of({ res: this.structures }) : this._httpClient.get<any>(`${this.apiUrl}/island_level_structures_by_phoneme?phoneme=${phoneme}`)
     let aux_sum_act_id
     return structuresObservers.pipe(
       concatMap((structuresRes: { isError: boolean, res: LevelStructure[] }) => {
         this.structures = structuresRes.res
-
-        
-        console.log('>> game.service >> :', phoneme)
         this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme === phoneme)
 
         //Si no existe el resumen local traerlo de la nube
@@ -244,7 +299,7 @@ export class GameService {
         aux_sum_act_id = _sumaryActivitiesRes2.res.sum_act_id
         //Si el resumen no existe, crearlo
         if (!this._islandLevels.getValue()) {
-          return this._httpClient.get<any>(`${this.apiUrl}/island_level_by_user_phoneme`)
+          return this.getAllLevelByUserPhone(this.currentGame.phoneme)
         } else {
           return of({ isError: false, res: this._islandLevels.getValue() })
         }
@@ -277,12 +332,12 @@ export class GameService {
         //Niveles jugados
         let islandLevels = resIslandLevel.res
         this._islandLevels.next(islandLevels ?? [])
-        
+
         //Posición actual
         this.currentGame.posGame = (gamePos - 1)
         this.currentGame.posIsland = (island - 1)
         this.currentGame.posLevel = (level - 1)
-        
+
         //Posición actual
         let countSections = 0
         this.currentGame.progress = 0
@@ -295,7 +350,7 @@ export class GameService {
           }
         })
         this.currentGame.goal = countSections
-        
+
         return of(resIslandLevel)
       })
     )

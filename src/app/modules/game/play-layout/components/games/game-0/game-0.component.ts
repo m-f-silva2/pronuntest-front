@@ -29,7 +29,7 @@ export class Game0Component {
   @ViewChild('audio') audio: ElementRef<HTMLAudioElement> | undefined;
 
   
-  constructor(private _gameService: GameService, private router: Router){
+  constructor(public _gameService: GameService, private router: Router){
     this.dataGames = this._gameService.dataGames
   
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
