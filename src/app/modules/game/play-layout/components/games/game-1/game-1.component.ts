@@ -28,7 +28,7 @@ export class Game1Component {
     this.sections.push({
       title: 'VAMOS A PRONUNCIAR SONIDOS DE LA PALABRA "'+this._gameService.currentGame.phoneme+'"',
       subtitle: undefined,
-      image: 'string',
+      resource: '',
       next: '1',
       previous: undefined
     })

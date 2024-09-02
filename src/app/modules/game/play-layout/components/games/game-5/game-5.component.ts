@@ -16,7 +16,7 @@ export class Game5Component {
   sections = [{
     title: 'MUEVE EL OBJETO CORRECTO',
     subtitle: 'Mueve el objeto de acuerdo al sonido escuchado',
-    image: 'string',
+    resource: '',
     next: '1',
     previous: undefined
   }]
