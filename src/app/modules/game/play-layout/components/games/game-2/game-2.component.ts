@@ -17,7 +17,7 @@ export class Game2Component {
   sections = [{
     title: 'EXHALAR AIRE POR LA BOCA',
     subtitle: 'Expulsa el aire por la boca para que el barco llegue a la meta',
-    image: 'string',
+    resource: '/assets/video/explosion.mp4',
     next: '1',
     previous: undefined
   }]
@@ -46,10 +46,12 @@ export class Game2Component {
     this.section += direction
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.startRecording()
-    }, 2000);
+  handleRecording() {
+    
+      if(this.section == 1){
+        this.startRecording()
+      }
+    
   }
   
   async startRecording() {

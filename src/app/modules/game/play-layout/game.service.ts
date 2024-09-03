@@ -155,7 +155,7 @@ export class GameService {
             }).subscribe(res => {
               this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
               this.structure = newStructure
-              this._islandLevels.next([res.res, ...this._islandLevels.getValue()!])
+              this._islandLevels.next([res.res, ...this._islandLevels?.getValue()??[]])
 
             })
           } else {
@@ -321,7 +321,7 @@ export class GameService {
             sum_act_id: aux_sum_act_id!,
           })
         } else {
-          return of({ isError: false, res: resIslandLevel })
+          return of({ isError: false, res: resIslandLevel.res })
         }
       }),
 
@@ -329,9 +329,12 @@ export class GameService {
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
 
-        //Niveles jugados
-        let islandLevels = resIslandLevel.res
-        this._islandLevels.next(islandLevels ?? [])
+          //Niveles jugados
+          const islandLevels = Array.isArray(resIslandLevel.res)
+          ? resIslandLevel.res
+          : [resIslandLevel.res].flat();
+          this._islandLevels.next(islandLevels)
+        
 
         //Posición actual
         this.currentGame.posGame = (gamePos - 1)

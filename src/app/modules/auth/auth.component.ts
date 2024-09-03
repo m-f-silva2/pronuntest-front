@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
   constructor(private readonly svgIconRegistry: SvgIconRegistryService) {
     // Registra tus iconos SVG aquí
     this.svgIconRegistry.addSvg('my-icon', 'assets/icons/bell.svg');
+
   }
 
   ngOnInit(): void {}

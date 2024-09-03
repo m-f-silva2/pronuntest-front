@@ -16,7 +16,7 @@ export class Game5Component {
   sections = [{
     title: 'MUEVE EL OBJETO CORRECTO',
     subtitle: 'Mueve el objeto de acuerdo al sonido escuchado',
-    image: 'string',
+    resource: '',
     next: '1',
     previous: undefined
   }]
@@ -57,7 +57,7 @@ export class Game5Component {
   // defined for when drop element on target
   dragDrop(ev: any) {
     const data = ev.dataTransfer.getData("Text");
-    if(data === 'boxA'){
+    if(data === 'boxC'){
       ev.target.appendChild(document.getElementById(data));
       ev.stopPropagation();
       this.isCompleted = true

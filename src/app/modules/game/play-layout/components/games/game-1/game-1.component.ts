@@ -26,9 +26,9 @@ export class Game1Component {
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA PALABRA "'+this._gameService.currentGame.phoneme+'"',
+      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA "'+this._gameService.currentGame.phoneme+'"',
       subtitle: undefined,
-      image: 'string',
+      resource: '',
       next: '1',
       previous: undefined
     })

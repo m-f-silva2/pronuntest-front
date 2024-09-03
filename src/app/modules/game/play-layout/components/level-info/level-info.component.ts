@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './level-info.component.css'
 })
 export class LevelInfoComponent {
-  @Input() data?: {title?: string, subtitle?: string, image?: string, next?: string, previous?: string }
+  @Input() data?: {title?: string, subtitle?: string, resource?: string, next?: string, previous?: string }
   @Output() btnsEvent = new EventEmitter<'endNext'|'previous'|'firstPrevious'|'next'>();
 
   constructor(){}
