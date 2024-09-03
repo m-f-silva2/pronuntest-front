@@ -46,12 +46,12 @@ export class Game2Component {
     this.section += direction
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
+  handleRecording() {
+    
       if(this.section == 1){
         this.startRecording()
       }
-    }, 2000);
+    
   }
   
   async startRecording() {

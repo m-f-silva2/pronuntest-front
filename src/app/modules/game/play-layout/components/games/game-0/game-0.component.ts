@@ -16,24 +16,32 @@ import { IDataGame, GameService } from '../../../game.service';
 export class Game0Component {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  sections = [{
-    title: 'VAMOS A ESCUCHAR SONIDOS DE LA PALABRA POLLO',
-    subtitle: '',//'El sonido de pa es igual cuando escuchamos reventar un globo',
-    image: 'string',
-    next: '1',
-    previous: undefined
-  }]
+  sections: any[] = []
+
   dataGames: IDataGame
   section = 0
   isCompleted = false
   @ViewChild('audio') audio: ElementRef<HTMLAudioElement> | undefined;
-
+  phonemeSrc = ''
   
   constructor(public _gameService: GameService, private router: Router){
     this.dataGames = this._gameService.dataGames
   
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity= res
+    })
+
+
+    this.phonemeSrc = '/assets/audios/fonema_'+this._gameService.currentGame.phoneme+'.mp3'
+
+
+
+    this.sections.push({
+      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA "'+this._gameService.currentGame.phoneme+'"',
+      subtitle: undefined,
+      resource: '',
+      next: '1',
+      previous: undefined
     })
   }
   

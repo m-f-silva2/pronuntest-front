@@ -57,7 +57,7 @@ export class Game5Component {
   // defined for when drop element on target
   dragDrop(ev: any) {
     const data = ev.dataTransfer.getData("Text");
-    if(data === 'boxA'){
+    if(data === 'boxC'){
       ev.target.appendChild(document.getElementById(data));
       ev.stopPropagation();
       this.isCompleted = true

@@ -155,7 +155,6 @@ export class GameService {
             }).subscribe(res => {
               this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
               this.structure = newStructure
-              console.log('>> >>  res.res, ...this._islandLevels:', res.res, this._islandLevels.getValue());
               this._islandLevels.next([res.res, ...this._islandLevels?.getValue()??[]])
 
             })
@@ -322,7 +321,7 @@ export class GameService {
             sum_act_id: aux_sum_act_id!,
           })
         } else {
-          return of({ isError: false, res: resIslandLevel })
+          return of({ isError: false, res: resIslandLevel.res })
         }
       }),
 

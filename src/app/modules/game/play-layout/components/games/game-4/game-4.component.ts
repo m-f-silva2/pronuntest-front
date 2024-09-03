@@ -34,6 +34,13 @@ export class Game4Component {
     /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity= res
     }) */
+      this.sections = [{
+        title: 'INFLAR GLOBO',
+        subtitle: 'Exhala aire por la boca para inflar el globo',
+        resource: '/assets/video/explosion.mp4',
+        next: '1',
+        previous: undefined
+      }]
   }
   btnsNavegation(typeDirection: 'endNext'|'firstPrevious'|'previous'|'next') {
     const direction = (typeDirection === 'endNext' || typeDirection === 'next')? 1:-1
