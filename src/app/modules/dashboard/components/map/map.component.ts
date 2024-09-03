@@ -47,25 +47,30 @@ export class MapComponent implements OnInit{
   ngOnInit(): void {
     if(this.center == undefined){
       this.center = this.data.points;
+      
+      console.log("pont",this.center);
     }
     this.renderMap();
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
-      const current: any[] = changes['data'].currentValue.points;
+      const current: [number, number][] = changes['data'].currentValue.points;
 
-    if (Array.isArray(current)) {
-      current.map((coord: any) => {
-        console.log("2", current);
-        // Aquí puedes realizar otras acciones con coord
-        // Por ejemplo, si coord es un array de [lat, lng], podrías hacer lo siguiente:
-        // const [lat, lng] = coord;
-        // console.log(`Latitud: ${lat}, Longitud: ${lng}`);
-      });
-    } else {
-      console.error('Data is not an array:', current);
-    }
+      if (Array.isArray(current)) {
+        this.center = current;
+        current.map((coord: any) => {
+          const [lat, lng] = coord;
+          //console.log("2", current);
+          //this.center.push([lng, lat]);
+          // Aquí puedes realizar otras acciones con coord
+          // Por ejemplo, si coord es un array de [lat, lng], podrías hacer lo siguiente:
+          // const [lat, lng] = coord;
+          // console.log(`Latitud: ${lat}, Longitud: ${lng}`);
+        });
+      } else {
+        console.error('Data is not an array:', current);
+      }
       this.updateMap();
     }
   }
@@ -90,10 +95,8 @@ export class MapComponent implements OnInit{
       source: new OSM(),
     });
 
-    this.center.map((coord) =>{
-      console.log("coord",coord);
-    })
-  console.log(">>>", this.center)
+    
+    console.log(">>>", this.center)
     this.vector = new VectorLayer({
       source: new Cluster({
         distance: 4,
@@ -124,7 +127,7 @@ export class MapComponent implements OnInit{
 
   updateMap() {
       if (this.map && this.vectorLayer) {
-        let updatedLayer = new VectorLayer({
+        /*let updatedLayer = new VectorLayer({
           source: new Cluster({
             distance: 10,
             source: new VectorSource({
@@ -140,12 +143,13 @@ export class MapComponent implements OnInit{
           style: this.styleFunction,
         });
 
-          // Actualiza las capas en el mapa
+        // Actualiza las capas en el mapa
         let layers = this.map.getLayers().getArray();
         layers[1] = updatedLayer;
-        this.map.render();
+        this.map.render();*/
       } else {
-        this.renderMap(); // Render map initially if not already done
+        
+        //this.renderMap(); // Render map initially if not already done
       }
   }
 
