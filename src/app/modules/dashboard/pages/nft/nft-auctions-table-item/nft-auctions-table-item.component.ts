@@ -20,9 +20,9 @@ export class NftAuctionsTableItemComponent implements OnInit {
   ngOnInit(): void {}
 
   getImage(): string {
-    return this.auction.users_image === undefined ? 'assets/icons/heroicons/outline/users.svg' : (this.auction.users_image === null ? 'assets/icons/heroicons/outline/users.svg' : this.auction.users_image);
+    return this.auction.image === undefined ? 'assets/icons/heroicons/outline/users.svg' : (this.auction.image === null ? 'assets/icons/heroicons/outline/users.svg' : this.auction.image);
   }
   getGenderText(): string {
-    return this.auction.users_gender === 'm' ? 'Masculino' : (this.auction.users_gender === 'f' ? 'Femenino' : '');
+    return this.auction.gender === 'm' ? 'Masculino' : (this.auction.gender === 'f' ? 'Femenino' : '');
   }
 }

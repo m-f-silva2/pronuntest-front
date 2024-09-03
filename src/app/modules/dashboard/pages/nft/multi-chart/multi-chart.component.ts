@@ -34,7 +34,7 @@ export class MultiChartComponent implements OnInit, OnDestroy {
       this.data.chart.tooltip = {
         theme: this.themeService.theme().mode,
       };
-      this.data.chart.colors = [primaryColor];
+      this.data.chart.colors = [this.themeService.theme().color];
       /* this.data.chart.stroke!.colors = [primaryColor]; */
       /* this.data.chart.xaxis!.crosshairs!.stroke!.color = primaryColor; */
     });
@@ -60,7 +60,7 @@ export class MultiChartComponent implements OnInit, OnDestroy {
     this.data.chart.tooltip = {
       theme: this.themeService.theme().mode,
     };
-    this.data.chart.colors = [primaryColor];
+    this.data.chart.colors = [this.themeService.theme().color];
 
   }
 

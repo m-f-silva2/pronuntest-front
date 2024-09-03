@@ -1,1 +1,16 @@
-<div id="ol-map" name="ol-map" class="map-container"></div>
+<div class="flex-col rounded-lg bg-background px-8 py-8 sm:flex-row h-full">
+    <!-- Card Header -->
+    <div class="mb-2 flex items-center justify-between">
+      <div class="flex-col">
+        <div class="flex items-center space-x-1 gap-4">
+          <span class="text-lg font-semibold text-muted-foreground">{{title}}</span>
+          
+        </div>
+        <!-- <span class="text-sm text-muted-foreground">Subtitle</span> -->
+      </div>
+      <div class="cursor-pointer rounded-sm bg-card px-1 py-1 text-center text-xs text-muted-foreground hover:bg-muted hover:text-foreground">
+        <svg-icon src="assets/icons/heroicons/outline/dots-horizontal.svg" [svgClass]="'h-3 w-3'"></svg-icon>
+      </div>
+    </div>
+    <div id="ol-map" name="ol-map" class="map-container"></div>
+</div>

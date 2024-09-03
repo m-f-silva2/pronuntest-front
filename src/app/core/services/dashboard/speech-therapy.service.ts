@@ -20,7 +20,7 @@ export class SpeechTherapyService {
   
   dataGraphic(graphic: string): Observable<any> {
     const url = `${this.apiUrl}/${graphic}`;
-    console.log(url);
+    
     return this._httpClient.get<any>(url)
       .pipe(
         catchError(this.handleError) // Manejo de errores opcional

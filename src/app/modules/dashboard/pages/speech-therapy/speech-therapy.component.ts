@@ -366,8 +366,10 @@ export class SpeechTherapyComponent {
 
   updateDataGraphic(graphic: string, title: string, data: any, categories: any){
     //this.completF.chart.series![0].name = 'Fonemas';
-    //console.log("graphic",graphic);
-    if(graphic == 'g-1'){
+    
+    if(data == undefined){
+      console.log("data",data)
+    }else if(graphic == 'g-1'){
       this.completF.title = title;
       this.completF.chart.series![0].data = data;
       this.completF.chart.xaxis!.categories = categories;
@@ -380,6 +382,7 @@ export class SpeechTherapyComponent {
       this.precisionPhonemeVS.chart.series![1].data = data[1];
       this.precisionPhonemeVS.chart.xaxis!.categories = categories;
       this.precisionPhonemeVS = {...this.precisionPhonemeVS};
+      //console.log(this.precisionPhonemeVS);
     }else if(graphic == 'g-3'){
       this.precisionUserVS.title = title;
       this.precisionUserVS.chart.series![0].name = "Mejor";
@@ -390,16 +393,25 @@ export class SpeechTherapyComponent {
       this.precisionUserVS = {...this.precisionUserVS};
     }else if(graphic == 'g-4'){
       console.log("intentos", data, categories);
-    }else if(graphic == 'g-5'){
-      console.log("tabla", data, categories);
+    }else if(graphic == 't-1'){
+      //console.log("tabla", data);
+      this.table = data;
     }else if(graphic == 'm-1'){
-      console.log("mapa", data, categories);
-      //this.points
+      data.forEach((data: { lng: any; lat: any; }) => {
+        if (data.lat !== 0 && data.lng !== 0) {
+          this.points.points.push([data.lng, data.lat]);
+        }
+      });
+      console.log("spee",this.points)
     }
   }
-
   
-  organizeData(data: DataItem[], keyField: keyof DataItem): OrganizedData {
+  organizeData(data: DataItem[], keyField: keyof DataItem): OrganizedData  | undefined {
+    // Verifica que el array de datos no esté vacío
+    if (!Array.isArray(data) || data.length === 0) {
+      return undefined;
+    }
+
     return data.reduce((acc: OrganizedData, item: DataItem) => {
       const key = item[keyField] as string;
       
@@ -410,8 +422,7 @@ export class SpeechTherapyComponent {
           users_id: [],
           best: [],
           worst: [],
-          intents: [],
-          type_game: []
+          intents: []
         };
       }
       
@@ -421,7 +432,6 @@ export class SpeechTherapyComponent {
       acc[key].best.push(item.best);
       acc[key].worst.push(item.worst);
       acc[key].intents.push(item.intents);
-      acc[key].type_game.push(item.type_game);
       
       return acc;
     }, {});
@@ -430,36 +440,38 @@ export class SpeechTherapyComponent {
   getDataGraphic() {
     /*GRAFICA 1 */
     this._speechTherapyService.dataGraphics({ graphic: 'g-1', valueToSearch: null }).subscribe({
-      next: (res: {isError: boolean, res: { phoneme: string[], num_users_completed: number[] }}) => {
+      next: (res: {isError: boolean, res: { phoneme: string[], num_completed: number[] }}) => {
         if(res.isError) return
         
         var title = "Fonemas completados";
-        this.updateDataGraphic('g-1', title, res.res.num_users_completed, res.res.phoneme)
+        this.updateDataGraphic('g-1', title, res.res.num_completed, res.res.phoneme)
       },
       error(err) {
         console.error('>> >>  :', err);
       },
     });
-    /*setTimeout(() => {
-      this.updateDataGraphic('g-2', [1], ["uno"]);
-    }, 2000);*/
+    
 
     /*GRAFICAS 2 Y 3 */
     this._speechTherapyService.dataGraphics({ graphic: 'g-2', valueToSearch: null }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
         if(res.isError) return
-        
         // Organize by phoneme
         const organizedDataG2 = this.organizeData(res.res, 'phoneme');
-        const keys = Object.keys(organizedDataG2);
-        const title1 = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
-        this.updateDataGraphic('g-2', title1, [organizedDataG2[keys[0]].best, organizedDataG2[keys[0]].worst], organizedDataG2[keys[0]].users_name);
+        if(organizedDataG2){
+          const keys = Object.keys(organizedDataG2);
+          const title1 = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
+          this.updateDataGraphic('g-2', title1, [organizedDataG2[keys[0]].best, organizedDataG2[keys[0]].worst], organizedDataG2[keys[0]].users_name);
+        }
+        
         
         // Organize by users_name
         const organizedDataG3 = this.organizeData(res.res, 'users_name');
-        const keysG3 = Object.keys(organizedDataG3);
-        const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].users_name[0]} por fonemas: Mejor intento vs peor intento`;
-        this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst], organizedDataG3[keysG3[0]].phoneme);
+        if(organizedDataG3){
+          const keysG3 = Object.keys(organizedDataG3);
+          const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].users_name[0]} por fonemas: Mejor intento vs peor intento`;
+          this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst], organizedDataG3[keysG3[0]].phoneme);
+        }
       },
       error(err) {
         console.error('>> >>  :', err);
@@ -470,9 +482,8 @@ export class SpeechTherapyComponent {
       next: (res: {isError: boolean, res: []}) => {
         if(res.isError) return
         
-        //console.log("res",res.res);
         // Organize by phoneme
-        const organizedDataByPhoneme:OrganizedData = this.organizeData(res.res, 'phoneme');
+        const organizedDataByPhoneme:OrganizedData = this.organizeData(res.res, 'phoneme') || {};
         //console.log("phonme",organizedDataByPhoneme['fonema pa'].type_game);
         //const organizedDataG4 = {...organizedDataByPhoneme}
         const organizedDataG4 = Object.keys(organizedDataByPhoneme).reduce((acc: any, key: string) => {
@@ -482,6 +493,7 @@ export class SpeechTherapyComponent {
         }, {});
         const keys = Object.keys(organizedDataG4);
         const title = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
+        
         //console.log("organized",organizedDataG4);
         //this.updateDataGraphic('g-4', title, [organizedDataG4[keys[0]].best, organizedDataG4[keys[0]].worst], organizedDataG4[keys[0]].users_name);
       },
@@ -495,8 +507,9 @@ export class SpeechTherapyComponent {
       next: (res: {isError: boolean, res: []}) => {
         if(res.isError) return
         
-        this.table = res.res;
+        //this.table = res.res;
         const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
+        this.updateDataGraphic('t-1', title, res.res, '');
       },
       error(err) {
         console.error('>> >>  :', err);
@@ -504,12 +517,15 @@ export class SpeechTherapyComponent {
     });
 
     /*MAPA 1*/
-    this._speechTherapyService.dataGraphics({ graphic: 'm-1', valueToSearch: null }).subscribe({
+    this._speechTherapyService.dataGraphics({ graphic: 'g-6', valueToSearch: null }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
         if(res.isError) return
         
         //this.table = res.res;
+        //console.log("res", res.res);
         const title = `Mapa`;
+        this.updateDataGraphic('m-1', title, res.res, '');
+
       },
       error(err) {
         console.error('>> >>  :', err);

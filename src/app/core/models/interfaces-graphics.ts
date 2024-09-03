@@ -6,7 +6,6 @@ export interface OrganizedData {
       best: number[];
       worst: number[];
       intents: number[];
-      type_game: string[];
     };
   }
   
@@ -21,15 +20,16 @@ export interface OrganizedData {
   }
   
   export interface Table {
-    users_name: string;
-    users_other: string;
-    users_image: string;
-    users_avatar: string;
+    user_name: string;
+    role_name: string;
+    other: string;
+    image: string;
+    avatar: string;
     users_id: number;
-    users_identification: number;
-    users_gender: string;
-    users_age: number;
-    users_condition: string;
-    users_date_admission: string;
-    users_progress_now: string;
+    identification: number;
+    gender: string;
+    age: number;
+    condition: string;
+    date_admission: string;
+    progress_now: string;
   }
