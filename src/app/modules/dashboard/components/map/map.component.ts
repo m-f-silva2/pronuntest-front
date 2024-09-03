@@ -50,6 +50,7 @@ export class MapComponent implements OnInit{
       
       console.log("pont",this.center);
     }
+    this.generateRandomPoints(this.center,10);
     this.renderMap();
   }
 
