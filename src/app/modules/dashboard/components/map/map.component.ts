@@ -97,7 +97,7 @@ export class MapComponent implements OnInit{
     });
 
     
-    console.log(">>>", this.center)
+    //console.log(">>>", this.center)
     this.vector = new VectorLayer({
       source: new Cluster({
         distance: 4,

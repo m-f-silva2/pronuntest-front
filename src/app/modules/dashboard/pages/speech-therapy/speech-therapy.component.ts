@@ -12,6 +12,7 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
 import { DataItem, OrganizedData, Table } from 'src/app/core/models/interfaces-graphics';
 import { CommonModule } from '@angular/common';
 import { MapComponent } from '../../components/map/map.component';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-speech-therapy',
@@ -321,9 +322,9 @@ export class SpeechTherapyComponent {
       colors: ['#FFFFFF'],
     }
   }
+  private token;
 
-
-  constructor(private _speechTherapyService: SpeechTherapyService) {
+  constructor(private _authService: AuthService, private _speechTherapyService: SpeechTherapyService) {
     this.nft = [
       {
         id: 34356771,
@@ -351,12 +352,11 @@ export class SpeechTherapyComponent {
         image: './assets/images/img-03.jpg',
       },
     ];
-    
-
+    this.token = this._authService.getToken();
+    if (!this.token) return
   }
   
   ngOnInit(): void {
-    
     this.getDataGraphic();
   }
 
@@ -374,6 +374,7 @@ export class SpeechTherapyComponent {
       this.completF.chart.series![0].data = data;
       this.completF.chart.xaxis!.categories = categories;
       this.completF = {...this.completF};
+      //console.log('>>g-1', this.completF);
     }else if(graphic == 'g-2'){
       this.precisionPhonemeVS.title = title;
       this.precisionPhonemeVS.chart.series![0].name = "Mejor";
@@ -382,7 +383,7 @@ export class SpeechTherapyComponent {
       this.precisionPhonemeVS.chart.series![1].data = data[1];
       this.precisionPhonemeVS.chart.xaxis!.categories = categories;
       this.precisionPhonemeVS = {...this.precisionPhonemeVS};
-      //console.log(this.precisionPhonemeVS);
+      //console.log("--g-2",this.precisionPhonemeVS);
     }else if(graphic == 'g-3'){
       this.precisionUserVS.title = title;
       this.precisionUserVS.chart.series![0].name = "Mejor";
@@ -391,10 +392,12 @@ export class SpeechTherapyComponent {
       this.precisionUserVS.chart.series![1].data = data[1];
       this.precisionUserVS.chart.xaxis!.categories = categories;
       this.precisionUserVS = {...this.precisionUserVS};
+      //console.log('>>', this.precisionUserVS);
     }else if(graphic == 'g-4'){
-      console.log("intentos", data, categories);
+      //console.log("intentos", data, categories);
     }else if(graphic == 't-1'){
       //console.log("tabla", data);
+      this.table = [];
       this.table = data;
     }else if(graphic == 'm-1'){
       data.forEach((data: { lng: any; lat: any; }) => {
@@ -402,7 +405,7 @@ export class SpeechTherapyComponent {
           this.points.points.push([data.lng, data.lat]);
         }
       });
-      console.log("spee",this.points)
+      //console.log("spee",this.points)
     }
   }
   
@@ -418,7 +421,7 @@ export class SpeechTherapyComponent {
       if (!acc[key]) {
         acc[key] = {
           phoneme: [],
-          users_name: [],
+          user_name: [],
           users_id: [],
           best: [],
           worst: [],
@@ -427,7 +430,7 @@ export class SpeechTherapyComponent {
       }
       
       acc[key].phoneme.push(item.phoneme);
-      acc[key].users_name.push(item.users_name);
+      acc[key].user_name.push(item.user_name);
       acc[key].users_id.push(item.users_id);
       acc[key].best.push(item.best);
       acc[key].worst.push(item.worst);
@@ -439,9 +442,9 @@ export class SpeechTherapyComponent {
 
   getDataGraphic() {
     /*GRAFICA 1 */
-    this._speechTherapyService.dataGraphics({ graphic: 'g-1', valueToSearch: null }).subscribe({
+    this._speechTherapyService.dataGraphics({ graphic: 'g-1', valueToSearch: this.token }).subscribe({
       next: (res: {isError: boolean, res: { phoneme: string[], num_completed: number[] }}) => {
-        if(res.isError) return
+        if(res.isError || res.res == undefined) return
         
         var title = "Fonemas completados";
         this.updateDataGraphic('g-1', title, res.res.num_completed, res.res.phoneme)
@@ -453,23 +456,28 @@ export class SpeechTherapyComponent {
     
 
     /*GRAFICAS 2 Y 3 */
-    this._speechTherapyService.dataGraphics({ graphic: 'g-2', valueToSearch: null }).subscribe({
+    this._speechTherapyService.dataGraphics({ graphic: 'g-2', valueToSearch: this.token }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
-        if(res.isError) return
+        if(res.isError || res.res == undefined) return
         // Organize by phoneme
         const organizedDataG2 = this.organizeData(res.res, 'phoneme');
         if(organizedDataG2){
           const keys = Object.keys(organizedDataG2);
+          //console.log(keys[0],"res",res.res);
           const title1 = `Exactitud ${keys[0]} por paciente: Mejor vs peor`;
-          this.updateDataGraphic('g-2', title1, [organizedDataG2[keys[0]].best, organizedDataG2[keys[0]].worst], organizedDataG2[keys[0]].users_name);
+          this.updateDataGraphic('g-2', title1, [organizedDataG2[keys[0]].best, organizedDataG2[keys[0]].worst], organizedDataG2[keys[0]].user_name);
         }
         
         
         // Organize by users_name
-        const organizedDataG3 = this.organizeData(res.res, 'users_name');
+        const organizedDataG3 = this.organizeData(res.res, 'user_name');
+        //console.log('>>g-3', organizedDataG3);
         if(organizedDataG3){
+          
           const keysG3 = Object.keys(organizedDataG3);
-          const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].users_name[0]} por fonemas: Mejor intento vs peor intento`;
+          //console.log(keysG3[0],"res",[organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst]);
+          
+          const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].user_name[0]} por fonemas: Mejor intento vs peor intento`;
           this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst], organizedDataG3[keysG3[0]].phoneme);
         }
       },
@@ -478,9 +486,9 @@ export class SpeechTherapyComponent {
       },
     });
     /*GRAFICA 4 */
-    this._speechTherapyService.dataGraphics({ graphic: 'g-4', valueToSearch: null }).subscribe({
+    this._speechTherapyService.dataGraphics({ graphic: 'g-4', valueToSearch: this.token }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
-        if(res.isError) return
+        if(res.isError || res.res == undefined) return
         
         // Organize by phoneme
         const organizedDataByPhoneme:OrganizedData = this.organizeData(res.res, 'phoneme') || {};
@@ -503,9 +511,10 @@ export class SpeechTherapyComponent {
     });
 
     /*TABLA 1*/
-    this._speechTherapyService.dataGraphics({ graphic: 'g-5', valueToSearch: null }).subscribe({
+    const token = this._authService.getToken();
+    this._speechTherapyService.dataGraphics({ graphic: 'g-5', valueToSearch: this.token }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
-        if(res.isError) return
+        if(res.isError || res.res == undefined) return
         
         //this.table = res.res;
         const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
@@ -517,9 +526,9 @@ export class SpeechTherapyComponent {
     });
 
     /*MAPA 1*/
-    this._speechTherapyService.dataGraphics({ graphic: 'g-6', valueToSearch: null }).subscribe({
+    this._speechTherapyService.dataGraphics({ graphic: 'g-6', valueToSearch: this.token }).subscribe({
       next: (res: {isError: boolean, res: []}) => {
-        if(res.isError) return
+        if(res.isError || res.res == undefined) return
         
         //this.table = res.res;
         //console.log("res", res.res);
@@ -531,7 +540,6 @@ export class SpeechTherapyComponent {
         console.error('>> >>  :', err);
       },
     });
-
   }
 
   /*async ngOnInit() {
