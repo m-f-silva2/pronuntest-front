@@ -184,9 +184,20 @@ export class Game1Component {
     const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
     
 
-    this._gameService.sendAudio(blobBody).subscribe({
+    this._gameService.sendAudio(blobBody, this._gameService.structure?.phoneme!).subscribe({
       next: (res: any) => {
-        console.log('>> >>  audio res:', res);
+        const islandLevel = this._gameService._islandLevels.getValue()?.find(res => res.isl_lev_str_id === this._gameService.structure?.isl_lev_str_id)
+        if(!islandLevel) throw new Error('')
+        islandLevel.best_accuracy_ia  = res.score
+        islandLevel.worst_accuracy_ia = res.score
+        this._gameService.updateIslandLevel(islandLevel).subscribe({
+          next: (resScoreUpdate: any) => {
+            console.error('>> >>  scoreUpdate error:', resScoreUpdate);
+          },
+          error: (error: any) => {
+            console.error('>> >>  scoreUpdate error:', error);
+          }
+        })
       },
       error: (error: any) => {
         console.error('>> >>  audio error:', error);
