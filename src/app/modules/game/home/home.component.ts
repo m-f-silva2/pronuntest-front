@@ -9,7 +9,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  phonemes = ['p']
+  phonemes = [
+    {name: 'pa', label:'Jugar', hideLock: true, link: '/games/island'},
+    {name: 'r', label:'', hideLock: false, link: '/games'},
+  ]
   constructor(){
   }
 

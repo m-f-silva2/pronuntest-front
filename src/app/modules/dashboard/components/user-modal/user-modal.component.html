@@ -1,0 +1,31 @@
+<!-- Botón para abrir la modal -->
+<button (click)="openModal()" class="open-modal-btn">Abrir Modal</button>
+
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-content">
+    <span (click)="closeModal()" class="close-btn">&times;</span>
+    <h2>Lista de Usuarios</h2>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button (click)="editUser(user)">Editar</button>
+            <button (click)="deleteUser(user)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

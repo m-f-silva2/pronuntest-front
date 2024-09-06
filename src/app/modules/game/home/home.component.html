@@ -5,29 +5,29 @@
     </div>
     <div class="relative flex justify-center flex-col items-center ">
         <div
-            class="-mb-10 bg-yellow-600 h-fit z-10 relative w-fit p-4 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2">
+            class="-mb-10 bg-blue-700 h-fit z-10 relative w-fit p-4 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2">
             SELECCIONA EL FONEMA
         </div>
 
         <div
-            class="border-blue-800 border-[1.4rem] bg-orange-950 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 pt-20 flex-wrap">
+            class="border-blue-800 border-[1rem] backdrop-blur-sm bg-white/35 h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 pt-20 flex-wrap">
 
             <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                <p class="font-bold text-xl text-center mb-2">Vocales</p>
+                <p class="font-bold text-3xl text-center mb-2">Vocales</p>
                 <a
-                    class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
+                    class="-mb-8 block bg-green-600 h-fit z-10 text-2xl relative w-fit px-6 py-2 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
                     href="https://itch.io/embed-upload/11194872?color=333333">
                     Jugar
                 </a>
             </div>
             @for (item of phonemes; track $index) {
                 <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                    <p class="font-bold text-xl text-center mb-2">{{item}}</p>
+                    <p class="font-bold text-3xl text-center mb-2">{{item.name}}</p>
                     <button
-                        class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
-                        (click)="selectPhoneme(item)"
-                        routerLink="/games/island">
-                        Jugar
+                        class="-mb-8 block bg-green-600 h-fit z-10 text-2xl relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
+                        [routerLink]="item.link">
+                        <img [hidden]="item.hideLock" src="assets/images/padlock.svg" alt="">
+                        {{item.label}}
                     </button>
                 </div>
             }

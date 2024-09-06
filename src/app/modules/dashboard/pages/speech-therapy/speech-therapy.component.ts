@@ -475,10 +475,12 @@ export class SpeechTherapyComponent {
         if(organizedDataG3){
           
           const keysG3 = Object.keys(organizedDataG3);
+          const lastKey = keysG3.length-1;
+          //console.log(keysG3.length);
           //console.log(keysG3[0],"res",[organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst]);
           
-          const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[0]].user_name[0]} por fonemas: Mejor intento vs peor intento`;
-          this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[0]].best, organizedDataG3[keysG3[0]].worst], organizedDataG3[keysG3[0]].phoneme);
+          const title2 = `Exactitud del paciente ${organizedDataG3[keysG3[lastKey]].user_name[0]} por fonemas: Mejor intento vs peor intento`;
+          this.updateDataGraphic('g-3', title2, [organizedDataG3[keysG3[lastKey]].best, organizedDataG3[keysG3[lastKey]].worst], organizedDataG3[keysG3[lastKey]].phoneme);
         }
       },
       error(err) {
