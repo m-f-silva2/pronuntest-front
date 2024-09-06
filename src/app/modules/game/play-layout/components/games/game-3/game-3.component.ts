@@ -15,7 +15,7 @@ export class Game3Component {
   section = 0
   sections = [{
     title: 'RECORDAR SECUENCIA DE SONIDOS',
-    subtitle: 'Según la secuencia de palabras escuchadas intenta recrearla con el tablero!',
+    subtitle: 'Según la secuencia de palabras escuchadas en el audio intentar recrearla con el tablero a continuación!',
     resource: '',
     next: '1',
     previous: undefined

@@ -15,8 +15,8 @@ import { GameService } from '../../../game.service';
 export class Game2Component {
   sumaryActivity: SumaryActivities | undefined
   sections = [{
-    title: 'EXHALAR AIRE POR LA BOCA',
-    subtitle: 'Expulsa el aire por la boca para que el barco llegue a la meta',
+    title: 'AHORA VAMOS A REPASAR EL SONIDO DEL FONEMA P',
+    subtitle: '',
     resource: '/assets/video/explosion.mp4',
     next: '1',
     previous: undefined
