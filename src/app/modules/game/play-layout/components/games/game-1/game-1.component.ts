@@ -26,7 +26,7 @@ export class Game1Component {
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA "'+this._gameService.currentGame.phoneme+'"',
+      title: 'AHORA VAMOS A PRONUNCIAR SONIDOS RELACIONADOS CON EL FONEMA "'+this._gameService.currentGame.phoneme+'", POR EJEMPLO "'+this._gameService.structure?.phoneme+'"',
       subtitle: undefined,
       resource: '',
       next: '1',
@@ -100,7 +100,6 @@ export class Game1Component {
         }
       };
 
-
       // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
     } else {
       console.error('No se pudo obtener el Blob WAV');
@@ -129,7 +128,6 @@ export class Game1Component {
     this.mediaRecorder.start();
     this.isRecording = true;
     this.setArc({ target: { value: 0, min: 0, max: 100 } })
-
 
     setTimeout(() => {
       this.stopRecording()
