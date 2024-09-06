@@ -267,7 +267,8 @@ export class GameService {
     return structuresObservers.pipe(
       concatMap((structuresRes: { isError: boolean, res: LevelStructure[] }) => {
         this.structures = structuresRes.res
-        this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme === phoneme)
+        
+        this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme_type === phoneme)
 
         //Si no existe el resumen local traerlo de la nube
         if (!this._sumaryActivity.getValue()) {
