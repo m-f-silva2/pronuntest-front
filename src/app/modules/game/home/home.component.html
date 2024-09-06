@@ -24,7 +24,7 @@
                 <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
                     <p class="font-bold text-3xl text-center mb-2">{{item.name}}</p>
                     <button
-                        class="-mb-8 block bg-green-600 h-fit z-10 text-2xl relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
+                        [class]="item.styleClass"
                         [routerLink]="item.link">
                         <img [hidden]="item.hideLock" src="assets/images/padlock.svg" alt="">
                         {{item.label}}
