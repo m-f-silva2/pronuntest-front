@@ -25,6 +25,7 @@
                     <p class="font-bold text-3xl text-center mb-2">{{item.name}}</p>
                     <button
                         [class]="item.styleClass"
+                        (click)="selectPhoneme(item.name)"
                         [routerLink]="item.link">
                         <img [hidden]="item.hideLock" src="assets/images/padlock.svg" alt="">
                         {{item.label}}
