@@ -234,6 +234,14 @@ export class GameService {
       })
     )
   }
+  updateIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
+    return this._httpClient.put<any>(`${this.apiUrl}/island_levels/update`, islandLevel).pipe(
+      tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
+        if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
+        //TODO
+      })
+    )
+  }
 
   getLevelByUserPhoneLevel(phoneme: string, codePosLevel: number): Observable<{ isError: boolean, res: IslandLevel }> {
     return this._httpClient.get<any>(
@@ -361,7 +369,7 @@ export class GameService {
   }
 
 
-  sendAudio(audio: ArrayBuffer): Observable<any> {
+  sendAudio(audio: ArrayBuffer, phoneme: string): Observable<any> {
     const boundary = "boundary";
     const headers = new HttpHeaders({
       "Content-Type": `multipart/form-data; boundary=${boundary}`,
@@ -369,7 +377,7 @@ export class GameService {
     });
 
     const blob = new Blob([audio], { type: 'audio/wav' });
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/a`, blob, { headers: headers }).pipe(
+    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/${phoneme}`, blob, { headers: headers }).pipe(
       tap((res: unknown) => {
         //TODO: respuesta
         console.info('>> >>  audio res 2:', res);
