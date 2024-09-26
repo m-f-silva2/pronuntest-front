@@ -36,6 +36,14 @@ export class GameService {
         levels: [
           {
             games: [
+              { gameNum: 7, sections: [{ type: 'info' }, { type: 'game' }] },  // 
+              { gameNum: 8, sections: [{ type: 'info' }, { type: 'game' }] },  //
+              { gameNum: 10, sections: [{ type: 'info' }, { type: 'game' }] }, //
+              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },  //información, juego grabar
+            ]
+          },
+          {
+            games: [
               { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar 
               { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego grabar
             ]
@@ -346,9 +354,9 @@ export class GameService {
         
 
         //Posición actual
-        this.currentGame.posGame = (gamePos - 1)
-        this.currentGame.posIsland = (island - 1)
-        this.currentGame.posLevel = (level - 1)
+        this.currentGame.posIsland = island
+        this.currentGame.posGame   = (gamePos - 1)
+        this.currentGame.posLevel  = (level - 1)
 
         //Posición actual
         let countSections = 0

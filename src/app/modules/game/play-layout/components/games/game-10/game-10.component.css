@@ -1,0 +1,27 @@
+.spinner {
+    width: 9rem;
+    height: 9rem;
+    position: relative;
+  }
+  .spinner circle {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-width: var(--stroke-width, 3);
+  }
+  .spinner .ring {
+    stroke: #000;
+    opacity: 0.1;
+  }
+  .spinner .line {
+    stroke: #0ebeff;
+    stroke-width: 3;
+    stroke-dasharray: var(--stroke-dasharray);
+    stroke-dashoffset: var(--stroke-dashoffset);
+    -webkit-animation: 943ms spinner-rotate linear infinite;
+            animation: 943ms spinner-rotate linear infinite;
+  }
+  .spinner .text {
+    font-size: 0.6rem;
+    font-weight: 300;
+    fill: rgba(0, 0, 0, 0.4);
+  }

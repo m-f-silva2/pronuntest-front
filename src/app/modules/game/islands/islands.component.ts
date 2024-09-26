@@ -14,6 +14,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 })
 export class IslandsComponent {
   btns: { state: 'block'|'unlock', island: number, level?: number }[] = [
+    { state:'unlock',island:0,level:1},{state:'block',island:0,level:2},{state:'block',island:0,level:3},{state:'block',island:0,level:4},
     { state:'unlock',island:1,level:1},{state:'block',island:1,level:2},{state:'block',island:1,level:3},{state:'block',island:1,level:4},{state:'block',island:1,level:5},
     { state:'block',island:2,level:1},{state:'block',island:2,level:2},{state:'block',island:2,level:3},{state:'block',island:2,level:4},{state:'block',island:2,level:5},
     { state:'block',island:3,level:1},{state:'block',island:3,level:2},{state:'block',island:3,level:3},{state:'block',island:3,level:4},{state:'block',island:3,level:5},

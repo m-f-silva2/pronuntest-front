@@ -12,6 +12,9 @@ import { Game4Component } from './play-layout/components/games/game-4/game-4.com
 import { Game5Component } from './play-layout/components/games/game-5/game-5.component';
 import { PlayLayoutComponent } from './play-layout/play-layout.component';
 import { HomeComponent } from './home/home.component';
+import { Game7Component } from './play-layout/components/games/game-7/game-7.component';
+import { Game8Component } from './play-layout/components/games/game-8/game-8.component';
+import { Game10Component } from './play-layout/components/games/game-10/game-10.component';
 
 const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const levelService = inject(GameService);
@@ -21,7 +24,7 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   const level = params[5]
   const gamePos  = params[7]
 
-  return levelService.getDataGame(Number(island??1), Number(level??1), Number(gamePos??1)).pipe(
+  return levelService.getDataGame(Number(island??0), Number(level??1), Number(gamePos??1)).pipe(
       catchError((error) => {
           console.error(error);
           const parentUrl = state.url.split('/').slice(0, -1).join('/');
@@ -35,6 +38,11 @@ export default [
   { path: '', component: HomeComponent },
   { path: 'island', component: IslandsComponent, resolve: {gameResolver} },
   
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game7Component, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game8Component, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: Game10Component, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game2Component, resolve: {gameResolver} }, ] },
+
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
   { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
 
