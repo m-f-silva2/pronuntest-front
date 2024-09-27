@@ -7,16 +7,26 @@
         <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-4/12
             flex flex-col gap-6 justify-evenly items-center px-16
             ">
-            <h3 class="text-center font-bold text-4xl text-red-800">VAMOS A PRONUNCIAR LA PALABRA
-                "{{_gameService.structure?.phoneme}}"</h3>
+            <h3 class="text-center font-bold text-2xl text-red-800">TOCA LAS IMAGENES PARA ESCUCHAR EL SONIDO</h3>
 
-            <div class="relative w-36 h-36 ">
-                
+            <div class="flex flex-col w-full h-full">
+                <div class="">
+                    <button class="py-2 px-4 m-2 text-white bg-blue-500 rounded " (click)="animation()"  [disabled]="blockBtn">play</button>
+                </div>
+                <div class="relative border-gray-600 border-dashed bg-cyan-300/50 border-2 w-full h-full overflow-hidden select-none">
+                    <div class="relative w-full h-full -top-4 " #containerIMG>
+                        <img (click)="handleClick(0)" class="img0 absolute -top-[15%] left-[8%]" src="assets/images/isla0/burbujas.png"  alt="" srcset="">
+                        <img (click)="handleClick(1)" class="img1 absolute -top-[30%] left-[70%]" src="assets/images/isla0/globo.png"     alt="" srcset="">
+                        <img (click)="handleClick(2)" class="img2 absolute -top-[40%] left-[30%]" src="assets/images/isla0/serpiente.png" alt="" srcset="">
+                        <img (click)="handleClick(3)" class="img3 absolute -top-[60%] left-[67%]" src="assets/images/isla0/tren.png"      alt="" srcset="">
+                        <img (click)="handleClick(4)" class="img4 absolute -top-[80%] left-[20%] animate-spin" src="assets/images/isla0/vaca.png"      alt="" srcset="">
+                    </div>
+                </div>
             </div>
 
-           
 
-            <div class="flex gap-8">
+
+            <div class="flex gap-8 mb-4">
                 <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
                     <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -33,9 +43,12 @@
                     </svg>
                 </button>
                 }
-                
+
             </div>
         </div>
     </section>
     }
 </main>
+@for (audio of audios; track $index) {
+    <audio class="hidden" [id]="'audio'+$index"  [src]="audio"></audio>
+}

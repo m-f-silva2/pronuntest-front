@@ -13,9 +13,12 @@
             <section id="html5-drag" class="move-boxes " >  
                 
                 <div class="relative">
+                    
                     <button id="play-video" class="video-play-button opacity-20 absolute -bottom-6 -z-10 select-none" >
                         <span></span>
                     </button>
+
+
                     <article (click)="handlePlay()" id="dropIt" class="z-10" (dragenter)="dragEnter($event)" (drop)="dragDrop($event)" (dragover)="dragOver($event)">
                     </article>
                 </div>
@@ -33,7 +36,7 @@
             </section>
             
 
-            <div class="flex gap-8 mt-4">
+            <div class="flex gap-8 mt-4 mb-4">
                 <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
                     <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path

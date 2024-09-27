@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, concatMap, Observable, of, tap } from 'rxjs';
-import { IslandLevel } from 'src/app/core/models/island_level';
+import { IslandLevel, IslandLevelFull } from 'src/app/core/models/island_level';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { environment } from 'src/environments/environment';
@@ -24,7 +24,7 @@ export interface IDataGame {
 export class GameService {
   _sumaryActivities = new BehaviorSubject<SumaryActivities[] | undefined>(undefined)
   _sumaryActivity = new BehaviorSubject<SumaryActivities | undefined>(undefined)
-  _islandLevels = new BehaviorSubject<IslandLevel[] | undefined>(undefined)
+  _islandLevels = new BehaviorSubject<IslandLevelFull[] | undefined>(undefined)
   apiUrl = environment.baseApiBD + '/' + environment.apimUrlModules.games;
   currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0, phoneme: '' }
   structures: LevelStructure[] = []
@@ -32,16 +32,32 @@ export class GameService {
 
   dataGames: IDataGame = {
     islands: [
-      {
+      {//Isla 0
         levels: [
           {
             games: [
               { gameNum: 7, sections: [{ type: 'info' }, { type: 'game' }] },  // 
+            ]
+          },
+          {
+            games: [
               { gameNum: 8, sections: [{ type: 'info' }, { type: 'game' }] },  //
+            ]
+          },
+          {
+            games: [
               { gameNum: 10, sections: [{ type: 'info' }, { type: 'game' }] }, //
+            ]
+          },
+          {
+            games: [
               { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },  //información, juego grabar
             ]
           },
+        ]
+      },
+      {//Isla 1
+        levels: [
           {
             games: [
               { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar 
@@ -74,11 +90,11 @@ export class GameService {
           },
         ]
       },
-      {
+      {//Isla 2
         levels: [
         ]
       },
-      {
+      {//Isla 3
         levels: [
         ]
       },
@@ -120,19 +136,19 @@ export class GameService {
     //Existe juego siguiente en este nivel?
     if (nextGameExist) {
       this.currentGame.posGame += direction
-      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${this.currentGame.posLevel + 1}/gamePos/${this.currentGame.posGame + 1}`)
+      this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${this.currentGame.posLevel + 1}/gamePos/${this.currentGame.posGame + 1}`)
       return
       //Existe nivel siguiente en esta isla?
     } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
       //Aquí finaliza el nivel si es en dirección +1
       //(Buscar si existe el siguiente nivel) Validar si ya había completado el nivel en db, sino crear
       const nextSumaryActivityDB = this._sumaryActivities.getValue()?.find(res =>
-        res.isl_lev_id === (this.currentGame.posIsland + 1) && res.isl_lev_str_id?.toString() === ((this.currentGame.posLevel + direction) + direction)?.toString()
+        res.isl_lev_id === (this.currentGame.posIsland) && res.isl_lev_str_id?.toString() === ((this.currentGame.posLevel + direction) + direction)?.toString()
       )
 
       //Si no existe en db el nivel, crearlo
       if (nextSumaryActivityDB) {
-        this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
+        this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${(this.currentGame.posLevel + direction) + direction}/gamePos/1`)
         this.currentGame.posLevel = this.currentGame.posLevel + direction
         this.currentGame.posGame = 0
         this.currentGame.progress = 0
@@ -144,12 +160,12 @@ export class GameService {
           if (value.isError) throw new Error(value.res.toString())
           const newStructure = this.structures.find(res => res.code_pos_level == ((this.currentGame.posLevel + direction) + direction))
 
-        
-        this.currentGame.posLevel = this.currentGame.posLevel + direction
-        this.currentGame.posGame = 0
-        this.currentGame.progress = 0
 
-        if (!value.res) {
+          this.currentGame.posLevel = this.currentGame.posLevel + direction
+          this.currentGame.posGame = 0
+          this.currentGame.progress = 0
+
+          if (!value.res) {
             this.createIslandLevel({
               //:La estructura tiene la isla y el nivel 
               isl_lev_str_id: newStructure?.isl_lev_str_id,
@@ -161,62 +177,16 @@ export class GameService {
               date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
               sum_act_id: this._sumaryActivity.getValue()?.sum_act_id,
             }).subscribe(res => {
-              this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
+              this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
               this.structure = newStructure
-              this._islandLevels.next([res.res, ...this._islandLevels?.getValue()??[]])
+              this._islandLevels.next([res.res, ...this._islandLevels?.getValue() ?? []])
 
             })
           } else {
             this.structure = newStructure
-            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
+            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
           }
         })
-
-
-        /* this.createIslandLevel({
-          isl_id: this.currentGame.posIsland + 1,
-          isl_lev_str_id: ((this.currentGame.posLevel + direction) + direction).toString(),
-          isl_lev_max_intents: 0,
-          isl_lev_status: '',
-        }).subscribe(resIslandLevel => {
-    
-          console.info('>> 2 resIslandLevel siguiente creado:', resIslandLevel)
-          this.createSummary({
-            isl_lev_id: resIslandLevel.res.isl_lev_id,
-            users_id: 1, 
-            sum_act_score_game: 0,
-            sum_act_intents: 0,
-            sum_act_best_accuracy_ia: 0,
-            sum_act_worst_accuracy_ia: 0,
-            sum_act_date_created: new Date().toISOString()
-          }).subscribe(resSumary => {
-            console.info('>> 2 summary siguiente creado:', resSumary)
-
-            this.currentGame.posLevel = this.currentGame.posLevel + direction
-            this.currentGame.posGame = 0
-            this.currentGame.progress = 0
-
-            const auxSumaryActivities = this._sumaryActivities.getValue()
-            const auxSumaryActivity = {
-              isl_id: this.currentGame.posIsland + 1,
-              isl_lev_str_id: ((this.currentGame.posLevel + direction) + direction).toString(),
-              isl_lev_max_intents: 0,
-              isl_lev_status: '',
-              //
-              isl_lev_id: resIslandLevel.res.isl_lev_id,
-              users_id: 1, //FIXME : temporal users_id
-              sum_act_score_game: 0,
-              sum_act_intents: 0,
-              sum_act_best_accuracy_ia: 0,
-              sum_act_worst_accuracy_ia: 0,
-              sum_act_date_created: new Date().toISOString()
-            }
-            this._sumaryActivity.next(auxSumaryActivity)
-            auxSumaryActivities?.push(auxSumaryActivity)
-            this._sumaryActivities.next(auxSumaryActivities)
-            this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland + 1}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
-          })
-        }) */
       }
       return
     }
@@ -271,6 +241,7 @@ export class GameService {
   }
 
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: unknown }> {
+
     const phoneme = localStorage.getItem('phoneme')
     if (!phoneme) {
       this.router.navigateByUrl(`/games`)
@@ -283,7 +254,8 @@ export class GameService {
     return structuresObservers.pipe(
       concatMap((structuresRes: { isError: boolean, res: LevelStructure[] }) => {
         this.structures = structuresRes.res
-        
+
+
         this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme_type === phoneme)
 
         //Si no existe el resumen local traerlo de la nube
@@ -324,7 +296,6 @@ export class GameService {
 
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
-
         //Si el resumen no existe, crearlo
         if (resIslandLevel.res.length === 0) {
           return this.createIslandLevel({
@@ -346,17 +317,17 @@ export class GameService {
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
 
-          //Niveles jugados
-          const islandLevels = Array.isArray(resIslandLevel.res)
+        //Niveles jugados
+        const islandLevels = Array.isArray(resIslandLevel.res)
           ? resIslandLevel.res
           : [resIslandLevel.res].flat();
-          this._islandLevels.next(islandLevels)
-        
+        this._islandLevels.next(islandLevels)
+
 
         //Posición actual
         this.currentGame.posIsland = island
-        this.currentGame.posGame   = (gamePos - 1)
-        this.currentGame.posLevel  = (level - 1)
+        this.currentGame.posGame = (gamePos - 1)
+        this.currentGame.posLevel = (level - 1)
 
         //Posición actual
         let countSections = 0

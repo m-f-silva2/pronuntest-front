@@ -5,18 +5,24 @@
     <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
 
         <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-4/12
-            flex flex-col gap-6 justify-evenly items-center px-16
+            flex flex-col gap-6 justify-evenly items-center px-2 xl:px-16
             ">
-            <h3 class="text-center font-bold text-4xl text-red-800">VAMOS A PRONUNCIAR LA PALABRA
+            <h3 class="text-center font-bold text-2xl text-red-800 mt-4">VAMOS A PRONUNCIAR LA PALABRA
                 "{{_gameService.structure?.phoneme}}"</h3>
 
-            <div class="relative w-36 h-36 ">
-                
+            <div class="relative w-full h-full">
+                <div class="w-full h-full backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 md:block">
+                    <img class="h-full w-auto m-auto pt-14" src="assets/images/character.svg" alt="" srcset="">
+                    <div (click)="handleClick(0)" class="absolute top-[54%] left-[46%]">1</div>
+                    <div (click)="handleClick(1)" class="absolute top-[60%] left-[46%]">2</div>
+                    <div (click)="handleClick(2)" class="absolute top-[70%] left-[46%]">3</div>
+                    
+                </div>
             </div>
 
-           
 
-            <div class="flex gap-8">
+
+            <div class="flex gap-8 mb-4">
                 <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
                     <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -33,9 +39,12 @@
                     </svg>
                 </button>
                 }
-                
+
             </div>
         </div>
     </section>
     }
 </main>
+@for (audio of audios; track $index) {
+    <audio class="hidden" [id]="'audio'+$index"  [src]="audio"></audio>
+}

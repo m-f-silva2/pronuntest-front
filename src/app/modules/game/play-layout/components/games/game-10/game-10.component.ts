@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'app-game-10',
@@ -20,8 +21,11 @@ export class Game10Component {
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
+  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  audios = ['assets/audios/fonema_a.mp3', 'assets/audios/fonema_e.mp3', 'assets/audios/fonema_i.mp3', 'assets/audios/fonema_o.mp3','assets/audios/fonema_u.mp3']
+  sounds = [false, false, false, false, false]
 
-  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
+  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'VAMOS A ESCUCHAR SONIDOS DE "'+this._gameService.currentGame.phoneme+'"',
@@ -43,5 +47,15 @@ export class Game10Component {
     this.section += direction
   }
 
+  handleClick(btn: number){
+    this.sounds[btn] = true;
+    (document.getElementById('audio'+btn) as HTMLAudioElement).play();
 
+    if(this.sounds.every(res=>res===true)){
+      this.isCompleted = true
+      this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
+        this._toastService.toast.set(undefined)
+      }})
+    }
+  }
 }

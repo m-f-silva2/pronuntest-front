@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BtnLevelComponent } from './btn-level.component';
 import { Router, RouterLink } from '@angular/router';
 import { IDataGame, GameService } from '../play-layout/game.service';
-import { Subject, takeUntil } from 'rxjs';
+import { find, Subject, takeUntil } from 'rxjs';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
@@ -15,7 +15,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class IslandsComponent {
   btns: { state: 'block'|'unlock', island: number, level?: number }[] = [
     { state:'unlock',island:0,level:1},{state:'block',island:0,level:2},{state:'block',island:0,level:3},{state:'block',island:0,level:4},
-    { state:'unlock',island:1,level:1},{state:'block',island:1,level:2},{state:'block',island:1,level:3},{state:'block',island:1,level:4},{state:'block',island:1,level:5},
+    { state:'block',island:1,level:1},{state:'block',island:1,level:2},{state:'block',island:1,level:3},{state:'block',island:1,level:4},{state:'block',island:1,level:5},
     { state:'block',island:2,level:1},{state:'block',island:2,level:2},{state:'block',island:2,level:3},{state:'block',island:2,level:4},{state:'block',island:2,level:5},
     { state:'block',island:3,level:1},{state:'block',island:3,level:2},{state:'block',island:3,level:3},{state:'block',island:3,level:4},{state:'block',island:3,level:5},
   ]
@@ -33,12 +33,15 @@ export class IslandsComponent {
   
   constructor(private _route: Router, public _gameService: GameService){
     this.dataGames = this._gameService.dataGames
+    /* FIXME bloquear niveles */
     this._gameService._islandLevels.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      res?.forEach((item, index) => {
-        this.btns[index].state = 'unlock'
-      })
-      
-      /* this.sumaryActivity */
+      for (const element of this.btns) {
+        const resIslandFull = res?.find(resIslandFull=>resIslandFull.code_pos_level ==  element.island)
+        if(resIslandFull){
+          element.state = 'unlock'
+        }
+      }
+       
     })
   }
 
