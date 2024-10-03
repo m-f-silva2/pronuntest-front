@@ -44,11 +44,11 @@ export class ProfileMenuComponent implements OnInit {
       link: '/profile',
       email: 'youemail@gmail.com',
     },
-    {
+    /*{
       title: 'Settings',
       icon: './assets/icons/heroicons/outline/cog-6-tooth.svg',
       link: '/settings',
-    },
+    },*/
     {
       title: 'Log out',
       icon: './assets/icons/heroicons/outline/logout.svg',

@@ -38,14 +38,14 @@ export class Game0Component {
 
 
     this.sections.push({
-      title: 'VAMOS A RECONOCER EL SONIDOS DE LA LETRA "'+this._gameService.structure?.phoneme_type+'"',
+      title: 'VAMOS A RECONOCER EL SONIDO DE LA LETRA "'+this._gameService.structure?.phoneme_type+'"',
       subtitle: undefined,
       resource: '/assets/video/explosion.mp4',
       next: '1',
       previous: undefined
     })
     this.sections.push({
-      title: 'VAMOS A PRONUNCIAR SONIDOS DE LA LETRA "'+this._gameService.structure?.phoneme+'"',
+      title: 'Vamos a escuchar sonidos relacionados con el fonema "'+this._gameService.structure?.phoneme_type+'", por ejemplo "'+this._gameService.structure?.phoneme+'"',
       subtitle: undefined,
       resource: '',
       next: '1',

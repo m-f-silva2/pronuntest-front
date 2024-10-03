@@ -14,9 +14,9 @@ export class Game4Component {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   section = 0
   sections = [{
-    title: 'INFLAR GLOBO',
-    subtitle: 'Exhala aire por la boca para inflar el globo',
-    resource: '',
+    title: 'AHORA VAMOS A REPASAR EL SONIDO DEL FONEMA P',
+    subtitle: '',
+    resource: '/assets/video/explosion.mp4',
     next: '1',
     previous: undefined
   }]
