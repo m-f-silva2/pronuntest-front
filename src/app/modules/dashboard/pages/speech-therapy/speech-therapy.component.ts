@@ -13,13 +13,15 @@ import { DataItem, OrganizedData, Table } from 'src/app/core/models/interfaces-g
 import { CommonModule } from '@angular/common';
 import { MapComponent } from '../../components/map/map.component';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { UserModalComponent } from '../../components/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-speech-therapy',
   standalone: true,
   imports: [
     CommonModule,
-    NftHeaderComponent, 
+    NftHeaderComponent,
+    UserModalComponent, 
     NftDualCardComponent, 
     NftSingleCardComponent, 
     NftChartCardComponent, 
@@ -358,6 +360,16 @@ export class SpeechTherapyComponent {
   
   ngOnInit(): void {
     this.getDataGraphic();
+  }
+
+  isModalOpen = false;
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  handleClose() {
+    this.isModalOpen = false;
   }
 
   activarFonema(fonema: string) {

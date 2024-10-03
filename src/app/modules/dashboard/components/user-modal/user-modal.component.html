@@ -1,31 +1,19 @@
-<!-- Botón para abrir la modal -->
-<button (click)="openModal()" class="open-modal-btn">Abrir Modal</button>
+<!-- Botón para abrir el modal -->
+<button class="button_assigment" (click)="openModal()">Asignar pacientes</button>
 
 <!-- Modal -->
-<div *ngIf="isModalOpen" class="modal-overlay">
-  <div class="modal-content">
-    <span (click)="closeModal()" class="close-btn">&times;</span>
-    <h2>Lista de Usuarios</h2>
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <button (click)="editUser(user)">Editar</button>
-            <button (click)="deleteUser(user)">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Título del Modal</h2>
+      <button (click)="closeModal()" class="close-button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div nft-auctions-table [data]="data" class="md:col-span-4 xl:col-span-4 w-full"></div>
+
+    </div>
+    <div class="modal-footer">
+      <button (click)="closeModal()">Cerrar</button>
+    </div>
   </div>
 </div>

@@ -1,14 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Table } from 'src/app/core/models/interfaces-graphics';
+import { NftAuctionsTableComponent } from '../../pages/nft/nft-auctions-table/nft-auctions-table.component';
 
 @Component({
   selector: 'app-user-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, NftAuctionsTableComponent],
   templateUrl: './user-modal.component.html',
   styleUrl: './user-modal.component.css'
 })
 export class UserModalComponent {
+  @Input('data') data: Table[] = <any>{};
   isModalOpen = false;
+  
+  ngOnInit():void{
+  }
 
   users = [
     { id: 1, name: 'Juan Pérez', email: 'juan.perez@example.com' },
@@ -23,17 +30,5 @@ export class UserModalComponent {
 
   closeModal() {
     this.isModalOpen = false;
-  }
-
-  editUser(user: { name: string; }) {
-    alert('Editar usuario: ' + user.name);
-    // Aquí puedes implementar la lógica para editar el usuario
-  }
-
-  deleteUser(user: { name: string; id: number; }) {
-    if (confirm('¿Estás seguro de que deseas eliminar a ' + user.name + '?')) {
-      this.users = this.users.filter(u => u.id !== user.id);
-      alert('Usuario eliminado');
-    }
   }
 }

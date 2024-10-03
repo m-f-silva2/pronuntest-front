@@ -1,17 +1,30 @@
 <div class="mx-auto px-4 py-4 sm:px-8 lg:container">
   <!-- Header -->
-  <app-nft-header></app-nft-header>
+  <div class="flex space-x-4 mx-2">
+    <!-- Columna 1 -->
+    <div class="flex-1">
+      <app-nft-header></app-nft-header>
+    </div>
+    
+    <!-- Columna 2 -->
+    <div class="flex-2">
+      <app-user-modal [data]="table"></app-user-modal>
+    </div>
+  </div>
+  
+  
   <!-- end Header -->
-  <div class="mb-1 flex justify-between">
-    <!--<div class="grid grid-cols-3 gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 p-2">
-      <h1 class="text-lg font-semibold">Fonemas:</h1>
+  <div class="mb-0 ">
+    <!--<h1 class="text-lg font-semibold">Fonemas:</h1>
+    <div class="grid grid-cols-3 gap-4 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 p-2">
       <button *ngFor="let fonema of fonemas" 
               (click)="activarFonema(fonema)" 
               [ngClass]="{'bg-blue-500 text-white': activo === fonema, 'bg-gray-300': activo !== fonema}"
               class="px-1 py-1 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
         {{ fonema }}
-      </button>
-    </div>-->
+      </div>
+    </button>-->
+
   </div>
   
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">

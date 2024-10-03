@@ -30,4 +30,17 @@ export class NftAuctionsTableComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  filteredData: any[] = this.data;
+
+  filterTable(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredData = this.data.filter(auction => 
+      auction.user_name.toLowerCase().includes(searchTerm) || 
+      auction.identification.toString().includes(searchTerm) ||
+      auction.gender.toLowerCase().includes(searchTerm) ||
+      auction.condition.toLowerCase().includes(searchTerm)
+    );
+    console.log(this.data, "  -- ", this.filteredData);
+  }
 }
