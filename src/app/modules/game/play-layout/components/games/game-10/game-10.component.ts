@@ -22,7 +22,7 @@ export class Game10Component {
   dataGames: IDataGame
   isCompleted = false
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  audios = ['assets/audios/fonema_a.mp3', 'assets/audios/fonema_e.mp3', 'assets/audios/fonema_i.mp3', 'assets/audios/fonema_o.mp3','assets/audios/fonema_u.mp3']
+  audios = ['assets/audios/fonema_k.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_s.wav', 'assets/audios/fonema_ch.wav','assets/audios/fonema_m.wav']
   sounds = [false, false, false, false, false]
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private _toastService: ToastService) {

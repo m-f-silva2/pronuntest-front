@@ -21,7 +21,7 @@ export class Game8Component {
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
-  audios = ['assets/audios/fonema_a.mp3', 'assets/audios/fonema_e.mp3', 'assets/audios/fonema_i.mp3', 'assets/audios/fonema_o.mp3','assets/audios/fonema_u.mp3']
+  audios = ['assets/audios/fonema_m.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_k.wav', 'assets/audios/fonema_s.wav','assets/audios/fonema_t.wav']
   sounds = [false, false, false]
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
