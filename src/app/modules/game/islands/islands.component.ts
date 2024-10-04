@@ -34,14 +34,19 @@ export class IslandsComponent {
   constructor(private _route: Router, public _gameService: GameService){
     this.dataGames = this._gameService.dataGames
     /* FIXME bloquear niveles */
-    this._gameService._islandLevels.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
-      for (const element of this.btns) {
-        const resIslandFull = res?.find(resIslandFull=>resIslandFull.code_pos_level ==  element.island)
+
+    let previousBtn: { state: 'block'|'unlock', island: number, level?: number }
+    this._gameService._islandLevels.pipe(takeUntil(this._unsubscribeAll)).subscribe(resIL => {
+      for (const btn of this.btns) {
+        const resIslandFull = resIL?.find(resIslandFull=>resIslandFull.code_pos_level ==  btn.level && resIslandFull.code_island ==  btn.island)
         if(resIslandFull){
-          element.state = 'unlock'
+          btn.state = 'unlock'
         }
+        if(btn.state == 'block' && previousBtn.state == 'unlock' && (btn.island > previousBtn.island)){
+          btn.state = 'unlock'
+        }
+        previousBtn = btn
       }
-       
     })
   }
 

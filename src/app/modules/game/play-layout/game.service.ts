@@ -117,6 +117,9 @@ export class GameService {
   set sumaryActivities(activities: SumaryActivities[] | undefined) {
     this._sumaryActivities.next(activities)
   }
+  set islandLevels$(IslandLevelFull: IslandLevelFull[] | undefined) {
+    this._islandLevels.next(IslandLevelFull)
+  }
 
   /* componetes games (sections), level-info; next (end, normal), previous (first, normal)   */
   navegationGame(direction: number, type: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -141,6 +144,42 @@ export class GameService {
       //Existe nivel siguiente en esta isla?
     } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
       //Aquí finaliza el nivel si es en dirección +1
+
+      //TODO ======== ACTUALIZAR NIEVEL ACTUAL Y PASAR AL NIEVEL SIGUIENTE ======
+      if (direction > 0) {
+        const _currentGame = {...this.currentGame}
+        let island = this._islandLevels.getValue()?.find(res => res.code_island == _currentGame.posIsland && res.code_pos_level == (_currentGame.posLevel+1))
+        
+        
+        const currentStructure = this.structures.find(res =>
+          res.code_pos_level == (_currentGame.posLevel+1) && res.code_island == _currentGame.posIsland
+        )
+        if (island) {
+          island.score = currentStructure?.level_goal_score
+          island.intents! += 1 //FIXME: revisar si es nulo?
+          this.updateIslandLevel(island).subscribe()
+        } else {
+          //Si es el primer nivel de una isla, crearla porque no existe
+          this.createIslandLevel({
+            //:La estructura tiene la isla y el nivel 
+            isl_lev_str_id: currentStructure?.isl_lev_str_id,
+            intents: 0,
+            status: 'active',
+            score: 0,
+            best_accuracy_ia: 0,
+            worst_accuracy_ia: 0,
+            date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            sum_act_id: this._sumaryActivity.getValue()?.sum_act_id,
+          }).subscribe(res=>{
+            //TODO: Añadir nuevo island level al observable
+            let islandNew = this._islandLevels.getValue()
+            islandNew?.push({...res, ...currentStructure})
+            this.islandLevels$ = islandNew
+          })
+        }
+      }
+      //...
+
       //(Buscar si existe el siguiente nivel) Validar si ya había completado el nivel en db, sino crear
       const nextSumaryActivityDB = this._sumaryActivities.getValue()?.find(res =>
         res.isl_lev_id === (this.currentGame.posIsland) && res.isl_lev_str_id?.toString() === ((this.currentGame.posLevel + direction) + direction)?.toString()
@@ -156,10 +195,11 @@ export class GameService {
       } else {
 
         //Buscar nivel en local o db, sino crearlo
-        this.getLevelByUserPhoneLevel(this.currentGame.phoneme, (this.currentGame.posLevel + direction + 1)).subscribe(value => {
+        this.getLevelByUserPhoneLevelIsland(this.currentGame.phoneme, (this.currentGame.posLevel + direction + 1), this.currentGame.posIsland).subscribe(value => {
           if (value.isError) throw new Error(value.res.toString())
-          const newStructure = this.structures.find(res => res.code_pos_level == ((this.currentGame.posLevel + direction) + direction))
-
+          const newStructure = this.structures.find(res =>
+            res.code_pos_level == ((this.currentGame.posLevel + direction) + direction) && res.code_island == this.currentGame.posIsland
+          )
 
           this.currentGame.posLevel = this.currentGame.posLevel + direction
           this.currentGame.posGame = 0
@@ -171,7 +211,7 @@ export class GameService {
               isl_lev_str_id: newStructure?.isl_lev_str_id,
               intents: 0,
               status: 'active',
-              score: 0,
+              score: 0, /* newStructure?.level_goal_score */
               best_accuracy_ia: 0,
               worst_accuracy_ia: 0,
               date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
@@ -180,8 +220,9 @@ export class GameService {
               this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
               this.structure = newStructure
               this._islandLevels.next([res.res, ...this._islandLevels?.getValue() ?? []])
-
             })
+
+
           } else {
             this.structure = newStructure
             this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${(this.currentGame.posLevel + direction)}/gamePos/1`)
@@ -221,9 +262,9 @@ export class GameService {
     )
   }
 
-  getLevelByUserPhoneLevel(phoneme: string, codePosLevel: number): Observable<{ isError: boolean, res: IslandLevel }> {
+  getLevelByUserPhoneLevelIsland(phoneme: string, codePosLevel: number, code_island: number): Observable<{ isError: boolean, res: IslandLevel }> {
     return this._httpClient.get<any>(
-      `${this.apiUrl}/island_level_by_user_phoneme?phoneme=${phoneme}&code_pos_level=${codePosLevel}`).pipe(
+      `${this.apiUrl}/island_level_by_user_phoneme_island?phoneme=${phoneme}&code_pos_level=${codePosLevel}&code_island=${code_island}`).pipe(
         tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
           if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
           //TODO
@@ -296,7 +337,7 @@ export class GameService {
 
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
-        //Si el resumen no existe, crearlo
+        //Si la isla no existe, crearla
         if (resIslandLevel.res.length === 0) {
           return this.createIslandLevel({
             isl_lev_str_id: this.structure?.isl_lev_str_id,
@@ -314,13 +355,13 @@ export class GameService {
       }),
 
 
-      concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
+      concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[]|IslandLevel }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
 
         //Niveles jugados
         const islandLevels = Array.isArray(resIslandLevel.res)
-          ? resIslandLevel.res
-          : [resIslandLevel.res].flat();
+        ? resIslandLevel.res
+        : [{...this.structure, ...resIslandLevel.res}].flat();
         this._islandLevels.next(islandLevels)
 
 
