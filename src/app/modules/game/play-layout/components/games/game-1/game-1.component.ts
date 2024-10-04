@@ -76,16 +76,27 @@ export class Game1Component {
     await this.sendFile(dataFileArrBuf)
   }
 
-  intervalArc: any
+  intervalArc: any;
+  i:number = 0;
   async stopRecording() {
       this.isRecording = false;
-      this.countRecording = 0
+      this.countRecording = 0;
       this.wavRecorder.stop();
-      setTimeout(() => {
-        this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
-          this._toastService.toast.set(undefined)
-        }})
-      }, 2000);
+      if(this.i == 0 || this.i == 3){
+        setTimeout(() => {
+          this.i++;
+          this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
+            this._toastService.toast.set(undefined)
+          }})
+        }, 1500);
+      }else{
+        setTimeout(() => {
+          this.i = 0;
+          this._toastService.toast.set({ type: 's', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo!", end: () => { 
+            this._toastService.toast.set(undefined)
+          }})
+        }, 1500);
+      }
   }
 
   async getWavBlob() {
