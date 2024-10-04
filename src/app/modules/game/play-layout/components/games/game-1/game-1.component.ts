@@ -5,6 +5,7 @@ import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
 import { WavRecorder } from "webm-to-wav-converter";
+import { ToastService } from 'src/app/core/services/toast/toast.service';
 
 @Component({
   selector: 'app-game-1',
@@ -23,10 +24,11 @@ export class Game1Component {
   isCompleted = false
   wavRecorder = new WavRecorder();
 
-  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router) {
+  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
+    //title: 'AHORA VAMOS A PRONUNCIAR SONIDOS RELACIONADOS CON EL FONEMA "'+this._gameService.currentGame.phoneme+'", POR EJEMPLO "'+this._gameService.structure?.phoneme+'"',
     this.sections.push({
-      title: 'AHORA VAMOS A PRONUNCIAR SONIDOS RELACIONADOS CON EL FONEMA "'+this._gameService.currentGame.phoneme+'", POR EJEMPLO "'+this._gameService.structure?.phoneme+'"',
+      title: 'AHORA VAMOS A PRONUNCIAR SONIDOS RELACIONADOS CON EL FONEMA "'+this._gameService.currentGame.phoneme,
       subtitle: undefined,
       resource: '',
       next: '1',
@@ -79,6 +81,11 @@ export class Game1Component {
       this.isRecording = false;
       this.countRecording = 0
       this.wavRecorder.stop();
+      setTimeout(() => {
+        this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
+          this._toastService.toast.set(undefined)
+        }})
+      }, 2000);
   }
 
   async getWavBlob() {
@@ -108,6 +115,7 @@ export class Game1Component {
 
   async startRecording() {
     if (this.isRecording) {
+      this.isCompleted=true;
       this.stopRecording()
       return
     }
@@ -141,6 +149,7 @@ export class Game1Component {
       this.setArc({ target: { value: 16.66666666 * (this.countRecording / 100), min: 0, max: 100 } })
     }, 10)
 
+    
   }
 
   concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {

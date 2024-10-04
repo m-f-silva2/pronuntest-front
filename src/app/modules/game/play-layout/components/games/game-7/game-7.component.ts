@@ -22,7 +22,7 @@ export class Game7Component {
   dataGames: IDataGame
   isCompleted = false
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  audios = ['assets/audios/fonema_k.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_s.wav', 'assets/audios/fonema_ch.wav','assets/audios/fonema_m.wav']
+  audios = ['assets/audios/fonema_d.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_s.wav', 'assets/audios/fonema_ch.wav','assets/audios/fonema_m.wav']
   sounds = [false, false, false, false, false]
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
@@ -39,6 +39,27 @@ export class Game7Component {
       this.sumaryActivity = res
     })
 
+  }
+
+  balloonState: string = 'normal';
+
+  explodeBalloon() {
+    this.balloonState = 'exploded';
+
+    // Reproducir sonido de explosión
+    const audio = new Audio('assets/audios/fonema_p.wav');
+    audio.play();
+
+    // Restablecer el estado tras unos segundos
+    setTimeout(() => {
+      this.balloonState = 'normal';
+    }, 1500); // Volver a mostrar el globo después de 2 segundos
+  }
+
+  isPlaying: boolean = true;
+
+  togglePlayPause() {
+    this.isPlaying = !this.isPlaying;
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {

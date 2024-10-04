@@ -4,7 +4,7 @@
     }@else {
     <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
 
-        <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-4/12
+        <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-8/12
             flex flex-col gap-6 justify-evenly items-center px-16
             ">
             <h3 class="text-center font-bold text-2xl text-red-800">TOCA LAS IMAGENES PARA ESCUCHAR EL SONIDO</h3>
@@ -15,11 +15,12 @@
                 </div>
                 <div class="relative border-gray-600 border-dashed bg-cyan-300/50 border-2 w-full h-full overflow-hidden select-none">
                     <div class="relative w-full h-full -top-4 " #containerIMG>
-                        <img (click)="handleClick(0)" class="img0 absolute -top-[15%] left-[8%]" src="assets/images/isla0/burbujas.png"  alt="" srcset="">
-                        <img (click)="handleClick(1)" class="img1 absolute -top-[30%] left-[70%]" src="assets/images/isla0/globo.png"     alt="" srcset="">
-                        <img (click)="handleClick(2)" class="img2 absolute -top-[40%] left-[30%]" src="assets/images/isla0/serpiente.png" alt="" srcset="">
-                        <img (click)="handleClick(3)" class="img3 absolute -top-[60%] left-[67%]" src="assets/images/isla0/tren.png"      alt="" srcset="">
-                        <img (click)="handleClick(4)" class="img4 absolute -top-[80%] left-[20%] animate-spin" src="assets/images/isla0/vaca.png"      alt="" srcset="">
+                        <img style="height: 120px;width: auto;" (click)="handleClick(0)" class="img0 absolute -top-[15%] left-[8%]" src="assets/images/isla0/abeja.png"  alt="" srcset="">
+                        <img style="height: 120px;width: auto;" [src]="isPlaying ? 'assets/images/isla0/globo.png' : 'assets/images/isla0/globo.gif'" 
+                        (click)="handleClick(1)" class="img1 absolute -top-[30%] left-[70%]"   alt="" srcset=""/>
+                        <img style="height: 120px;width: auto;" (click)="handleClick(2)" class="img2 absolute -top-[40%] left-[30%]" src="assets/images/isla0/serpiente.png" alt="" srcset="">
+                        <img style="height: 120px;width: auto;" (click)="handleClick(3)" class="img3 absolute -top-[60%] left-[67%]" src="assets/images/isla0/tren.png"      alt="" srcset="">
+                        <img style="height: 120px;width: auto;" (click)="handleClick(4)" class="img4 absolute -top-[80%] left-[20%]" src="assets/images/isla0/vaca.png"      alt="" srcset="">
                     </div>
                 </div>
             </div>

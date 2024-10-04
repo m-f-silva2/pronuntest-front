@@ -7,16 +7,29 @@
         <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-4/12
             flex flex-col gap-6 justify-evenly items-center px-2 xl:px-16
             ">
-            <h3 class="text-center font-bold text-2xl text-red-800 mt-4">VAMOS A PRONUNCIAR LA PALABRA
-                "{{_gameService.structure?.phoneme}}"</h3>
+            <h3 class="text-center font-bold text-2xl text-red-800 mt-4"></h3>
 
             <div class="relative w-full h-full">
                 <div class="w-full h-full backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 md:block">
                     <img class="h-full w-auto m-auto pt-14" src="assets/images/character.svg" alt="" srcset="">
-                    <div (click)="handleClick(0)" class="absolute top-[54%] left-[46%]">1</div>
-                    <div (click)="handleClick(1)" class="absolute top-[60%] left-[46%]">2</div>
-                    <div (click)="handleClick(2)" class="absolute top-[70%] left-[46%]">3</div>
-                    
+                    <div (click)="handleClick(0)" class="absolute top-[52%] left-[40%]">
+                        <img src="assets/images/nariz.png" style="width: 70px;" alt="">
+                        <div class="arrow-container absolute top-[-60%] left-[10%]">
+                            <div class="arrow-down"></div>
+                        </div>
+                    </div>
+                    <div (click)="handleClick(1)" class="absolute top-[58%] left-[39.5%]">
+                        <img src="assets/images/boca.png" style="width: 74px;" alt="">
+                        <div class="arrow-container absolute top-[58%] left-[12%]">
+                            <div class="arrow"></div>
+                        </div>
+                    </div>
+                    <div (click)="handleClick(2)" class="absolute top-[67%] left-[41%]">
+                        <img src="assets/images/corbata.png" style="width: 65px;" alt="">
+                        <div class="arrow-container absolute top-[40%] left-[1%]">
+                            <div class="arrow"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
