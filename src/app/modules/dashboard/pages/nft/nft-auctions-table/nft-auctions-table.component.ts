@@ -1,16 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NftAuctionsTableItemComponent } from '../nft-auctions-table-item/nft-auctions-table-item.component';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Table } from 'src/app/core/models/interfaces-graphics';
 
 @Component({
     selector: '[nft-auctions-table]',
     templateUrl: './nft-auctions-table.component.html',
     standalone: true,
-    imports: [NgFor, NftAuctionsTableItemComponent],
+    imports: [CommonModule, NftAuctionsTableItemComponent],
 })
 export class NftAuctionsTableComponent implements OnInit {
   @Input('data') data: Table[] = <any>{};
+  @Input() isAssignmentUser = <Boolean> false;
+  // Lista que se muestra en la tabla, filtrada por el buscador
+  public filteredData: Table[] = this.data;
 
   public activeAuction: {
     name: string,
@@ -26,21 +29,21 @@ export class NftAuctionsTableComponent implements OnInit {
   }[] = [];
 
   constructor() {
-    
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
-  filteredData: any[] = this.data;
-
+  // Método para filtrar la tabla
   filterTable(event: Event): void {
     const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+    // Filtrar por diferentes campos (nombre, identificación, género, condición)
     this.filteredData = this.data.filter(auction => 
       auction.user_name.toLowerCase().includes(searchTerm) || 
       auction.identification.toString().includes(searchTerm) ||
       auction.gender.toLowerCase().includes(searchTerm) ||
       auction.condition.toLowerCase().includes(searchTerm)
     );
-    console.log(this.data, "  -- ", this.filteredData);
+    console.log('Filtered data:', this.filteredData);
   }
 }

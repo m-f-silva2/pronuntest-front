@@ -208,6 +208,7 @@ export class SpeechTherapyComponent {
   }
   
   table: Table[] = [];
+  tableModal: Table[] = [];
 
   repetsF: { chart: Partial<ChartOptions>, title: string, options?: string[] } = {
     title: 'Repetición de fonemas', 
@@ -379,8 +380,8 @@ export class SpeechTherapyComponent {
   updateDataGraphic(graphic: string, title: string, data: any, categories: any){
     //this.completF.chart.series![0].name = 'Fonemas';
     
-    if(data == undefined){
-      console.log("data",data)
+    console.log("data "+graphic, data)
+    if(data == undefined || data.length == 0){
     }else if(graphic == 'g-1'){
       this.completF.title = title;
       this.completF.chart.series![0].data = data;
@@ -411,6 +412,10 @@ export class SpeechTherapyComponent {
       //console.log("tabla", data);
       this.table = [];
       this.table = data;
+    }else if(graphic == 't-2'){
+      //console.log("tabla", data);
+      this.tableModal = [];
+      this.tableModal = data;
     }else if(graphic == 'm-1'){
       data.forEach((data: { lng: any; lat: any; }) => {
         if (data.lat !== 0 && data.lng !== 0) {
@@ -533,6 +538,19 @@ export class SpeechTherapyComponent {
         //this.table = res.res;
         const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
         this.updateDataGraphic('t-1', title, res.res, '');
+      },
+      error(err) {
+        console.error('>> >>  :', err);
+      },
+    });
+     /*TABLA 2 MODAL*/
+    this._speechTherapyService.dataGraphics({ graphic: 'g-7', valueToSearch: this.token }).subscribe({
+      next: (res: {isError: boolean, res: []}) => {
+        if(res.isError || res.res == undefined) return
+        
+        //this.table = res.res;
+        const title = `Exactitud ${res.res.keys} por paciente: Mejor vs peor`;
+        this.updateDataGraphic('t-2', title, res.res, '');
       },
       error(err) {
         console.error('>> >>  :', err);
