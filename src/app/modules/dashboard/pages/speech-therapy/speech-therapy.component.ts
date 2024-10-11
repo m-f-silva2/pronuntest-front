@@ -387,7 +387,6 @@ export class SpeechTherapyComponent {
       this.completF.chart.series![0].data = data;
       this.completF.chart.xaxis!.categories = categories;
       this.completF = {...this.completF};
-      //console.log('>>g-1', this.completF);
     }else if(graphic == 'g-2'){
       this.precisionPhonemeVS.title = title;
       this.precisionPhonemeVS.chart.series![0].name = "Mejor";

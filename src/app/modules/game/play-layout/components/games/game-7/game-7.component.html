@@ -2,53 +2,57 @@
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
-    <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
-
-        <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-8/12
-            flex flex-col gap-6 justify-evenly items-center px-16
-            ">
-            <h3 class="text-center font-bold text-2xl text-red-800">TOCA LAS IMAGENES PARA ESCUCHAR EL SONIDO</h3>
-
-            <div class="flex flex-col w-full h-full">
-                <div class="">
-                    <button class="py-2 px-4 m-2 text-white bg-blue-500 rounded " (click)="animation()"  [disabled]="blockBtn">play</button>
-                </div>
-                <div class="relative border-gray-600 border-dashed bg-cyan-300/50 border-2 w-full h-full overflow-hidden select-none">
-                    <div class="relative w-full h-full -top-4 " #containerIMG>
-                        <img style="height: 120px;width: auto;" (click)="handleClick(0)" class="img0 absolute -top-[15%] left-[8%]" src="assets/images/isla0/abeja.png"  alt="" srcset="">
-                        <img style="height: 120px;width: auto;" [src]="isPlaying ? 'assets/images/isla0/globo.png' : 'assets/images/isla0/globo.gif'" 
-                        (click)="handleClick(1)" class="img1 absolute -top-[30%] left-[70%]"   alt="" srcset=""/>
-                        <img style="height: 120px;width: auto;" (click)="handleClick(2)" class="img2 absolute -top-[40%] left-[30%]" src="assets/images/isla0/serpiente.png" alt="" srcset="">
-                        <img style="height: 120px;width: auto;" (click)="handleClick(3)" class="img3 absolute -top-[60%] left-[67%]" src="assets/images/isla0/tren.png"      alt="" srcset="">
-                        <img style="height: 120px;width: auto;" (click)="handleClick(4)" class="img4 absolute -top-[80%] left-[20%]" src="assets/images/isla0/vaca.png"      alt="" srcset="">
+        <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
+            <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-8/12 flex flex-col gap-6 justify-evenly items-center px-16">
+                <h3 class="text-center font-bold text-2xl text-red-800">TOCA LAS IMÁGENES PARA ESCUCHAR EL SONIDO</h3>
+        
+                <div class="flex flex-col w-full h-full">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="font-bold">Puntos: <span>{{ points }}</span></p>
+                            <p class="font-bold">Intentos: <span>{{ attempts }}</span></p>
+                        </div>
+                        <button class="py-2 px-4 m-2 text-white bg-blue-500 rounded" (click)="startGame()" [disabled]="blockBtn">Play</button>
+                    </div>
+                    <div class="relative border-gray-600 border-dashed bg-cyan-300/50 border-2 w-full h-full overflow-hidden select-none">
+                        <div class="relative w-full h-full">
+                            <!-- Generamos las imágenes dinámicamente con *ngFor -->
+                            <div *ngFor="let bomb of bombs" 
+                                 class="bomb" 
+                                 [ngStyle]="{'left.px': bomb.left, 'top.px': '0px'}" 
+                                 (click)="bombClicked(bomb.id)">
+                                <img [src]="bomb.image" alt="Bomba o Imágen" style="width: 80px; height: 80px;" />
+                            </div>
+                        </div>
                     </div>
                 </div>
+        
+                <div class="result" [style.color]="resultColor">{{ resultMessage }}</div>
+
+                <div class="flex gap-8 mb-4">
+                    <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
+                        <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
+                                fill="#DBE8EB" />
+                        </svg>
+                    </button>
+                    @if(isCompleted){
+                    <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
+                        <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
+                                fill="#DBE8EB" />
+                        </svg>
+                    </button>
+                    }
+    
+                </div>
             </div>
-
-
-
-            <div class="flex gap-8 mb-4">
-                <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
-                    <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
-                            fill="#DBE8EB" />
-                    </svg>
-                </button>
-                @if(isCompleted){
-                <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
-                    <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
-                            fill="#DBE8EB" />
-                    </svg>
-                </button>
-                }
-
-            </div>
-        </div>
-    </section>
+        </section>
+        
     }
+    
 </main>
 @for (audio of audios; track $index) {
     <audio class="hidden" [id]="'audio'+$index"  [src]="audio"></audio>
