@@ -167,3 +167,8 @@
   font-family: 'knight-warrior';
   src: url('/assets/knight-warrior.otf') format('truetype');
 }
+
+@font-face {
+  font-family: 'ShadyLane';
+  src: url('/assets/ShadyLane.ttf') format('truetype');
+}
