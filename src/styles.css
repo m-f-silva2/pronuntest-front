@@ -164,11 +164,15 @@
 }
 
 @font-face {
-  font-family: 'knight-warrior';
-  src: url('/assets/knight-warrior.otf') format('truetype');
+  font-family: 'Flippinfont';
+  src: url('/assets/Flippinfont.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'ShadyLane';
   src: url('/assets/ShadyLane.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Pingsan';
+  src: url('/assets/Pingsan.ttf') format('truetype');
 }

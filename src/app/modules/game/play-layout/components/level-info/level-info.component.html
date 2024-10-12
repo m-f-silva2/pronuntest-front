@@ -1,16 +1,11 @@
-<section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
+<section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2 font-Flippinfont">
     
-    <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 md:w-4/12
-    hidden md:block
-    ">
-        <img src="assets/images/character.svg" alt="" srcset="" class="h-full m-auto pt-14">
-    </div>
-
-    <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 
+   <div class="container_border_content" >
+   <div class="container_border backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-white/35 h-4/5 
     md:w-4/12
     flex flex-col gap-6 justify-center items-center px-8 md:px-16
     ">
-        <h3 class="text-center font-bold text-4xl text-red-800
+        <h3 class="text-center font-bold text-4xl text-blue-50
         md:text-2xl
         ">{{data?.title}}</h3>
         <p class="text-2xl md:text-xl">{{data?.subtitle}}</p>
@@ -32,14 +27,9 @@
         
 
         @if (data?.next) {
-            <btn-img 
-            [type]="'orange'"
-            [identifier]="'next'"
-            [title]="'Siguiente'"
-            [imgPath]="'assets/images/arrow.svg'"
-            (eventClick)="handleBtn('next')"
-            ></btn-img>
+            <btn-img (eventClick)="handleBtn('next')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" />
         }
         </div>
+    </div>
     </div>
 </section>

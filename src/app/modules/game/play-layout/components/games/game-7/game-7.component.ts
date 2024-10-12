@@ -5,11 +5,12 @@ import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-game-7',
   standalone: true,
-  imports: [LevelInfoComponent],
+  imports: [LevelInfoComponent, BtnImgComponent],
   templateUrl: './game-7.component.html',
   styleUrl: './game-7.component.css'
 })

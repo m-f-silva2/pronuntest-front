@@ -1,0 +1,17 @@
+
+.container_border_content {
+    background: linear-gradient(170.37deg, #A3E8FF 39.58%, #5AD0F2 93.33%);
+    overflow: hidden;
+    border-radius: 80px;
+    padding: 1rem;
+    border: solid 1px #ffffff17;
+    box-shadow: 0px 6px 19.4px rgba(0, 0, 0, 0.24);
+}
+
+.container_border {
+    border-radius: 70px;
+    background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
+    box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
+    width: 623px;
+    height: 404.36px;
+}
