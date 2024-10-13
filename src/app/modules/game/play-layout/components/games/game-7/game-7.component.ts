@@ -29,9 +29,9 @@ export class Game7Component {
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'VAMOS A ESCUCHAR SONIDOS DE "'+this._gameService.currentGame.phoneme+'"',
+      title: 'Vamos a escuchar sonidos de la letra '+this._gameService.structure?.phoneme_type+' \n\nToca las burbujas que más se parezcan al sonido que escuches',
       subtitle: undefined,
-      resource: '',
+      resource: '/assets/video/explosion.mp4',
       next: '1',
       previous: undefined
     })

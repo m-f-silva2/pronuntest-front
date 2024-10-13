@@ -34,9 +34,6 @@ export class Game0Component {
 
 
     this.phonemeSrc = '/assets/audios/fonema_'+this._gameService.structure?.phoneme+'.mp3'
-    console.log('>> >>  :', this.phonemeSrc);
-
-
 
     this.sections.push({
       title: 'VAMOS A RECONOCER EL SONIDO DE LA LETRA "'+this._gameService.structure?.phoneme_type+'"',

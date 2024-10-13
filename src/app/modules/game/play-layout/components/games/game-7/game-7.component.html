@@ -1,37 +1,60 @@
-<main class="w-full h-full font-Flippinfont">
+<main class="w-full h-[90%] font-Flippinfont ">
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
-    <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
+    <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center">
 
-        <div class="container_border h-[84%]">
-        <div class="container_border_content h-full flex flex-col gap-6 justify-evenly items-center px-16">
-            <h3 class="text-center text-3xl text-blue-50 mt-8">Toca las imagenes para escuchar el sonido</h3>
-
-            <div class="flex flex-col w-full h-full">
-                <div class=" w-fit mb-4">
+        <div class="container_border h-full w-full max-w-7xl">
+            <div class="container_border_content h-full flex flex-col gap-6 justify-evenly items-center px-16">
+                <div class="w-fit mb-4 mt-11">
                     <btn-img (eventClick)="animation()" [title]="'Iniciar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"  class="w-fit"/>
                 </div>
-                <div class="relative border-gray-600 border-dashed bg-cyan-300/50 border-2 w-full h-full overflow-hidden select-none">
-                    <div class="relative w-full h-full -top-4 " #containerIMG>
-                        <img (click)="handleClick(0)" class="img0 absolute -top-[15%] left-[8%]" src="assets/images/isla0/burbujas.png"  alt="" srcset="">
-                        <img (click)="handleClick(1)" class="img1 absolute -top-[30%] left-[70%]" src="assets/images/isla0/globo.png"     alt="" srcset="">
-                        <img (click)="handleClick(2)" class="img2 absolute -top-[40%] left-[30%]" src="assets/images/isla0/serpiente.png" alt="" srcset="">
-                        <img (click)="handleClick(3)" class="img3 absolute -top-[60%] left-[67%]" src="assets/images/isla0/tren.png"      alt="" srcset="">
-                        <img (click)="handleClick(4)" class="img4 absolute -top-[80%] left-[20%] animate-spin" src="assets/images/isla0/vaca.png"      alt="" srcset="">
+
+                <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
+
+                    <div class="flex flex-col h-full w-full max-w-lg items-center 
+                        ">
+                        <div class="relative  w-full h-full overflow-hidden select-none">
+                            <div class="relative w-full h-full -top-4 " #containerIMG>
+                                <div class="bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img0 absolute -top-[15%] left-[8%]">
+                                    <img (click)="handleClick(0)" src="assets/images/isla0/burbujas.png" alt="">
+                                </div>
+                                <div class="bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img1 absolute -top-[30%] left-[70%]">
+                                    <img (click)="handleClick(1)" src="assets/images/isla0/globo.png"    alt="">
+                                </div>
+                                <div class="bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img2 absolute -top-[40%] left-[30%]">
+                                    <img (click)="handleClick(2)" src="assets/images/isla0/serpiente.png"alt="">
+                                </div>
+                                <div class="bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img3 absolute -top-[60%] left-[67%]">
+                                    <img (click)="handleClick(3)" src="assets/images/isla0/tren.png"     alt="">
+                                </div>
+                                <div class="bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img4 absolute -top-[80%] left-[20%">
+                                    <img (click)="handleClick(4)" src="assets/images/isla0/vaca.png"     alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <img class="w-80 -mt-3" src="assets/images/isla0/cactus.svg"alt="">
                     </div>
+                    
+                    <div class="flex flex-col items-center justify-between p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
+                        <h3 class="text-center text-3xl text-blue-50 mt-8">Siguiente sonido</h3>
+                        <div class="flex flex-row gap-4">
+                            <img class="w-24" src="assets/images/isla0/serpiente.png"alt="">
+                            <img class="w-24" src="assets/images/guante.svg"alt="">
+                        </div>
+                        <img  class="w-24 opacity-25" src="assets/images/isla0/vaca.png"alt="">
+                        <img class="w-24 opacity-5" src="assets/images/isla0/vaca.png"alt="">
+                    </div>
+
+                </div>
+
+                <div class="flex gap-8 mb-4">
+                    <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
+                    @if(isCompleted){
+                        <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" />
+                    }
                 </div>
             </div>
-
-            <div class="flex gap-8 mb-4">
-                
-                <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
-                @if(isCompleted){
-                    <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" />
-                }
-
-            </div>
-        </div>
         </div>
     </section>
     }
