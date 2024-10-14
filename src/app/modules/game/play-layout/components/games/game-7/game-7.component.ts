@@ -24,7 +24,12 @@ export class Game7Component {
   isCompleted = false
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   audios = ['assets/audios/fonema_k.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_s.wav', 'assets/audios/fonema_ch.wav','assets/audios/fonema_m.wav']
-  sounds = [false, false, false, false, false]
+  itemsCompleted = [false, false, false, false, false]
+  yItemsEnd = [558, 605, 710, 810, 915]
+  lastItemY = 0
+  correctItems = [false, false, true, false, true]
+  sizeCorrectItems = 2
+  intents = 2
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
@@ -56,20 +61,41 @@ export class Game7Component {
     this.interval = setInterval(() => {
       this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(${count}px)`);
       count++
-      if(count > 1000){
+      if(count > 960){
         clearInterval(this.interval)
+        if(this.sizeCorrectItems > 0){
+          this.isCompleted = true
+          this._toastService.toast.set({ type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => { 
+            this._toastService.toast.set(undefined)
+          }})
+        }
+      }
+      
+      if(count > this.yItemsEnd[this.lastItemY]){
+        this.itemsCompleted[this.lastItemY] = true
+        this.lastItemY++
       }
     }, 20);
   }
 
   handleClick(btn: number){
-    this.sounds[btn] = true;
+    this.itemsCompleted[btn] = true;
     (document.getElementById('audio'+btn) as HTMLAudioElement).play();
 
-    if(this.sounds.every(res=>res===true)){
+    if(this.correctItems[btn]){
+      this.sizeCorrectItems--
+    }else{
+      this.intents--
+    }
+
+    if(this.sizeCorrectItems == 0 && this.intents>0){
       clearInterval(this.interval)
       this.isCompleted = true
       this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
+        this._toastService.toast.set(undefined)
+      }})
+    }else if(this.intents == 0){
+      this._toastService.toast.set({ type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => { 
         this._toastService.toast.set(undefined)
       }})
     }

@@ -10,7 +10,7 @@
             <div class="toast__cell">
 
                 <div class="toast"
-                    [ngClass]="data.type=='s'? 'toast__green':'' && data.type=='i'? 'toast__blue':'' && data.type=='w'? 'toast__yellow':''">
+                    [ngClass]="data.type=='s'? 'toast__green':'' || data.type=='i'? 'toast__blue':'' || data.type=='w'? 'toast__yellow':''">
                     <div class='toast__icon'>
                         <div class="icon" [ngStyle]="{
                         'background': color[data.type].color,
