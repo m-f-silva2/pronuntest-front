@@ -86,7 +86,9 @@ module.exports = {
       },
     },
     fontFamily: {
-      knightwarrior: ['knight-warrior', 'sans-serif'],
+      ShadyLane: ['ShadyLane', 'sans-serif'],
+      Flippinfont: ['Flippinfont', 'sans-serif'],
+      Pingsan: ['Pingsan', 'sans-serif'],
       poppins: ['Poppins', 'system-ui', 'sans-serif'],
       nunito: ['Nunito Sans', 'sans-serif'],
     },

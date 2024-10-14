@@ -7,39 +7,34 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   template: `
   <div class="h-full relative" (click)="handleClick()">
   @if (data.state === 'unlock') {
-    <div class="animate-bounce text-5xl text-sky-200 absolute bottom-7 left-4 font-knightwarrior drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+    <div class="animate-bounce text-4xl text-[#e9e0cf] absolute -bottom-7 left-4 font-ShadyLane drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
       {{data.level}}
     </div>
   }@else{
-    <svg class="text-5xl absolute bottom-7 left-2" width="40" height="45" viewBox="0 0 40 45" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g filter="url(#filter0_d_290_28)">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M20 0.5C26.6274 0.5 31.5 4.17509 31.5 10V11H33.5C33.5 11 39 15.365 39 25.5001C39 35.7173 30.4934 42 20 42C9.50659 42 1 35.7173 1 25.5001C1 15.2828 6.5 11 6.5 11H8.5V10C8.5 4.17509 13.3726 0.5 20 0.5ZM20 5.5C23.8199 5.5 25.9488 7.47681 25.9991 11H14.0009C14.0512 7.47681 16.1801 5.5 20 5.5ZM24.5 21C24.5 23 22.9176 23.8266 21.5 24.5L23.5 32H16.4331L18.5 24.5C17.0824 23.8266 15.5 23 15.5 21C15.5 18.7909 17.5147 16.5 20 16.5C22.4853 16.5 24.5 18.7909 24.5 21Z" fill="#D9D9D9"/>
-      </g>
-      <defs>
-      <filter id="filter0_d_290_28" x="0" y="0.5" width="40" height="44.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="2"/>
-      <feGaussianBlur stdDeviation="0.5"/>
-      <feComposite in2="hardAlpha" operator="out"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.39 0"/>
-      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_290_28"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_290_28" result="shape"/>
-      </filter>
-      </defs>
-    </svg>
+    
+    <svg class="absolute -bottom-9 left-4" width="21" height="21" viewBox="0 0 30 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+    
+<g filter="url(#filter0_i_425_63)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.6228 1C22.6485 1.5689 25.2314 3.44138 24.9085 6.29313L24.8531 6.78271L26.3698 6.95439C26.3698 6.95439 30.2986 9.5635 29.7369 14.5254C29.7369 22.5001 20.1232 22.4008 12.1659 21.5001C3.99998 19.5001 0.354686 16.2656 0.920929 11.2635C1.48717 6.26132 5.89526 4.63668 5.89526 4.63668L7.41189 4.80836L7.46731 4.31878C7.79012 1.46703 12.5971 0.431096 17.6228 1ZM16.4373 3.10285C19.334 3.43075 20.8389 4.58131 20.6817 6.3105L12.1659 5.5C12.3992 3.77943 13.5406 2.77495 16.4373 3.10285ZM18.9907 11.0776C18.8799 12.0568 17.6341 12.3256 16.5218 12.5336L17.6228 16.3771L12.2639 15.7705L14.2469 12.2761C13.2092 11.8247 12.055 11.2842 12.1659 10.305C12.2883 9.22349 13.9431 8.27488 15.8277 8.48822C17.7123 8.70156 19.1132 9.99606 18.9907 11.0776Z" fill="#ADADAD"/>
+</g>
+<defs>
+<filter id="filter0_i_425_63" x="0.863922" y="0.849854" width="28.9279" height="22.0625" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_425_63"/>
+</filter>
+</defs>
+</svg>
+
+
+
   }
-  <svg class="w-full h-full" width="30" height="20" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M29.95 11C29.95 13.4608 28.2873 15.6972 25.5809 17.3211C22.8754 18.9443 19.1346 19.95 15 19.95C10.8654 19.95 7.12458 18.9443 4.41912 17.3211C1.71267 15.6972 0.05 13.4608 0.05 11C0.05 8.53916 1.71267 6.30276 4.41912 4.67888C7.12458 3.05561 10.8654 2.04997 15 2.04997C19.1346 2.04997 22.8754 3.05561 25.5809 4.67888C28.2873 6.30276 29.95 8.53916 29.95 11Z" fill="#565656" stroke="#272727" stroke-width="0.1"/>
-      <path d="M29.95 9.00001C29.95 11.4608 28.2873 13.6972 25.5809 15.3211C22.8754 16.9444 19.1346 17.95 15 17.95C10.8654 17.95 7.12458 16.9444 4.41912 15.3211C1.71267 13.6972 0.05 11.4608 0.05 9.00001C0.05 6.53919 1.71267 4.30279 4.41912 2.67892C7.12458 1.05564 10.8654 0.05 15 0.05C19.1346 0.05 22.8754 1.05564 25.5809 2.67892C28.2873 4.30279 29.95 6.53919 29.95 9.00001Z" fill="url(#paint0_linear_80_6364)" stroke="black" stroke-width="0.1"/>
-      <defs>
-        <linearGradient id="paint0_linear_80_6364" x1="15" y1="18" x2="23" y2="-1.94131e-06" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#F4F4F4"/>
-        <stop offset="1" stop-color="#BEBEBE"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
+  <img src="assets/images/level_base.svg" alt="" srcset="">
   `
 })
 export class BtnLevelComponent {

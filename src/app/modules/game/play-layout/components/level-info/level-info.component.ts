@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-level-info',
   standalone: true,
-  imports: [],
+  imports: [BtnImgComponent],
   templateUrl: './level-info.component.html',
   styleUrl: './level-info.component.css'
 })

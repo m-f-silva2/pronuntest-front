@@ -1,37 +1,39 @@
-<div class="h-screen w-screen overflow-hidden  bg-cyan-300  relative flex justify-center items-center">
+<div
+    class="font-Flippinfont container-home h-screen w-screen overflow-hidden relative flex justify-center items-center">
     <!-- Clouds -->
     <div class="fixed top-0 z-0 w-screen overflow-hidden">
         <img class="w-full min-w-[1300px]" src="assets/images/clouds.svg" alt="">
     </div>
-    <div class="relative flex justify-center flex-col items-center ">
-        <div class="-mb-10 bg-blue-700 h-fit z-10 relative w-fit p-4 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2">
-            SELECCIONA EL FONEMA
+
+
+    <div class="relative z-10 flex justify-center flex-col items-center mb-14">
+        <div class="title-home text-3xl z-10 -mb-11 w-fit px-14 py-5  text-orange-100  ">
+            Selecciona el Fonema
         </div>
+        <div class="container_border flex justify-center flex-col items-center skew-x-1">
 
-        <div
-            class="border-blue-800 border-[1rem] backdrop-blur-sm bg-white/35 h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 pt-20 flex-wrap">
+            <div class="container_border_content items-center backdrop-blur-sm h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 flex-wrap">
 
-            <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                <p class="font-bold text-3xl text-center mb-2">Vocales</p>
-                <a
-                    class="-mb-8 block bg-green-600 h-fit z-10 text-2xl relative w-fit px-6 py-2 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
-                    href="https://itch.io/embed-upload/11194872?color=333333">
-                    Jugar
-                </a>
-            </div>
-            @for (item of phonemes; track $index) {
-                <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
-                    <p class="font-bold text-3xl text-center mb-2">{{item.name}}</p>
-                    <button
-                        [class]="item.styleClass"
-                        (click)="selectPhoneme(item.name)"
-                        [routerLink]="item.link">
-                        <img [hidden]="item.hideLock" src="assets/images/padlock.svg" alt="">
-                        {{item.label}}
-                    </button>
+                <div class="card-level min-w-32  rotate-1 rounded-2xl w-fit px-3 py-4  text-white h-fit">
+                    <p class="font-bold text-3xl text-center mb-4">Vocales</p>
+                    <a class="block h-fit z-10 text-2xl relative w-fit"
+                        href="https://itch.io/embed-upload/11194872?color=333333">
+                        <btn-img [title]="'Jugar'" [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
+                    </a>
                 </div>
-            }
-            <!-- <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
+
+                @for (item of phonemes; track $index; let odd = $odd) {
+                <div
+                    class="card-level  min-w-32  rounded-2xl w-fit px-4 py-4 skew-x-1 text-white h-fit {{odd?'rotate-2':'-rotate-1'}}">
+                    <p class="font-bold text-3xl text-center mb-4">{{item.name}}</p>
+                    <btn-img [title]="item.label" class="text-xl" [routerLink]="item.link" [type]="'orange'"
+                        [imgPath]="'assets/images/'+(!item.hideLock?'padlock-white.svg':'play.svg')"
+                        (eventClick)="selectPhoneme(item.name)" />
+
+                    <!-- item.hideLock -->
+                </div>
+                }
+                <!-- <div class="border-cyan-200 border-2 bg-blue-600 rounded-2xl w-fit px-3 py-4 skew-x-1 text-white h-fit">
                 <p class="font-bold text-xl text-center mb-2">Pino</p>
                 <button
                     class="-mb-8 block bg-yellow-600 h-fit z-10 relative w-fit px-2 py-1 rounded-xl font-bold text-yellow-50 border-yellow-950 border-2"
@@ -42,11 +44,12 @@
             </div> -->
 
 
-        </div>
+            </div>
 
+        </div>
     </div>
 
-    
+    <img class="absolute bottom-0 z-0 w-full max-w-full"  src="assets/images/isla1_bottom.svg"  alt="">
 
 
 </div>

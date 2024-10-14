@@ -1,0 +1,184 @@
+
+
+.red span {
+    color: white;
+    font-weight: 600;
+    text-shadow:
+        2px 0 #8a1c1c,
+        -2px 0 #8a1c1c,
+        0 2px #8a1c1c,
+        0 -2px #8a1c1c,
+        1px 1px #8a1c1c,
+        -1px -1px #8a1c1c,
+        1px -1px #8a1c1c,
+        -1px 1px #8a1c1c;
+}
+
+.yellow span {
+    color: white;
+    font-weight: 600;
+    text-shadow:
+        2px 0 #8a7f1c,
+        -2px 0 #8a7f1c,
+        0 2px #8a7f1c,
+        0 -2px #8a7f1c,
+        1px 1px #8a7f1c,
+        -1px -1px #8a7f1c,
+        1px -1px #8a7f1c,
+        -1px 1px #8a7f1c;
+}
+
+.green span {
+    color: white;
+    font-weight: 600;
+    text-shadow:
+        2px 0 #3B8A1C,
+        -2px 0 #3B8A1C,
+        0 2px #3B8A1C,
+        0 -2px #3B8A1C,
+        1px 1px #3B8A1C,
+        -1px -1px #3B8A1C,
+        1px -1px #3B8A1C,
+        -1px 1px #3B8A1C;
+}
+
+.orange span {
+    color: white;
+    font-weight: 600;
+    text-shadow:
+        2px 0 #8a671c,
+        -2px 0 #8a671c,
+        0 2px #8a671c,
+        0 -2px #8a671c,
+        1px 1px #8a671c,
+        -1px -1px #8a671c,
+        1px -1px #8a671c,
+        -1px 1px #8a671c;
+}
+
+
+.green {
+    min-width: 2.46rem;
+    background: linear-gradient(-45deg, #93e23e, #85D234);
+    border-radius: 1rem;
+    border-top: solid 2px #3b8a1c6b;
+    border-right: solid 2px #3b8a1ca8;
+    border-left: solid 2px #3B8A1C;
+    border-bottom: solid 2px #3B8A1C;
+    box-shadow: 0px 0px 1px 3px #FFFFFF, inset 4px 5px 2px -2px #afff8f,
+        inset -3px -4px 2px -2px #3b8a1ca8, 0px 0px 2px 4px #0000005e;
+    padding: 0.38rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    
+}
+
+.green:hover {
+    filter: brightness(1.1);
+}
+
+.green:active {
+    filter: contrast(1.2) brightness(0.9);
+}
+
+.green img {
+    /* filter: invert(1) hue-rotate(180deg) drop-shadow(-1px 1px 1px #3B8A1C); */
+    max-width: 1.22rem;
+    max-height: 1.22rem;
+    font-weight: 600;
+    fill: white;
+}
+
+.orange {
+    min-width: 2.46rem;
+    background: radial-gradient( #ffc593, #f88e2b);
+    border-radius: 1rem;
+    border-top: solid 2px #634d106b;
+    border-right: solid 2px #8a5e1ca8;
+    border-left: solid 2px #6e5113;
+    border-bottom: solid 2px #8a631c;
+    box-shadow: 0px 0px 1px 3px #FFFFFF, inset 4px 5px 2px -2px #ffce8f,
+        inset -3px -4px 2px -2px #6e4b16a8, 0px 0px 2px 4px #0000005e;
+    padding: 0.38rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.orange:hover {
+    filter: brightness(1.1);
+}
+
+.orange:active {
+    filter: contrast(1.2) brightness(0.9);
+}
+
+.orange img {
+    /* filter: invert(1) hue-rotate(180deg) drop-shadow(-1px 1px 1px #8a7f1c); */
+    max-width: 1.22rem;
+    max-height: 1.22rem;
+    font-weight: 600;
+    fill: white;
+}
+
+.red {
+    min-width: 2.46rem;
+    background: linear-gradient(-45deg, #ec5348, #E14135);
+    border-radius: 1rem;
+    border-top: solid 2px #8a1c1c6b;
+    border-right: solid 2px #8a1c1ca8;
+    border-left: solid 2px #8a1c1c;
+    border-bottom: solid 2px #8a1c1c;
+    box-shadow: 0px 0px 1px 3px #FFFFFF, inset 4px 5px 2px -2px #ff8f8f,
+        inset -3px -4px 2px -2px #8a1c1ca8, 0px 0px 2px 4px #0000005e;
+    padding: 0.38rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.red:hover {
+    filter: brightness(1.1);
+}
+
+.red:active {
+    filter: contrast(1.2) brightness(0.9);
+}
+
+.red img {
+    /* filter: invert(1) hue-rotate(180deg) drop-shadow(-1px 1px 1px #8a1c1c); */
+    max-width: 1.22rem;
+    max-height: 1.22rem;
+    font-weight: 600;
+    fill: white;
+}
+
+img {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    filter: drop-shadow(1px 1px 0px red) drop-shadow(1px -1px 0px red) drop-shadow(-2px -0px 0px red);
+}
+
+span {
+    margin-right: 0.5rem;
+}
+
+
+
+
+.red img {
+    filter: drop-shadow(1px 2px 0px #8a1c1c) drop-shadow(1px -1px 0px #8a1c1c) drop-shadow(-2px -0px 0px #8a1c1c);
+}
+.yellow img {
+    filter: drop-shadow(1px 2px 0px #8a7f1c) drop-shadow(1px -1px 0px #8a7f1c) drop-shadow(-2px -0px 0px #8a7f1c);
+}
+.green img {
+    filter: drop-shadow(1px 2px 0px #3B8A1C) drop-shadow(1px -1px 0px #3B8A1C) drop-shadow(-2px -0px 0px #3B8A1C);
+}
+.orange img {
+    filter: drop-shadow(1px 2px 0px #8a671c) drop-shadow(1px -1px 0px #8a671c) drop-shadow(-2px -0px 0px #8a671c);
+}
