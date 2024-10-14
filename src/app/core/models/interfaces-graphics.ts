@@ -24,7 +24,7 @@ export interface OrganizedData {
     other: string;
     image: string;
     avatar: string;
-    users_id: number;
+    user_id: number;
     identification: number;
     gender: string;
     age: number;

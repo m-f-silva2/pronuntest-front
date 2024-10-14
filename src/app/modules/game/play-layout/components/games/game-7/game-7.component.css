@@ -1,43 +1,43 @@
 .spinner {
-    width: 9rem;
-    height: 9rem;
-    position: relative;
-  }
-  .spinner circle {
-    fill: none;
-    stroke-linecap: butt;
-    stroke-width: var(--stroke-width, 3);
-  }
-  .spinner .ring {
-    stroke: #000;
-    opacity: 0.1;
-  }
-  .spinner .line {
-    stroke: #0ebeff;
-    stroke-width: 3;
-    stroke-dasharray: var(--stroke-dasharray);
-    stroke-dashoffset: var(--stroke-dashoffset);
-    -webkit-animation: 943ms spinner-rotate linear infinite;
-            animation: 943ms spinner-rotate linear infinite;
-  }
-  .spinner .text {
-    font-size: 0.6rem;
-    font-weight: 300;
-    fill: rgba(0, 0, 0, 0.4);
-  }
+  width: 9rem;
+  height: 9rem;
+  position: relative;
+}
+.spinner circle {
+  fill: none;
+  stroke-linecap: butt;
+  stroke-width: var(--stroke-width, 3);
+}
+.spinner .ring {
+  stroke: #000;
+  opacity: 0.1;
+}
+.spinner .line {
+  stroke: #0ebeff;
+  stroke-width: 3;
+  stroke-dasharray: var(--stroke-dasharray);
+  stroke-dashoffset: var(--stroke-dashoffset);
+  -webkit-animation: 943ms spinner-rotate linear infinite;
+          animation: 943ms spinner-rotate linear infinite;
+}
+.spinner .text {
+  font-size: 0.6rem;
+  font-weight: 300;
+  fill: rgba(0, 0, 0, 0.4);
+}
 
-  
-  .container_border {
-    background: linear-gradient(170.37deg, #A3E8FF 39.58%, #5AD0F2 93.33%);
-    overflow: hidden;
-    border-radius: 80px;
-    padding: 1rem;
-    border: solid 1px #ffffff17;
-    box-shadow: 0px 6px 19.4px rgba(0, 0, 0, 0.24);
+
+.container_border {
+  background: linear-gradient(170.37deg, #A3E8FF 39.58%, #5AD0F2 93.33%);
+  overflow: hidden;
+  border-radius: 80px;
+  padding: 1rem;
+  border: solid 1px #ffffff17;
+  box-shadow: 0px 6px 19.4px rgba(0, 0, 0, 0.24);
 }
 
 .container_border_content {
-    border-radius: 60px;
-    background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
-    box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
+  border-radius: 60px;
+  background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
+  box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
 }

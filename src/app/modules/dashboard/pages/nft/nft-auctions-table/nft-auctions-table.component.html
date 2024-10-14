@@ -1,8 +1,8 @@
 <div class="flex-col rounded-lg bg-background px-8 py-8 sm:flex-row w-full">
   <div class="mb-4 flex items-center justify-between">
     <div class="flex-col items-center">
-      <h3 class="text-md font-bold text-foreground">Active Auctions</h3>
-      <span class="text-xs text-muted-foreground">Updated 37 minutes ago</span>
+      <h3 class="text-md font-bold text-foreground">Seleccionar paciente</h3>
+      <!--<span class="text-xs text-muted-foreground">Updated 37 minutes ago</span>-->
     </div>
     <!--<button
       class="flex-none rounded-md bg-card px-4 py-2.5 text-xs font-semibold text-muted-foreground hover:bg-muted hover:text-foreground">
@@ -10,7 +10,12 @@
     </button>-->
     <!-- Buscador -->
     <div class="mb-4">
-      <input type="text" placeholder="Buscar..." (input)="filterTable($event)" class="w-full p-2 border border-gray-300 rounded-md" />
+      <input 
+        type="text" 
+        placeholder="Buscar..." 
+        (input)="filterTable($event)" 
+        class="w-full p-2 border border-gray-300 rounded-md" 
+      />
     </div>
   </div>
 
@@ -24,6 +29,7 @@
           <th class="py-3 text-right">Género</th>
           <th class="py-3 text-right">Edad</th>
           <th class="py-3 text-right">Condición</th>
+          <th class="py-3 text-right">Acción</th>
           <!--<th class="py-3 text-right">Fecha de ingreso</th>-->
           <!--<th class="py-3 text-right">Progreso actual</th>-->
           
@@ -31,10 +37,19 @@
       </thead>
       <!--end Table head-->
       <!--Table body-->
-      <tbody>
+      <tbody *ngIf="filteredData.length != undefined">
+        <tr
+          *ngFor="let auction of filteredData"
+          [auction]="auction"
+          [isAssignmentUser]="isAssignmentUser"
+          nft-auctions-table-item
+          class="border-b border-dashed border-border hover:bg-card"></tr>
+      </tbody>
+      <tbody *ngIf="filteredData.length == undefined">
         <tr
           *ngFor="let auction of data"
           [auction]="auction"
+          [isAssignmentUser]="isAssignmentUser"
           nft-auctions-table-item
           class="border-b border-dashed border-border hover:bg-card"></tr>
       </tbody>
