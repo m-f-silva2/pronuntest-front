@@ -16,21 +16,11 @@
                         ">
                         <div class="relative  w-full h-full overflow-hidden select-none">
                             <div class="relative w-full h-full -top-4 " #containerIMG>
-                                <div (click)="handleClick(0)" class="{{itemsCompleted[0]?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img0 absolute -top-[15%] left-[8%]">
-                                    <img src="assets/images/isla0/burbujas.png" alt="">
-                                </div>
-                                <div (click)="handleClick(1)" class="{{itemsCompleted[1]?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img1 absolute -top-[30%] left-[70%]">
-                                    <img src="assets/images/isla0/globo.png"    alt="">
-                                </div>
-                                <div (click)="handleClick(2)" class="{{itemsCompleted[2]?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img2 absolute -top-[40%] left-[30%]">
-                                    <img src="assets/images/isla0/serpiente.png"alt="">
-                                </div>
-                                <div (click)="handleClick(3)" class="{{itemsCompleted[3]?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img3 absolute -top-[60%] left-[67%]">
-                                    <img src="assets/images/isla0/tren.png"     alt="">
-                                </div>
-                                <div (click)="handleClick(4)" class="{{itemsCompleted[4]?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img4 absolute -top-[80%] left-[20%">
-                                    <img src="assets/images/isla0/vaca.png"     alt="">
-                                </div>
+                                @for (resource of itemsResources; track $index) {
+                                    <div (click)="handleClick($index)" class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img0 absolute -top-[{{resource.top}}] left-[{{resource.left}}]">
+                                        <img [src]="resource.img" alt="" class="w-16">
+                                    </div>
+                                }
                             </div>
                         </div>
                         <img class="w-80 -mt-3" src="assets/images/isla0/cactus.svg"alt="">
@@ -38,12 +28,18 @@
                     
                     <div class="flex flex-col items-center justify-between p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
                         <h3 class="text-center text-3xl text-blue-50 mt-8">Siguiente sonido</h3>
-                        <div class="flex flex-row gap-4">
-                            <img class="w-24" src="assets/images/isla0/serpiente.png"alt="">
-                            <img class="w-24" src="assets/images/guante.svg"alt="">
-                        </div>
-                        <img  class="w-24 opacity-25" src="assets/images/isla0/vaca.png"alt="">
-                        <img class="w-24 opacity-5" src="assets/images/isla0/vaca.png"alt="">
+                        @for (item of correctItemsResources; track $index; let first = $first) {
+                            @if (!item.completed) {
+                                @if (first || $index == (this.correctItemsResources.length - this.sizeCorrectItems) ) {
+                                    <div class="flex flex-row gap-4">
+                                        <img (click)="handleClickNextAudio(item.audio)" class="w-24 opacity-100" [src]="item.img" alt="">
+                                        <img class="w-24" src="assets/images/guante.svg"alt="">
+                                    </div>
+                                }@else{
+                                    <img (click)="handleClickNextAudio(item.audio)"  class="w-24 opacity-25" [src]="item.img" alt="">
+                                }
+                            }
+                        }
                     </div>
 
                 </div>
@@ -59,6 +55,7 @@
     </section>
     }
 </main>
-@for (audio of audios; track $index) {
+<!-- @for (audio of audios; track $index) {
     <audio class="hidden" [id]="'audio'+$index"  [src]="audio"></audio>
-}
+} -->
+<audio class="hidden" id="audioAux"  [src]="audio"></audio>
