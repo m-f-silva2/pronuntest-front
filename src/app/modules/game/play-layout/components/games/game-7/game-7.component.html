@@ -12,12 +12,14 @@
 
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
 
-                    <div class="flex flex-col h-full w-full max-w-lg items-center 
-                        ">
+                    <div class="flex flex-col h-full w-full max-w-lg items-center ">
                         <div class="relative  w-full h-full overflow-hidden select-none">
                             <div class="relative w-full h-full -top-4 " #containerIMG>
-                                @for (resource of itemsResources; track $index) {
-                                    <div (click)="handleClick($index)" class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] bg-cover w-24 h-24 aspect-square flex justify-center items-center img0 absolute -top-[{{resource.top}}] left-[{{resource.left}}]">
+                                @for (resource of itemsResources; track resource.id; let index = $index) {
+                                    <div (click)="handleClick(index)" 
+                                    [style]="'top:' + resource.top+'%; left:'+resource.left+'%'"
+                                    
+                                    class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] absolute  bg-cover w-24 h-24 aspect-square flex justify-center items-center">
                                         <img [src]="resource.img" alt="" class="w-16">
                                     </div>
                                 }
@@ -26,7 +28,7 @@
                         <img class="w-80 -mt-3" src="assets/images/isla0/cactus.svg"alt="">
                     </div>
                     
-                    <div class="flex flex-col items-center justify-between p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
+                    <div class="flex flex-col items-center justify-start gap-20 p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
                         <h3 class="text-center text-3xl text-blue-50 mt-8">Siguiente sonido</h3>
                         @for (item of correctItemsResources; track $index; let first = $first) {
                             @if (!item.completed) {

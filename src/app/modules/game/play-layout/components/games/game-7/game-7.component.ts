@@ -15,14 +15,15 @@ import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.compo
   styleUrl: './game-7.component.css'
 })
 export class Game7Component {
+  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  blockBtn = false
+  interval: any
   sumaryActivity: SumaryActivities | undefined
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections: any[] = []
   section = 0
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
-  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   audios = [
     'assets/audios/fonema_k.wav',
     'assets/audios/fonema_p.wav',
@@ -30,25 +31,23 @@ export class Game7Component {
     'assets/audios/fonema_ch.wav',
     'assets/audios/fonema_m.wav'
   ]
-  /* itemsCompleted = [false, false, false, false, false]
-  yItemsEnd      = [558, 605, 710, 810, 915] */
   posCurrentDown = 0
-  /* correctItems = [false, true, false, true, true]  */
   itemsResources = [
-    { completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav',  yEnd: 558, top: '15%', left: '8%' },
-    { completed: false, img: 'assets/images/isla0/globo.png',    audio: 'assets/audios/fonema_p.wav',  yEnd: 605, top: '30%', left: '70%' },
-    { completed: false, img: 'assets/images/isla0/serpiente.png',audio: 'assets/audios/fonema_s.wav',  yEnd: 710, top: '40%', left: '30%' },
-    { completed: false, img: 'assets/images/isla0/tren.png',     audio: 'assets/audios/fonema_ch.wav', yEnd: 810, top: '60%', left: '67%' },
-    { completed: false, img: 'assets/images/isla0/vaca.png',     audio: 'assets/audios/fonema_m.wav',  yEnd: 915, top: '80%', left: '20%' },
+    { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558,  top: 16, left: 8 },
+    { id: 1, completed: false, img: 'assets/images/isla0/globo.png', audio: 'assets/audios/fonema_p.wav', yEnd: 605,     top: 31, left: 70 },
+    { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: 41, left: 30 },
+    { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810,     top: 61, left: 67 },
+    { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915,      top: 81, left: 20 },
   ]
   correctItemsResources = [
     { completed: false, pos: 1, audio: 'assets/audios/fonema_s.wav', img: 'assets/images/isla0/globo.png' },
     { completed: false, pos: 3, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/isla0/tren.png' },
     /* { completed: false, pos: 4, audio: 'assets/audios/fonema_m.wav', img: 'assets/images/isla0/vaca.png' }, */
   ]
-  sizeCorrectItems = 2
-  intents = 2
-  audio: string = ''
+  sizeCorrectItems = this.correctItemsResources.length;
+  intents = 2;
+  audio: string = '';
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
@@ -63,7 +62,17 @@ export class Game7Component {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
+  }
 
+  ngAfterViewInit() {
+      this.itemsResources = [
+        { id: 5, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558, top: -15, left: 8 },
+        { id: 6, completed: false, img: 'assets/images/isla0/globo.png', audio: 'assets/audios/fonema_p.wav', yEnd: 605, top: -30, left: 70 },
+        { id: 7, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: -40, left: 30 },
+        { id: 8, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810, top: -60, left: 67 },
+        { id: 9, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915, top: -80, left: 20 },
+      ]
+      this.ref.detectChanges()
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -72,8 +81,6 @@ export class Game7Component {
     this.section += direction
   }
 
-  blockBtn = false
-  interval: any
   animation() {
     this.blockBtn = true
     let count = 0
@@ -83,7 +90,7 @@ export class Game7Component {
       if (count > 950) {
         clearInterval(this.interval)
         if (this.sizeCorrectItems > 0) {
-          this.isCompleted = true
+          /* this.isCompleted = true */
           this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
           this._toastService.toast.set({
             type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => {
@@ -92,7 +99,7 @@ export class Game7Component {
           })
         }
       }
-      
+
       if (this.posCurrentDown < this.itemsResources.length && count > this.itemsResources[this.posCurrentDown].yEnd) {
         this.itemsResources[this.posCurrentDown].completed = true
         this.posCurrentDown++
@@ -102,7 +109,6 @@ export class Game7Component {
 
   handleClick(btn: number) {
     this.itemsResources[btn].completed = true
-    /* this.itemsCompleted[btn] = true; */
     this.handleClickNextAudio(this.itemsResources[btn].audio)
 
     if (this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].pos == btn) {
@@ -113,17 +119,16 @@ export class Game7Component {
     }
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
-      clearInterval(this.interval)
+      this.restart()
+      this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
       this.isCompleted = true
-      this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
       this._toastService.toast.set({
         type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
           this._toastService.toast.set(undefined)
         }
       })
     } else if (this.intents == 0) {
-      clearInterval(this.interval)
-      this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
+      this.restart()
       this._toastService.toast.set({
         type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => {
           this._toastService.toast.set(undefined)
@@ -132,12 +137,15 @@ export class Game7Component {
     }
   }
 
-  restart(){
+  restart() {
     this.isCompleted = false
     clearInterval(this.interval)
-    this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`); 
-    this.itemsResources.forEach(res=>res.completed=false)
-    this.correctItemsResources.forEach(res=>res.completed=false)
+    this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
+    this.itemsResources.forEach(res => res.completed = false)
+    this.correctItemsResources.forEach(res => res.completed = false)
+    this.sizeCorrectItems = this.correctItemsResources.length
+    this.intents = 2
+    this.audio = ''
   }
 
   handleClickNextAudio(_audio: string) {
