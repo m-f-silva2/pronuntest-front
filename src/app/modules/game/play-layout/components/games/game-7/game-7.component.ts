@@ -38,11 +38,11 @@ export class Game7Component {
     { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: -41, left: 30 },
     { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810,     top: -61, left: 67 },
     { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915,      top: -81, left: 20 },
-    { id: 5, completed: false, img: 'assets/images/isla0/abeja.svg', audio: 'assets/audios/fonema_m.wav', yEnd: 1000,      top: -91, left: 80 },
+    { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1000,      top: -91, left: 80 },
   ]
   correctItemsResources = [
-    { completed: false, pos: 1, audio: 'assets/audios/fonema_s.wav', img: 'assets/images/isla0/globo.svg' },
-    { completed: false, pos: 3, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/isla0/tren.png' },
+    { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
+    { completed: false, pos: 5, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
     /* { completed: false, pos: 4, audio: 'assets/audios/fonema_m.wav', img: 'assets/images/isla0/vaca.png' }, */
   ]
   sizeCorrectItems = this.correctItemsResources.length;

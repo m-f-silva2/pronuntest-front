@@ -34,6 +34,7 @@
                             @if (!item.completed) {
                                 @if (first || $index == (this.correctItemsResources.length - this.sizeCorrectItems) ) {
                                     <div class="flex flex-row gap-4">
+                                        <!-- question_mark -->
                                         <img (click)="handleClickNextAudio(item.audio)" class="w-24 opacity-100" [src]="item.img" alt="">
                                         <img class="w-24" src="assets/images/guante.svg"alt="">
                                     </div>
