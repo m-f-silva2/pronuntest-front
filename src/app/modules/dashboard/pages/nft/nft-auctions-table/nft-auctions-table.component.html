@@ -41,7 +41,8 @@
         <tr
           *ngFor="let auction of filteredData"
           [auction]="auction"
-          [isAssignmentUser]="isAssignmentUser"
+          [isAssignUser]="isAssignUser"
+          [isUnAssignUser]="isUnAssignUser"
           nft-auctions-table-item
           class="border-b border-dashed border-border hover:bg-card"></tr>
       </tbody>
@@ -49,7 +50,8 @@
         <tr
           *ngFor="let auction of data"
           [auction]="auction"
-          [isAssignmentUser]="isAssignmentUser"
+          [isAssignUser]="isAssignUser"
+          [isUnAssignUser]="isUnAssignUser"
           nft-auctions-table-item
           class="border-b border-dashed border-border hover:bg-card"></tr>
       </tbody>

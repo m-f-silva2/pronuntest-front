@@ -21,8 +21,14 @@
   <span class="text-sm font-semibold text-muted-foreground">{{ auction.condition }}</span>
 </td>
 <!-- Botón de asignación -->
-<td class="py-3 text-right" *ngIf="isAssignmentUser == true">
+<td class="py-3 text-right" *ngIf="isAssignUser == true">
   <button (click)="assignPatient(auction.user_id)" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
     Asignar Paciente
+  </button>
+</td>
+<!-- Botón de desasignación -->
+<td class="py-3 text-right" *ngIf="isUnAssignUser == true">
+  <button (click)="unassignPatient(auction.user_id)" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+    Desasignar Paciente
   </button>
 </td>

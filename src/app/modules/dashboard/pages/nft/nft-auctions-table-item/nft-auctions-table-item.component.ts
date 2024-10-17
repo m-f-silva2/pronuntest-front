@@ -14,7 +14,8 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
 })
 export class NftAuctionsTableItemComponent implements OnInit {
   @Input() auction = <Table>{};
-  @Input() isAssignmentUser = <Boolean> false;
+  @Input() isAssignUser = <Boolean> false;
+  @Input() isUnAssignUser = <Boolean> false;
 
   constructor(private _speechTherapyService: SpeechTherapyService) {
   }
@@ -38,6 +39,20 @@ export class NftAuctionsTableItemComponent implements OnInit {
       error => {
         console.error('Error al asignar paciente:', error);
         alert('Error al asignar paciente');
+      }
+    );
+  }
+  // Método para desasignar paciente
+  unassignPatient(user_id_patient: number): void {
+    // Llamar al servicio para insertar los datos en la tabla user_unassignment
+    this._speechTherapyService.unassignPatient(user_id_patient).subscribe(
+      response => {
+        console.log('Paciente desasignado correctamente:', response);
+        alert('Paciente desasignado correctamente');
+      },
+      error => {
+        console.error('Error al desasignar paciente:', error);
+        alert('Error al desasignar paciente');
       }
     );
   }
