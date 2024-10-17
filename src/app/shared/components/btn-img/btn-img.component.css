@@ -46,14 +46,14 @@
     color: white;
     font-weight: 600;
     text-shadow:
-        2px 0 #8a671c,
-        -2px 0 #8a671c,
-        0 2px #8a671c,
-        0 -2px #8a671c,
-        1px 1px #8a671c,
-        -1px -1px #8a671c,
-        1px -1px #8a671c,
-        -1px 1px #8a671c;
+        2px 0 #795a17,
+        -2px 0 #775816,
+        0 2px #6e5215,
+        0 -2px #6b4f13,
+        1px 1px #805f1a,
+        -1px -1px #7e5e19,
+        1px -1px #7c5c17,
+        -1px 1px #7a5b17;
 }
 
 

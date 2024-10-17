@@ -1,15 +1,14 @@
 <div class="h-screen w-screen overflow-hidden">
 
-    <a class="absolute top-4 left-4  flex items-center justify-center z-50" routerLink="/games">
+    <btn-img routerLink="/games" [title]="'Inicio'"  [type]="'green'" [imgPath]="'assets/images/home/home.svg'" class="w-40 block absolute top-4 left-4 z-50"/>
+    <btn-img (eventClick)="logoup()" [title]="'Cerrar sesión'"  [type]="'orange'" [imgPath]="'assets/icons/heroicons/outline/logout.svg'" class="w-40 break-keep absolute top-20 left-4 z-50"/>
+
+    <!-- <a class="absolute top-4 left-4  flex items-center justify-center z-50" routerLink="/games">
         <img src="assets/images/home.svg" alt="Isla" title="Isla"
         class="w-16 py-2 px-2 bg-cyan-200 rounded-full border-cyan-100 border-4 z-0">
-        
-        <!-- <div class="text-cyan-100 bg-cyan-400 border-cyan-200 border-4 rounded-r-lg w-16 -ml-3 text-end pr-2">
-            {{levelStructure?.isl_id}}
-        </div> -->
-    </a>
+    </a> -->
 
-    <div class="absolute top-20 left-4 flex items-center justify-center z-50">
+    <!-- <div class="absolute top-20 left-4 flex items-center justify-center z-50">
         @for (item of profileMenu; track $index) {
           <button
             (click)="logoup()"
@@ -19,41 +18,40 @@
             <svg-icon src="{{ item.icon }}" [svgClass]="'h-10 w-10 text-muted-foreground/50'"> </svg-icon>
           </button>
         }
-    </div>
+    </div> -->
 
     <div
-        class="background-container select-none flex box-content overflow-y-hidden overflow-x-scroll static m-0 p-0
-        ">
-        <div class="relative flex-shrink-0 w-screen h-dvh">
+        class="background-container select-none flex box-content overflow-y-hidden overflow-x-scroll static m-0 p-0">
+        <div class="relative flex-shrink-0 w-screen h-dvh pointer-events-none">
 
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
                 
                 <div class="h-full relative isla">
                     <img class="h-full min-w-[580px] -ml-12 -mt-28 sm:-mt-0 sm:-ml-0" src="assets/images/isla0/yate.svg" alt="">
                     
-                    <div class="absolute bottom-[52%] left-[23%] w-14 h-14 levelBtn3">
-                        <app-btn-level  class="h-full" [data]="btns[2]" (_handleClick)="handleBtnLevel($event)"/>
+                    <div class="absolute bottom-[52%] left-[23%] w-14 h-14 z-50">
+                        <app-btn-level  class="h-full pointer-events-auto" [data]="btns[2]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[40%] left-[63.5%] w-14 h-14 levelBtn3">
-                        <app-btn-level  class="h-full" [data]="btns[3]" (_handleClick)="handleBtnLevel($event)"/>
+                    <div class="absolute bottom-[40%] left-[63.5%] w-14 h-14">
+                        <app-btn-level  class="h-full pointer-events-auto" [data]="btns[3]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     
                 </div>
             </div>
             
             <div class="absolute z-10 left-36 bottom-56 xl:left-96 xl:bottom-44">
-                <div class="absolute bottom-28 left-[40.5%] w-14 h-14 levelBtn2">
-                    <app-btn-level  class="h-full" [data]="btns[1]" (_handleClick)="handleBtnLevel($event)"/>
+                <div class="absolute bottom-28 left-[40.5%] w-14 h-14">
+                    <app-btn-level  class="h-full pointer-events-auto" [data]="btns[1]" (_handleClick)="handleBtnLevel($event)"/>
                 </div>
                 <img class="w-full max-w-[180px]" src="assets/images/isla0/rock.svg"  alt="">
             </div>
 
-            <div class="absolute flex justify-start w-screen bottom-0  overflow-hidden select-all z-30">
+            <div class="absolute flex justify-start w-screen bottom-0  overflow-hidden z-30 select-none pointer-events-none">
                 <div class="relative w-full">
-                    <div class="absolute bottom-32 left-64 w-14 h-14 levelBtn1 z-30">
-                        <app-btn-level  class="h-full" [data]="btns[0]" (_handleClick)="handleBtnLevel($event)"/>
+                    <div class="absolute bottom-32 left-64 w-14 h-14 z-30 ">
+                        <app-btn-level  class="h-full pointer-events-auto" [data]="btns[0]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <img class="w-full max-w-[580px] "  src="assets/images/isla0/isla0_bottom.svg"  alt="">
+                    <img class="w-full max-w-[580px] relative z-0"  src="assets/images/isla0/isla0_bottom.svg"  alt="">
                 </div>
             </div>
 
@@ -72,13 +70,13 @@
                     <div class="absolute bottom-[30%] left-[41%] w-14 h-14 levelBtn2">
                         <app-btn-level  class="h-full" [data]="btns[5]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[41%] left-[33%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[41%] left-[33%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[6]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[58%] left-[46%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[58%] left-[46%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[7]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[70%] left-[36%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[70%] left-[36%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[8]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                 </div>
@@ -101,13 +99,13 @@
                     <div class="absolute bottom-[27%] left-[38%] w-14 h-14 levelBtn2">
                         <app-btn-level  class="h-full" [data]="btns[10]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[42%] left-[50%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[42%] left-[50%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[11]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[60%] left-[40%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[60%] left-[40%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[12]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[72%] left-[45%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[72%] left-[45%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[13]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                 </div>
@@ -128,13 +126,13 @@
                     <div class="absolute bottom-[30%] left-[38%] w-14 h-14 levelBtn2">
                         <app-btn-level  class="h-full" [data]="btns[15]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[41%] left-[35%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[41%] left-[35%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[16]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[58%] left-[59%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[58%] left-[59%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[17]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[79%] left-[39%] w-14 h-14 levelBtn3">
+                    <div class="absolute bottom-[79%] left-[39%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[18]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                 </div>

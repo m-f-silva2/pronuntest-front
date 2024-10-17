@@ -4,11 +4,12 @@ import { Router, RouterLink } from '@angular/router';
 import { IDataGame, GameService } from '../play-layout/game.service';
 import { find, Subject, takeUntil } from 'rxjs';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-islands',
   standalone: true,
-  imports: [BtnLevelComponent, RouterLink, AngularSvgIconModule],
+  imports: [BtnLevelComponent, RouterLink, AngularSvgIconModule, BtnImgComponent],
   templateUrl: './islands.component.html',
   styleUrl: './islands.component.css'
 })

@@ -44,7 +44,6 @@ export class Game5Component {
     ev.dataTransfer.setDragImage(ev.currentTarget,50,50);
     return true;
   }
-
   // these  prevents default behavior of browser
   dragEnter(event: any) {
     event.preventDefault();
@@ -53,7 +52,6 @@ export class Game5Component {
   dragOver(event: any) {
     event.preventDefault();
   }
-  
   // defined for when drop element on target
   dragDrop(ev: any) {
     const data = ev.dataTransfer.getData("Text");
@@ -64,6 +62,7 @@ export class Game5Component {
     }
     return false;
   }
+  /* END DROP */
 
   async handlePlay(key?:string){
     if(!key){
