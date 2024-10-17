@@ -35,6 +35,9 @@ export class NftAuctionsTableItemComponent implements OnInit {
       response => {
         console.log('Paciente asignado correctamente:', response);
         alert('Paciente asignado correctamente');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       },
       error => {
         console.error('Error al asignar paciente:', error);
@@ -49,6 +52,9 @@ export class NftAuctionsTableItemComponent implements OnInit {
       response => {
         console.log('Paciente desasignado correctamente:', response);
         alert('Paciente desasignado correctamente');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       },
       error => {
         console.error('Error al desasignar paciente:', error);
