@@ -3,9 +3,9 @@
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
     <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center">
-
         <div class="container_border h-full w-full max-w-7xl">
             <div class="container_border_content h-full flex flex-col gap-6 justify-between items-center px-16">
+                
                 <div class="w-fit mb-4 mt-11">
                     <btn-img (eventClick)="animation()" [title]="'Iniciar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"  class="w-fit"/>
                 </div>
@@ -57,7 +57,5 @@
     </section>
     }
 </main>
-<!-- @for (audio of audios; track $index) {
-    <audio class="hidden" [id]="'audio'+$index"  [src]="audio"></audio>
-} -->
+
 <audio class="hidden" id="audioAux"  [src]="audio"></audio>

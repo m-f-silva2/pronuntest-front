@@ -33,14 +33,15 @@ export class Game7Component {
   ]
   posCurrentDown = 0
   itemsResources = [
-    { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558,  top: 16, left: 8 },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.png', audio: 'assets/audios/fonema_p.wav', yEnd: 605,     top: 31, left: 70 },
-    { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: 41, left: 30 },
-    { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810,     top: 61, left: 67 },
-    { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915,      top: 81, left: 20 },
+    { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558,  top: -16, left: 8 },
+    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 605,     top: -31, left: 70 },
+    { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: -41, left: 30 },
+    { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810,     top: -61, left: 67 },
+    { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915,      top: -81, left: 20 },
+    { id: 5, completed: false, img: 'assets/images/isla0/abeja.svg', audio: 'assets/audios/fonema_m.wav', yEnd: 1000,      top: -91, left: 80 },
   ]
   correctItemsResources = [
-    { completed: false, pos: 1, audio: 'assets/audios/fonema_s.wav', img: 'assets/images/isla0/globo.png' },
+    { completed: false, pos: 1, audio: 'assets/audios/fonema_s.wav', img: 'assets/images/isla0/globo.svg' },
     { completed: false, pos: 3, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/isla0/tren.png' },
     /* { completed: false, pos: 4, audio: 'assets/audios/fonema_m.wav', img: 'assets/images/isla0/vaca.png' }, */
   ]
@@ -62,17 +63,6 @@ export class Game7Component {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
-  }
-
-  ngAfterViewInit() {
-      this.itemsResources = [
-        { id: 5, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558, top: -15, left: 8 },
-        { id: 6, completed: false, img: 'assets/images/isla0/globo.png', audio: 'assets/audios/fonema_p.wav', yEnd: 605, top: -30, left: 70 },
-        { id: 7, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: -40, left: 30 },
-        { id: 8, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810, top: -60, left: 67 },
-        { id: 9, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915, top: -80, left: 20 },
-      ]
-      this.ref.detectChanges()
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
