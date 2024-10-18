@@ -1,13 +1,13 @@
-<main class="w-full h-full">
+<main class="w-full h-[90%] font-Flippinfont ">
 
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
-    <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center p-2">
+        <section class="flex flex-col justify-center h-full w-full items-center ">
+            <div class="container_border h-full w-full max-w-7xl">
+                <div class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center px-16">
 
-        <div class="backdrop-blur-sm border-slate-500 border-2 rounded-2xl bg-sky-400/80 h-4/5 md:w-4/12
-            flex flex-col gap-6 justify-evenly items-center px-16
-            ">
+
             <h3 class="text-center font-bold text-4xl text-red-800">RECORDAR SECUENCIA DE SONIDOS</h3>
             <div>
                 <p>Reproducir sonido</p>
@@ -73,26 +73,15 @@
                 </div>
             </div>
             
+        </div>
+        </div>
 
-            <div class="flex gap-8 mb-4">
-                <button class="bg-primary p-4 rounded-lg rotate-180" (click)="btnsNavegation('previous')">
-                    <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
-                            fill="#DBE8EB" />
-                    </svg>
-                </button>
-                @if(this.isCompleted){
-
-                    <button class="bg-primary p-4 rounded-lg " (click)="btnsNavegation('endNext')">
-                        <svg width="28" height="15" viewBox="0 0 28 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                            d="M27.1871 8.22711C27.5776 7.83659 27.5776 7.20342 27.1871 6.8129L20.8232 0.448936C20.4326 0.0584122 19.7995 0.0584122 19.409 0.448936C19.0184 0.839461 19.0184 1.47263 19.409 1.86315L25.0658 7.52L19.409 13.1769C19.0184 13.5674 19.0184 14.2005 19.409 14.5911C19.7995 14.9816 20.4326 14.9816 20.8232 14.5911L27.1871 8.22711ZM0.52002 8.52H26.48V6.52H0.52002V8.52Z"
-                            fill="#DBE8EB" />
-                        </svg>
-                    </button>
-                }
-            </div>
+        <div class="flex gap-8 m-4">
+            <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
+            @if(isCompleted){
+                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+                class="animate-wiggle"/>
+            }
         </div>
     </section>
     }

@@ -6,11 +6,12 @@ import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-game-10',
   standalone: true,
-  imports: [LevelInfoComponent, CommonModule],
+  imports: [LevelInfoComponent, CommonModule, BtnImgComponent],
   templateUrl: './game-10.component.html',
   styleUrl: './game-10.component.css'
 })

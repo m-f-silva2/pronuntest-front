@@ -2,11 +2,12 @@ import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/co
 import { GameService } from '../../../game.service';
 import { Subject, takeUntil } from 'rxjs';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-game-3',
   standalone: true,
-  imports: [LevelInfoComponent],
+  imports: [LevelInfoComponent, BtnImgComponent],
   templateUrl: './game-3.component.html',
   styleUrl: './game-3.component.css'
 })

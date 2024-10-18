@@ -16,7 +16,6 @@ import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.compo
 })
 export class Game7Component {
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  blockBtn = false
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
@@ -24,6 +23,7 @@ export class Game7Component {
   countRecording = 0
   dataGames: IDataGame
   isCompleted = false
+  isRuning = false
   audios = [
     'assets/audios/fonema_k.wav',
     'assets/audios/fonema_p.wav',
@@ -33,12 +33,12 @@ export class Game7Component {
   ]
   posCurrentDown = 0
   itemsResources = [
-    { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 558,  top: -16, left: 8 },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 605,     top: -31, left: 70 },
-    { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 710, top: -41, left: 30 },
-    { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 810,     top: -61, left: 67 },
-    { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 915,      top: -81, left: 20 },
-    { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1000,      top: -91, left: 80 },
+    { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav',  yEnd: 758, top: -16, left: 8  },
+    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     yEnd: 805, top: -31, left: 70 },
+    { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 916, top: -41, left: 30 },
+    { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',     yEnd: 1022, top: -61, left: 67 },
+    { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav',      yEnd: 1138, top: -81, left: 20 },
+    { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     yEnd: 1287,top: -91, left: 80 },
   ]
   correctItemsResources = [
     { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
@@ -71,13 +71,17 @@ export class Game7Component {
     this.section += direction
   }
 
-  animation() {
-    this.blockBtn = true
+  animationOrPlay() {
+    setTimeout(() => {
+    this.handleClickNextAudio(this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].audio)
+    }, 380)
+    this.isRuning = true
     let count = 0
     this.interval = setInterval(() => {
       this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(${count}px)`);
-      count++
-      if (count > 950) {
+      count = count+2
+      
+      if (count > 1250) {
         clearInterval(this.interval)
         if (this.sizeCorrectItems > 0) {
           /* this.isCompleted = true */
@@ -85,6 +89,7 @@ export class Game7Component {
           this._toastService.toast.set({
             type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => {
               this._toastService.toast.set(undefined)
+              this.restart()
             }
           })
         }
@@ -104,6 +109,12 @@ export class Game7Component {
     if (this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].pos == btn) {
       this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true
       this.sizeCorrectItems--
+      //Calcular tiempo del sonido del objeto tocado y las felicitaciones
+      if(this.sizeCorrectItems != 0){
+        setTimeout(() => {
+          this.handleClickNextAudio('assets/audios/sonido_excelente.mp3')
+        }, 400);
+      }
     } else {
       this.intents--
     }
@@ -136,12 +147,15 @@ export class Game7Component {
     this.sizeCorrectItems = this.correctItemsResources.length
     this.intents = 2
     this.audio = ''
+    setTimeout(() => {
+      this.isRuning = false;
+    }, 1000);
   }
 
   handleClickNextAudio(_audio: string) {
     this.audio = _audio;
     setTimeout(() => {
       (document.getElementById('audioAux') as HTMLAudioElement).play();
-    }, 10);
+    }, 4);
   }
 }

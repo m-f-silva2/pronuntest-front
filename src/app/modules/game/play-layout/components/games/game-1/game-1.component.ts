@@ -6,11 +6,12 @@ import { IDataGame, GameService } from '../../../game.service';
 import { Router } from '@angular/router';
 import { WavRecorder } from "webm-to-wav-converter";
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-game-1',
   standalone: true,
-  imports: [LevelInfoComponent],
+  imports: [LevelInfoComponent, BtnImgComponent],
   templateUrl: './game-1.component.html',
   styleUrl: './game-1.component.css'
 })

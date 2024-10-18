@@ -3,11 +3,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { GameService } from '../../../game.service';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
 @Component({
   selector: 'app-game-2',
   standalone: true,
-  imports: [LevelInfoComponent],
+  imports: [LevelInfoComponent, BtnImgComponent],
   templateUrl: './game-2.component.html',
   styleUrl: './game-2.component.css'
 

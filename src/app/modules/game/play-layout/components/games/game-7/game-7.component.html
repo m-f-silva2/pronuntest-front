@@ -2,13 +2,18 @@
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
-    <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center">
+    <section class="flex flex-col justify-center h-full w-full items-center ">
         <div class="container_border h-full w-full max-w-7xl">
-            <div class="container_border_content h-full flex flex-col gap-6 justify-between items-center px-16">
+            <div class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center px-16">
                 
-                <div class="w-fit mb-4 mt-11">
-                    <btn-img (eventClick)="animation()" [title]="'Iniciar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"  class="w-fit"/>
-                </div>
+                @if (!isRuning) {
+                    <div class="absolute m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
+                            
+                        <img src="assets/temp-video.png" alt="" class="w-[66%]">
+
+                        <btn-img class="w-fit block blur-none text-4xl" (eventClick)="animationOrPlay()" [title]="'Jugar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"/>
+                    </div>
+                }
 
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
 
@@ -20,6 +25,7 @@
                                     [style]="'top:' + resource.top+'%; left:'+resource.left+'%'"
                                     
                                     class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] absolute  bg-cover w-24 h-24 aspect-square flex justify-center items-center">
+
                                         <img [src]="resource.img" alt="" class="w-16">
                                     </div>
                                 }
@@ -28,33 +34,35 @@
                         <img class="w-80 -mt-3" src="assets/images/isla0/cactus.svg"alt="">
                     </div>
                     
-                    <div class="flex flex-col items-center justify-start gap-20 p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
+                    <!-- Card siguiente sonido -->
+                    <div class="flex flex-col items-center mb-8 mt-8 justify-start gap-20 p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
                         <h3 class="text-center text-3xl text-blue-50 mt-8">Siguiente sonido</h3>
                         @for (item of correctItemsResources; track $index; let first = $first) {
                             @if (!item.completed) {
                                 @if (first || $index == (this.correctItemsResources.length - this.sizeCorrectItems) ) {
-                                    <div class="flex flex-row gap-4">
-                                        <!-- question_mark -->
-                                        <img (click)="handleClickNextAudio(item.audio)" class="w-24 opacity-100" [src]="item.img" alt="">
-                                        <img class="w-24" src="assets/images/guante.svg"alt="">
+                                    <div class="flex flex-row gap-4 ">
+                                        <img (click)="handleClickNextAudio(item.audio)" class="w-24 opacity-100 animate-fade-in-down" [src]="item.img" alt="">
+                                        <img class="w-24 animate-fade-in-down" src="assets/images/guante.svg"alt="">
                                     </div>
                                 }@else{
-                                    <img (click)="handleClickNextAudio(item.audio)"  class="w-24 opacity-25" [src]="item.img" alt="">
+                                    <img (click)="handleClickNextAudio(item.audio)"  class="animate-fade-in-down w-24 opacity-25 " [src]="item.img" alt="">
                                 }
                             }
                         }
                     </div>
 
                 </div>
-
-                <div class="flex gap-8 mb-4">
-                    <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
-                    @if(isCompleted){
-                        <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" />
-                    }
-                </div>
             </div>
         </div>
+
+        <div class="flex gap-8 m-4">
+            <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
+            @if(isCompleted){
+                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+                class="animate-wiggle"/>
+            }
+        </div>
+
     </section>
     }
 </main>
