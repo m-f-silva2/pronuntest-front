@@ -57,6 +57,19 @@ export class SpeechTherapyService {
       );
   }
 
+  unassignPatient( user_id_patient: number): Observable<any> {
+    const body = {
+      user_id_patient: user_id_patient.toString(),
+      token: this._authService.getToken() // Asegúrate de pasar el token si es necesario
+    };
+  
+    // Realiza una solicitud POST para insertar los datos en la tabla user_assignment
+    return this._httpClient.delete(`${this.apiUrl}/user_assignment/deleteById`, {body})
+      .pipe(
+        catchError(this.handleError) // Manejo de errores opcional
+      );
+  }
+
   private handleError(error: any) {
     console.error('Error en la petición:', error);
     return throwError(error); // Propaga el error

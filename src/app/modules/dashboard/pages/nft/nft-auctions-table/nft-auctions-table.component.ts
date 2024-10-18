@@ -11,7 +11,8 @@ import { Table } from 'src/app/core/models/interfaces-graphics';
 })
 export class NftAuctionsTableComponent implements OnInit {
   @Input('data') data: Table[] = <any>{};
-  @Input() isAssignmentUser = <Boolean> false;
+  @Input() isAssignUser = <Boolean> false;
+  @Input() isUnAssignUser = <Boolean> false;
   // Lista que se muestra en la tabla, filtrada por el buscador
   public filteredData: Table[] = this.data;
 

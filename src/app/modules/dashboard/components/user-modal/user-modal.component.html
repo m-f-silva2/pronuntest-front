@@ -9,7 +9,7 @@
       <button (click)="closeModal()" class="close-button">&times;</button>
     </div>
     <div class="modal-body">
-      <div nft-auctions-table [data]="data" [isAssignmentUser]="true" class="md:col-span-4 xl:col-span-4 w-full"></div>
+      <div nft-auctions-table [data]="data" [isAssignUser]="true" [isUnAssignUser]="false" class="md:col-span-4 xl:col-span-4 w-full"></div>
     </div>
     <div class="modal-footer">
       <button (click)="closeModal()">Cerrar</button>
