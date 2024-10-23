@@ -13,3 +13,5 @@
         <img class="w-full min-w-[1300px]" src="assets/images/clouds.svg" alt="">
     </div>
 </div>
+
+@if (_toastGameService.toast()) {<toast-game [data]="_toastGameService.toast()"></toast-game>}

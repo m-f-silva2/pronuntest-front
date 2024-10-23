@@ -36,7 +36,7 @@ export class GameService {
         levels: [
           {
             games: [
-              { gameNum: 7, sections: [{ type: 'info' }, { type: 'game' }] },  // 
+              { gameNum: 7, sections: [{ type: 'info' }, { type: 'game' }, { type: 'game' }, { type: 'game' }] },  // 
             ]
           },
           {

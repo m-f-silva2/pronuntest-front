@@ -1,4 +1,4 @@
-<form class="my-10 space-y-6" [formGroup]="form" (submit)="onSubmit()">
+<form class="my-10 space-y-6" [formGroup]="form" (submit)="onSubmit($event)">
 
   <div class="cards flex flex-row w-full justify-around">
     @if(roleTextCode == 'patient'){
@@ -50,7 +50,7 @@
           <input
             type="text"
             id="email"
-            [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
+            [ngClass]="{ 'is__invalid-input': submitted && form.controls.email.errors }"
             class="peer block"
             placeholder=" "
             formControlName="email" />
@@ -60,9 +60,9 @@
             Email
           </label>
         </div>
-        <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-          <div *ngIf="f['email'].errors['required']">Required field</div>
-          <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
+        <div *ngIf="submitted && form.controls.email.errors" class="is__invalid-error">
+          <div *ngIf="form.controls.email.errors['required']">Correo requerido</div>
+          <div *ngIf="form.controls.email.errors['email']">Correo invalido</div>
         </div>
       </div>
   
@@ -71,7 +71,7 @@
           <input
             [type]="passwordTextType ? 'text' : 'password'"
             id="password"
-            [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
+            [ngClass]="{ 'is__invalid-input': submitted && form.controls.email.errors }"
             class="peer block"
             placeholder=" "
             formControlName="password" />
@@ -91,8 +91,8 @@
             </svg-icon>
           </span>
         </div>
-        <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
-          <div *ngIf="f['password'].errors['required']">Required field</div>
+        <div *ngIf="submitted && form.controls.password.errors" class="is__invalid-error">
+          <div *ngIf="form.controls.password.errors['required']">Contraseña requerida</div>
         </div>
       </div>
     </div>

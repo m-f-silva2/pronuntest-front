@@ -40,7 +40,6 @@ export const tokenInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
                 /* authService.signup(); */
                 localStorage.clear()
                 // Reload the app
-                location.reload();
             }
             throw new Error(JSON.stringify(error));
         }),

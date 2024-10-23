@@ -45,7 +45,9 @@
                                         <img class="w-24 animate-fade-in-down" src="assets/images/guante.svg"alt="">
                                     </div>
                                 }@else{
-                                    <img (click)="handleClickNextAudio(item.audio)"  class="animate-fade-in-down w-24 opacity-25 " [src]="item.img" alt="">
+                                    <img (click)="handleClickNextAudio(item.audio)"  class="animate-fade-in-down w-24 opacity-25
+                                    {{$index > 1? 'hidden': ''}}
+                                    " [src]="item.img" alt="">
                                 }
                             }
                         }
@@ -57,8 +59,12 @@
 
         <div class="flex gap-8 m-4">
             <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
-            @if(isCompleted){
-                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+            @if(section < 3 && isCompleted){
+                <btn-img (eventClick)="btnsNavegation('next')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+                class="animate-wiggle"/>
+            }
+            @if(section == 3 && isCompleted){
+                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente Nivel'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
                 class="animate-wiggle"/>
             }
         </div>

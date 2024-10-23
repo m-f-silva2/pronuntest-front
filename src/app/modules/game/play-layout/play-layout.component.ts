@@ -6,12 +6,14 @@ import { GameService } from './game.service';
 import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { Subject, takeUntil } from 'rxjs';
 import { HeaderComponent } from './components/header/header.component';
+import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
+import { ToastGameComponent } from 'src/app/core/services/toast_game/toast-game.component';
 
 
 @Component({
   selector: 'app-play-layout',
   standalone: true,
-  imports: [BreadcrumbComponent, RouterOutlet, HeaderComponent],
+  imports: [BreadcrumbComponent, RouterOutlet, HeaderComponent, ToastGameComponent],
   templateUrl: './play-layout.component.html',
   styleUrl: './play-layout.component.css'
 })
@@ -21,7 +23,7 @@ export class PlayLayoutComponent {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(public _gameService: GameService){
+  constructor(public _gameService: GameService, public _toastGameService: ToastGameService){
     this.levelBreadcrumb =[{
       island_name: 'games',
       island_url: '/games',

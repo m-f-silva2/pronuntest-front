@@ -1,0 +1,27 @@
+@if(data){
+<div class="container_fixed">
+    
+    <div class="toast__container" [ngClass]="'update'+data.timeS" [style]="'animation: popup '+data.timeS+'s linear both'">
+        <div class="toast" [ngClass]="data.type=='s'? 'toast__green':'' || data.type=='i'? 'toast__blue':'' || data.type=='w'? 'toast__yellow':''">
+
+            <div class='toast__header'>
+                <div class="icon">
+                    <img src="assets/images/star.svg" alt="" srcset="">
+                    <img src="assets/images/star.svg" alt="" srcset="">
+                    <img src="assets/images/star.svg" alt="" srcset="">
+                </div>
+
+                <div class="cinta">
+                    GANASTE!!!
+                </div>
+            </div>
+
+            <div class='toast__content'>
+                Felicitaciones, sigue al siguiente nivel.
+            </div>
+
+        </div>
+    </div>
+
+</div>
+}
