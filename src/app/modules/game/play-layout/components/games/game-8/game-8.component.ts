@@ -6,11 +6,12 @@ import { IDataGame, GameService } from '../../../game.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-game-8',
   standalone: true,
-  imports: [LevelInfoComponent, BtnImgComponent],
+  imports: [CommonModule, LevelInfoComponent, BtnImgComponent],
   templateUrl: './game-8.component.html',
   styleUrl: './game-8.component.css'
 })
@@ -18,14 +19,13 @@ export class Game8Component {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections: any[] = []
+  dataGames: IDataGame
+  sounds = [false, false, false]
+  isCompleted = false
   section = 0
   countRecording = 0
-  dataGames: IDataGame
-  isCompleted = false
-  audios = ['assets/audios/fonema_m.wav', 'assets/audios/fonema_p.wav', 'assets/audios/fonema_k.wav', 'assets/audios/fonema_s.wav','assets/audios/fonema_t.wav']
-  sounds = [false, false, false]
   itemsResources = [
-    { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.mp3' , part: 'nariz'   },
+    { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.wav' , part: 'nariz'   },
     { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', part: 'boca'    },
     { img: 'assets/images/isla0/abeja.svg', audio: 'assets/audios/fonema_ch.wav', part: 'garganta'},
   ]
@@ -48,7 +48,17 @@ export class Game8Component {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
+    this.itemsResources = this.shuffleArray(this.itemsResources);
+    this.itemsResourcesPos = 0; // Comenzar desde la primera posición después del barajado
 
+  }
+  // Método para barajar el array
+  shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   play() {
@@ -64,7 +74,6 @@ export class Game8Component {
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
   }
-
 
   handleClick(btn: number){
     this.sounds[btn] = true;
@@ -93,34 +102,59 @@ export class Game8Component {
     dragOver(event: any) {
       event.preventDefault();
     }
-    // defined for when drop element on target
     dragDrop(ev: any, parteCuerpo: string) {
       const data = ev.dataTransfer.getData("Text");
-      if(this.itemsResources[this.itemsResourcesPos].part  === parteCuerpo){
+      
+      if (this.itemsResources[this.itemsResourcesPos].part === parteCuerpo) {
         ev.target.appendChild(document.getElementById(data));
         ev.stopPropagation();
+        // Avanzar a la siguiente imagen
+        this.itemsResourcesPos++;
+
+        if (this.itemsResourcesPos >= this.itemsResources.length) {
+          this.isCompleted = true;
         
-        setTimeout(() => {
-          this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3')
-          this.isCompletedAux = true
-          this._toastGameService.toast.set({
-            type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
-              this._toastGameService.toast.set(undefined)
+          setTimeout(() => {
+            this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
+            this.isCompletedAux = true;
+            this._toastGameService.toast.set({
+              type: 's', timeS: 3, title: "¡Ganaste!", message: "Nivel completado con éxito!", end: () => {
+                this._toastGameService.toast.set(undefined);
+              }
+            });
+          }, 500);
+      
+          setTimeout(() => {
+            this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3');
+            this.isCompleted = true;
+            this.isRuning = false;
+      
+            // Avanzar a la siguiente imagen
+            this.itemsResourcesPos++;
+            if (this.itemsResourcesPos >= this.itemsResources.length) {
+              this.itemsResourcesPos = 0; // Reiniciar a la primera imagen si se completan todas
             }
-          })
-        }, 500);
+          }, 3300);
+          this.itemsResourcesPos = -1; // Resetea el índice si se completan todas las imágenes
+        }else{
+          // Acción cuando el drop es exitoso
+          this.handleClickNextAudio('assets/audios/sonido_excelente.mp3');
+          this._toastService.toast.set({
+            type: 's', timeS: 3, title: "¡Bien hecho!", message: "¡sigue jugando!", end: () => {
+              this._toastService.toast.set(undefined);
+            }
+          });
+        }
+      } else {
+        this.handleClickNextAudio('assets/audios/error.mp3');
         setTimeout(() => {
-          this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
-          this.isCompleted = true
-          this.isRuning = false
-        }, 3300);
-        
-      }else{
-        this.handleClickNextAudio('assets/audios/error.mp3')
+          this.handleClickNextAudio('assets/audios/sonido_intentalo_nuevo.mp3');
+        }, 400);
       }
+    
       return false;
     }
-    /* END DROP */
+    
     isCompletedAux = false
 
 
