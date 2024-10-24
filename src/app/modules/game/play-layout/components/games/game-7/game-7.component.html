@@ -1,3 +1,10 @@
+@if(isCompleted){
+<div class="fixed top-0 left-0 w-screen h-screen select-none pointer-events-none z-50 flex justify-center items-center">
+    <div class="sprint overflow-hidden w-[1050px] h-[626px] ">
+    </div>
+</div>
+}
+
 <main class="w-full h-[90%] font-Flippinfont ">
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
@@ -7,23 +14,20 @@
             <div class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center px-16">
                 
                 @if (!isRuning) {
-                    <div class="absolute m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
-                            
-                        <img src="assets/temp-video.png" alt="" class="w-[66%]">
-
-                        <btn-img class="w-fit block blur-none text-4xl" (eventClick)="animationOrPlay()" [title]="'Jugar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"/>
+                    <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
+                        <img src="assets/temp-video.png" alt="" class="h-full max-w-full max-h-full object-contain block">
+                        <btn-img class="w-fit block blur-none text-4xl" (eventClick)="play()" [title]="'Jugar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"/>
                     </div>
                 }
 
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
-
                     <div class="flex flex-col h-full w-full max-w-lg items-center ">
                         <div class="relative  w-full h-full overflow-hidden select-none">
                             <div class="relative w-full h-full -top-4 " #containerIMG>
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
                                     <div (click)="handleClick(index)" 
                                     [style]="'top:' + resource.top+'%; left:'+resource.left+'%'"
-                                    
+
                                     class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/burbuja.svg')] absolute  bg-cover w-24 h-24 aspect-square flex justify-center items-center">
 
                                         <img [src]="resource.img" alt="" class="w-16">
@@ -73,4 +77,5 @@
     }
 </main>
 
-<audio class="hidden" id="audioAux"  [src]="audio"></audio>
+<audio class="hidden" id="audio"  [src]="audio"></audio>
+<audio class="hidden" id="audioAux"  [src]="audioAux"></audio>

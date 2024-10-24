@@ -5,6 +5,7 @@ import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
+import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
 
 @Component({
   selector: 'app-game-8',
@@ -25,13 +26,14 @@ export class Game8Component {
   sounds = [false, false, false]
   itemsResources = [
     { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.mp3' , part: 'nariz'   },
-    { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_pu.mp3', part: 'boca'    },
+    { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', part: 'boca'    },
     { img: 'assets/images/isla0/abeja.svg', audio: 'assets/audios/fonema_ch.wav', part: 'garganta'},
   ]
   itemsResourcesPos = -1
   audio: string = '';
+  isRuning = false
   
-  constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
+  constructor(private _toastGameService: ToastGameService,public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Escucha el sonido de la imagen y repítelo tú mismo. Luego, observa el dibujo y decide si el sonido se produce en la nariz, la boca o la garganta.',
@@ -41,12 +43,20 @@ export class Game8Component {
       previous: undefined
     })
 
-    this.itemsResourcesPos = Math.floor(Math.random() * 3)
+    this.itemsResourcesPos = 1 //Math.floor(Math.random() * 3)
 
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
 
+  }
+
+  play() {
+    this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audio)
+    this.isRuning = true
+    document.getElementById('startDrag')!.appendChild(document.getElementById('boxA')!);
+    this.isCompletedAux = false
+    this.isCompleted = false
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -89,20 +99,29 @@ export class Game8Component {
       if(this.itemsResources[this.itemsResourcesPos].part  === parteCuerpo){
         ev.target.appendChild(document.getElementById(data));
         ev.stopPropagation();
-
-        this.isCompleted = true
-        this.handleClickNextAudio('assets/audios/sonido_excelente.mp3')
-        this.isCompleted = true
-        this._toastService.toast.set({
-          type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
-            this._toastService.toast.set(undefined)
-          }
-        })
-
+        
+        setTimeout(() => {
+          this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3')
+          this.isCompletedAux = true
+          this._toastGameService.toast.set({
+            type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
+              this._toastGameService.toast.set(undefined)
+            }
+          })
+        }, 500);
+        setTimeout(() => {
+          this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
+          this.isCompleted = true
+          this.isRuning = false
+        }, 3300);
+        
+      }else{
+        this.handleClickNextAudio('assets/audios/error.mp3')
       }
       return false;
     }
     /* END DROP */
+    isCompletedAux = false
 
 
     handleClickNextAudio(_audio: string) {

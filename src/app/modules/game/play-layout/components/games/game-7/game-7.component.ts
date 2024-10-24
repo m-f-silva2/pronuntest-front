@@ -91,6 +91,7 @@ export class Game7Component {
   sizeCorrectItems = 0;
   intents = 5;
   audio: string = '';
+  audioAux: string = '';
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
@@ -120,7 +121,7 @@ export class Game7Component {
     this.sizeCorrectItems = this.correctItemsResources.length;
   }
 
-  animationOrPlay() {
+  play() {
     setTimeout(() => {
       this.handleClickNextAudio(this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].audio)
     }, 380)
@@ -152,26 +153,30 @@ export class Game7Component {
   }
 
   handleClick(btn: number) {
-    this.itemsResources[btn].completed = true
-    this.handleClickNextAudio(this.itemsResources[btn].audio)
+    this.itemsResources[btn].completed = true    
 
     if (this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].pos == btn) {
       this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true
       this.sizeCorrectItems--
-      console.log('>> >>: this.sizeCorrectItems', this.sizeCorrectItems);
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
+        this.handleClickNextAudio(this.itemsResources[btn].audio)
         setTimeout(() => {
-          this.handleClickNextAudio('assets/audios/sonido_excelente.mp3')
-        }, 400);
+          this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
+        }, 100);
       }
     } else {
+      this.handleSecondaryAudio('assets/audios/error.mp3')
       this.intents--
     }
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
       this.restart()
-      this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
+      this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
+      setTimeout(() => {
+        this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
+      }, 700);
+
       this.isCompleted = true
       this._toastGameService.toast.set({
         type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
@@ -205,8 +210,15 @@ export class Game7Component {
   handleClickNextAudio(_audio: string) {
     this.audio = _audio;
     setTimeout(() => {
-      (document.getElementById('audioAux') as HTMLAudioElement).play();
+      (document.getElementById('audio') as HTMLAudioElement).play();
     }, 4);
+  }
+  
+  handleSecondaryAudio(_audio: string) {
+    this.audioAux = _audio;
+    setTimeout(() => {
+      (document.getElementById('audioAux') as HTMLAudioElement).play();
+    }, 2);
   }
 }
 

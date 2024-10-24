@@ -41,3 +41,29 @@
   background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
   box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
 }
+
+
+.sprint {
+  background-image: url("/assets/images/confetti.svg"); 
+  height: 626px; 
+  background-size: cover; 
+  background-repeat: no-repeat;
+  animation: sprint .48s both;
+}
+
+@keyframes sprint {
+  0% {   background-position:    0px    0px; }
+  0.1% {   background-position:  0px    0px; }
+  20% {  background-position:    0px    0px; }
+  20.1% {  background-position: -1050px 0px; }
+  40% {  background-position:   -1050px 0px; }
+  40.1% {  background-position: -2100px 0px; }
+  60% {  background-position:   -2100px 0px; }
+  60.1% {  background-position: -3150px 0px; }
+  80% {  background-position:   -3150px 0px; }
+  80.1% {  background-position: -4200px 0px; }
+  90% { background-position:   -4200px 0px; }
+  90.1% { background-position: -5250px 0px; }
+  92% { opacity: 1; }
+  100% { opacity: 0; }
+}
