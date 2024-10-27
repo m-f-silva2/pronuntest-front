@@ -51,7 +51,10 @@ export class SignInComponent {
     }
     
     const token = this._authService.getToken()
-    if (!token) return
+    if (!token) {
+      this._toastService.toast.set(undefined)
+      return
+    }
 
     const dataRole: { [key: string]: any } = {
       "admin": { code: 1, page: '/admin' },

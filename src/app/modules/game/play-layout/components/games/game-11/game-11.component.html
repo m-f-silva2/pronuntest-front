@@ -23,17 +23,33 @@
                     <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
                         <div class="flex flex-col h-full w-full max-w-lg items-center ">
                             <div class="relative  w-full h-full overflow-hidden select-none">
-                                <div class="relative w-full h-full " #containerIMG>
-                                    <img src="assets/images/globo.svg" alt="" class="w-16">
+                                <div class="flex justify-center items-center w-full h-full " #containerIMG>
+                                    
+                                    <!-- [style]="'top:' + resource.top+'%; left:'+resource.left+'%'" -->
+                                    <!-- {{resource.completed?'hidden':''}} -->
+                                        <div class="m-auto w-24 h-24 aspect-square flex justify-center items-center">
+                                            <img src="assets/images/isla0/globo.svg" alt="" class="w-16" #balloon> 
+                                        </div>
+                                    
                                 </div>
                             </div>
                         </div>
                         
-                        
+                        <!-- Card siguiente sonido -->
                         <div class="flex flex-col items-center mb-8 mt-8 justify-start gap-20 p-8 max-w-lg border-gray-50/50 border-dashed bg-cyan-300/35 border-8 rounded-2xl">
-                            <h3 class="text-center text-3xl text-blue-50 mt-8">Siguiente sonido</h3>
+                            <h3 class="text-center text-3xl text-blue-50 mt-8">Toca aquí para iniciar</h3>
                             <div class="flex flex-row gap-4 ">
-                                <img (click)="handleClickNextAudio(correctItemResource!.audio)" class="w-24 opacity-100 animate-fade-in-down" [src]="correctItemResource!.img" alt="">
+                                <div class="relative w-36 h-36 ">
+                                    <svg viewBox="-25 -25 50 50" class="spinner absolute top-0 left-0">
+                                        <circle class="ring" cx="0" cy="0" r="22" />
+                                        <circle class="line" cx="0" cy="0" r="22" pathLength="1" />
+                                    </svg>
+                                    <div class="bg-white/50 hover:bg-red-600/60 rounded-full absolute top-[9px] left-[9px]"
+                                        (click)="startRecording()">
+                                        <img src="assets/images/microphone.svg" alt="" srcset="">
+                                    </div>
+                                </div>
+                                
                                 <img class="w-24 animate-fade-in-down" src="assets/images/guante.svg"alt="">
                             </div>
                             

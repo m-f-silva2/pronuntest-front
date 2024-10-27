@@ -26,10 +26,10 @@ export class Game4Component {
   isCompleted = false
   countRecording = 0
   goal = 160
-  private mediaRecorder: MediaRecorder | null = null;
-  public isRecording = false;
+  isRecording = false;
   frequency: number = 0
   audioContext!: AudioContext;
+  private mediaRecorder: MediaRecorder | null = null;
 
   constructor(private _gameService: GameService, private ref: ChangeDetectorRef) {
     /* this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {

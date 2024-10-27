@@ -24,13 +24,6 @@ export class Game7Component {
   dataGames: IDataGame
   isCompleted = false
   isRuning = false
-  audios = [
-    'assets/audios/fonema_k.wav',
-    'assets/audios/fonema_p.wav',
-    'assets/audios/fonema_s.wav',
-    'assets/audios/fonema_ch.wav',
-    'assets/audios/fonema_m.wav'
-  ]
   posCurrentDown = 0
   itemsResources: any[] = []
   allItemsResources = [

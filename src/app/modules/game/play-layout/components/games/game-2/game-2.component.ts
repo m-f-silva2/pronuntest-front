@@ -23,11 +23,11 @@ export class Game2Component {
     previous: undefined
   }]
   section = 0
-  countRecording = 0
-  goal = 80
   @ViewChild('boat') boat!: ElementRef;
   isCompleted = false
-
+  
+  countRecording = 0
+  goal = 80
   private mediaRecorder: MediaRecorder | null = null;
   public isRecording = false;
   frequency: number = 0
@@ -48,11 +48,9 @@ export class Game2Component {
   }
 
   handleRecording() {
-    
       if(this.section == 1){
         this.startRecording()
       }
-    
   }
   
   async startRecording() {
@@ -90,6 +88,14 @@ export class Game2Component {
     }, 200);
   }
 
+  stopRecording() {
+    if (this.mediaRecorder) {
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+    }
+  }
+  sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
   async moveBoat(num: number) {
     for (let i = 0; i < num; i++) {
       this.boat.nativeElement.style.bottom = (this.frequency + i) + '%'
@@ -98,13 +104,5 @@ export class Game2Component {
     }
     this.frequency += num
   }
-  sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-  stopRecording() {
-    if (this.mediaRecorder) {
-      this.mediaRecorder.stop();
-      this.isRecording = false;
-    }
-  }
-
+  
 }

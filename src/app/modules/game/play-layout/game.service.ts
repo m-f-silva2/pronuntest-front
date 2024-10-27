@@ -34,26 +34,10 @@ export class GameService {
     islands: [
       {//Isla 0
         levels: [
-          {
-            games: [
-              { gameNum: 7, sections: [{ type: 'info' }, { type: 'game' }, { type: 'game' }, { type: 'game' }] },  // 
-            ]
-          },
-          {
-            games: [
-              { gameNum: 8, sections: [{ type: 'info' }, { type: 'game' }] },  //
-            ]
-          },
-          {
-            games: [
-              { gameNum: 10, sections: [{ type: 'info' }, { type: 'game' }] }, //
-            ]
-          },
-          {
-            games: [
-              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },  //información, juego grabar
-            ]
-          },
+          { games: [ { gameNum: 7,  sections: [{ type: 'info' }, { type: 'game' }, { type: 'game' }, { type: 'game' }] },]},
+          { games: [ { gameNum: 8,  sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [ { gameNum: 10, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [ { gameNum: 11,  sections: [{ type: 'info' }, { type: 'game' }] },]},
         ]
       },
       {//Isla 1

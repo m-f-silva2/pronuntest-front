@@ -1,0 +1,217 @@
+.spinner {
+    width: 9rem;
+    height: 9rem;
+    position: relative;
+  }
+  .spinner circle {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-width: var(--stroke-width, 3);
+  }
+  .spinner .ring {
+    stroke: #000;
+    opacity: 0.1;
+  }
+  .spinner .line {
+    stroke: #0ebeff;
+    stroke-width: 3;
+    stroke-dasharray: var(--stroke-dasharray);
+    stroke-dashoffset: var(--stroke-dashoffset);
+    -webkit-animation: 943ms spinner-rotate linear infinite;
+            animation: 943ms spinner-rotate linear infinite;
+  }
+  .spinner .text {
+    font-size: 0.6rem;
+    font-weight: 300;
+    fill: rgba(0, 0, 0, 0.4);
+  }
+
+  /* ANIMACION GLOBO*/
+  .balloon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /*background-color: #f0f0f0;*/
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+  }
+  
+  .balloon-wrapper {
+    position: relative;
+  }
+  
+  .balloon {
+    width: 150px;
+    height: auto;
+    transition: transform 0.3s ease, opacity 0.5s ease;
+  }
+  
+  .balloon-exploding {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-out, opacity 0.2s ease-in-out;
+    opacity: 0;
+  }
+  
+  .particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+  
+  .particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    animation: particle-fly 0.8s ease-out forwards;
+  }
+  
+  .particle-1 {
+    background-color: yellow;
+    animation: particle-fly-1 0.6s ease-out forwards;
+  }
+  
+  .particle-2 {
+    background-color: orange;
+    animation: particle-fly-2 0.8s ease-out forwards;
+  }
+  
+  .particle-3 {
+    background-color: red;
+    animation: particle-fly-3 0.9s ease-out forwards;
+  }
+  
+  .particle-4 {
+    background-color: pink;
+    animation: particle-fly-4 1s ease-out forwards;
+  }
+  
+  .particle-5 {
+    background-color: blue;
+    animation: particle-fly-5 1.1s ease-out forwards;
+  }
+  
+  /* Animaciones para cada partícula */
+  @keyframes particle-fly-1 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-80px, -100px); }
+  }
+  
+  @keyframes particle-fly-2 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(100px, -120px); }
+  }
+  
+  @keyframes particle-fly-3 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50px, 150px); }
+  }
+  
+  @keyframes particle-fly-4 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(120px, 90px); }
+  }
+  
+  @keyframes particle-fly-5 {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-150px, 50px); }
+  }
+  
+  /* Efecto de destello */
+  .balloon-wrapper.exploded {
+    animation: flash-bg 0.2s ease;
+  }
+  
+  /**/
+
+  .snake-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #f0f0f0;
+  }
+  
+  .snake {
+    display: flex;
+    position: relative;
+  }
+  
+  .snake-segment {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: green;
+    margin-right: 5px;
+    animation: snake-move 2s infinite ease-in-out;
+    position: relative;
+  }
+  
+  /* Animación ondulante para cada segmento */
+  @keyframes snake-move {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(10px) translateY(-5px); }
+    50% { transform: translateX(20px); }
+    75% { transform: translateX(10px) translateY(5px); }
+  }
+  .snake-segment:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .snake-segment:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  
+  .snake-segment:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  
+  .snake-segment:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  
+  .snake-segment:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+  .snake-container {
+    width: 600px;
+    height: 600px;
+    position: relative;
+    background-color: #f0f0f0;
+  }
+  
+  .snake-segment {
+    width: 30px;
+    height: 30px;
+    background-color: green;
+    position: absolute;
+    border-radius: 5px;
+  }
+  
+
+
+
+
+  .container_border {
+    background: linear-gradient(170.37deg, #A3E8FF 39.58%, #5AD0F2 93.33%);
+    overflow: hidden;
+    border-radius: 80px;
+    padding: 1rem;
+    border: solid 1px #ffffff17;
+    box-shadow: 0px 6px 19.4px rgba(0, 0, 0, 0.24);
+  }
+  
+  .container_border_content {
+    border-radius: 60px;
+    background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
+    box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
+  }
