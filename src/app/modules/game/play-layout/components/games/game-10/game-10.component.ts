@@ -8,11 +8,12 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
+import { ConffetyComponent } from '../../conffety/conffety.component';
 
 @Component({
   selector: 'app-game-10',
   standalone: true,
-  imports: [LevelInfoComponent, CommonModule, BtnImgComponent],
+  imports: [LevelInfoComponent, CommonModule, BtnImgComponent, ConffetyComponent],
   templateUrl: './game-10.component.html',
   styleUrl: './game-10.component.css'
 })
@@ -25,12 +26,12 @@ export class Game10Component {
   isCompleted = false
   isRuning = false
   sizeCorrectItems = 0
-  itemsResources: {id: number, completed: boolean, img: string, audio: string,  yEnd: number, top: number, left: number}[] = []
-  allItemsResources: {id: number, completed: boolean, img: string, audio: string,  yEnd: number, top: number, left: number}[][] = [
+  itemsResources: { id: number, completed: boolean, img: string, audio: string, yEnd: number, top: number, left: number }[] = []
+  allItemsResources: { id: number, completed: boolean, img: string, audio: string, yEnd: number, top: number, left: number }[][] = [
     [],
-    [    
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: 80, left: 20 },       
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916,  top: 41, left: 30 },
+    [
+      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: 80, left: 20 },
+      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: 41, left: 30 },
     ],
     [
       { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: 38, left: 80 },
@@ -38,15 +39,15 @@ export class Game10Component {
       { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: 61, left: 67 },
     ],
     [
-      { id: 0, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',    yEnd: 1022, top: 61, left: 67 },
-      { id: 1, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav',yEnd: 916,  top: 41, left: 30 },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 805,  top: 31, left: 70 },
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758,     top: 16, left: 8  },
+      { id: 0, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 1022, top: 61, left: 67 },
+      { id: 1, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 916, top: 41, left: 30 },
+      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: 31, left: 70 },
+      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: 16, left: 8 },
     ],
   ]
 
-  correctItemResource?: {id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }
-  allCorrectItemBySection: {id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }[] = [
+  correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }
+  allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }[] = [
     { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1 },
     { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2 },
     { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 3, intents: 3 },
@@ -83,7 +84,7 @@ export class Game10Component {
     this.initData()
   }
 
-  initData(){
+  initData() {
     this.itemsResources = this.allItemsResources[this.section]
     this.correctItemResource = this.allCorrectItemBySection[this.section]
     this.isCompleted = false
@@ -108,7 +109,7 @@ export class Game10Component {
 
   handleClick(btn: number) {
     this.itemsResources[btn].completed = true;
-    if( this.itemsResources[btn].audio == this.correctItemResource?.audio){
+    if (this.itemsResources[btn].audio == this.correctItemResource?.audio) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
@@ -123,18 +124,19 @@ export class Game10Component {
     }
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
-      this.restart()
+      
       this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
       setTimeout(() => {
         this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
-      }, 700);
+        this.restart()
+        this.isCompleted = true
+        this._toastGameService.toast.set({
+          type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
+            this._toastGameService.toast.set(undefined)
+          }
+        })
+      }, 500);
 
-      this.isCompleted = true
-      this._toastGameService.toast.set({
-        type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
-          this._toastGameService.toast.set(undefined)
-        }
-      })
     } else if (this.intents == 0) {
       this.restart()
       this._toastService.toast.set({
@@ -151,7 +153,7 @@ export class Game10Component {
       (document.getElementById('audio') as HTMLAudioElement).play();
     }, 4);
   }
-  
+
   handleSecondaryAudio(_audio: string) {
     this.audioAux = _audio;
     setTimeout(() => {

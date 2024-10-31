@@ -7,11 +7,12 @@ import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
 import { CommonModule } from '@angular/common';
+import { ConffetyComponent } from '../../conffety/conffety.component';
 
 @Component({
   selector: 'app-game-8',
   standalone: true,
-  imports: [CommonModule, LevelInfoComponent, BtnImgComponent],
+  imports: [CommonModule, LevelInfoComponent, BtnImgComponent, ConffetyComponent],
   templateUrl: './game-8.component.html',
   styleUrl: './game-8.component.css'
 })

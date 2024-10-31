@@ -7,11 +7,12 @@ import { Router } from '@angular/router';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
+import { ConffetyComponent } from '../../conffety/conffety.component';
 
 @Component({
   selector: 'app-game-7',
   standalone: true,
-  imports: [LevelInfoComponent, BtnImgComponent],
+  imports: [LevelInfoComponent, BtnImgComponent, ConffetyComponent],
   templateUrl: './game-7.component.html',
   styleUrl: './game-7.component.css'
 })

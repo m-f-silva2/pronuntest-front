@@ -20,7 +20,7 @@
                         <btn-img (eventClick)="handleBtn('previous')" [title]="'Volver'" [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
                     }
                     @if (data?.next) {
-                        <btn-img (eventClick)="handleBtn('next')" [title]="'Siguiente'" [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" />
+                        <btn-img (eventClick)="handleBtn('next')" [title]="'Siguiente'" [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" class="animate-wiggle" />
                     }
                 </div>
             </div>

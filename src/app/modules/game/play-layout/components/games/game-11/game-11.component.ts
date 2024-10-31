@@ -8,11 +8,12 @@ import { SumaryActivities } from 'src/app/core/models/sumary_activities';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 import { CommonModule } from '@angular/common';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
+import { ConffetyComponent } from '../../conffety/conffety.component';
 
 @Component({
   selector: 'app-game-11',
   standalone: true,
-  imports: [LevelInfoComponent, CommonModule, BtnImgComponent],
+  imports: [LevelInfoComponent, CommonModule, BtnImgComponent, ConffetyComponent],
   templateUrl: './game-11.component.html',
   styleUrl: './game-11.component.css'
 })
@@ -30,7 +31,7 @@ export class Game11Component {
 
   @ViewChild('balloon') balloon!: ElementRef;
   countRecording = 0
-  goal = 160
+  goal = 130
   isRecording = false;
   frequency: number = 0
   audioContext!: AudioContext;
@@ -63,6 +64,9 @@ export class Game11Component {
   }
 
   initData() {
+    if(this.balloon){
+      this.balloon.nativeElement.style.width = '12px'
+    }
     this.isCompleted = false
     /* this.intents = this.correctItemResource?.intents || 0 */
     this.frequency = 0
@@ -114,21 +118,21 @@ export class Game11Component {
             source.disconnect()
             clearInterval(intervalId)
 
-            this.restart()
             this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
             setTimeout(() => {
               this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
-            }, 700);
+              this.restart()
+              this.isCompleted = true
+              this._toastGameService.toast.set({
+                type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
+                  this._toastGameService.toast.set(undefined)
+                }
+              })
+            }, 500);
 
-            this.isCompleted = true
-            this._toastGameService.toast.set({
-              type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
-                this._toastGameService.toast.set(undefined)
-              }
-            })
-            
           }
         }, 200);
+
       }
     }, 200);
   }
