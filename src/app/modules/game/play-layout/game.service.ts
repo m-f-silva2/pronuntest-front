@@ -45,7 +45,7 @@ export class GameService {
           {
             games: [
               { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar 
-              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego grabar
+              { gameNum: 12, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego grabar
             ]
           },
           {
