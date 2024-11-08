@@ -18,6 +18,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
   styleUrl: './game-12.component.css'
 })
 export class Game12Component {
+  /* TOPO */
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []

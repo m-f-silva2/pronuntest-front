@@ -256,67 +256,11 @@
 
 .container_border_content {
   border-radius: 60px;
-  /* background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%); */
-  background-image: url('/assets/images/isla1/madera_textura.webp');
-  background-repeat: repeat;
-  background-size: 500px 500px;
+  background: linear-gradient(170.37deg, #7fd0ff 39.58%, #5eacff 93.33%); 
+  /* background-image: url('/assets/images/isla1/madera_textura.webp'); */
+  background-repeat: no-repeat;
+  background-size: cover;
 
   box-shadow: inset 0px 6px 10px rgba(0, 0, 0, 0.24);
 }
 
-
-
-/* flip  */
-.flip-container {
-  perspective: 1000;
-  
-  float: left;
-  cursor: pointer;
-}
-
-.flip-container .flippable {
-  transition: 0.5s;
-  transform-style: preserve-3d;
-  position: relative;
-
-  background-image: url('/assets/images/isla1/carta.svg');
-  background-repeat: no-repeat;
-  height: 13.2rem;
-  width: 9.2rem;
-}
-
-.flip-container .flipme {
-  transform: rotateY(180deg);
-}
-
-.flip-container,
-.front,
-.back {
-  height: 13.2rem;
-  width: 9.2rem;
-  border-radius: 5px;
-
-  background-position: center;
-  align-items: start; 
-  /* display: flex;
-  justify-content: center;
-  overflow: hidden;
-  */
-}
-
-.front,
-.back {
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-repeat: no-repeat;
-}
-
-.front {
-  z-index: 2;
-}
-
-.back {
-  transform: rotateY(180deg);
-}
