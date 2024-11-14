@@ -30,6 +30,29 @@
   fill: rgba(0, 0, 0, 0.4);
 }
 
+/* nivel 4 sufista */
+.container-move{
+  transition: all 100ms linear;
+}
+
+.muerteAlFurfista {
+  animation: muerteAlFurfistaAnimateCae 1s linear both;
+}
+.muerteAlFurfista > img {
+  animation: muerteAlFurfistaRota 1s linear both;
+}
+@keyframes muerteAlFurfistaRota {
+  to {
+    transform: rotateZ(1080deg);
+  }
+}
+@keyframes muerteAlFurfistaAnimateCae {
+  to {
+    transform: translateY(400px);
+  }
+}
+/*    */
+
 /* ANIMACION GLOBO*/
 .balloon-container {
   display: flex;

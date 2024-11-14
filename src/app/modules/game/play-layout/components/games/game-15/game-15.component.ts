@@ -20,6 +20,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class Game15Component {
   /* Nubes saltos */
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  @ViewChild('surfitaIMG') surfitaIMG!: ElementRef<HTMLDivElement>;
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
@@ -32,12 +33,12 @@ export class Game15Component {
   allItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: number, top: number, right:number}[][] = [
     [{ id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758,  top: 44, right: 0 }],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758,  top: 44, right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805,  top: 45, right: 4 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916,  top: 42, right: 8 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: 41, right: -30 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: 46, right: -34 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: 47, right: -38 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65,  top: 44, right: 0 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 67,  top: 45, right: 4 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 69,  top: 42, right: 8 },
+      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 105, top: 41, right: -30 },
+      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 110, top: 46, right: -34 },
+      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 114, top: 47, right: -38 },
     ],
     [
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: 44,  right: 0 },
@@ -91,6 +92,7 @@ export class Game15Component {
     this.sizeCorrectItems = this.itemsResources.filter(res=>res.isCorrect).length
   }
 
+  muerteAlFurfista = false
   play() {
     setTimeout(() => {
       //TODO: almacenar clikeados
@@ -99,10 +101,10 @@ export class Game15Component {
     this.isRuning = true
     let count = 0
     this.interval = setInterval(() => {
-      this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateX(-${count}px)`);
-      count = count + 3
-
-      if (count > 1250) {
+      this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateX(-${count}%)`);
+      count = count + 1
+      if (count > 115) {
+        this.muerteAlFurfista = true
         clearInterval(this.interval)
         if (this.sizeCorrectItems > 0) {
           /* this.isCompleted = true */
@@ -120,7 +122,7 @@ export class Game15Component {
         this.itemsResources[this.posCurrentDown].completed = true
         this.posCurrentDown++
       }
-    }, 20);
+    }, 100);
   }
 
   handleClick(btn: number) {
@@ -173,6 +175,7 @@ export class Game15Component {
     this.intents = this.itemsResources.length
     this.sizeCorrectItems = this.itemsResources.filter(res=>res.isCorrect).length
     this.audio = ''
+    this.muerteAlFurfista = false
     setTimeout(() => {
       this.isRuning = false;
     }, 1000);

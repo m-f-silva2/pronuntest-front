@@ -10,7 +10,7 @@
                 
                 @if (!isRuning) {
                     <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
-                        <img src="assets/temp-video5.png" alt="" class="h-full max-w-full max-h-full object-contain block">
+                        <img src="assets/temp-video6.png" alt="" class="h-full max-w-full max-h-full object-contain block">
                         <btn-img class="w-fit block blur-none text-4xl" (eventClick)="play()" [title]="'Jugar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"/>
                     </div>
                 }
@@ -18,9 +18,8 @@
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
                     <div class="flex flex-col h-full w-full items-center ">
                         
-                        <div class="mcontainer-game relative  w-full h-full overflow-hidden select-none ">
-
-                            <div class="relative w-full h-full z-20" #containerIMG>
+                        <div class="relative  w-full h-full overflow-hidden select-none ">
+                            <div class="container-move relative w-full h-full z-20" #containerIMG>
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
                                     <div (click)="handleClick(index)" 
                                     [style]="'top:' + resource.top+'%; right:'+resource.right+'%'"
@@ -32,7 +31,7 @@
                                 }
                             </div>
 
-                            <div class="absolute bottom-28 left-[10%] w-full z-10 animate-bounce">
+                            <div #surfitaIMG class="absolute bottom-28 left-[10%] w-full z-10 animate-bounce {{muerteAlFurfista?'muerteAlFurfista':''}}">
                                 <img src="/assets/images/isla1/surfista.png" alt="" class="w-72">
                             </div>
 
