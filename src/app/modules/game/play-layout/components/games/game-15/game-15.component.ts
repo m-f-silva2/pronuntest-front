@@ -40,20 +40,20 @@ export class Game15Component {
       { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: 47, right: -38 },
     ],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: -16,  right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31,  right: 0 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: -41,  right: 0 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: -61, right: 0 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: -81, right: 0 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, right: 0 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: 44,  right: 0 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: 45,  right: 4 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: 42,  right: 8 },
+      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: 41, right: -30 },
+      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: 46, right: -34 },
+      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: 47, right: -38 },
     ],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 758,  top: -16, right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 805,  top: -31, right: 0 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav',yEnd: 916,  top: -41, right: 0 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',    yEnd: 1022, top: -61, right: 0 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav',     yEnd: 1138, top: -81, right: 0 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 1287, top: -91, right: 0 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 758,  top: 44, right: 0 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 805,  top: 45, right: 4 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav',yEnd: 916,  top: 42, right: 8 },
+      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',    yEnd: 1022, top: 41, right: -30 },
+      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav',     yEnd: 1138, top: 46, right: -34 },
+      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 1287, top: 47, right: -38 },
     ],
   ]
 /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
@@ -100,7 +100,7 @@ export class Game15Component {
     let count = 0
     this.interval = setInterval(() => {
       this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateX(-${count}px)`);
-      count = count + 2
+      count = count + 3
 
       if (count > 1250) {
         clearInterval(this.interval)
