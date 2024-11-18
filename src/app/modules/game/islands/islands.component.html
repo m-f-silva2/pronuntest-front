@@ -3,26 +3,18 @@
     <btn-img routerLink="/games" [title]="'Inicio'"  [type]="'green'" [imgPath]="'assets/images/home/home.svg'" class="w-40 block absolute top-4 left-4 z-50"/>
     <btn-img (eventClick)="logoup()" [title]="'Cerrar sesión'"  [type]="'orange'" [imgPath]="'assets/icons/heroicons/outline/logout.svg'" class="w-40 break-keep absolute top-20 left-4 z-50"/>
 
-    <!-- <a class="absolute top-4 left-4  flex items-center justify-center z-50" routerLink="/games">
-        <img src="assets/images/home.svg" alt="Isla" title="Isla"
-        class="w-16 py-2 px-2 bg-cyan-200 rounded-full border-cyan-100 border-4 z-0">
-    </a> -->
+    <div class="absolute top-0 left-[46%] text-white text-2xl flex gap-2 p-4 z-20">
+        <btn-img [title]="''" [type]="'green'" [imgPath]="'assets/images/arrow-back.svg'" class="w-8 block mr-2" (eventClick)="scrollIsland(-1)"/>
+        <div class="font-Flippinfont drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+            {{islad}}
+        </div>
+        <btn-img [title]="''" [type]="'green'" [imgPath]="'assets/images/arrow.svg'" class="w-8 block"            (eventClick)="scrollIsland(1)"/>
+    </div>
 
-    <!-- <div class="absolute top-20 left-4 flex items-center justify-center z-50">
-        @for (item of profileMenu; track $index) {
-          <button
-            (click)="logoup()"
-            routerLink="{{ item.link }}"
-            :key="$index"
-            class="w-16 py-2 px-2 bg-cyan-200 rounded-full border-cyan-100 border-4 flex items-center justify-center">
-            <svg-icon src="{{ item.icon }}" [svgClass]="'h-10 w-10 text-muted-foreground/50'"> </svg-icon>
-          </button>
-        }
-    </div> -->
-
-    <div
-        class="pt-4 background-container select-none flex box-content overflow-y-hidden overflow-x-scroll static m-0 p-0">
-        <div class="relative flex-shrink-0 w-screen h-dvh pointer-events-none">
+    <div class="scrollable pt-4 background-container select-none flex box-content overflow-y-hidden overflow-x-scroll static m-0 p-0"
+        #scrollableElement (scroll)="onScroll()"
+    >
+        <div class="relative flex-shrink-0 w-screen h-dvh pointer-events-none" >
 
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
                 
@@ -141,7 +133,6 @@
                 <img class="w-full min-w-[1300px]" src="assets/images/isla3_bottom.svg" alt="">
             </div>
         </div>
-
 
     </div>
 

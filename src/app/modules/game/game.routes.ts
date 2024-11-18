@@ -2,24 +2,25 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@an
 import { IslandsComponent } from './islands/islands.component';
 import { inject } from '@angular/core';
 import { catchError } from 'rxjs';
-import { Game1Component } from './play-layout/components/games/game-1/game-1.component';
-import { Game2Component } from './play-layout/components/games/game-2/game-2.component';
+import { GameZzMicrophoneComponent } from './play-layout/components/games/game-zz-microphone/game-zz-microphone.component';
 
 import { GameService } from './play-layout/game.service';
-import { Game0Component } from './play-layout/components/games/game-0/game-0.component';
-import { Game3Component } from './play-layout/components/games/game-3/game-3.component';
-import { Game4Component } from './play-layout/components/games/game-4/game-4.component';
-import { Game5Component } from './play-layout/components/games/game-5/game-5.component';
+import { GameZzPlayComponent } from './play-layout/components/games/game-zz-play/game-zz-play.component';
+import { GameZzMoveboxComponent } from './play-layout/components/games/game-zz-movebox/game-zz-movebox.component';
 import { PlayLayoutComponent } from './play-layout/play-layout.component';
 import { HomeComponent } from './home/home.component';
-import { Game7Component } from './play-layout/components/games/game-7/game-7.component';
-import { Game8Component } from './play-layout/components/games/game-8/game-8.component';
-import { Game10Component } from './play-layout/components/games/game-10/game-10.component';
-import { Game11Component } from './play-layout/components/games/game-11/game-11.component';
-import { Game12Component } from './play-layout/components/games/game-12/game-12.component';
-import { Game13Component } from './play-layout/components/games/game-13/game-13.component';
-import { Game14Component } from './play-layout/components/games/game-14/game-14.component';
-import { Game15Component } from './play-layout/components/games/game-15/game-15.component';
+import { GameACactusComponent } from './play-layout/components/games/game-a-cactus/game-a-cactus.component';
+import { GameBFaceComponent } from './play-layout/components/games/game-b-face/game-b-face.component';
+import { GameCTapComponent } from './play-layout/components/games/game-c-tap/game-c-tap.component';
+import { GameDInflateComponent } from './play-layout/components/games/game-d-inflate/game-d-inflate.component';
+import { GameEMoleComponent } from './play-layout/components/games/game-e-mole/game-e-mole.component';
+import { GameFCardsComponent } from './play-layout/components/games/game-f-cards/game-f-cards.component';
+import { GameGCloudsComponent } from './play-layout/components/games/game-g-clouds/game-g-clouds.component';
+import { GameHSurferComponent } from './play-layout/components/games/game-h-surfer/game-h-surfer.component';
+import { GameIListenboxComponent } from './play-layout/components/games/game-i-listenbox/game-i-listenbox.component';
+import { GameJTempComponent } from './play-layout/components/games/game-j-temp/game-j-temp.component';
+import { GameKTempComponent } from './play-layout/components/games/game-k-temp/game-k-temp.component';
+import { GameLTempComponent } from './play-layout/components/games/game-l-temp/game-l-temp.component';
 
 const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const levelService = inject(GameService);
@@ -43,23 +44,20 @@ export default [
   { path: '', component: HomeComponent },
   { path: 'island', component: IslandsComponent, resolve: {gameResolver} },
   
-  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game7Component, resolve: {gameResolver} }, ] },
-  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game8Component, resolve: {gameResolver} }, ] },
-  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: Game10Component, resolve: {gameResolver} }, ] },
-  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game11Component, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameACactusComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: GameBFaceComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: GameCTapComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/0', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: GameDInflateComponent, resolve: {gameResolver} }, ] },
 
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: Game12Component, resolve: {gameResolver} }, ] },
-  //{ path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: Game13Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: Game14Component, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameEMoleComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: GameFCardsComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: GameGCloudsComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: GameHSurferComponent, resolve: {gameResolver} }, ] },
 
-  //{ path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: Game15Component, resolve: {gameResolver} }, ] },
-
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/1', component: Game0Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/2', component: Game1Component, resolve: {gameResolver} }, ] },
-  { path: 'island/1', component: PlayLayoutComponent, children: [ { path: 'level/5/gamePos/3', component: Game5Component, resolve: {gameResolver} }, ] },
-  
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameIListenboxComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/1', component: GameJTempComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: GameKTempComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: GameLTempComponent, resolve: {gameResolver} }, ] },
 
   /* { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },

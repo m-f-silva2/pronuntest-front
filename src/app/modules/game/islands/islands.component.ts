@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BtnLevelComponent } from './btn-level.component';
 import { Router, RouterLink } from '@angular/router';
 import { IDataGame, GameService } from '../play-layout/game.service';
-import { find, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
 
@@ -14,6 +14,7 @@ import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.compo
   styleUrl: './islands.component.css'
 })
 export class IslandsComponent {
+  @ViewChild('scrollableElement') scrollableElement!: ElementRef;
   btns: { state: 'block'|'unlock', island: number, level?: number }[] = [
     { state:'unlock',island:0,level:1},{state:'block',island:0,level:2},{state:'block',island:0,level:3},{state:'block',island:0,level:4},
     { state:'block',island:1,level:1},{state:'block',island:1,level:2},{state:'block',island:1,level:3},{state:'block',island:1,level:4},{state:'block',island:1,level:5},
@@ -30,6 +31,23 @@ export class IslandsComponent {
   ];
   dataGames: IDataGame
   
+  islad = 'Isla 0'
+  onScroll() {
+    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
+    const left = this.scrollableElement.nativeElement.scrollLeft;
+    const pos = Math.round(left/w)
+    const _islad = ['Isla 0', 'Isla 1', 'Isla 2', 'Isala 3'][pos]
+    if(this.islad != _islad){
+      this.islad = _islad
+    }
+  }
+  scrollIsland(direction: 1|-1){
+    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
+    const left = this.scrollableElement.nativeElement.scrollLeft;
+    const pos = Math.round(left/w) + direction
+    this.scrollableElement.nativeElement.scrollLeft = w * pos
+  }
+
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   
   constructor(private _route: Router, public _gameService: GameService){
