@@ -14,10 +14,10 @@
     <div class="scrollable pt-4 background-container select-none flex box-content overflow-y-hidden overflow-x-scroll static m-0 p-0"
         #scrollableElement (scroll)="onScroll()"
     >
-        <div class="relative flex-shrink-0 w-screen h-dvh pointer-events-none" >
 
+        <!-- ISLA 0 -->
+        <div class="relative flex-shrink-0 w-screen h-dvh pointer-events-none" >
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
-                
                 <div class="h-full relative isla">
                     <img class="h-full min-w-[580px] -ml-12 -mt-28 sm:-mt-0 sm:-ml-0" src="assets/images/isla0/yate.svg" alt="">
                     
@@ -48,7 +48,8 @@
             </div>
 
         </div>
-        
+
+        <!-- ISLA 1 -->
         <div class="relative flex-shrink-0 w-screen h-dvh">
 
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
@@ -68,9 +69,9 @@
                     <div class="absolute bottom-[58%] left-[46%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[7]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[70%] left-[36%] w-14 h-14 ">
+                    <!-- <div class="absolute bottom-[70%] left-[36%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[8]" (_handleClick)="handleBtnLevel($event)"/>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -80,26 +81,27 @@
 
         </div>
 
+        <!-- ISLA 2 -->
         <div class="relative flex-shrink-0 w-screen h-dvh">
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
                 <div class="h-full relative isla">
                     <img class="h-full " src="assets/images/isla2.svg" alt="">
 
                     <div class="absolute bottom-[17%] left-[19%] w-14 h-14 levelBtn1">
-                        <app-btn-level  class="h-full" [data]="btns[9]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[8]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[27%] left-[38%] w-14 h-14 levelBtn2">
-                        <app-btn-level  class="h-full" [data]="btns[10]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[9]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[42%] left-[50%] w-14 h-14 ">
-                        <app-btn-level  class="h-full" [data]="btns[11]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[10]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[60%] left-[40%] w-14 h-14 ">
-                        <app-btn-level  class="h-full" [data]="btns[12]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[11]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[72%] left-[45%] w-14 h-14 ">
+                    <!-- <div class="absolute bottom-[72%] left-[45%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[13]" (_handleClick)="handleBtnLevel($event)"/>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="absolute flex justify-center w-screen bottom-0 z-0 overflow-hidden">
@@ -107,26 +109,27 @@
             </div>
         </div>
 
+        <!-- ISLA 3 -->
         <div class="relative flex-shrink-0 w-screen h-dvh">
             <div class="absolute z-10 flex justify-center items-center w-screen h-full">
                 <div class="h-full relative isla">
                     <img class="h-full " src="assets/images/isla3.svg" alt="">
 
                     <div class="absolute bottom-[17%] left-[15%] w-14 h-14 levelBtn1">
-                        <app-btn-level  class="h-full" [data]="btns[14]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[12]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[30%] left-[38%] w-14 h-14 levelBtn2">
-                        <app-btn-level  class="h-full" [data]="btns[15]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[13]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[41%] left-[35%] w-14 h-14 ">
-                        <app-btn-level  class="h-full" [data]="btns[16]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[14]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
                     <div class="absolute bottom-[58%] left-[59%] w-14 h-14 ">
-                        <app-btn-level  class="h-full" [data]="btns[17]" (_handleClick)="handleBtnLevel($event)"/>
+                        <app-btn-level  class="h-full" [data]="btns[15]" (_handleClick)="handleBtnLevel($event)"/>
                     </div>
-                    <div class="absolute bottom-[79%] left-[39%] w-14 h-14 ">
+                    <!-- <div class="absolute bottom-[79%] left-[39%] w-14 h-14 ">
                         <app-btn-level  class="h-full" [data]="btns[18]" (_handleClick)="handleBtnLevel($event)"/>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="absolute flex justify-center w-screen bottom-0 z-0 overflow-hidden">
