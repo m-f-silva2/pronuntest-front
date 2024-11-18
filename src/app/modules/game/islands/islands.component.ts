@@ -36,7 +36,7 @@ export class IslandsComponent {
     const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
     const left = this.scrollableElement.nativeElement.scrollLeft;
     const pos = Math.round(left/w)
-    const _islad = ['Isla 0', 'Isla 1', 'Isla 2', 'Isala 3'][pos]
+    const _islad = ['Isla 0', 'Isla 1', 'Isla 2', 'Isla 3'][pos]
     if(this.islad != _islad){
       this.islad = _islad
     }

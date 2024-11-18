@@ -11,7 +11,8 @@
                 @if (!isRuning) {
                     <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
                         <img src="assets/temp-video.png" alt="" class="h-full max-w-full max-h-full object-contain block">
-                        <btn-img class="w-fit block blur-none text-4xl" (eventClick)="play()" [title]="'Jugar'"  [type]="'orange'" [imgPath]="'assets/images/play.svg'"/>
+                        <btn-img class="w-fit block blur-none text-4xl absolute {{isCompleted?'top-0':'bottom-0'}}" (eventClick)="play()" [title]="isCompleted?'Volver a jugar':'Jugar'"
+                        [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
                     </div>
                 }
 
@@ -59,11 +60,11 @@
         <div class="flex gap-8 m-4">
             <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
             @if(section < 3 && isCompleted){
-                <btn-img (eventClick)="btnsNavegation('next')" [title]="'Siguiente'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+                <btn-img (eventClick)="btnsNavegation('next')" [title]="'Siguiente'"  [type]="'green'" [imgPath]="'assets/images/arrow.svg'" 
                 class="animate-wiggle"/>
             }
             @if(section == 3 && isCompleted){
-                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente Nivel'"  [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" 
+                <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente Nivel'"  [type]="'green'" [imgPath]="'assets/images/arrow.svg'" 
                 class="animate-wiggle"/>
             }
         </div>
