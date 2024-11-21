@@ -1,6 +1,6 @@
 @if(isCompleted){<app-conffety />}
 
-<main class="w-full h-[90%] font-Flippinfont ">
+<main class="w-full h-[88%] font-Flippinfont ">
     @if (section === 0) {
     <app-level-info (btnsEvent)="btnsNavegation($event)" [data]="sections[section]"></app-level-info>
     }@else {
@@ -16,14 +16,39 @@
                     </div>
                 }
 
-                <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
-                    <div class="flex flex-col h-full w-full items-center ">
-                        
-                        <div class="relative  w-full h-full overflow-hidden select-none ">
-                            <!-- Code -->
-                        </div>
+                <div class="relative w-full h-full flex flex-col justify-around items-center">
+
+                    <div id="startDrag" class=" border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
+                        <img 
+                          *ngFor="let item of itemsResources; let i = index" 
+                          class="w-16 drag" 
+                          (click)="handleClickNextAudio(item.audio)" 
+                          [src]="item.img"
+                          (dragstart)="dragStart($event)" 
+                          [hidden]="itemsResourcesPos !== i" 
+                          id="boxA{{i}}" 
+                          draggable="true">
                     </div>
 
+                    <div class="h-fit relative w-full max-w-[500px] flex justify-center items-center gap-5 ">
+                        <div (click)="handleClick(0)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover"
+                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'nariz')"
+                            (dragover)="dragOver($event)">
+
+                            <div class="arrow-container select-none pointer-events-none w-full h-full">
+                                <div class="arrow-down w-full h-full"></div>
+                            </div>
+                        </div>
+
+                        <div (click)="handleClick(1)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover"
+                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boca')"
+                            (dragover)="dragOver($event)">
+
+                            <div class="arrow-container select-none pointer-events-none w-full h-full">
+                                <div class="arrow-down w-full h-full"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -45,4 +70,4 @@
 </main>
 
 <audio class="hidden" id="audio"  [src]="audio"></audio>
-<audio class="hidden" id="audioAux"  [src]="audioAux"></audio>
+<!-- <audio class="hidden" id="audioAux"  [src]="audioAux"></audio> -->

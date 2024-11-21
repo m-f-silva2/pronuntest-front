@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-  <div class="h-full relative" (click)="handleClick()">
+  <div class="h-full relative hover:scale-105 hover:transition-all" (click)="handleClick()">
   @if (data.state === 'unlock') {
     <div class="animate-bounce text-4xl text-[#e9e0cf] absolute -bottom-7 left-4 font-ShadyLane drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
       {{data.level}}

@@ -22,12 +22,6 @@
 
                     <div id="startDrag"
                         class=" border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
-                        <!--<img class="w-16 drag" 
-                            (click)="handleClickNextAudio(itemsResources[itemsResourcesPos].audio)"
-                            [src]="itemsResources[itemsResourcesPos].img" 
-                            alt="" 
-                            (dragstart)="dragStart($event)"
-                            id="boxA" draggable="true">-->
                         <img 
                           *ngFor="let item of itemsResources; let i = index" 
                           class="w-16 drag" 

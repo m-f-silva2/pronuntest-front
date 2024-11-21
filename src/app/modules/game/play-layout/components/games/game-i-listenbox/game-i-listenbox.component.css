@@ -1,0 +1,107 @@
+.spinner {
+    width: 9rem;
+    height: 9rem;
+    position: relative;
+  }
+  .spinner circle {
+    fill: none;
+    stroke-linecap: butt;
+    stroke-width: var(--stroke-width, 3);
+  }
+  .spinner .ring {
+    stroke: #000;
+    opacity: 0.1;
+  }
+  .spinner .line {
+    stroke: #0ebeff;
+    stroke-width: 3;
+    stroke-dasharray: var(--stroke-dasharray);
+    stroke-dashoffset: var(--stroke-dashoffset);
+    -webkit-animation: 943ms spinner-rotate linear infinite;
+            animation: 943ms spinner-rotate linear infinite;
+  }
+  .spinner .text {
+    font-size: 0.6rem;
+    font-weight: 300;
+    fill: rgba(0, 0, 0, 0.4);
+  }
+
+  .arrow-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin: 20px;
+  }
+  
+  .arrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #4ca3ff; /* Color de la flecha */
+    margin-bottom: 10px;
+    animation: bounce 1s infinite; /* Añadir animación de rebote */
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px); /* Altura del rebote */
+    }
+    60% {
+      transform: translateY(-5px); /* Altura del rebote */
+    }
+  }
+
+  .arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid #007bff; /* Color de la flecha */
+    margin-bottom: 10px;
+    animation: bounce-down 1s infinite; /* Añadir animación de rebote hacia abajo */
+  }
+  
+  @keyframes bounce-down {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(10px); /* Altura del rebote hacia abajo */
+    }
+    60% {
+      transform: translateY(5px); /* Altura del rebote hacia abajo */
+    }
+  }
+  
+  p {
+    font-size: 16px;
+    color: #007bff; /* Color del texto */
+    text-align: center;
+  }
+  
+
+  .container_border {
+    background: linear-gradient(170.37deg, #A3E8FF 39.58%, #5AD0F2 93.33%);
+    overflow: hidden;
+    border-radius: 80px;
+    padding: 1rem;
+    border: solid 1px #ffffff17;
+    box-shadow: 0px 6px 19.4px rgba(0, 0, 0, 0.24);
+  }
+  
+  .container_border_content {
+    border-radius: 60px;
+    background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%);
+    box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
+  }
+
+
+.boxDrop .drag {
+  top: 0;
+  position: absolute;
+}
