@@ -20,9 +20,9 @@ export class GameZzMicrophoneComponent {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   sections: any[] = []
   section = 0
-  countRecording = 0
   dataGames: IDataGame
   isCompleted = false
+  countRecording = 0
   wavRecorder = new WavRecorder();
 
   constructor(public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private _toastService: ToastService) {
@@ -52,7 +52,7 @@ export class GameZzMicrophoneComponent {
   private mediaRecorder: MediaRecorder | null = null;
   public isRecording = false;
   public audioUrl: string | null = null;
-
+  
   async getFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {
       try {
@@ -192,17 +192,7 @@ export class GameZzMicrophoneComponent {
     body += `Content-Disposition: form-data; name="recording"; filename="recording.wav"\r\n`;
     body += `Content-Type: audio/wav\r\n\r\n`;
 
-    /* const audioWAB8Array = new Uint8Array(buffer); */
-    /* const numbers: number[] = [];
-    for (const byte of audioWAB8Array) {
-      numbers.push(byte);
-    } */
-   /* body += String.fromCharCode.apply(null, numbers);
-   body += `\r\n--${boundary}--\r\n`; */
-
     const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
-    
-
     this._gameService.sendAudio(blobBody, this._gameService.structure?.phoneme!).subscribe({
       next: (res: any) => {
         const islandLevel = this._gameService._islandLevels.getValue()?.find(res => res.isl_lev_str_id === this._gameService.structure?.isl_lev_str_id)

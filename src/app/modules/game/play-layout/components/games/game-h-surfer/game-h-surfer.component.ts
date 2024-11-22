@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
 import { ToastGameService } from '../../../../../../core/services/toast_game/toast-game.service';
 import { ConffetyComponent } from '../../conffety/conffety.component';
+import { WavRecorder } from "webm-to-wav-converter";
 
 @Component({
   selector: 'app-game-h-surfer',
@@ -34,27 +35,12 @@ export class GameHSurferComponent {
     [{ id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758,  top: 44, right: 0 }],
     [
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65,  top: 44, right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 67,  top: 45, right: 4 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 69,  top: 42, right: 8 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 105, top: 41, right: -30 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 110, top: 46, right: -34 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 114, top: 47, right: -38 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65,  top: 42, right: 29 },
     ],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: 44,  right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: 45,  right: 4 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: 42,  right: 8 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: 41, right: -30 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: 46, right: -34 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: 47, right: -38 },
-    ],
-    [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 758,  top: 44, right: 0 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 805,  top: 45, right: 4 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav',yEnd: 916,  top: 42, right: 8 },
-      { id: 3, completed: false, isCorrect: true, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',    yEnd: 1022, top: 41, right: -30 },
-      { id: 4, completed: false, isCorrect: true, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav',     yEnd: 1138, top: 46, right: -34 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',    yEnd: 1287, top: 47, right: -38 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 44,  right: 0 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 42,  right: 20 },
+      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 47, right: -38 },
     ],
   ]
 /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
@@ -94,10 +80,13 @@ export class GameHSurferComponent {
 
   muerteAlFurfista = false
   play() {
+    console.log('>> >>: play', );
     setTimeout(() => {
       //TODO: almacenar clikeados
-      this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
-    }, 380)
+      //this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
+      this.startRecording()
+    }, 400)
+
     this.isRuning = true
     let count = 0
     this.interval = setInterval(() => {
@@ -122,13 +111,13 @@ export class GameHSurferComponent {
         this.itemsResources[this.posCurrentDown].completed = true
         this.posCurrentDown++
       }
-    }, 100);
+    }, 500);
   }
 
-  handleClick(btn: number) {
+  handleClick(btn: number, isCorrect: boolean) {
     this.itemsResources[btn].completed = true
 
-    if (this.itemsResources[btn].isCorrect) {
+    if (isCorrect) {
       /* this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true */
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
@@ -142,6 +131,12 @@ export class GameHSurferComponent {
       this.handleSecondaryAudio('assets/audios/error.mp3')
       this.intents--
     }
+    
+    console.log('>> >>: perdiste', this.intents, this.sizeCorrectItems);
+
+    setTimeout(() => {
+        this.startRecording()
+    }, 500);
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
       this.restart()
@@ -176,6 +171,7 @@ export class GameHSurferComponent {
     this.sizeCorrectItems = this.itemsResources.filter(res=>res.isCorrect).length
     this.audio = ''
     this.muerteAlFurfista = false
+    this.i = -1
     setTimeout(() => {
       this.isRuning = false;
     }, 1000);
@@ -194,5 +190,206 @@ export class GameHSurferComponent {
       (document.getElementById('audioAux') as HTMLAudioElement).play();
     }, 2);
   }
+
+
+  /* ===== Logica audio ===== */
+
+  private mediaRecorder: MediaRecorder | null = null;
+  public isRecording = false;
+  public audioUrl: string | null = null;
+  countRecording = 0
+  wavRecorder = new WavRecorder();
+
+  async getFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      try {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = (): void => {
+          resolve(reader.result as ArrayBuffer);
+        };
+        reader.onerror = (error: any) => {
+          console.error('>> >>  error reader file:', error);
+          reject();
+        };
+      } catch (e) {
+        reject();
+      }
+    });
+  }
+
+  async file(event: any) {
+    const file = event.files[0] as File
+    const dataFileArrBuf = await this.getFileToArrayBuffer(file)
+    await this.sendFile(dataFileArrBuf)
+  }
+
+  intervalArc: any;
+  i:number = -1;
+  async stopRecording() {
+      this.isRecording = false;
+      this.countRecording = 0;
+      this.wavRecorder.stop();
+      if(this.i == 0 || this.i == 3){
+        /* this.handleClick(this.i) */
+        /* this.i++; */
+        /* setTimeout(() => {
+          this.i++;
+          this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
+            this._toastService.toast.set(undefined)
+          }})
+        }, 1500); */
+        console.log('>> >>: 1', );
+      }/* else{
+        console.log('>> >>: 2', );
+        setTimeout(() => {
+          this.i = 0;
+          this._toastService.toast.set({ type: 's', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo!", end: () => { 
+            this._toastService.toast.set(undefined)
+          }})
+        }, 1500);
+      } */
+  }
+
+  async getWavBlob() {
+    const wavBlob = await this.wavRecorder.getBlob()!
+
+    if (wavBlob) {
+      // Convert Blob to byte array (assuming limited library usage)
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(wavBlob);
+      reader.onload = async (event) => {
+        if (event.target && event.target.result) {
+          this.isCompleted = true
+          this.sendFile(event.target.result as ArrayBuffer)
+          this.audioUrl = URL.createObjectURL(wavBlob);
+          this.ref.markForCheck();
+
+        } else {
+          console.error("Error reading audio data");
+        }
+      };
+
+      // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
+    } else {
+      console.error('No se pudo obtener el Blob WAV');
+    }
+  }
+
+  async startRecording() {
+    if (this.isRecording) {
+      this.isCompleted=true;
+      this.stopRecording()
+      return
+    }
+    const started = await this.wavRecorder.start();
+    if (!started) {
+      console.error('No se pudo iniciar la grabación');
+      return
+    }
+
+    const stream = this.wavRecorder.stream
+    this.mediaRecorder = new MediaRecorder(stream);
+
+    this.mediaRecorder.onstop = () => {
+      this.getWavBlob()
+    };
+
+
+    this.mediaRecorder.start();
+    this.isRecording = true;
+    this.setArc({ target: { value: 0, min: 0, max: 100 } })
+
+    setTimeout(() => {
+      this.stopRecording()
+      this.countRecording = 0
+      console.log('>> >>: stoprecording', );
+    }, 3000);
+
+    this.countRecording = 1
+    this.intervalArc = setInterval(() => {
+      if (this.countRecording === 0) { return }
+      this.countRecording++
+      this.setArc({ target: { value: 16.66666666 * (this.countRecording / 100), min: 0, max: 100 } })
+    }, 10)
+  }
+
+  concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {
+    // Convertir texto a ArrayBuffer utilizando el encoding especificado
+    const textBeforeBuffer = new TextEncoder().encode(textBefore);
+    const textAfterBuffer = new TextEncoder().encode(textAfter);
+  
+    // Calcular el tamaño total del nuevo buffer
+    const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
+  
+    // Crear un nuevo ArrayBuffer
+    const newBuffer = new ArrayBuffer(totalLength);
+    const newUint8Array = new Uint8Array(newBuffer);
+    const originalBuffer = new Uint8Array(buffer);
+
+    // Copiar los datos al nuevo ArrayBuffer
+    newUint8Array.set(textBeforeBuffer);
+    newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
+    newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
+  
+    return newBuffer;
+  }
+
+  sendFile(buffer: ArrayBuffer) {
+    const boundary = "boundary";
+    let body = "";
+    body += `--${boundary}\r\n`;
+    body += `Content-Disposition: form-data; name="recording"; filename="recording.wav"\r\n`;
+    body += `Content-Type: audio/wav\r\n\r\n`;
+
+    const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
+    this._gameService.sendAudio(blobBody, 'a').subscribe({ //FIXME: a
+      next: (res: any) => {
+
+        this.i++
+        this.handleClick(this.i, res.score > 80)
+
+        /* const islandLevel = this._gameService._islandLevels.getValue()?.find(res => res.isl_lev_str_id === this._gameService.structure?.isl_lev_str_id)
+        if(!islandLevel) throw new Error('')
+        islandLevel.best_accuracy_ia  = res.score
+        islandLevel.worst_accuracy_ia = res.score
+        this._gameService.updateIslandLevel(islandLevel).subscribe({
+          next: (resScoreUpdate: any) => {
+            this.i++
+            this.handleClick(this.i, resScoreUpdate.score > 80)
+          },
+          error: (error: any) => {
+            this.i++
+            console.error('>> >> geterror1:', error);
+          }
+        }) */
+      },
+      error: (error: any) => {
+        this.i++
+        console.error('>> >>  getaudio2:', error);
+      }
+    });
+  }
+
+
+  setArc(event: { target: { value: number, min: number, max: number } }) {
+    const spinner = document.querySelector('.spinner')! as HTMLElement
+    const line = spinner.querySelector('.line')! as SVGGeometryElement
+
+    const pathLength = line.getTotalLength()
+    const radius = Number(line.getAttribute('r'))
+    const piR2 = 2 * Math.PI * radius
+    const { value, min, max } = event.target
+
+
+    const val = value  //parseInt(value, 10)
+    const length = Math.abs(((val / max) * piR2) / pathLength).toFixed(2)
+    /* const percent = ((value - min) / (max - min) * 100) */
+
+    spinner.style.setProperty('--stroke-dasharray', `${length} 1`)
+    spinner.style.setProperty('--stroke-dashoffset', val < 0 ? (Number(length) * 2) + '' : '0')
+    spinner.style.setProperty('--stroke-timing', val === 0 ? '0ms' : '300ms')
+  }
+
 }
 

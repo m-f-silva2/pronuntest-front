@@ -17,12 +17,22 @@
                 }
 
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
-                    <div class="flex flex-col h-full w-full items-center ">
+                    <div class="flex flex-col h-full w-full items-center relative">
                         
+                        <div class="absolute w-36 h-36 top-4 left-6 ">
+                            <svg viewBox="-25 -25 50 50" class="spinner absolute top-0 left-0">
+                                <circle class="ring" cx="0" cy="0" r="22" />
+                                <circle class="line" cx="0" cy="0" r="22" pathLength="1" />
+                            </svg>
+                            <div class="bg-white/50 animate-wiggle rounded-full absolute top-[9px] left-[9px]">
+                                <img src="assets/images/microphone.svg" alt="" srcset="">
+                            </div>
+                        </div>
+
                         <div class="relative  w-full h-full overflow-hidden select-none ">
                             <div class="container-move relative w-full h-full z-20" #containerIMG>
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
-                                    <div (click)="handleClick(index)" 
+                                    <div  
                                     [style]="'top:' + resource.top+'%; right:'+resource.right+'%'"
 
                                     class="{{resource.completed?'hidden':''}} absolute  bg-contain bg-no-repeat bg-bottom flex justify-center items-center z-20">
