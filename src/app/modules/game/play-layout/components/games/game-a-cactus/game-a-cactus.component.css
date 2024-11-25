@@ -38,8 +38,6 @@
 
 .container_border_content {
   border-radius: 60px;
-  /* background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%); */
-  background: url('/5t6eassets/images/isla0/desert-bg.webp');
   box-shadow: inset  0px 6px 10px rgba(0, 0, 0, 0.24);
 }
 

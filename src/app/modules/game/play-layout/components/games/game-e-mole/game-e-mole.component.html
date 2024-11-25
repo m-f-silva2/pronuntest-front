@@ -45,11 +45,11 @@
         <div class="flex gap-8 m-4">
             <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'" [type]="'orange'"
                 [imgPath]="'assets/images/arrow-back.svg'" />
-            @if(section < 3 && isCompleted){ 
+            @if(section < sectionsGame && isCompleted){ 
                 <btn-img (eventClick)="btnsNavegation('next')" [title]="'Siguiente'" [type]="'green'"
                 [imgPath]="'assets/images/arrow.svg'" class="animate-wiggle" />
             }
-            @if(section == 3 && isCompleted){
+            @if(section == sectionsGame && isCompleted){
             <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente Nivel'" [type]="'green'"
                 [imgPath]="'assets/images/arrow.svg'" class="animate-wiggle" />
             }

@@ -28,32 +28,18 @@ export class GameGCloudsComponent {
   isCompleted = false
   isRuning = false
   posCurrentDown = 0
+  sectionsGame = 2
+
   itemsResources: any[] = []
   allItemsResources = [
     [],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: -16, left: 8 },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: -41, left: 30 },
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: -61, left: 67 },
-      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: -81, left: 20 },
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 80 },
-    ],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: -16, left: 8 },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: -41, left: 30 },
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: -61, left: 67 },
-      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: -81, left: 20 },
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 80 },
-    ],
     [
       { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 758, top: -16, left: 8 },
       { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
       { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 916, top: -41, left: 30 },
       { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 1022, top: -61, left: 67 },
       { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 1138, top: -81, left: 20 },
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 80 },
+      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 65 },
     ],
   ]
 
@@ -61,14 +47,6 @@ export class GameGCloudsComponent {
   correctItemsResources: any[] = []
   allCorrectItemsResources = [
     [],
-    [
-      { completed: false, pos: 0, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 2, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 3, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 4, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 5, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-    ],
     [
       { completed: false, pos: 0, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
       { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
@@ -113,8 +91,8 @@ export class GameGCloudsComponent {
     this.isCompleted = false
     this.itemsResources = this.allItemsResources[this.section]
     this.correctItemsResources = this.allCorrectItemsResources[this.section]
-    this.intents = this.correctItemsResources.length
-    this.sizeCorrectItems = this.correctItemsResources.length;
+    this.intents = this.correctItemsResources?.length
+    this.sizeCorrectItems = this.correctItemsResources?.length;
   }
 
   play() {

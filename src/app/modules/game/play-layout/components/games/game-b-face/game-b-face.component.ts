@@ -28,7 +28,7 @@ export class GameBFaceComponent {
   itemsResources = [
     { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.wav' , part: 'nariz'   },
     { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', part: 'boca'    },
-    { img: 'assets/images/isla0/abeja.svg', audio: 'assets/audios/fonema_ch.wav', part: 'garganta'},
+    { img: 'assets/images/isla1/pregunta.svg', audio: 'assets/audios/fonema_ch.wav', part: 'garganta'},
   ]
   itemsResourcesPos = -1
   audio: string = '';

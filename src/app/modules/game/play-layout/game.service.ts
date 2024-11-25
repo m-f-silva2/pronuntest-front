@@ -44,17 +44,17 @@ export class GameService {
         levels: [
           {
             games: [
-              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego grabar
+              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, topo
             ]
           },
           {
             games: [
-              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego barco
+              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, 
             ]
           },
           {
             games: [
-              { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego cuadro-secuencia
+              { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] }, //información, 
             ]
           },
           {

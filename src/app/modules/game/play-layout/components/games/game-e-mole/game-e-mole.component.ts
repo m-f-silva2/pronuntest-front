@@ -26,6 +26,7 @@ export class GameEMoleComponent {
   dataGames: IDataGame
   isCompleted = false
   isRuning = false
+  sectionsGame = 2
   sizeCorrectItems = 0
   itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, top: number, left: number, w: number }[] = []
   allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, top: number, left: number, w: number}[][] = [
@@ -35,23 +36,18 @@ export class GameEMoleComponent {
       { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 28, left: 35  },
     ],
     [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', w:10, active: false, top: 38, left: 60 },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', w:10, active: false, top: 41, left: 20 },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', w:10, active: false, top: 61, left: 47 },
-    ],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav',     w:10, active: false, top: 61, left: 37 },
-      { id: 1, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', w:10, active: false, top: 41, left: 30 },
+      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_ch.wav',     w:10, active: false, top: 61, left: 37 },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_s.wav',      w:10, active: false, top: 41, left: 30 },
       { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     w:10, active: false, top: 31, left: 60 },
       { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     w:10, active: false, top: 16, left: 8 },
     ],
   ]
 
   correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }
+  
   allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }[] = [
     { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1 },
     { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2 },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 3, intents: 3 },
     { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2 },
   ]
 
@@ -86,14 +82,13 @@ export class GameEMoleComponent {
   }
 
   initData() {
-    
-    this.itemsResources = this.allItemsResources[this.section]
+    this.itemsResources = this.allItemsResources[this.section];
     this.correctItemResource = this.allCorrectItemBySection[this.section]
-    this.isCompleted = false
     this.sizeCorrectItems = this.correctItemResource?.sizeCorrectItems || 0
     this.intents = this.correctItemResource?.intents || 0
     this.audio = ''
-    this.itemsResources.forEach(res => res.completed = false)
+    this.itemsResources?.forEach(res => res.completed = false)
+    this.isCompleted = false
   }
 
   intervalTopo: any

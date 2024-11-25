@@ -67,7 +67,6 @@ export class GameDInflateComponent {
     if(this.balloon){
       this.balloon.nativeElement.style.width = '12px'
     }
-    this.isCompleted = false
     /* this.intents = this.correctItemResource?.intents || 0 */
     this.frequency = 0
     this.audio = ''
@@ -81,13 +80,12 @@ export class GameDInflateComponent {
     }, 380)
   }
   restart() {
+    this.stopRecording()
     this.initData()
     setTimeout(() => {
       this.isRuning = false;
-    }, 1000);
+    }, 800);
   }
-
-
 
   async startRecording() {
     this.audioContext = new AudioContext();
@@ -95,7 +93,7 @@ export class GameDInflateComponent {
     const analyser = this.audioContext.createAnalyser();
     const source = this.audioContext.createMediaStreamSource(stream);
     source.connect(analyser);
-
+    this.isRecording = true
     const intervalId = setInterval(() => {
       analyser.smoothingTimeConstant = 0.3;
       analyser.fftSize = 1024;
@@ -119,10 +117,10 @@ export class GameDInflateComponent {
             clearInterval(intervalId)
 
             this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
+            this.restart()
             setTimeout(() => {
-              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
-              this.restart()
               this.isCompleted = true
+              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
               this._toastGameService.toast.set({
                 type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
                   this._toastGameService.toast.set(undefined)

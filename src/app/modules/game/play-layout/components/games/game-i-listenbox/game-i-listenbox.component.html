@@ -18,21 +18,23 @@
 
                 <div class="relative w-full h-full flex flex-col justify-around items-center">
 
-                    <div id="startDrag" class=" border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
+                    <div id="startDrag" class="hover:brightness-125 border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
+                        <!-- Imagen mover -->
                         <img 
                           *ngFor="let item of itemsResources; let i = index" 
-                          class="w-16 drag" 
-                          (click)="handleClickNextAudio(item.audio)" 
+                          class="w-16 drag cursor-pointer" 
+                          (click)="onAudioEnded()" 
                           [src]="item.img"
                           (dragstart)="dragStart($event)" 
                           [hidden]="itemsResourcesPos !== i" 
-                          id="boxA{{i}}" 
+                          id="box{{i}}" 
                           draggable="true">
                     </div>
 
-                    <div class="h-fit relative w-full max-w-[500px] flex justify-center items-center gap-5 ">
-                        <div (click)="handleClick(0)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover"
-                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'nariz')"
+                    <div class="h-fit relative w-full flex justify-center items-center gap-8">
+                        <!-- Caja 1 -->
+                        <div (click)="handleClickBox(0)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover hover:brightness-125"
+                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boxA')"
                             (dragover)="dragOver($event)">
 
                             <div class="arrow-container select-none pointer-events-none w-full h-full">
@@ -40,8 +42,9 @@
                             </div>
                         </div>
 
-                        <div (click)="handleClick(1)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover"
-                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boca')"
+                        <!-- Caja 2 -->
+                        <div (click)="handleClickBox(1)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover hover:brightness-125"
+                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boxB')"
                             (dragover)="dragOver($event)">
 
                             <div class="arrow-container select-none pointer-events-none w-full h-full">
@@ -55,11 +58,11 @@
 
         <div class="flex gap-8 m-4">
             <btn-img (eventClick)="btnsNavegation('previous')" [title]="'Volver'"  [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
-            @if(section < 3 && isCompleted){
+            @if(section < 1 && isCompleted){
                 <btn-img (eventClick)="btnsNavegation('next')" [title]="'Siguiente'"  [type]="'green'" [imgPath]="'assets/images/arrow.svg'" 
                 class="animate-wiggle"/>
             }
-            @if(section == 3 && isCompleted){
+            @if(section == 1 && isCompleted){
                 <btn-img (eventClick)="btnsNavegation('endNext')" [title]="'Siguiente Nivel'"  [type]="'green'" [imgPath]="'assets/images/arrow.svg'" 
                 class="animate-wiggle"/>
             }
@@ -69,5 +72,6 @@
     }
 </main>
 
-<audio class="hidden" id="audio"  [src]="audio"></audio>
-<!-- <audio class="hidden" id="audioAux"  [src]="audioAux"></audio> -->
+<audio class="hidden" id="audioMultiple" (ended)="onAudioEnded()" [src]="audioMultiple"></audio>
+<audio class="hidden" id="audio" [src]="audio"></audio>
+<audio class="hidden" id="audioAux"  [src]="audioAux"></audio>

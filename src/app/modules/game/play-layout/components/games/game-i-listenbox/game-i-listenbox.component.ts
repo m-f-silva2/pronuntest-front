@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Renderer2 } from '@angular/core';
+import { ChangeDetectorRef, Component, KeyValueDiffers, Renderer2 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
@@ -26,15 +26,17 @@ export class GameIListenboxComponent {
   isCompleted = false
   section = 0
   countRecording = 0
-  itemsResources = [
-    { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.wav',  part: 'nariz'   },
-    { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',  part: 'boca'    },
+  itemsResources: { img: string,  audioL: string, audioR: string, boxExplosion: 0|1 }[] = [
+    { img: 'assets/images/isla0/vaca.png',  audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0},
+    { img: 'assets/images/isla0/globo.svg', audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 1},
   ]
+  
   itemsResourcesPos = -1
   audio: string = '';
+  audioAux: string = '';
   isRuning = false
-  
-  constructor(private _toastGameService: ToastGameService,public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
+
+  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Escucha el sonido de la imagen y repítelo tú mismo. Luego, observa el dibujo y decide si el sonido se produce en la nariz, la boca o la garganta.',
@@ -44,14 +46,12 @@ export class GameIListenboxComponent {
       previous: undefined
     })
 
-    this.itemsResourcesPos = 1 //Math.floor(Math.random() * 3)
-
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
     this.itemsResources = this.shuffleArray(this.itemsResources);
-    this.itemsResourcesPos = 0; // Comenzar desde la primera posición después del barajado
 
+    this.itemsResourcesPos = 0;
   }
   // Método para barajar el array
   shuffleArray(array: any[]) {
@@ -63,11 +63,11 @@ export class GameIListenboxComponent {
   }
 
   play() {
-    this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audio)
+    this.onAudioEnded()
     this.isRuning = true
-    document.getElementById('startDrag')!.appendChild(document.getElementById('boxA')!);
     this.isCompletedAux = false
     this.isCompleted = false
+
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -76,93 +76,115 @@ export class GameIListenboxComponent {
     this.section += direction
   }
 
-  handleClick(btn: number){
-    this.sounds[btn] = true;
-    (document.getElementById('audio'+btn) as HTMLAudioElement).play();
-
-    if(this.sounds.every(res=>res===true)){
-      this.isCompleted = true
-      this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
-        this._toastService.toast.set(undefined)
-      }})
+  handleClickBox(btn: number) {
+    if(btn === 0){
+      this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audioL)
+    }else{
+      this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audioR)
     }
   }
 
-    /* DROP */
-    dragStart(ev: any) {
-      ev.dataTransfer.effectAllowed='move';
-      ev.dataTransfer.setData("Text", ev.currentTarget.getAttribute('id'));
-      ev.dataTransfer.setDragImage(ev.currentTarget,50,50);
-      return true;
-    }
-    // these  prevents default behavior of browser
-    dragEnter(event: any) {
-      event.preventDefault();
-      return true;
-    }
-    dragOver(event: any) {
-      event.preventDefault();
-    }
-    dragDrop(ev: any, parteCuerpo: string) {
-      const data = ev.dataTransfer.getData("Text");
-      
-      if (this.itemsResources[this.itemsResourcesPos].part === parteCuerpo) {
-        ev.target.appendChild(document.getElementById(data));
-        ev.stopPropagation();
-        // Avanzar a la siguiente imagen
-        this.itemsResourcesPos++;
+  /* DROP */
+  dragStart(ev: any) {
+    ev.dataTransfer.effectAllowed = 'move';
+    ev.dataTransfer.setData("Text", ev.currentTarget.getAttribute('id'));
+    ev.dataTransfer.setDragImage(ev.currentTarget, 50, 50);
+    return true;
+  }
+  // these  prevents default behavior of browser
+  dragEnter(event: any) {
+    event.preventDefault();
+    return true;
+  }
+  dragOver(event: any) {
+    event.preventDefault();
+  }
+  dragDrop(ev: any, box: 'boxA'|'boxB') {
+    const data = ev.dataTransfer.getData("Text");
+    const boxCode = ['boxA','boxB']
 
-        if (this.itemsResourcesPos >= this.itemsResources.length) {
-          this.isCompleted = true;
-        
-          setTimeout(() => {
-            this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
-            this.isCompletedAux = true;
-            this._toastGameService.toast.set({
-              type: 's', timeS: 3, title: "¡Ganaste!", message: "Nivel completado con éxito!", end: () => {
-                this._toastGameService.toast.set(undefined);
-              }
-            });
-          }, 500);
-      
-          setTimeout(() => {
-            this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3');
-            this.isCompleted = true;
-            this.isRuning = false;
-      
-            // Avanzar a la siguiente imagen
-            this.itemsResourcesPos++;
-            if (this.itemsResourcesPos >= this.itemsResources.length) {
-              this.itemsResourcesPos = 0; // Reiniciar a la primera imagen si se completan todas
-            }
-          }, 3300);
-          this.itemsResourcesPos = -1; // Resetea el índice si se completan todas las imágenes
-        }else{
-          // Acción cuando el drop es exitoso
-          this.handleClickNextAudio('assets/audios/sonido_excelente.mp3');
-          this._toastService.toast.set({
-            type: 's', timeS: 3, title: "¡Bien hecho!", message: "¡sigue jugando!", end: () => {
-              this._toastService.toast.set(undefined);
+    if (boxCode[this.itemsResources[this.itemsResourcesPos].boxExplosion] === box) {
+      ev.target.appendChild(document.getElementById(data));
+      ev.stopPropagation();
+      // Avanzar a la siguiente imagen
+      this.itemsResourcesPos++;
+
+      if (this.itemsResourcesPos >= this.itemsResources.length) {
+        this.isCompleted = true;
+
+        this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
+        setTimeout(() => {
+          this.isCompletedAux = true;
+          this.handleSecondaryAudio('assets/audios/sonido_ganaste.mp3');
+          this._toastGameService.toast.set({
+            type: 's', timeS: 3, title: "¡Ganaste!", message: "Nivel completado con éxito!", end: () => {
+              this._toastGameService.toast.set(undefined);
             }
           });
-        }
-      } else {
-        this.handleClickNextAudio('assets/audios/error.mp3');
+        }, 500);
+
         setTimeout(() => {
-          this.handleClickNextAudio('assets/audios/sonido_intentalo_nuevo.mp3');
-        }, 400);
+          this.isCompleted = true;
+          this.isRuning = false;
+
+          // Avanzar a la siguiente imagen
+          this.itemsResourcesPos++;
+          if (this.itemsResourcesPos >= this.itemsResources.length) {
+            this.itemsResourcesPos = 0; // Reiniciar a la primera imagen si se completan todas
+          }
+        }, 3300);
+        this.itemsResourcesPos = -1; // Resetea el índice si se completan todas las imágenes
+      } else {
+        // Acción cuando el drop es exitoso
+        this.handleClickNextAudio('assets/audios/sonido_excelente.mp3');
+        this._toastService.toast.set({
+          type: 's', timeS: 3, title: "¡Bien hecho!", message: "¡sigue jugando!", end: () => {
+            this._toastService.toast.set(undefined);
+          }
+        });
       }
-    
-      return false;
-    }
-    
-    isCompletedAux = false
-
-
-    handleClickNextAudio(_audio: string) {
-      this.audio = _audio;
+    } else {
+      this.handleClickNextAudio('assets/audios/error.mp3');
       setTimeout(() => {
-        (document.getElementById('audioAux') as HTMLAudioElement).play();
-      }, 10);
+        this.handleClickNextAudio('assets/audios/sonido_intentalo_nuevo.mp3');
+      }, 400);
     }
+
+    return false;
+  }
+
+  isCompletedAux = false
+  currentIndex = -1
+  audioMultiple = ''
+  onAudioEnded() {
+    this.currentIndex++;
+    if (this.currentIndex == 0) {
+      this.audioMultiple = this.itemsResources[this.currentIndex].audioL
+      this.playAudioMultiple();
+    }else if (this.currentIndex == 1) {
+      this.audioMultiple = this.itemsResources[this.currentIndex].audioR
+      this.playAudioMultiple();
+    }else{
+      this.currentIndex = -1
+    }
+  }
+
+  handleClickNextAudio(_audio: string) {
+    this.audio = _audio;
+    setTimeout(() => {
+      (document.getElementById('audio') as HTMLAudioElement).play();
+    }, 4);
+  }
+  handleSecondaryAudio(_audio: string) {
+    this.audioAux = _audio;
+    setTimeout(() => {
+      (document.getElementById('audioAux') as HTMLAudioElement).play();
+    }, 2);
+  }
+  playAudioMultiple() {
+    setTimeout(() => {
+      (document.getElementById('audioMultiple') as HTMLAudioElement).play();
+    }, 2);
+  }
+
 }

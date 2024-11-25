@@ -80,7 +80,6 @@ export class GameHSurferComponent {
 
   muerteAlFurfista = false
   play() {
-    console.log('>> >>: play', );
     setTimeout(() => {
       //TODO: almacenar clikeados
       //this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
@@ -132,12 +131,7 @@ export class GameHSurferComponent {
       this.intents--
     }
     
-    console.log('>> >>: perdiste', this.intents, this.sizeCorrectItems);
-
-    setTimeout(() => {
-        this.startRecording()
-    }, 500);
-
+    /* Determinar si finaliza */
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
       this.restart()
       this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
@@ -145,6 +139,7 @@ export class GameHSurferComponent {
         this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
       }, 700);
 
+      console.log('>> >>: aquí no debe entrar a la primera q', );
       this.isCompleted = true
       this._toastGameService.toast.set({
         type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
@@ -158,6 +153,11 @@ export class GameHSurferComponent {
           this._toastService.toast.set(undefined)
         }
       })
+    }else{
+      setTimeout(() => {
+        console.log('>> >>: restart grabación:::: ', );
+        this.startRecording()
+      }, 500);
     }
   }
 
@@ -172,6 +172,7 @@ export class GameHSurferComponent {
     this.audio = ''
     this.muerteAlFurfista = false
     this.i = -1
+    this.stopRecording()
     setTimeout(() => {
       this.isRuning = false;
     }, 1000);
@@ -221,7 +222,7 @@ export class GameHSurferComponent {
   async file(event: any) {
     const file = event.files[0] as File
     const dataFileArrBuf = await this.getFileToArrayBuffer(file)
-    await this.sendFile(dataFileArrBuf)
+    this.sendFile(dataFileArrBuf)
   }
 
   intervalArc: any;
@@ -230,6 +231,8 @@ export class GameHSurferComponent {
       this.isRecording = false;
       this.countRecording = 0;
       this.wavRecorder.stop();
+      console.log('>> >>: stop');
+
       if(this.i == 0 || this.i == 3){
         /* this.handleClick(this.i) */
         /* this.i++; */
@@ -239,7 +242,6 @@ export class GameHSurferComponent {
             this._toastService.toast.set(undefined)
           }})
         }, 1500); */
-        console.log('>> >>: 1', );
       }/* else{
         console.log('>> >>: 2', );
         setTimeout(() => {
@@ -251,34 +253,8 @@ export class GameHSurferComponent {
       } */
   }
 
-  async getWavBlob() {
-    const wavBlob = await this.wavRecorder.getBlob()!
-
-    if (wavBlob) {
-      // Convert Blob to byte array (assuming limited library usage)
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(wavBlob);
-      reader.onload = async (event) => {
-        if (event.target && event.target.result) {
-          this.isCompleted = true
-          this.sendFile(event.target.result as ArrayBuffer)
-          this.audioUrl = URL.createObjectURL(wavBlob);
-          this.ref.markForCheck();
-
-        } else {
-          console.error("Error reading audio data");
-        }
-      };
-
-      // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
-    } else {
-      console.error('No se pudo obtener el Blob WAV');
-    }
-  }
-
   async startRecording() {
     if (this.isRecording) {
-      this.isCompleted=true;
       this.stopRecording()
       return
     }
@@ -287,7 +263,8 @@ export class GameHSurferComponent {
       console.error('No se pudo iniciar la grabación');
       return
     }
-
+    
+    console.log('>> >>: startRecording', );
     const stream = this.wavRecorder.stream
     this.mediaRecorder = new MediaRecorder(stream);
 
@@ -303,7 +280,6 @@ export class GameHSurferComponent {
     setTimeout(() => {
       this.stopRecording()
       this.countRecording = 0
-      console.log('>> >>: stoprecording', );
     }, 3000);
 
     this.countRecording = 1
@@ -311,28 +287,7 @@ export class GameHSurferComponent {
       if (this.countRecording === 0) { return }
       this.countRecording++
       this.setArc({ target: { value: 16.66666666 * (this.countRecording / 100), min: 0, max: 100 } })
-    }, 10)
-  }
-
-  concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {
-    // Convertir texto a ArrayBuffer utilizando el encoding especificado
-    const textBeforeBuffer = new TextEncoder().encode(textBefore);
-    const textAfterBuffer = new TextEncoder().encode(textAfter);
-  
-    // Calcular el tamaño total del nuevo buffer
-    const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
-  
-    // Crear un nuevo ArrayBuffer
-    const newBuffer = new ArrayBuffer(totalLength);
-    const newUint8Array = new Uint8Array(newBuffer);
-    const originalBuffer = new Uint8Array(buffer);
-
-    // Copiar los datos al nuevo ArrayBuffer
-    newUint8Array.set(textBeforeBuffer);
-    newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
-    newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
-  
-    return newBuffer;
+    }, 8)
   }
 
   sendFile(buffer: ArrayBuffer) {
@@ -343,7 +298,7 @@ export class GameHSurferComponent {
     body += `Content-Type: audio/wav\r\n\r\n`;
 
     const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
-    this._gameService.sendAudio(blobBody, 'a').subscribe({ //FIXME: a
+    this._gameService.sendAudio(blobBody, 'a').pipe(takeUntil(this._unsubscribeAll)) .subscribe({ //FIXME: a
       next: (res: any) => {
 
         this.i++
@@ -371,6 +326,49 @@ export class GameHSurferComponent {
     });
   }
 
+  concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {
+    // Convertir texto a ArrayBuffer utilizando el encoding especificado
+    const textBeforeBuffer = new TextEncoder().encode(textBefore);
+    const textAfterBuffer = new TextEncoder().encode(textAfter);
+  
+    // Calcular el tamaño total del nuevo buffer
+    const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
+  
+    // Crear un nuevo ArrayBuffer
+    const newBuffer = new ArrayBuffer(totalLength);
+    const newUint8Array = new Uint8Array(newBuffer);
+    const originalBuffer = new Uint8Array(buffer);
+
+    // Copiar los datos al nuevo ArrayBuffer
+    newUint8Array.set(textBeforeBuffer);
+    newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
+    newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
+  
+    return newBuffer;
+  }
+
+  async getWavBlob() {
+    const wavBlob = await this.wavRecorder.getBlob()!
+
+    if (wavBlob) {
+      // Convert Blob to byte array (assuming limited library usage)
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(wavBlob);
+      reader.onload = async (event) => {
+        if (event.target && event.target.result) {
+          this.sendFile(event.target.result as ArrayBuffer)
+          this.audioUrl = URL.createObjectURL(wavBlob);
+          this.ref.markForCheck();
+        } else {
+          console.error("Error reading audio data");
+        }
+      };
+
+      // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
+    } else {
+      console.error('No se pudo obtener el Blob WAV');
+    }
+  }
 
   setArc(event: { target: { value: number, min: number, max: number } }) {
     const spinner = document.querySelector('.spinner')! as HTMLElement
