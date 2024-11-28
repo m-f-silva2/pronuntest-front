@@ -28,7 +28,6 @@
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
                                 
                                 
-                                <!-- <div class="{{resource.completed?'hidden':''}} flip-container "> -->
                                 <a class="flip-container " (click)="handleClick(index)">
 
                                     <div class="flippable {{resource.completed?'flipme':''}}">
