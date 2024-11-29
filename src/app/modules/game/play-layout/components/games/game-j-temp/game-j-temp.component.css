@@ -257,9 +257,11 @@
   .container_border_content {
     border-radius: 60px;
     /* background: linear-gradient(170.37deg, #139EEE 39.58%, #0F63BE 93.33%); */
-    background-image: url('/assets/images/isla1/madera_textura.webp');
-    background-repeat: repeat;
-    background-size: 500px 500px;
+    background-image: url('/assets/images/isla2/panel_fondo.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    /* background-size: 500px 500px; */
   
     box-shadow: inset 0px 6px 10px rgba(0, 0, 0, 0.24);
   }
@@ -319,4 +321,27 @@
   
   .back {
     transform: rotateY(180deg);
+  }
+
+
+  /* iland 2 Level 2 */
+  .animate_timon {
+    animation: animateTimon linear 100s infinite;
+  }
+  @keyframes animateTimon {
+    to {
+      transform: rotateZ(360deg);
+    }
+  }
+
+  .animate_button{
+    animation: animateBtn linear 2s alternate infinite;
+  }
+  @keyframes animateBtn {
+    from {
+      transform: translateY(0rem);
+    }
+    to {
+      transform: translateY(1rem);
+    }
   }
