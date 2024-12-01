@@ -18,13 +18,13 @@
 
                 <div class="relative w-full h-full flex flex-col justify-around items-center">
 
-                    <div id="startDrag" class="hover:brightness-125 border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
+                    <div id="startDrag" class="hover:brightness-125 border-cyan-200 border-4 w-36 h-36 rounded-full bg-cyan-500 flex justify-center items-center p-4">
                         <!-- Imagen mover -->
                         <img 
                           *ngFor="let item of itemsResources; let i = index" 
-                          class="w-16 drag cursor-pointer" 
-                          (click)="onAudioEnded()" 
                           [src]="item.img"
+                          class="w-full h-auto drag cursor-pointer" 
+                          (click)="onAudioEnded()" 
                           (dragstart)="dragStart($event)" 
                           [hidden]="itemsResourcesPos !== i" 
                           id="box{{i}}" 

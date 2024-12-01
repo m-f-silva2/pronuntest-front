@@ -27,8 +27,23 @@ export class GameIListenboxComponent {
   section = 0
   countRecording = 0
   itemsResources: { img: string,  audioL: string, audioR: string, boxExplosion: 0|1 }[] = [
-    { img: 'assets/images/isla0/vaca.png',  audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0},
-    { img: 'assets/images/isla0/globo.svg', audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 1},
+    { img: 'assets/images/isla2/chino.webp',   audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/fila.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/hielo.webp',   audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/luna.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/lupa.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/malo.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/mama.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/mapa.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/masa.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/palo.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/papa.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/pelo.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/pila.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/pino.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/pollo.webp',   audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/puma.webp',    audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
+    { img: 'assets/images/isla2/suma.webp ',   audioL: 'assets/audios/fonema_po.mp3', audioR: 'assets/audios/fonema_pu.mp3', boxExplosion: 0 },
   ]
   
   itemsResourcesPos = -1
@@ -136,7 +151,7 @@ export class GameIListenboxComponent {
         this.itemsResourcesPos = -1; // Resetea el índice si se completan todas las imágenes
       } else {
         // Acción cuando el drop es exitoso
-        this.handleClickNextAudio('assets/audios/sonido_excelente.mp3');
+        this.handleClickNextAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)]);
         this._toastService.toast.set({
           type: 's', timeS: 3, title: "¡Bien hecho!", message: "¡sigue jugando!", end: () => {
             this._toastService.toast.set(undefined);
