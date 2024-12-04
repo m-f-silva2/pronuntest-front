@@ -42,27 +42,10 @@ export class GameService {
       },
       {//Isla 1
         levels: [
-          {
-            games: [
-              { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, topo
-            ]
-          },
-          {
-            games: [
-              { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] }, //información, 
-            ]
-          },
-          {
-            games: [
-              { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] }, //información, 
-            ]
-          },
-          {
-            games: [
-              //{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego escuchar
-              { gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] }, //información, juego inflar-globo
-            ]
-          },
+          {games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          {games: [{ gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          {games: [{ gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          {games: [{ gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },]},
         ]
       },
       {//Isla 2

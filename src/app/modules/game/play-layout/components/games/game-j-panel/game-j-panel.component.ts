@@ -8,52 +8,51 @@ import { CommonModule } from '@angular/common';
 import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
 import { ToastGameService } from '../../../../../../core/services/toast_game/toast-game.service';
 import { ConffetyComponent } from '../../conffety/conffety.component';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-game-j-temp',
+  selector: 'app-game-j-panel',
   standalone: true,
   imports: [LevelInfoComponent, CommonModule, BtnImgComponent, ConffetyComponent],
-  templateUrl: './game-j-temp.component.html',
-  styleUrl: './game-j-temp.component.css'
+  templateUrl: './game-j-panel.component.html',
+  styleUrl: './game-j-panel.component.css'
 })
-export class GameJTempComponent {
-  /* Cartas 2 */
-  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+export class GameJPanelComponent {
+  /* Panel barco */
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
   dataGames: IDataGame
   isCompleted = false
   isRuning = false
-  sizeCorrectItems = 0
-  itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[] = []
-  allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[][] = [
-    [],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', active: false, phonema: 'po' },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_pe.wav', active: false, phonema: 'pe' },
-    ],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_pu.wav', active: false, phonema: 'pa' },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', active: false, phonema: 'po' },
-    ],
-  ]
-
-  correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }
-  allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }[] = [
-    { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1, phonema: '' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
-  ]
-
-  /* sizeCorrectItems = 0; */
+  sizeCorrectItems = 3
   intents = 5;
   audio: string = '';
   audioAux: string = '';
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
+  itemsResources: { img: string,     audio: string, correctPos: 0|1 }[] = []
+  allItemsResources: { img: string,  audio: string, correctPos: 0|1 }[] = [
+    { img: 'assets/images/isla2/chino.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/fila.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/hielo.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/luna.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/lupa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/malo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/mama.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/mapa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/masa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/palo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/papa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/pelo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/pila.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/pino.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/pollo.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/puma.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+    { img: 'assets/images/isla2/suma.webp ', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+  ]
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
+
+
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -66,7 +65,6 @@ export class GameJTempComponent {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
-
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -76,51 +74,47 @@ export class GameJTempComponent {
     this.initData()
   }
 
-  initData() {
-    
-    this.itemsResources = this.allItemsResources[this.section]
-    this.correctItemResource = this.allCorrectItemBySection[this.section]
-    this.isCompleted = false
-    this.sizeCorrectItems = 1 //this.correctItemResource?.sizeCorrectItems || 0
-    this.intents = this.correctItemResource?.intents || 0
-    this.audio = ''
-    this.itemsResources.forEach(res => res.completed = false)
+  private initData() {
+    this.allItemsResources.sort(() => Math.random() - 0.5);
+    this.isCompleted = false;
+    this.sizeCorrectItems = 3;
+    this.intents = 5;
+    this.audio = '';
   }
 
-  intervalTopo: any
-  play() {
-    this.initData()
-    this.isRuning = true
-    setTimeout(() => {
-      this.handleClickNextAudio(this.correctItemResource!.audio)
-    }, 380)
-
-    this.intervalTopo = setInterval(() => {
-      const randomPos = Math.floor(Math.random() * this.itemsResources.length)
-      if(this.itemsResources[randomPos].active == false){
-        this.itemsResources[randomPos].active = true
-        setTimeout(() => {
-          this.itemsResources[randomPos].active = false
-        }, 2980);
-      }
-    }, 300);
-  }
-  restart() {
-    clearInterval(this.intervalTopo)
+  private restart() {
     this.initData()
     setTimeout(() => {
       this.isRuning = false;
     }, 1000);
   }
 
-  handleClick(btn: number) {
-    this.itemsResources[btn].completed = true;
-    if (this.itemsResources[btn].phonema == this.correctItemResource?.phonema) {
+  private startOrNext(){
+    //Toma de la posición 3 hacia abajo
+    this.itemsResources = [...[this.allItemsResources[(4-this.sizeCorrectItems)*2-1], this.allItemsResources[(4-this.sizeCorrectItems)*2]]]
+    const correctPos = Math.floor(Math.random() * 2) as 0|1;
+    this.itemsResources[0].correctPos = correctPos
+    this.itemsResources[1].correctPos = correctPos
+  }
+
+  play() {
+    this.initData()
+    this.isRuning = true
+    this.startOrNext()
+
+    setTimeout(() => {
+      this.handleClickNextAudio(this.itemsResources[this.itemsResources[0].correctPos].audio)
+    }, 380)
+  }
+
+  handleClick(btn: 0|1|3) {
+    if(btn === 3) return
+    if (this.itemsResources[btn].correctPos === btn) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
-        this.handleClickNextAudio(this.itemsResources[btn].audio)
         setTimeout(() => {
+          this.startOrNext()
           this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
         }, 100);
       }

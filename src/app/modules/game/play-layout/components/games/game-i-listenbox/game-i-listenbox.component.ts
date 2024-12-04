@@ -51,7 +51,7 @@ export class GameIListenboxComponent {
   audioAux: string = '';
   isRuning = false
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private _toastService: ToastService) {
+  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Escucha el sonido de la imagen y repítelo tú mismo. Luego, observa el dibujo y decide si el sonido se produce en la nariz, la boca o la garganta.',

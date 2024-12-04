@@ -278,7 +278,7 @@
   transition: 0.5s;
   transform-style: preserve-3d;
   position: relative;
-
+  
   background-image: url('/assets/images/isla1/carta.svg');
   background-repeat: no-repeat;
   height: 13.2rem;
@@ -319,4 +319,30 @@
 
 .back {
   transform: rotateY(180deg);
+}
+
+.flip-container:hover > .flippable {
+  animation: wiggle 1s ease-in-out infinite;
+}
+@keyframes wiggle {
+  0%, 100% {
+      transform: rotate(-3deg);
+  }
+  50% {
+      transform: rotate(3deg);
+  }
+}
+
+.mode_front {
+  filter: brightness(1.2); 
+  opacity: 0.8;
+}
+.mode_front .back {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+.mode_front .front {
+  transform: rotateY(180deg);
+  z-index: -10;
+  visibility: hidden;
 }

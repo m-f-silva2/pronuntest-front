@@ -19,46 +19,46 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 })
 export class GameFCardsComponent {
   /* Cartas */
-  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
   dataGames: IDataGame
   isCompleted = false
+  mode: 'front'|'back'|null = null
   isRuning = false
   sizeCorrectItems = 0
-  itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[] = []
-  allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[][] = [
-    [],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-    ],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pa' },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pe' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pi' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pu' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-    ],
-  ]
-
-  correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }
-  allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }[] = [
-    { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1, phonema: '' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2, phonema: 'po' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 6, phonema: 'po' },
-  ]
-
-
-  /* sizeCorrectItems = 0; */
   intents = 5;
   audio: string = '';
   audioAux: string = '';
+  itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string   , correctItem: boolean }[] = []
+  allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string, correctItem: boolean }[][] = [
+    [],
+    [
+      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
+    ],
+    [
+      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pa', correctItem: false},
+      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pe', correctItem: false},
+      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pi', correctItem: true},
+      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false},
+      { id: 6, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pu', correctItem: false},
+      { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true},
+    ],
+    [
+      { id: 8, completed: false, img: 'assets/images/isla2/pelo.webp', audio:  'assets/audios/fonema_pe.mp3', active: false, phonema: 'pa',  correctItem: true },
+      { id: 9, completed: false, img: 'assets/images/isla2/pila.webp', audio:  'assets/audios/fonema_pi.mp3', active: false, phonema: 'pe',  correctItem: true },
+      { id: 10, completed: false, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_pi.mp3', active: false, phonema: 'pi', correctItem: true },
+      { id: 11, completed: false, img: 'assets/images/isla2/pollo.webp', audio:'assets/audios/fonema_po.mp3', active: false, phonema:'po', correctItem: true },
+      { id: 12, completed: false, img: 'assets/images/isla2/puma.webp', audio: 'assets/audios/fonema_pu.mp3', active: false, phonema: 'pu', correctItem: true },
+      { id: 13, completed: false, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_pa.mp3', active: false, phonema: 'po', correctItem: true },
+    ],
+  ]
+  //TODO: Que sonido suena como "variable"
+
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
+  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -71,6 +71,11 @@ export class GameFCardsComponent {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
+    if(this._gameService.currentGame.posIsland === 2 && (this._gameService.currentGame.posLevel === 2 || this._gameService.currentGame.posLevel === 3)){
+      this.mode = 'front'
+    }else{
+      this.mode = 'back'
+    }
 
   }
 
@@ -82,14 +87,14 @@ export class GameFCardsComponent {
   }
 
   initData() {
-    
-    this.itemsResources = this.allItemsResources[this.section]
-    this.correctItemResource = this.allCorrectItemBySection[this.section]
+    const sectionMode = this.mode == 'front'? this.section + 2 : this.section
+    this.itemsResources = [...this.allItemsResources[sectionMode]]
+
     this.isCompleted = false
-    this.sizeCorrectItems = 2 //this.correctItemResource?.sizeCorrectItems || 0
-    this.intents = this.correctItemResource?.intents || 0
+    this.sizeCorrectItems = this.itemsResources.filter(res=>res.correctItem === true).length || 0
+    this.intents = this.itemsResources.length-1 || 0
     this.audio = ''
-    this.itemsResources.forEach(res => res.completed = false)
+    this.itemsResources?.forEach(res => res.completed = false)
   }
 
   intervalTopo: any
@@ -97,7 +102,7 @@ export class GameFCardsComponent {
     this.initData()
     this.isRuning = true
     setTimeout(() => {
-      this.handleClickNextAudio(this.correctItemResource!.audio)
+      this.handleClickNextAudio(this.itemsResources[this.sizeCorrectItems-1]!.audio)
     }, 380)
 
     this.intervalTopo = setInterval(() => {
@@ -105,8 +110,9 @@ export class GameFCardsComponent {
       if(this.itemsResources[randomPos].active == false){
         this.itemsResources[randomPos].active = true
         setTimeout(() => {
+          if(!this.itemsResources[randomPos]) return
           this.itemsResources[randomPos].active = false
-        }, 2980);
+        }, 2780);
       }
     }, 300);
   }
@@ -120,14 +126,17 @@ export class GameFCardsComponent {
 
   handleClick(btn: number) {
     this.itemsResources[btn].completed = true;
-    if (this.itemsResources[btn].phonema == this.correctItemResource?.phonema) {
+    if ((this.itemsResources[btn].correctItem && this.mode === 'back') 
+      || (this.itemsResources[btn].id == this.itemsResources[this.sizeCorrectItems-1].id && this.mode === 'front')) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
-        this.handleClickNextAudio(this.itemsResources[btn].audio)
         setTimeout(() => {
           this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
-        }, 100);
+        }, 10);
+        setTimeout(() => {
+          this.handleClickNextAudio(this.itemsResources[this.sizeCorrectItems-1].audio)
+        }, 900);
       }
     } else {
       this.handleSecondaryAudio('assets/audios/error.mp3')
@@ -161,7 +170,9 @@ export class GameFCardsComponent {
   handleClickNextAudio(_audio: string) {
     this.audio = _audio;
     setTimeout(() => {
-      (document.getElementById('audio') as HTMLAudioElement).play();
+      if(this.audio){
+        (document.getElementById('audio') as HTMLAudioElement).play();
+      }
     }, 4);
   }
 
