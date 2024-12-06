@@ -58,6 +58,7 @@ export class GameService {
       },
       {//Isla 3
         levels: [
+          { games: [ { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },]},
         ]
       },
     ]

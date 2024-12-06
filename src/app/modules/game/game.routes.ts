@@ -59,7 +59,8 @@ export default [
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: GameFCardsComponent, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: GameFCardsComponent, resolve: {gameResolver} }, ] },
 
-  /* { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameKTempComponent, resolve: {gameResolver} }, ] },
+  /* 
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },

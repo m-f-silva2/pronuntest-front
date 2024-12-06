@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
-import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
-import { LevelInfoComponent } from '../../level-info/level-info.component';
-import { IDataGame, GameService } from '../../../game.service';
-import { ToastService } from '../../../../../../core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
-import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
-import { ToastGameService } from '../../../../../../core/services/toast_game/toast-game.service';
+import { Subject, takeUntil } from 'rxjs';
+import { Component } from '@angular/core';
+import { SumaryActivities } from 'src/app/core/models/sumary_activities';
+import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { ToastGameService } from 'src/app/core/services/toast_game/toast-game.service';
+import { BtnImgComponent } from 'src/app/shared/components/btn-img/btn-img.component';
+import { IDataGame, GameService } from '../../../game.service';
 import { ConffetyComponent } from '../../conffety/conffety.component';
+import { LevelInfoComponent } from '../../level-info/level-info.component';
 
 @Component({
   selector: 'app-game-j-panel',
@@ -44,7 +44,7 @@ export class GameJPanelComponent {
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
 
-  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -85,7 +85,7 @@ export class GameJPanelComponent {
     //Toma de la posición 3 hacia abajo
     this.itemsResources = this.allItemsResources[(4-this.sizeCorrectItems)*2]
     this.itemsResources.correctPos = Math.floor(Math.random() * 2) as 0|1;
-    this.handleClickNextAudio(this.itemsResources.audioAB[this.itemsResources.correctPos]!)
+    this.handleClickNextAudio(this.itemsResources.audioAB[this.itemsResources.correctPos])
   }
 
   play() {

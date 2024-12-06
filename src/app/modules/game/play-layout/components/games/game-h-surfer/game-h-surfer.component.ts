@@ -3,7 +3,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
-import { Router } from '@angular/router';
 import { ToastService } from '../../../../../../core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
 import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
@@ -49,9 +48,9 @@ export class GameHSurferComponent {
   intents = 5;
   audio: string = '';
   audioAux: string = '';
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly ref: ChangeDetectorRef, private readonly renderer: Renderer2, private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
