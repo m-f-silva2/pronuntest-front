@@ -334,8 +334,8 @@
 }
 
 .mode_front {
-  filter: brightness(1.2); 
-  opacity: 0.8;
+  filter: brightness(110%) saturate(20%); 
+  opacity: 0.6;
 }
 .mode_front .back {
   z-index: 2;

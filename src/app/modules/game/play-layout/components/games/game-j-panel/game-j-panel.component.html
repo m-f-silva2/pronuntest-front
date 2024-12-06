@@ -25,15 +25,15 @@
                                 <img src="assets/images/play.svg" alt="" width="50px" height="50px">
                             </div>
                           
-                            <div class="flex justify-center items-center gap-28 absolute h-[18%] bottom-[25%] animate_button z-10">
-                                @if (itemsResources && itemsResources.length > 0) {
-                                    <img (click)="handleClick(0)" [src]="itemsResources[0].img" alt="" class="w-28 mt-12">
+                            <div class="flex justify-center items-center absolute h-[18%] bottom-[25%] animate_button z-10">
+                                @if (itemsResources) {
+                                    <img (click)="handleClick(0)" [src]="itemsResources.imgA" alt="" class="w-28 mt-12 mr-[16%]">
                                     @if(sizeCorrectItems === 0){
-                                        <img (click)="handleClick(1)" [src]="itemsResources[1].img" alt="" class="w-28 ">
-                                        <img (click)="handleClick(3)" src="data:image/gif;base64,R0lGODlhAQABAIAAAA==" alt="" class="w-28 mt-12">
+                                        <img (click)="handleClick(1)" [src]="itemsResources.imgB" alt="" class="w-28 ml-[16%] mr-[16%]">
+                                        <img (click)="handleClick(3)" src="data:image/gif;base64,R0lGODlhAQABAIAAAA==" alt="" class="w-28 mt-12 ml-[16%]">
                                     }@else{
-                                        <img (click)="handleClick(3)" src="data:image/gif;base64,R0lGODlhAQABAIAAAA==" alt="" class="w-28">
-                                        <img (click)="handleClick(1)" [src]="itemsResources[1].img" alt="" class="w-28 mt-12">
+                                        <img (click)="handleClick(3)" src="data:image/gif;base64,R0lGODlhAQABAIAAAA==" alt="" class="w-28 ml-[16%] mr-[16%]">
+                                        <img (click)="handleClick(1)" [src]="itemsResources.imgB" alt="" class="w-28 mt-12 ml-[16%]">
                                     }
                                 }
                             </div>

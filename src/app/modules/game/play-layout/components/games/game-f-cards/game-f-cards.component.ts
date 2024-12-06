@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { IDataGame, GameService } from '../../../game.service';
-import { Router } from '@angular/router';
 import { ToastService } from '../../../../../../core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
 import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
@@ -46,19 +45,20 @@ export class GameFCardsComponent {
       { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true},
     ],
     [
-      { id: 8, completed: false, img: 'assets/images/isla2/pelo.webp', audio:  'assets/audios/fonema_pe.mp3', active: false, phonema: 'pa',  correctItem: true },
-      { id: 9, completed: false, img: 'assets/images/isla2/pila.webp', audio:  'assets/audios/fonema_pi.mp3', active: false, phonema: 'pe',  correctItem: true },
-      { id: 10, completed: false, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_pi.mp3', active: false, phonema: 'pi', correctItem: true },
-      { id: 11, completed: false, img: 'assets/images/isla2/pollo.webp', audio:'assets/audios/fonema_po.mp3', active: false, phonema:'po', correctItem: true },
-      { id: 12, completed: false, img: 'assets/images/isla2/puma.webp', audio: 'assets/audios/fonema_pu.mp3', active: false, phonema: 'pu', correctItem: true },
-      { id: 13, completed: false, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_pa.mp3', active: false, phonema: 'po', correctItem: true },
+      { id: 8, completed: false,  img: 'assets/images/isla2/pelo.webp', audio: 'assets/audios/pelo.mp3', active: false, phonema: 'pa', correctItem: true },
+      { id: 9, completed: false,  img: 'assets/images/isla2/pila.webp', audio: 'assets/audios/pila.mp3', active: false, phonema: 'pe', correctItem: true },
+      { id: 10, completed: false, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/pino.mp3', active: false, phonema: 'pi', correctItem: true },
+      { id: 11, completed: false, img: 'assets/images/isla2/pollo.webp', audio:'assets/audios/pollo.mp3',active: false, phonema: 'po', correctItem: true },
+      { id: 12, completed: false, img: 'assets/images/isla2/puma.webp', audio: 'assets/audios/puma.mp3', active: false, phonema: 'pu', correctItem: true },
+      { id: 13, completed: false, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/palo.mp3', active: false, phonema: 'po', correctItem: true },
     ],
   ]
   //TODO: Que sonido suena como "variable"
 
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
+  randomOrder: number[] = []
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -89,6 +89,7 @@ export class GameFCardsComponent {
   initData() {
     const sectionMode = this.mode == 'front'? this.section + 2 : this.section
     this.itemsResources = [...this.allItemsResources[sectionMode]]
+    this.randomOrder = [...Array(this.itemsResources.length)].map((_, index) => index+1).sort(() => Math.random() - 0.5);
 
     this.isCompleted = false
     this.sizeCorrectItems = this.itemsResources.filter(res=>res.correctItem === true).length || 0
@@ -105,7 +106,8 @@ export class GameFCardsComponent {
       this.handleClickNextAudio(this.itemsResources[this.sizeCorrectItems-1]!.audio)
     }, 380)
 
-    this.intervalTopo = setInterval(() => {
+
+    /* this.intervalTopo = setInterval(() => {
       const randomPos = Math.floor(Math.random() * this.itemsResources.length)
       if(this.itemsResources[randomPos].active == false){
         this.itemsResources[randomPos].active = true
@@ -114,7 +116,7 @@ export class GameFCardsComponent {
           this.itemsResources[randomPos].active = false
         }, 2780);
       }
-    }, 300);
+    }, 300); */
   }
   restart() {
     clearInterval(this.intervalTopo)

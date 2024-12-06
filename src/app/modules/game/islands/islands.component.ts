@@ -21,39 +21,17 @@ export class IslandsComponent {
     { state:'block',island:2,level:1},{state:'block',island:2,level:2},{state:'block',island:2,level:3},{state:'block',island:2,level:4},
     { state:'block',island:3,level:1},{state:'block',island:3,level:2},{state:'block',island:3,level:3},{state:'block',island:3,level:4},
   ]
-  public isOpen = false;
-  public profileMenu = [
-    {
-      title: 'Log out',
-      icon: './assets/icons/heroicons/outline/logout.svg',
-      link: '/auth',
-    },
-  ];
+  isOpen = false;
   dataGames: IDataGame
-  
-  islad = 'Isla 0'
-  onScroll() {
-    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
-    const left = this.scrollableElement.nativeElement.scrollLeft;
-    const pos = Math.round(left/w)
-    const _islad = ['Isla 0', 'Isla 1', 'Isla 2', 'Isla 3'][pos]
-    if(this.islad != _islad){
-      this.islad = _islad
-    }
-  }
-  scrollIsland(direction: 1|-1){
-    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
-    const left = this.scrollableElement.nativeElement.scrollLeft;
-    const pos = Math.round(left/w) + direction
-    this.scrollableElement.nativeElement.scrollLeft = w * pos
-  }
-
+  islad: string = 'Isla 0'
+  posIslad: number = 0
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+
   
   constructor(private _route: Router, public _gameService: GameService){
     this.dataGames = this._gameService.dataGames
     /* FIXME bloquear niveles */
-
+    
     let previousBtn: { state: 'block'|'unlock', island: number, level?: number }
     this._gameService._islandLevels.pipe(takeUntil(this._unsubscribeAll)).subscribe(resIL => {
       for (const btn of this.btns) {
@@ -68,6 +46,40 @@ export class IslandsComponent {
       }
     })
   }
+  
+  ngAfterViewInit () {
+    const isladLocal = localStorage.getItem('postIsland')
+    if(isladLocal != null){
+      this.posIslad = Number(isladLocal)
+    }else{
+      localStorage.setItem('postIsland', '0')
+    }
+    
+    this.scrollIsland(this.posIslad)
+  }
+
+  onScroll() {
+    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
+    const left = this.scrollableElement.nativeElement.scrollLeft;
+    const pos = Math.round(left/w)
+    const _islad = ['Isla 0', 'Isla 1', 'Isla 2', 'Isla 3'][pos]
+    if(this.islad != _islad){
+      this.islad = _islad
+      localStorage.setItem('postIsland', pos.toString())
+    }
+  }
+  async scrollIsland(direction: number){
+    const w = this.scrollableElement.nativeElement.getBoundingClientRect().width
+    const left = this.scrollableElement.nativeElement.scrollLeft;
+    const pos = Math.round(left/w) + direction
+    for (let i = left; direction>0? i < (pos*w) : i > (pos*w); i= direction>0? i+30 : i-30) {
+      await this.sleep(2)
+      this.scrollableElement.nativeElement.scrollLeft = i
+    }
+  }
+
+  sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 
   public logoup(){
     localStorage.removeItem('token')

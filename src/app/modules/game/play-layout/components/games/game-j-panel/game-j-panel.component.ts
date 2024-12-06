@@ -29,25 +29,17 @@ export class GameJPanelComponent {
   audio: string = '';
   audioAux: string = '';
 
-  itemsResources: { img: string,     audio: string, correctPos: 0|1 }[] = []
-  allItemsResources: { img: string,  audio: string, correctPos: 0|1 }[] = [
-    { img: 'assets/images/isla2/chino.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/fila.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/hielo.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/luna.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/lupa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/malo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/mama.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/mapa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/masa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/palo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/papa.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/pelo.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/pila.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/pino.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/pollo.webp', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/puma.webp',  audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
-    { img: 'assets/images/isla2/suma.webp ', audio: 'assets/audios/fonema_po.mp3', correctPos: 0 },
+  itemsResources!: { imgA: string, imgB: string,    audioAB: string[], correctPos: 0|1 }
+  allItemsResources: { imgA: string, imgB: string, audioAB: string[], correctPos: 0|1 }[] = [
+    { imgA: 'assets/images/isla2/palo.webp', imgB: 'assets/images/isla2/malo.webp',  audioAB: ['assets/audios/palo.mp3', 'assets/audios/malo.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/papa.webp', imgB: 'assets/images/isla2/mama.webp',  audioAB: ['assets/audios/papa.mp3', 'assets/audios/mama.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/pelo.webp', imgB: 'assets/images/isla2/hielo.webp', audioAB: ['assets/audios/pelo.mp3', 'assets/audios/hielo.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/pila.webp', imgB: 'assets/images/isla2/fila.webp',  audioAB: ['assets/audios/pila.mp3', 'assets/audios/fila.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/yoyo.webp', imgB: 'assets/images/isla2/pollo.webp', audioAB: ['assets/audios/yoyo.mp3', 'assets/audios/pollo.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/lupa.webp', imgB: 'assets/images/isla2/luna.webp',  audioAB: ['assets/audios/lupa.mp3', 'assets/audios/luna.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/mapa.webp', imgB: 'assets/images/isla2/masa.webp',  audioAB: ['assets/audios/mapa.mp3', 'assets/audios/masa.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/puma.webp', imgB: 'assets/images/isla2/suma.webp',  audioAB: ['assets/audios/puma.mp3', 'assets/audios/suma.mp3'], correctPos: 0 },
+    { imgA: 'assets/images/isla2/pino.webp', imgB: 'assets/images/isla2/chino.webp', audioAB: ['assets/audios/pino.mp3', 'assets/audios/chino.mp3'], correctPos: 0 }
   ]
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -91,32 +83,30 @@ export class GameJPanelComponent {
 
   private startOrNext(){
     //Toma de la posición 3 hacia abajo
-    this.itemsResources = [...[this.allItemsResources[(4-this.sizeCorrectItems)*2-1], this.allItemsResources[(4-this.sizeCorrectItems)*2]]]
-    const correctPos = Math.floor(Math.random() * 2) as 0|1;
-    this.itemsResources[0].correctPos = correctPos
-    this.itemsResources[1].correctPos = correctPos
+    this.itemsResources = this.allItemsResources[(4-this.sizeCorrectItems)*2]
+    this.itemsResources.correctPos = Math.floor(Math.random() * 2) as 0|1;
+    this.handleClickNextAudio(this.itemsResources.audioAB[this.itemsResources.correctPos]!)
   }
 
   play() {
     this.initData()
     this.isRuning = true
-    this.startOrNext()
-
+    
     setTimeout(() => {
-      this.handleClickNextAudio(this.itemsResources[this.itemsResources[0].correctPos].audio)
-    }, 380)
+      this.startOrNext()
+    }, 180)
   }
 
   handleClick(btn: 0|1|3) {
     if(btn === 3) return
-    if (this.itemsResources[btn].correctPos === btn) {
+    if (this.itemsResources.correctPos === btn) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
+        this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
         setTimeout(() => {
           this.startOrNext()
-          this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
-        }, 100);
+        }, 999);
       }
     } else {
       this.handleSecondaryAudio('assets/audios/error.mp3')
