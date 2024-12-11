@@ -6,7 +6,7 @@
     <section class="flex flex-col justify-center h-full w-full items-center ">
         <div class="container_border h-full w-full max-w-7xl">
             <div
-                class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center xl:px-16">
+                class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center">
 
                 @if (!isRuning) {
                 <div
@@ -17,29 +17,30 @@
                 </div>
                 }
 
-                <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
+                <div class="w-full flex flex-row flex-wrap justify-center h-full ">
                     <div class="flex flex-col h-full w-full items-center ">
-                        <div class="relative  w-full h-full overflow-hidden select-none flex justify-center">
+                        
+                        <div class="relative w-full h-full overflow-hidden select-none flex justify-center ">
+
                             <div class="border-teal-500 bg-teal-400 border-4 rounded-full flex justify-center items-center p-6 w-fit h-fit absolute top-4 right-2">
                                 <img src="assets/images/play.svg" alt="" width="50px" height="50px">
                             </div>
 
-                            <div class="relative flex flex-wrap gap-2 xl:gap-20 justify-center items-center w-full h-full xl:max-w-3xl " #containerIMG>
-                                @for (resource of itemsResources; track resource.id; let index = $index) {
-                                
-                                
-                                <a class="flip-container " (click)="handleClick(index)">
+                            <div class="relative flex flex-wrap gap-2 xl:gap-20 justify-center items-center w-full h-full
+                                ">
 
-                                    <div class="flippable {{resource.completed?'flipme':''}}">
-                                        <div class="front bg-[url('/assets/images/isla1/pregunta.svg')]">
-                                        </div>
-
-                                        <div class="back bg-[url('/assets/images/isla0/globo.svg')] relative">
-                                            <p class="text-teal-50 text-5xl absolute top-1/3 left-1/3 drop-shadow-md">{{resource.phonema}}</p>
-                                        </div>
+                                <!-- usar style para el left y top, right y bottom, width y height, z-index
+                                 class para las animaciones de entrada y salida, 
+                                 Hacer un efecto de border destello para las imagenes que puede clikear, si es correcto pasar a la seccion siguiente
+                                 Hacer un for con la configuracion de las imagenes
+                                 en la animación de entrada y salida deben haber dos grupos, estos se animan al mismo tiempo
+                                -->
+                                 @for (item of itemsResources; track $index) {
+                                    <div [class]="'frs '+frameClass + ' w-full h-full relative'">
+                                        <img src="assets/images/isla2/pino.webp" alt="" class="absolute" [style]="item.styles">
                                     </div>
-                                </a>
                                 }
+                               
                             </div>
                         </div>
                     </div>

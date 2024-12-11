@@ -19,7 +19,7 @@ import { GameGCloudsComponent } from './play-layout/components/games/game-g-clou
 import { GameHSurferComponent } from './play-layout/components/games/game-h-surfer/game-h-surfer.component';
 import { GameIListenboxComponent } from './play-layout/components/games/game-i-listenbox/game-i-listenbox.component';
 import { GameJPanelComponent } from './play-layout/components/games/game-j-panel/game-j-panel.component';
-import { GameKTempComponent } from './play-layout/components/games/game-k-temp/game-k-temp.component';
+import { GameKHistoryComponent } from './play-layout/components/games/game-k-history/game-k-history.component';
 import { GameLTempComponent } from './play-layout/components/games/game-l-temp/game-l-temp.component';
 
 const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
@@ -59,7 +59,7 @@ export default [
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/1', component: GameFCardsComponent, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/4/gamePos/1', component: GameFCardsComponent, resolve: {gameResolver} }, ] },
 
-  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameKTempComponent, resolve: {gameResolver} }, ] },
+  { path: 'island/3', component: PlayLayoutComponent, children: [ { path: 'level/1/gamePos/1', component: GameKHistoryComponent, resolve: {gameResolver} }, ] },
   /* 
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/2/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },
   { path: 'island/2', component: PlayLayoutComponent, children: [ { path: 'level/3/gamePos/', component: Game1Component, resolve: {gameResolver} }, ] },

@@ -51,36 +51,9 @@
     transform: translateY(400px);
   }
 }
-/*    */
+
 
 /* ANIMACION GLOBO*/
-.balloon-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  /*background-color: #f0f0f0;*/
-  position: relative;
-  overflow: hidden;
-  transition: background-color 0.3s ease;
-}
-
-.balloon-wrapper {
-  position: relative;
-}
-
-.balloon {
-  width: 150px;
-  height: auto;
-  transition: transform 0.3s ease, opacity 0.5s ease;
-}
-
-.balloon-exploding {
-  transform: scale(1.1);
-  transition: transform 0.2s ease-out, opacity 0.2s ease-in-out;
-  opacity: 0;
-}
-
 .particles {
   position: absolute;
   top: 50%;

@@ -1,25 +1,23 @@
-import { ChangeDetectorRef, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
-import { LevelInfoComponent } from '../../level-info/level-info.component';
-import { IDataGame, GameService } from '../../../game.service';
-import { ToastService } from '../../../../../../core/services/toast/toast.service';
 import { CommonModule } from '@angular/common';
-import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
+import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
+import { ToastService } from '../../../../../../core/services/toast/toast.service';
 import { ToastGameService } from '../../../../../../core/services/toast_game/toast-game.service';
+import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn-img.component';
+import { IDataGame, GameService } from '../../../game.service';
 import { ConffetyComponent } from '../../conffety/conffety.component';
-import { Router } from '@angular/router';
+import { LevelInfoComponent } from '../../level-info/level-info.component';
 
 @Component({
-  selector: 'app-game-k-temp',
+  selector: 'app-game-k-history',
   standalone: true,
   imports: [LevelInfoComponent, CommonModule, BtnImgComponent, ConffetyComponent],
-  templateUrl: './game-k-temp.component.html',
-  styleUrl: './game-k-temp.component.css'
+  templateUrl: './game-k-history.component.html',
+  styleUrl: './game-k-history.component.css'
 })
-export class GameKTempComponent {
-      /* Cartas */
-  @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+export class GameKHistoryComponent {
+  /* history */
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -27,28 +25,23 @@ export class GameKTempComponent {
   isCompleted = false
   isRuning = false
   sizeCorrectItems = 0
-  itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[] = []
-  allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[][] = [
+  frameClass = ''
+  itemsResources:    { id: number, img: string, audio: string, active: boolean, styles: string }[] = []
+  allItemsResources: { id: number, img: string, audio: string, active: boolean, styles: string }[][] = [
     [],
     [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-    ],
-    [
-      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pa' },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pe' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pi' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pu' },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po' },
+      /* style para el left y top, right y bottom, width y height, z-index */
+      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 15%; z-index: 10' },
+      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10' },
+      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 15%; z-index: 10' },
     ],
   ]
 
-  correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }
-  allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }[] = [
-    { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1, phonema: '' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2, phonema: 'po' },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 6, phonema: 'po' },
+  correctItemResource?: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }
+  allCorrectItemBySection: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }[] = [
+    { id: -1, img: '', audio: '', sizeCorrectItems: -1, intents: -1 },
+    { id: 1, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2,  },
+    { id: 1, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 6,  },
   ]
 
 
@@ -56,9 +49,9 @@ export class GameKTempComponent {
   intents = 5;
   audio: string = '';
   audioAux: string = '';
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService,  private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -82,33 +75,36 @@ export class GameKTempComponent {
   }
 
   initData() {
-    
     this.itemsResources = this.allItemsResources[this.section]
     this.correctItemResource = this.allCorrectItemBySection[this.section]
     this.isCompleted = false
     this.sizeCorrectItems = 2 //this.correctItemResource?.sizeCorrectItems || 0
     this.intents = this.correctItemResource?.intents || 0
     this.audio = ''
-    this.itemsResources.forEach(res => res.completed = false)
+    /* this.itemsResources.forEach(res => res.completed = false) */
   }
 
   intervalTopo: any
   play() {
     this.initData()
+    
     this.isRuning = true
     setTimeout(() => {
       this.handleClickNextAudio(this.correctItemResource!.audio)
     }, 380)
 
+    let count = 0
     this.intervalTopo = setInterval(() => {
-      const randomPos = Math.floor(Math.random() * this.itemsResources.length)
-      if(this.itemsResources[randomPos].active == false){
-        this.itemsResources[randomPos].active = true
-        setTimeout(() => {
-          this.itemsResources[randomPos].active = false
-        }, 2980);
-      }
-    }, 300);
+      setTimeout(() => {
+        count++
+        this.frameClass = 'fr'+count
+        console.log('>> >>: si o no perror', this.frameClass);
+        if(count == 2){
+          clearInterval(this.intervalTopo)
+          this.frameClass = 'exitLeft'
+        }
+      }, 1600);
+    }, 2000);
   }
   restart() {
     clearInterval(this.intervalTopo)
@@ -119,8 +115,8 @@ export class GameKTempComponent {
   }
 
   handleClick(btn: number) {
-    this.itemsResources[btn].completed = true;
-    if (this.itemsResources[btn].phonema == this.correctItemResource?.phonema) {
+    /* this.itemsResources[btn].completed = true; */
+    if (true) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
