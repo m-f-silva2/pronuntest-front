@@ -35,10 +35,12 @@
                                  Hacer un for con la configuracion de las imagenes
                                  en la animación de entrada y salida deben haber dos grupos, estos se animan al mismo tiempo
                                 -->
-                                 @for (item of itemsResources; track $index) {
-                                    <div [class]="'frs '+frameClass + ' w-full h-full relative'">
-                                        <img src="assets/images/isla2/pino.webp" alt="" class="absolute" [style]="item.styles">
-                                    </div>
+                                 @for (items of allItemsResources; track $index) {
+                                    @for (item of items; track $index) {
+                                        <div [class]="'frame_initial '+item.class+' w-full h-full relative'">
+                                            <img [src]="item.img" alt="" class="absolute" [style]="item.styles" (click)="handleClick($index)">
+                                        </div>
+                                    }
                                 }
                                
                             </div>

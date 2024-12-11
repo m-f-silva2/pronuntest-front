@@ -118,15 +118,15 @@
 
 /* Historia */
 
-.frs {
+.frame_initial {
   position: absolute;
   bottom: -100%;
 }
-.fr1 {
+.entryAbove {
   animation: entryAbove 1s linear both;
   border: solid 1px red;
 }
-.exitLeft{
+.exitLeft {
   animation: exitLeft 1s linear both;
 }
 

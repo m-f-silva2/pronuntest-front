@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
@@ -26,16 +26,23 @@ export class GameKHistoryComponent {
   isRuning = false
   sizeCorrectItems = 0
   frameClass = ''
-  itemsResources:    { id: number, img: string, audio: string, active: boolean, styles: string }[] = []
-  allItemsResources: { id: number, img: string, audio: string, active: boolean, styles: string }[][] = [
+  itemsResources:    { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[] = []
+  allItemsResources: { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[][] = [
     [],
     [
       /* style para el left y top, right y bottom, width y height, z-index */
-      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 15%; z-index: 10' },
-      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10' },
-      { id: 0, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 15%; z-index: 10' },
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 19%; z-index: 10', correct: true },
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10', correct: false },
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 15%; z-index: 10', correct: false },
+    ],
+    [
+      /* style para el left y top, right y bottom, width y height, z-index */
+      { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 15%; z-index: 10', correct: false },
+      { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10', correct: false },
+      { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 19%; z-index: 10', correct: true },
     ],
   ]
+  // 'fr'+count;    'exitLeft'
 
   correctItemResource?: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }
   allCorrectItemBySection: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }[] = [
@@ -75,11 +82,20 @@ export class GameKHistoryComponent {
   }
 
   initData() {
-    this.itemsResources = this.allItemsResources[this.section]
-    this.correctItemResource = this.allCorrectItemBySection[this.section]
     this.isCompleted = false
-    this.sizeCorrectItems = 2 //this.correctItemResource?.sizeCorrectItems || 0
-    this.intents = this.correctItemResource?.intents || 0
+    this.allItemsResources.forEach((list, i) => {
+      list.forEach(res => {
+        if(i === 1){
+          res.class = 'entryAbove';
+        }else{
+          res.class = '';
+        }
+      });
+    });
+
+    this.sizeCorrectItems = this.allItemsResources.length - 1 //this.correctItemResource?.sizeCorrectItems || 0
+    this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
+    this.intents = 10 //FIXME: determinar intentos
     this.audio = ''
     /* this.itemsResources.forEach(res => res.completed = false) */
   }
@@ -87,24 +103,11 @@ export class GameKHistoryComponent {
   intervalTopo: any
   play() {
     this.initData()
-    
     this.isRuning = true
-    setTimeout(() => {
+    
+    /* setTimeout(() => {
       this.handleClickNextAudio(this.correctItemResource!.audio)
-    }, 380)
-
-    let count = 0
-    this.intervalTopo = setInterval(() => {
-      setTimeout(() => {
-        count++
-        this.frameClass = 'fr'+count
-        console.log('>> >>: si o no perror', this.frameClass);
-        if(count == 2){
-          clearInterval(this.intervalTopo)
-          this.frameClass = 'exitLeft'
-        }
-      }, 1600);
-    }, 2000);
+    }, 380) */
   }
   restart() {
     clearInterval(this.intervalTopo)
@@ -116,15 +119,20 @@ export class GameKHistoryComponent {
 
   handleClick(btn: number) {
     /* this.itemsResources[btn].completed = true; */
-    if (true) {
+    if (this.itemsResources[btn].correct) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
+      this.itemsResources.forEach((res, i) => res.class = 'exitLeft' );
+      this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
       if (this.sizeCorrectItems != 0) {
+        this.itemsResources.forEach((res, i) => res.class = 'entryAbove' );
+
         this.handleClickNextAudio(this.itemsResources[btn].audio)
         setTimeout(() => {
           this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
         }, 100);
       }
+      
     } else {
       this.handleSecondaryAudio('assets/audios/error.mp3')
       this.intents--
