@@ -126,12 +126,12 @@
   animation: entryAbove 1s linear both;
   border: solid 1px red;
 }
-.exitLeft {
-  animation: exitLeft 1s linear both;
-}
+.exitLeft { animation: exitLeft 1s linear both; }
+.exitRight { animation: exitRight 1s linear both; }
 
 @keyframes entryAbove{ 0% { bottom: -100%; } 100% { bottom: 0%; } }
 @keyframes exitLeft  { 0% { bottom: 0%; left: 0%; } 100% { bottom: 0%; left: -100%; scale: 1; } }
+@keyframes exitRight { 0% { bottom: 0%; right: 0%; } 100% { bottom: 0%; right: -100%; scale: 1; } }
 
 @keyframes entryLeft{
 }

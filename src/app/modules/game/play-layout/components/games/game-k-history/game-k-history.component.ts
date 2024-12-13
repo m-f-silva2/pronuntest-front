@@ -31,12 +31,18 @@ export class GameKHistoryComponent {
     [],
     [
       /* style para el left y top, right y bottom, width y height, z-index */
+      { id: 0, img: 'assets/images/isla3/bosque.jpg', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 0%; left: 10%; width: auto; height: 100%; z-index: 1', correct: true },
       { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 19%; z-index: 10', correct: true },
       { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10', correct: false },
       { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 15%; z-index: 10', correct: false },
+
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 20%; left: 42%; width: auto; height: 25%; z-index: 10', correct: false },
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 20%; left: 52%; width: auto; height: 35%; z-index: 10', correct: false },
+      { id: 0, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 20%; left: 62%; width: auto; height: 45%; z-index: 10', correct: false },
     ],
     [
       /* style para el left y top, right y bottom, width y height, z-index */
+      { id: 0, img: 'assets/images/isla3/bosque.jpg', audio: 'assets/audios/fonema_p.wav', class: 'entryAbove', active: false, styles: 'bottom: 0%; left: 10%; width: auto; height: 100%; z-index: 1', correct: true },
       { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 40%; left: 10%; width: auto; height: 15%; z-index: 10', correct: false },
       { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 10%; left: 21%; width: auto; height: 15%; z-index: 10', correct: false },
       { id: 0, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/fonema_p.wav', class: '', active: false, styles: 'bottom: 20%; left: 32%; width: auto; height: 19%; z-index: 10', correct: true },
@@ -122,7 +128,9 @@ export class GameKHistoryComponent {
     if (this.itemsResources[btn].correct) {
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
-      this.itemsResources.forEach((res, i) => res.class = 'exitLeft' );
+      this.itemsResources.forEach((res, i) => {
+        res.class =  i%2===0 ? 'exitLeft': 'exitRight'
+      });
       this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
       if (this.sizeCorrectItems != 0) {
         this.itemsResources.forEach((res, i) => res.class = 'entryAbove' );
