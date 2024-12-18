@@ -124,7 +124,6 @@
 }
 .entryAbove {
   animation: entryAbove 1s linear both;
-  border: solid 1px red;
 }
 .exitLeft { animation: exitLeft 1s linear both; }
 .exitRight { animation: exitRight 1s linear both; }
@@ -138,4 +137,18 @@
 @keyframes entryRight{
 }
 @keyframes entryBelow{
+}
+
+
+.parallax-move {
+  position: absolute;
+  animation: parallaxMove 4s linear alternate infinite;
+}
+.parallax-move-reverse {
+  position: absolute;
+  animation: parallaxMove 3s linear alternate-reverse infinite;
+}
+@keyframes parallaxMove { 
+  0%   { transform:  translate(13px)  perspective( 750px)  rotateX(-5deg) rotateY(4deg); } 
+  100% { transform: translate(-13px) perspective( -750px)  rotateX(-5deg) rotateY(4deg); } 
 }

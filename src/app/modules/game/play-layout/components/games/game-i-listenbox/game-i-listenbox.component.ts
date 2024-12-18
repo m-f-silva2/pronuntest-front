@@ -37,7 +37,7 @@ export class GameIListenboxComponent {
     { img: 'assets/images/isla2/mapa.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "ma", r: "pa" },
     { img: 'assets/images/isla2/masa.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/sa.mp3', boxExplosion: 0, l: "ma", r: "sa" },
     { img: 'assets/images/isla2/palo.webp',  audioL: 'assets/audios/pa.mp3', audioR: 'assets/audios/lo.mp3', boxExplosion: 0, l: "pa", r: "lo" },
-    { img: 'assets/images/isla2/papa.webp',  audioL: 'assets/audios/pa.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "pa", r: "pá" },
+    { img: 'assets/images/isla2/padre.webp',  audioL: 'assets/audios/pa.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "pa", r: "pá" },
     { img: 'assets/images/isla2/pelo.webp',  audioL: 'assets/audios/pe.mp3', audioR: 'assets/audios/lo.mp3', boxExplosion: 0, l: "pe", r: "lo" },
     { img: 'assets/images/isla2/pila.webp',  audioL: 'assets/audios/pi.mp3', audioR: 'assets/audios/la.mp3', boxExplosion: 0, l: "pi", r: "la" },
     { img: 'assets/images/isla2/pino.webp',  audioL: 'assets/audios/pi.mp3', audioR: 'assets/audios/no.mp3', boxExplosion: 0, l: "pi", r: "no" },

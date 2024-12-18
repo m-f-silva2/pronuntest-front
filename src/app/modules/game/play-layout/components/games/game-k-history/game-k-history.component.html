@@ -22,7 +22,7 @@
                         
                         <div class="relative w-full h-full overflow-hidden select-none flex justify-center ">
 
-                            <div class="border-teal-500 bg-teal-400 border-4 rounded-full flex justify-center items-center p-6 w-fit h-fit absolute top-4 right-2">
+                            <div class="border-teal-500 bg-teal-400 border-4 rounded-full flex justify-center items-center p-6 w-fit h-fit absolute top-4 right-2 z-50">
                                 <img src="assets/images/microphone.svg" alt="" width="50px" height="50px">
                             </div>
 
@@ -36,9 +36,13 @@
                                  en la animación de entrada y salida deben haber dos grupos, estos se animan al mismo tiempo
                                 -->
                                  @for (items of allItemsResources; track $index) {
-                                    @for (item of items; track $index) {
+                                    @for (item of items; track $index;) {
                                         <div [class]="'frame_initial '+item.class+' w-full h-full relative'">
-                                            <img [src]="item.img" alt="" class="absolute" [style]="item.styles" (click)="handleClick($index)">
+                                            @if ($odd) {
+                                                <img [src]="item.img" alt="" class="parallax-move" [style]="item.styles" (click)="handleClick($index)">
+                                            }@else {
+                                                <img [src]="item.img" alt="" class="parallax-move-reverse" [style]="item.styles" (click)="handleClick($index)">
+                                            }
                                         </div>
                                     }
                                 }
