@@ -27,22 +27,12 @@ export class GameKHistoryComponent {
   isRuning = false
   sizeCorrectItems = 0
   frameClass = ''
-  itemsResources:    { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[] = []
-  allItemsResources: { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[][] = allItemsResourcesHistory
-  // 'fr'+count;    'exitLeft'
-
-  correctItemResource?: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }
-  allCorrectItemBySection: { id: number, img: string, audio: string, sizeCorrectItems: number, intents: number,  }[] = [
-    { id: -1, img: '', audio: '', sizeCorrectItems: -1, intents: -1 },
-    { id: 1, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2,  },
-    { id: 1, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 6,  },
-  ]
-
-
-  /* sizeCorrectItems = 0; */
   intents = 5;
   audio: string = '';
   audioAux: string = '';
+
+  itemsResources:    { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[] = []
+  allItemsResources: { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[][] = allItemsResourcesHistory
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService,  private readonly _toastService: ToastService) {
@@ -92,9 +82,9 @@ export class GameKHistoryComponent {
     this.initData()
     this.isRuning = true
     
-    /* setTimeout(() => {
-      this.handleClickNextAudio(this.correctItemResource!.audio)
-    }, 380) */
+    setTimeout(() => {
+      this.handleSecondaryAudio('assets/audios/historia-1-001.mp3');
+    }, 180)
   }
   restart() {
     clearInterval(this.intervalTopo)
@@ -115,10 +105,8 @@ export class GameKHistoryComponent {
       this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
       if (this.sizeCorrectItems != 0) {
         this.itemsResources.forEach((res, i) => res.class = 'entryAbove' );
-
-        this.handleClickNextAudio(this.itemsResources[btn].audio)
         setTimeout(() => {
-          this.handleSecondaryAudio(['assets/audios/sonido_excelente.mp3', 'assets/audios/sonido_perfecto.mp3'][Math.floor(Math.random() * 2)])
+          this.handleSecondaryAudio('assets/audios/historia-1-00'+(this.allItemsResources.length - this.sizeCorrectItems)+'.mp3');
         }, 100);
       }
       
