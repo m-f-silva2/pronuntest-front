@@ -144,10 +144,10 @@ filterOptions = [
   { key: 'map', label: 'Mapa', active: true },
   { key: 'table', label: 'Tabla', active: true },
   // Nuevos filtros de progreso en juegos
-  { key: 'gameLevel', label: 'Nivel de Juego', active: true },
+  /*{ key: 'gameLevel', label: 'Nivel de Juego', active: true },
   { key: 'attemptsPerLevel', label: 'Intentos por Nivel', active: true },
   { key: 'totalProgress', label: 'Porcentaje de Avance Total', active: true },
-  { key: 'precisionResults', label: 'Precisión por Nivel', active: true },
+  { key: 'precisionResults', label: 'Precisión por Nivel', active: true },*/
 ];
 
 // Datos filtrados
@@ -338,13 +338,22 @@ updateFilteredCharts(): void {
       return acc;
     }, {});
   }
+  
+  isFiltersVisible = false;
+
+  ngOnInit(): void {
+    this.getDataGraphic();
+    
+    // Mostrar los filtros después de 3 segundos
+    setTimeout(() => {
+      this.isFiltersVisible = true;
+    }, 3000); // Ajusta el tiempo según lo necesario
+  }
+
+  // Funciones de manejo de datos y gráficos...
 
   constructor(private _authService: AuthService, private _speechTherapyService: SpeechTherapyService) {
     this.token = this._authService.getToken();
-    if (!this.token) return
-  }
-  
-  ngOnInit(): void {
-    this.getDataGraphic();
+    if (!this.token) return;
   }
 }
