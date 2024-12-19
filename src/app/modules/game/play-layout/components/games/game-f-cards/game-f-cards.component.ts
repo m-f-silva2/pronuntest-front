@@ -84,7 +84,7 @@ export class GameFCardsComponent {
     const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
-    this.section = this.section < 2 && this.mode == 'front'? this.section : 0
+    /* this.section = this.section < 2 && this.mode == 'front'? this.section : 1 */
     this.initData()
   }
 

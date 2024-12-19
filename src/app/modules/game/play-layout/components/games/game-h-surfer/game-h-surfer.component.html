@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="relative  w-full h-full overflow-hidden select-none ">
-                            <div class="container-move relative w-full h-full z-20" #containerIMG>
+                            <div class="container-move relative w-full h-full z-20 " #containerIMG >
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
                                     <div  
                                     [style]="'top:' + resource.top+'%; right:'+resource.right+'%'"
@@ -42,7 +42,7 @@
                                 }
                             </div>
 
-                            <div #surfitaIMG class="absolute bottom-28 left-[10%] w-full z-10 animate-bounce {{muerteAlFurfista?'muerteAlFurfista':''}}">
+                            <div #surfitaIMG class="absolute bottom-28 left-[10%] w-fit z-10 animate-bounce {{muerteAlFurfista?'muerteAlFurfista':''}}">
                                 <img src="/assets/images/isla1/surfista.png" alt="" class="w-72">
                             </div>
 

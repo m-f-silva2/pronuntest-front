@@ -2,11 +2,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@an
 import { IslandsComponent } from './islands/islands.component';
 import { inject } from '@angular/core';
 import { catchError } from 'rxjs';
-import { GameZzMicrophoneComponent } from './play-layout/components/games/game-zz-microphone/game-zz-microphone.component';
-
 import { GameService } from './play-layout/game.service';
-import { GameZzPlayComponent } from './play-layout/components/games/game-zz-play/game-zz-play.component';
-import { GameZzMoveboxComponent } from './play-layout/components/games/game-zz-movebox/game-zz-movebox.component';
 import { PlayLayoutComponent } from './play-layout/play-layout.component';
 import { HomeComponent } from './home/home.component';
 import { GameACactusComponent } from './play-layout/components/games/game-a-cactus/game-a-cactus.component';
@@ -20,7 +16,6 @@ import { GameHSurferComponent } from './play-layout/components/games/game-h-surf
 import { GameIListenboxComponent } from './play-layout/components/games/game-i-listenbox/game-i-listenbox.component';
 import { GameJPanelComponent } from './play-layout/components/games/game-j-panel/game-j-panel.component';
 import { GameKHistoryComponent } from './play-layout/components/games/game-k-history/game-k-history.component';
-import { GameLTempComponent } from './play-layout/components/games/game-l-temp/game-l-temp.component';
 
 const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const levelService = inject(GameService);

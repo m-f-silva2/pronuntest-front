@@ -28,18 +28,18 @@ export class GameHSurferComponent {
   dataGames: IDataGame
   isCompleted = false
   isRuning = false
-  posCurrentDown = 0
-  itemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: number, top: number, right:number}[] = []
-  allItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: number, top: number, right:number}[][] = [
-    [{ id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758,  top: 44, right: 0 }],
+  posCurrentLeft = 0
+  itemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string,   top: number, right:number}[] = []
+  allItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string,top: number, right:number}[][] = [
+    [],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65,  top: 44, right: 0 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65,  top: 42, right: 29 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42, right: 29 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44, right: 0 },
     ],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 44,  right: 0 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 42,  right: 20 },
-      { id: 5, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 65, top: 47, right: -38 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 47, right: -38 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42,  right: 20 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44,  right: 0 },
     ],
   ]
 /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
@@ -90,7 +90,7 @@ export class GameHSurferComponent {
     this.interval = setInterval(() => {
       this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateX(-${count}%)`);
       count = count + 1
-      if (count > 115) {
+      if (count > ((100-24)-this.itemsResources[this.itemsResources.length-1].right)) {
         this.muerteAlFurfista = true
         clearInterval(this.interval)
         if (this.sizeCorrectItems > 0) {
@@ -104,18 +104,20 @@ export class GameHSurferComponent {
           })
         }
       }
-
-      if (this.posCurrentDown < this.itemsResources.length && count > this.itemsResources[this.posCurrentDown].yEnd) {
-        this.itemsResources[this.posCurrentDown].completed = true
-        this.posCurrentDown++
+      
+      if (this.posCurrentLeft < this.itemsResources.length && count > ((100-27)-this.itemsResources[this.posCurrentLeft].right)) {
+        this.itemsResources[this.posCurrentLeft].completed = true
+        this.posCurrentLeft++
+        this.handleSecondaryAudio('assets/audios/error.mp3')
+        this.intents--
       }
-    }, 500);
+    }, 300);
   }
 
   handleClick(btn: number, isCorrect: boolean) {
-    this.itemsResources[btn].completed = true
-
+    
     if (isCorrect) {
+      this.itemsResources[btn].completed = true
       /* this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true */
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
@@ -127,7 +129,7 @@ export class GameHSurferComponent {
       }
     } else {
       this.handleSecondaryAudio('assets/audios/error.mp3')
-      this.intents--
+      //this.intents--
     }
     
     /* Determinar si finaliza */
@@ -171,6 +173,7 @@ export class GameHSurferComponent {
     this.audio = ''
     this.muerteAlFurfista = false
     this.i = -1
+    this.posCurrentLeft = 0
     this.stopRecording()
     setTimeout(() => {
       this.isRuning = false;
@@ -301,7 +304,7 @@ export class GameHSurferComponent {
       next: (res: any) => {
 
         this.i++
-        this.handleClick(this.i, res.score > 80)
+        this.handleClick(this.i, res.score > 70)
 
         /* const islandLevel = this._gameService._islandLevels.getValue()?.find(res => res.isl_lev_str_id === this._gameService.structure?.isl_lev_str_id)
         if(!islandLevel) throw new Error('')
@@ -347,8 +350,7 @@ export class GameHSurferComponent {
   }
 
   async getWavBlob() {
-    const wavBlob = await this.wavRecorder.getBlob()!
-
+    const wavBlob = await this.wavRecorder.getBlob()!;
     if (wavBlob) {
       // Convert Blob to byte array (assuming limited library usage)
       const reader = new FileReader();

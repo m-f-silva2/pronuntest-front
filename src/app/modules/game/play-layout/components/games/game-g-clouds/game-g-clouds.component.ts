@@ -89,7 +89,7 @@ export class GameGCloudsComponent {
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
     this.isCompleted = false
-    this.itemsResources = this.allItemsResources[this.section]
+    this.itemsResources = [...this.allItemsResources[1]]
     this.correctItemsResources = this.allCorrectItemsResources[this.section]
     this.intents = this.correctItemsResources?.length
     this.sizeCorrectItems = this.correctItemsResources?.length;
