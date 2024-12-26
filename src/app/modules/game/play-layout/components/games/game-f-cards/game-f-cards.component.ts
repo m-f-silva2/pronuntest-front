@@ -62,7 +62,7 @@ export class GameFCardsComponent {
   constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService, private readonly ref: ChangeDetectorRef) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
+      title: 'Encuentra la pareja que coincida con el sonido.',
       subtitle: undefined,
       resource: '/assets/video/explosion.mp4',
       next: '1',
@@ -130,9 +130,9 @@ export class GameFCardsComponent {
 
   openMicrophone = false
   handleClick(btn: number) {
-    this.itemsResources[btn].completed = true;
     if ((this.itemsResources[btn].correctItem && this.mode === 'back') 
       || (this.itemsResources[btn].id == this.itemsResources[this.sizeCorrectItems-1].id && this.mode === 'front')) {
+        this.itemsResources[btn].completed = true;
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
@@ -200,6 +200,12 @@ export class GameFCardsComponent {
 
 
   /* ===== Logica audio ===== */
+  omit(): void {
+    this.i = 0;
+    this.openMicrophone = false;
+    this.intents--;
+    this.handleClickNextAudio(this.itemsResources[this.sizeCorrectItems-1]?.audio)
+  }
 
   private mediaRecorder: MediaRecorder | null = null;
   public isRecording = false;
@@ -237,26 +243,6 @@ export class GameFCardsComponent {
       this.isRecording = false;
       this.countRecording = 0;
       this.wavRecorder.stop();
-      console.log('>> >>: stop');
-
-      if(this.i == 0 || this.i == 3){
-        /* this.handleClick(this.i) */
-        /* this.i++; */
-        /* setTimeout(() => {
-          this.i++;
-          this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
-            this._toastService.toast.set(undefined)
-          }})
-        }, 1500); */
-      }/* else{
-        console.log('>> >>: 2', );
-        setTimeout(() => {
-          this.i = 0;
-          this._toastService.toast.set({ type: 's', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo!", end: () => { 
-            this._toastService.toast.set(undefined)
-          }})
-        }, 1500);
-      } */
   }
 
   async startRecording() {
@@ -332,7 +318,7 @@ export class GameFCardsComponent {
             this.handleClickNextAudio(this.itemsResources[this.sizeCorrectItems-1]?.audio)
           }
         }else{
-          this.intents--
+          /* this.intents-- */
           if (this.intents == 0) {
             this.restart()
             this._toastService.toast.set({
@@ -340,9 +326,8 @@ export class GameFCardsComponent {
                 this._toastService.toast.set(undefined)
               }
             })
-          }else{
-            this.handleSecondaryAudio('assets/audios/error.mp3')
           }
+          this.handleSecondaryAudio('assets/audios/error.mp3')
         }
 
 
@@ -400,10 +385,10 @@ export class GameFCardsComponent {
         if (event.target && event.target.result) {
           this.sendFile(event.target.result as ArrayBuffer)
           this.audioUrl = URL.createObjectURL(wavBlob);
-          this.ref.markForCheck();
         } else {
           console.error("Error reading audio data");
         }
+        this.ref.detectChanges();
       };
 
       // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor

@@ -92,45 +92,44 @@ export const allItemsResourcesHistory: { img: string, class: string, styles: str
   ],
 ]
 
-/* 
-arboles-selva-pan.webp
-cielo.webp
-fondo-casa.webp
-fondo-pollos.webp
-fondo-selva.webp
-llanura-camino.webp
-mar-pila.webp
-ninio-a-casa.webp
-ninio-apuntando.webp
-ninio-mapa.webp
-ninio-mar.webp
-ninio-piedra.webp
-papa.webp
-playa-cofre.webp
-pollos.webp
-pulpo.webp 
-
-*/
-
 
 export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, start: number, end: number }[][] = [
   [],
     [
-      /* Él es nuestro amigo, **Pepe**.  Un día, Pepe encontró un **mapa**.  */
       { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      /* Con curiosidad, se fue a pasear buscando el tesoro por encontrar. */
       { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
     ],
     [
-      /* Él es nuestro amigo, **Pepe**.  Un día, Pepe encontró un **mapa**.  */
       { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      /* Con curiosidad, se fue a pasear buscando el tesoro por encontrar. */
       { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
     ],
     [
-      /* Él es nuestro amigo, **Pepe**.  Un día, Pepe encontró un **mapa**.  */
-      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 0, end: 1 },
-      /* Con curiosidad, se fue a pasear buscando el tesoro por encontrar. */
-      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 0, end: 2 },
+      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
     ],
+    [
+      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    [
+      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    [
+      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    [
+      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    [
+      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    [
+      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
+      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+    ],
+    
   ]

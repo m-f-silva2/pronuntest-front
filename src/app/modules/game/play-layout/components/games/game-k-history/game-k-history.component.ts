@@ -45,7 +45,7 @@ export class GameKHistoryComponent {
 , private ref: ChangeDetectorRef) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
+      title: 'Vamos a contar una historia.',
       subtitle: undefined,
       resource: '/assets/video/explosion.mp4',
       next: '1',

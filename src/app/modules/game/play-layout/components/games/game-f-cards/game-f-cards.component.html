@@ -16,8 +16,14 @@
                                 <circle class="line" cx="0" cy="0" r="22" pathLength="1" />
                             </svg>
                             <div class="bg-white/50 animate-wiggle rounded-full absolute top-2 left-2 drop-shadow-md">
-                                <img src="assets/images/microphone.svg" alt="" srcset="">
+                                <img src="assets/images/microphone.svg" alt="" srcset="" (click)="startRecording()">
                             </div>
+                        </div>
+                        <div class="mt-4">
+                            @if(i > 0){
+                                <btn-img (eventClick)="omit()" [title]="'Omitir'" [type]="'red'"
+                                    [imgPath]="'assets/images/arrow-back.svg'" />
+                            }
                         </div>
                     </div>
                 </div>

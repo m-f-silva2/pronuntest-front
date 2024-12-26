@@ -91,7 +91,7 @@ export class GameACactusComponent {
   constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
+      title: 'Cada vez que haces una explosión, el micrófono graba el sonido y el globo crece más. ¡Sigue haciendo explosiones hasta que el globo estalle!',
       subtitle: undefined,
       resource: '/assets/video/explosion.mp4',
       next: '1',

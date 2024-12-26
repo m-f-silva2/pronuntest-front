@@ -61,7 +61,7 @@ export class GameEMoleComponent {
   constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private ref: ChangeDetectorRef, private router: Router, private renderer: Renderer2, private _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
-      title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
+      title: 'Vamos a reventar bombas con las silabas.',
       subtitle: undefined,
       resource: '/assets/video/explosion.mp4',
       next: '1',
