@@ -1,4 +1,6 @@
-
+:host{
+    cursor: url('/assets/cursors/use74.cur'), auto;
+}
 @media (max-width: 845px) {
     
     .isla{

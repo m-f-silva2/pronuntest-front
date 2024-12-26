@@ -1,3 +1,7 @@
 .background-container {
     background: linear-gradient(180deg, #B2EBEC 41.5%, #6AD8E7 45.5%, #2E87C8 100%);
 }
+
+:host{
+    cursor: url('/assets/cursors/use75.cur'), auto;
+}

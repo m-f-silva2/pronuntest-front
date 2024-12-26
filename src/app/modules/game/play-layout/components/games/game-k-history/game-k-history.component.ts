@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
@@ -8,7 +8,8 @@ import { BtnImgComponent } from '../../../../../../shared/components/btn-img/btn
 import { IDataGame, GameService } from '../../../game.service';
 import { ConffetyComponent } from '../../conffety/conffety.component';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
-import { allItemsResourcesHistory } from './history-data';
+import { allItemsResourcesHistory, RECORDS_ALL } from './history-data';
+import { WavRecorder } from "webm-to-wav-converter";
 
 @Component({
   selector: 'app-game-k-history',
@@ -30,12 +31,18 @@ export class GameKHistoryComponent {
   intents = 5;
   audio: string = '';
   audioAux: string = '';
+  wavRecorder = new WavRecorder();
+  
+  itemsResources: { img: string, class: string, styles: string }[] = []
+  allItemsResources: { img: string, class: string, styles: string }[][] = allItemsResourcesHistory
+  recordsAll = RECORDS_ALL
+  records: { audio: string, myRecord: any, approved: boolean, start: number, end: number }[] = []
+  currentRecord: { audio: string, myRecord: any, approved: boolean, start: number, end: number } | undefined
 
-  itemsResources:    { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[] = []
-  allItemsResources: { id: number, img: string, audio: string, active: boolean, class: string, styles: string, correct: boolean }[][] = allItemsResourcesHistory
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService,  private readonly _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService
+, private ref: ChangeDetectorRef) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
@@ -62,9 +69,9 @@ export class GameKHistoryComponent {
     this.isCompleted = false
     this.allItemsResources.forEach((list, i) => {
       list.forEach(res => {
-        if(i === 1){
+        if (i === 1) {
           res.class = 'entryAbove';
-        }else{
+        } else {
           res.class = '';
         }
       });
@@ -72,7 +79,8 @@ export class GameKHistoryComponent {
 
     this.sizeCorrectItems = this.allItemsResources.length - 1 //this.correctItemResource?.sizeCorrectItems || 0
     this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
-    this.intents = 10 //FIXME: determinar intentos
+    this.records = this.recordsAll[this.allItemsResources.length - this.sizeCorrectItems]
+    this.currentRecord = this.records[0]
     this.audio = ''
     /* this.itemsResources.forEach(res => res.completed = false) */
   }
@@ -81,9 +89,11 @@ export class GameKHistoryComponent {
   play() {
     this.initData()
     this.isRuning = true
-    
+
     setTimeout(() => {
-      this.handleSecondaryAudio('assets/audios/historia-1-001.mp3');
+      this.itemsResources[0].class = 'exitLeft';
+      this.itemsResources[1].class = 'exitRight';
+      this.handleClickNextAudio('assets/audios/historia-1-001.mp3');
     }, 180)
   }
   restart() {
@@ -95,28 +105,24 @@ export class GameKHistoryComponent {
   }
 
   handleClick(btn: number) {
-    /* this.itemsResources[btn].completed = true; */
-    if (this.itemsResources[btn].correct) {
-      this.sizeCorrectItems--
-      //Calcular tiempo del sonido del objeto tocado y las felicitaciones
-      this.itemsResources.forEach((res, i) => {
-        res.class =  i%2===0 ? 'exitLeft': 'exitRight'
-      });
-      this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
-      if (this.sizeCorrectItems != 0) {
-        this.itemsResources.forEach((res, i) => res.class = 'entryAbove' );
-        setTimeout(() => {
-          this.handleSecondaryAudio('assets/audios/historia-1-00'+(this.allItemsResources.length - this.sizeCorrectItems)+'.mp3');
-        }, 100);
-      }
-      
-    } else {
-      this.handleSecondaryAudio('assets/audios/error.mp3')
-      this.intents--
+    this.sizeCorrectItems--;
+    //Calcular tiempo del sonido del objeto tocado y las felicitaciones
+    this.itemsResources.forEach((res, i) => {
+      res.class = i % 2 === 0 ? 'exitLeft' : 'exitRight'
+    });
+    this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
+    this.records = this.recordsAll[this.allItemsResources.length - this.sizeCorrectItems]
+    this.currentRecord = this.records.find(r => !r.approved)
+    
+    if (this.sizeCorrectItems != 0) {
+      this.itemsResources.forEach((res, i) => res.class = 'entryAbove');
+      setTimeout(() => {
+        this.handleClickNextAudio('assets/audios/historia-1-00' + (this.allItemsResources.length - this.sizeCorrectItems) + '.mp3');
+      }, 100);
     }
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
-      
+
       this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
       setTimeout(() => {
         this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
@@ -129,13 +135,6 @@ export class GameKHistoryComponent {
         })
       }, 500);
 
-    } else if (this.intents == 0) {
-      this.restart()
-      this._toastService.toast.set({
-        type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => {
-          this._toastService.toast.set(undefined)
-        }
-      })
     }
   }
 
@@ -150,7 +149,138 @@ export class GameKHistoryComponent {
     this.audioAux = _audio;
     setTimeout(() => {
       (document.getElementById('audioAux') as HTMLAudioElement).play();
+    }, 10);
+  }
+
+  rangeAudio(_audio: string, start: number, end: number) {
+    this.audio = _audio;
+    setTimeout(() => {
+      const audioEl = document.getElementById('audio') as HTMLAudioElement
+      audioEl.currentTime = start
+      audioEl.play()
+
+      audioEl.addEventListener('timeupdate', function onTimeUpdate() {
+        if (audioEl.currentTime >= end) {
+          audioEl.pause(); // Pausar el audio al alcanzar el tiempo de fin
+          audioEl.removeEventListener('timeupdate', onTimeUpdate); // Limpiar el evento
+        }
+      });
     }, 2);
+  }
+
+  handleApproved(validation: boolean){
+    this.currentRecord!.approved = validation
+    if(!validation){
+      this.currentRecord!.myRecord = null
+    }else{
+      this.currentRecord = this.records.find(r => !r.approved)
+      if(!this.currentRecord){
+        this.handleClick(0);
+      }
+      this.ref.detectChanges();
+    }
+  }
+
+  /* Grabar */
+  private mediaRecorder: MediaRecorder | null = null;
+  public isRecording = false;
+  
+  async getFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      try {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = (): void => {
+          resolve(reader.result as ArrayBuffer);
+        };
+        reader.onerror = (error: any) => {
+          console.error('>> >>  error reader file:', error);
+          reject();
+        };
+      } catch (e) {
+        reject();
+      }
+    });
+  }
+
+  async file(event: any) {
+    const file = event.files[0] as File
+    const dataFileArrBuf = await this.getFileToArrayBuffer(file)
+    /* await this.sendFile(dataFileArrBuf) */
+  }
+
+  intervalArc: any;
+  i:number = 0;
+  async stopRecording() {
+      this.isRecording = false;
+      this.wavRecorder.stop();
+  }
+
+  async getWavBlob() {
+    const wavBlob = await this.wavRecorder.getBlob()!
+
+    if (wavBlob) {
+      // Convert Blob to byte array (assuming limited library usage)
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(wavBlob);
+      reader.onload = async (event) => {
+        if (event.target && event.target.result) {
+          this.currentRecord!.myRecord = URL.createObjectURL(wavBlob);
+
+          this.ref.detectChanges();
+        } else {
+          console.error("Error reading audio data");
+        }
+      };
+
+      // Puedes usar el Blob como quieras, por ejemplo, subirlo a un servidor
+    } else {
+      console.error('No se pudo obtener el Blob WAV');
+    }
+  }
+
+  async startRecording() {
+    if (this.isRecording) {
+      this.stopRecording()
+      return
+    }
+    const started = await this.wavRecorder.start();
+    if (!started) {
+      console.error('No se pudo iniciar la grabación');
+      return
+    }
+
+    const stream = this.wavRecorder.stream
+    this.mediaRecorder = new MediaRecorder(stream);
+
+    this.mediaRecorder.onstop = () => {
+      this.getWavBlob()
+    };
+    
+    this.mediaRecorder.start();
+    this.isRecording = true;
+    this.ref.detectChanges();
+  }
+
+  concatTextToBuffer(buffer: ArrayBuffer, textBefore: string, textAfter: string): ArrayBuffer {
+    // Convertir texto a ArrayBuffer utilizando el encoding especificado
+    const textBeforeBuffer = new TextEncoder().encode(textBefore);
+    const textAfterBuffer = new TextEncoder().encode(textAfter);
+  
+    // Calcular el tamaño total del nuevo buffer
+    const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
+  
+    // Crear un nuevo ArrayBuffer
+    const newBuffer = new ArrayBuffer(totalLength);
+    const newUint8Array = new Uint8Array(newBuffer);
+    const originalBuffer = new Uint8Array(buffer);
+
+    // Copiar los datos al nuevo ArrayBuffer
+    newUint8Array.set(textBeforeBuffer);
+    newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
+    newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
+  
+    return newBuffer;
   }
 }
 

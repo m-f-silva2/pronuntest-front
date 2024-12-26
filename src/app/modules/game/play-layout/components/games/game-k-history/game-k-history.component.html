@@ -6,7 +6,9 @@
     <section class="flex flex-col justify-center h-full w-full items-center ">
         <div class="container_border h-full w-full max-w-7xl">
             <div
-                class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center">
+                class="container_border_content relative h-full flex flex-col gap-6 justify-between items-center
+                
+                ">
 
                 @if (!isRuning) {
                 <div
@@ -22,8 +24,38 @@
                         
                         <div class="relative w-full h-full overflow-hidden select-none flex justify-center ">
 
-                            <div class="border-teal-500 bg-teal-400 border-4 rounded-full flex justify-center items-center p-6 w-fit h-fit absolute top-4 right-2 z-50">
-                                <img src="assets/images/microphone.svg" alt="" width="50px" height="50px">
+                            <div class="flex flex-col gap-2 absolute top-4 right-2 z-50">
+                                @for (record of records; track $index) {
+                                    @if (record.approved || record == currentRecord) {
+                                    <div class="flex">
+                                        <div class="border-teal-500 bg-teal-400 
+                                        border-3 rounded-full flex justify-center items-center p-2 w-fit h-fit
+                                        hover:brightness-125
+                                        ">
+                                            <img src="assets/images/play.svg" alt="" width="20px" height="20px"
+                                            (click)="rangeAudio(record!.myRecord? record!.myRecord : record.audio, record.start, record.end)">
+                                        </div>
+                                        @if (!record.approved) {
+                                        <div class="{{isRecording? 'border-red-500 bg-red-400': 'border-teal-500 bg-teal-400' }}
+                                        border-3 rounded-full flex justify-center items-center p-2 w-fit h-fit
+                                        hover:brightness-125
+                                        ">
+                                            <img src="assets/images/microphone.svg" alt="" width="50px" height="50px" (click)="startRecording()">
+                                        </div>
+                                        }@else{
+                                            <div class="border-teal-500 bg-teal-400 text-white p-2 w-fit h-fit rounded-full flex justify-center items-center">
+                                                Guardado
+                                            </div>
+                                        }
+                                    </div>
+                                    }
+                                    @if (record.myRecord && !record.approved) {
+                                        <div class="flex gap-2">
+                                            <btn-img (eventClick)="handleApproved(true)" [title]="'Sí'" [type]="'green'" [imgPath]="''" />
+                                            <btn-img (eventClick)="handleApproved(false)" [title]="'No'" [type]="'orange'" [imgPath]="''" />
+                                        </div>
+                                    }
+                                }
                             </div>
 
                             <div class="relative flex flex-wrap gap-2 xl:gap-20 justify-center items-center w-full h-full
@@ -37,7 +69,7 @@
                                 -->
                                  @for (items of allItemsResources; track $index) {
                                     @for (item of items; track $index;) {
-                                        <div [class]="'frame_initial '+item.class+' w-full h-full relative'">
+                                        <div [class]="'frame_initial '+item.class+' w-full h-full relative gap-2'">
                                             @if ($odd) {
                                                 <img [src]="item.img" alt="" class="parallax-move" [style]="item.styles" (click)="handleClick($index)">
                                             }@else {

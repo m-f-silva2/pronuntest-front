@@ -1,8 +1,8 @@
 @if(data){
-<div class="container_fixed">
+<div class="container_fixed pointer-events-none">
     
-    <div class="toast__container" [ngClass]="'update'+data.timeS" [style]="'animation: popup '+data.timeS+'s linear both'">
-        <div class="toast" [ngClass]="data.type=='s'? 'toast__green':'' || data.type=='i'? 'toast__blue':'' || data.type=='w'? 'toast__yellow':''">
+    <div class="toast__container pointer-events-none" [ngClass]="'update'+data.timeS" [style]="'animation: popup '+data.timeS+'s linear both'">
+        <div class="toast" [ngClass]="(data.type=='s' ? 'toast__green' : '') || (data.type=='i' ? 'toast__blue' : '') || (data.type=='w' ? 'toast__yellow' : '')">
 
             <div class='toast__header'>
                 <div class="icon">
@@ -17,7 +17,7 @@
             </div>
 
             <div class='toast__content'>
-                Felicitaciones, sigue así.
+                Felicitaciones, sigue así!!
             </div>
 
         </div>
