@@ -27,23 +27,15 @@ export class GameIListenboxComponent {
   section = 0
   countRecording = 0
   itemsResources: { img: string,  audioL: string, audioR: string, boxExplosion: 0|1, l: string, r: string }[] = [
-    { img: 'assets/images/isla2/chino.webp', audioL: 'assets/audios/chi.mp3', audioR: 'assets/audios/no.mp3',boxExplosion: 0, l: "chi", r: "no" },
-    { img: 'assets/images/isla2/fila.webp',  audioL: 'assets/audios/fi.mp3', audioR: 'assets/audios/la.mp3', boxExplosion: 0, l: "fi", r: "la" },
-    { img: 'assets/images/isla2/hielo.webp', audioL: 'assets/audios/hie.mp3', audioR: 'assets/audios/lo.mp3',boxExplosion: 1, l: "hie", r: "lo" },
-    { img: 'assets/images/isla2/luna.webp',  audioL: 'assets/audios/lu.mp3', audioR: 'assets/audios/na.mp3', boxExplosion: 1, l: "lu", r: "na" },
     { img: 'assets/images/isla2/lupa.webp',  audioL: 'assets/audios/lu.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "lu", r: "pa" },
-    { img: 'assets/images/isla2/malo.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/lo.mp3', boxExplosion: 0, l: "ma", r: "lo" },
-    { img: 'assets/images/isla2/mama.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/ma.mp3', boxExplosion: 1, l: "ma", r: "má" },
     { img: 'assets/images/isla2/mapa.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "ma", r: "pa" },
-    { img: 'assets/images/isla2/masa.webp',  audioL: 'assets/audios/ma.mp3', audioR: 'assets/audios/sa.mp3', boxExplosion: 0, l: "ma", r: "sa" },
     { img: 'assets/images/isla2/palo.webp',  audioL: 'assets/audios/pa.mp3', audioR: 'assets/audios/lo.mp3', boxExplosion: 0, l: "pa", r: "lo" },
-    { img: 'assets/images/isla2/padre.webp',  audioL: 'assets/audios/pa.mp3', audioR: 'assets/audios/pa.mp3', boxExplosion: 1, l: "pa", r: "pá" },
+    { img: 'assets/images/isla2/padre.webp',  audioL: 'assets/audios/pa.mp3', audioR:'assets/audios/pa.mp3', boxExplosion: 1, l: "pa", r: "pá" },
     { img: 'assets/images/isla2/pelo.webp',  audioL: 'assets/audios/pe.mp3', audioR: 'assets/audios/lo.mp3', boxExplosion: 0, l: "pe", r: "lo" },
     { img: 'assets/images/isla2/pila.webp',  audioL: 'assets/audios/pi.mp3', audioR: 'assets/audios/la.mp3', boxExplosion: 0, l: "pi", r: "la" },
     { img: 'assets/images/isla2/pino.webp',  audioL: 'assets/audios/pi.mp3', audioR: 'assets/audios/no.mp3', boxExplosion: 0, l: "pi", r: "no" },
     { img: 'assets/images/isla2/pollo.webp', audioL: 'assets/audios/po.mp3', audioR: 'assets/audios/yo.mp3', boxExplosion: 0, l: "po", r: "llo" },
     { img: 'assets/images/isla2/puma.webp',  audioL: 'assets/audios/pu.mp3', audioR: 'assets/audios/ma.mp3', boxExplosion: 0, l: "pu", r: "ma" },
-    { img: 'assets/images/isla2/suma.webp ', audioL: 'assets/audios/su.mp3', audioR: 'assets/audios/ma.mp3', boxExplosion: 0, l: "su", r: "ma" },
   ]
   
   itemsResourcesPos = -1

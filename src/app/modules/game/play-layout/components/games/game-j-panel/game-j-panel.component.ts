@@ -32,7 +32,6 @@ export class GameJPanelComponent {
   itemsResources!: { imgA: string, imgB: string,    audioAB: string[], correctPos: 0|1 }
   allItemsResources: { imgA: string, imgB: string, audioAB: string[], correctPos: 0|1 }[] = [
     { imgA: 'assets/images/isla2/palo.webp', imgB: 'assets/images/isla2/malo.webp',  audioAB: ['assets/audios/palo.mp3', 'assets/audios/malo.mp3'], correctPos: 0 },
-    { imgA: 'assets/images/isla2/padre.webp', imgB: 'assets/images/isla2/mama.webp',  audioAB: ['assets/audios/papa.mp3', 'assets/audios/mama.mp3'], correctPos: 0 },
     { imgA: 'assets/images/isla2/pelo.webp', imgB: 'assets/images/isla2/hielo.webp', audioAB: ['assets/audios/pelo.mp3', 'assets/audios/hielo.mp3'], correctPos: 0 },
     { imgA: 'assets/images/isla2/pila.webp', imgB: 'assets/images/isla2/fila.webp',  audioAB: ['assets/audios/pila.mp3', 'assets/audios/fila.mp3'], correctPos: 0 },
     { imgA: 'assets/images/isla2/yoyo.webp', imgB: 'assets/images/isla2/pollo.webp', audioAB: ['assets/audios/yoyo.mp3', 'assets/audios/pollo.mp3'], correctPos: 0 },
