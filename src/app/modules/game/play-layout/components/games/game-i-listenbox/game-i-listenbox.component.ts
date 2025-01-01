@@ -76,6 +76,15 @@ export class GameIListenboxComponent {
     this.isCompleted = false
   }
 
+  reset() {
+    this.itemsResources = this.shuffleArray(this.itemsResources);
+    this.itemsResourcesPos = 0;
+    const imgsEl = document.querySelectorAll('.boxDrop > img');
+    imgsEl.forEach((imgEl) => {
+      imgEl.remove();
+    });
+  }
+
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
     const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1
     this._gameService.navegationGame(direction, typeDirection)
@@ -119,6 +128,7 @@ export class GameIListenboxComponent {
         this.isCompleted = true;
 
         this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
+        this.reset();
         setTimeout(() => {
           this.isCompletedAux = true;
           this.handleSecondaryAudio('assets/audios/sonido_ganaste.mp3');
@@ -148,6 +158,9 @@ export class GameIListenboxComponent {
             this._toastService.toast.set(undefined);
           }
         });
+        setTimeout(() => {
+          this.onAudioEnded()
+        }, 1100);
       }
     } else {
       this.handleClickNextAudio('assets/audios/error.mp3');

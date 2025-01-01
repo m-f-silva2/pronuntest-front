@@ -117,8 +117,10 @@ export class GameKHistoryComponent {
     if (this.sizeCorrectItems != 0) {
       this.itemsResources.forEach((res, i) => res.class = 'entryAbove');
       setTimeout(() => {
-        this.handleClickNextAudio('assets/audios/historia-1-00' + (this.allItemsResources.length - this.sizeCorrectItems) + '.mp3');
-      }, 100);
+        console.log('>> >>: siguiente audio', (this.allItemsResources.length - this.sizeCorrectItems));
+        this.audio='';
+        this.handleClickNextAudio('assets/audios/historia-1-00'+(this.allItemsResources.length - this.sizeCorrectItems)+'.mp3');
+      }, 50);
     }
 
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
@@ -140,13 +142,15 @@ export class GameKHistoryComponent {
 
   handleClickNextAudio(_audio: string) {
     this.audio = _audio;
+    this.ref.detectChanges();
     setTimeout(() => {
       (document.getElementById('audio') as HTMLAudioElement).play();
-    }, 4);
+    }, 10);
   }
 
   handleSecondaryAudio(_audio: string) {
     this.audioAux = _audio;
+    this.ref.detectChanges();
     setTimeout(() => {
       (document.getElementById('audioAux') as HTMLAudioElement).play();
     }, 10);
@@ -154,18 +158,19 @@ export class GameKHistoryComponent {
 
   rangeAudio(_audio: string, start: number, end: number) {
     this.audio = _audio;
+    this.ref.detectChanges();
     setTimeout(() => {
       const audioEl = document.getElementById('audio') as HTMLAudioElement
       audioEl.currentTime = start
-      audioEl.play()
+      audioEl.play();
 
       audioEl.addEventListener('timeupdate', function onTimeUpdate() {
         if (audioEl.currentTime >= end) {
-          audioEl.pause(); // Pausar el audio al alcanzar el tiempo de fin
-          audioEl.removeEventListener('timeupdate', onTimeUpdate); // Limpiar el evento
+          audioEl.pause();
+          audioEl.removeEventListener('timeupdate', onTimeUpdate);
         }
       });
-    }, 2);
+    }, 5);
   }
 
   handleApproved(validation: boolean){

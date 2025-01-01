@@ -30,37 +30,26 @@ export class GameGCloudsComponent {
   posCurrentDown = 0
   sectionsGame = 2
 
-  itemsResources: any[] = []
-  allItemsResources = [
+  itemsResources: {id: number, isCorrect: boolean, completed: boolean, img: string, audio: string, yEnd: number, top: number, left: number }[] = []
+  allItemsResources: {id: number, isCorrect: boolean, completed: boolean, img: string, audio: string, yEnd: number, top: number, left: number }[][] = [
     [],
     [
-      { id: 0, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_k.wav', yEnd: 758, top: -16, left: 8 },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
-      { id: 2, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 916, top: -41, left: 30 },
-      { id: 3, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 1022, top: -61, left: 67 },
-      { id: 4, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 1138, top: -81, left: 20 },
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 65 },
-    ],
-  ]
-
-
-  correctItemsResources: any[] = []
-  allCorrectItemsResources = [
-    [],
-    [
-      { completed: false, pos: 0, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 2, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 3, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 4, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 5, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
+      { id: 0, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: -16, left: 8 },
+      { id: 1, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
+      { id: 2, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: -41, left: 30 },
+      { id: 3, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: -61, left: 67 },
+      { id: 4, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: -81, left: 20 },
+      { id: 5, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 65 },
     ],
     [
-      { completed: false, pos: 1, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
-      { completed: false, pos: 5, audio: 'assets/audios/fonema_p.wav', img: 'assets/images/question_mark.svg' },
+      { id: 0, isCorrect: false, completed: false, img: 'assets/images/isla0/burbujas.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 758, top: -16, left: 8 },
+      { id: 1, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 805, top: -31, left: 70 },
+      { id: 2, isCorrect: false, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_p.wav', yEnd: 916, top: -41, left: 30 },
+      { id: 3, isCorrect: false, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_p.wav', yEnd: 1022, top: -61, left: 67 },
+      { id: 4, isCorrect: false, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_p.wav', yEnd: 1138, top: -81, left: 20 },
+      { id: 5, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', yEnd: 1287, top: -91, left: 65 },
     ],
   ]
-
 
   sizeCorrectItems = 0;
   intents = 5;
@@ -89,15 +78,14 @@ export class GameGCloudsComponent {
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
     this.isCompleted = false
-    this.itemsResources = [...this.allItemsResources[1]]
-    this.correctItemsResources = this.allCorrectItemsResources[this.section]
-    this.intents = this.correctItemsResources?.length
-    this.sizeCorrectItems = this.correctItemsResources?.length;
+    this.itemsResources = [...this.allItemsResources[this.section]]
+    this.intents = this.itemsResources?.length
+    this.sizeCorrectItems = this.itemsResources?.filter(res=>res.isCorrect).length;
   }
 
   play() {
     setTimeout(() => {
-      this.handleClickNextAudio(this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].audio)
+      this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
     }, 380)
     this.isRuning = true
     let count = 0
@@ -127,10 +115,10 @@ export class GameGCloudsComponent {
   }
 
   handleClick(btn: number) {
-    this.itemsResources[btn].completed = true    
+    /* this.itemsResources[btn].completed = true     */
 
-    if (this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].pos == btn) {
-      this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true
+    if (this.itemsResources[btn].isCorrect) {
+      this.itemsResources[btn].completed = true
       this.sizeCorrectItems--
       //Calcular tiempo del sonido del objeto tocado y las felicitaciones
       if (this.sizeCorrectItems != 0) {
@@ -172,9 +160,9 @@ export class GameGCloudsComponent {
     clearInterval(this.interval)
     this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
     this.itemsResources.forEach(res => res.completed = false)
-    this.correctItemsResources.forEach(res => res.completed = false)
-    this.sizeCorrectItems = this.correctItemsResources.length
-    this.intents = this.correctItemsResources.length
+    this.itemsResources.forEach(res => res.completed = false)
+    this.sizeCorrectItems = this.itemsResources.filter(res => res.isCorrect).length
+    this.intents = this.itemsResources.length
     this.audio = ''
     setTimeout(() => {
       this.isRuning = false;

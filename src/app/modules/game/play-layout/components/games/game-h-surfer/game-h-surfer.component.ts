@@ -29,8 +29,8 @@ export class GameHSurferComponent {
   isCompleted = false
   isRuning = false
   posCurrentLeft = 0
-  itemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string,   top: number, right:number}[] = []
-  allItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string,top: number, right:number}[][] = [
+  itemsResources: { id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, top: number, right: number }[] = []
+  allItemsResources: { id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, top: number, right: number }[][] = [
     [],
     [
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42, right: 29 },
@@ -38,11 +38,11 @@ export class GameHSurferComponent {
     ],
     [
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 47, right: -38 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42,  right: 20 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44,  right: 0 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42, right: 20 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44, right: 0 },
     ],
   ]
-/*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
+  /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
 
   sizeCorrectItems = 0;
   intents = 5;
@@ -74,7 +74,7 @@ export class GameHSurferComponent {
     this.itemsResources = this.allItemsResources[this.section]
     //this.correctItemsResources = this.allCorrectItemsResources[this.section]
     this.intents = this.itemsResources.length
-    this.sizeCorrectItems = this.itemsResources.filter(res=>res.isCorrect).length
+    this.sizeCorrectItems = this.itemsResources.filter(res => res.isCorrect).length
   }
 
   muerteAlFurfista = false
@@ -90,7 +90,7 @@ export class GameHSurferComponent {
     this.interval = setInterval(() => {
       this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateX(-${count}%)`);
       count = count + 1
-      if (count > ((100-24)-this.itemsResources[this.itemsResources.length-1].right)) {
+      if (count > ((100 - 24) - this.itemsResources[this.itemsResources.length - 1].right)) {
         this.muerteAlFurfista = true
         clearInterval(this.interval)
         if (this.sizeCorrectItems > 0) {
@@ -104,8 +104,8 @@ export class GameHSurferComponent {
           })
         }
       }
-      
-      if (this.posCurrentLeft < this.itemsResources.length && count > ((100-27)-this.itemsResources[this.posCurrentLeft].right)) {
+
+      if (this.posCurrentLeft < this.itemsResources.length && count > ((100 - 27) - this.itemsResources[this.posCurrentLeft].right)) {
         this.itemsResources[this.posCurrentLeft].completed = true
         this.posCurrentLeft++
         this.handleSecondaryAudio('assets/audios/error.mp3')
@@ -115,7 +115,7 @@ export class GameHSurferComponent {
   }
 
   handleClick(btn: number, isCorrect: boolean) {
-    
+
     if (isCorrect) {
       this.itemsResources[btn].completed = true
       /* this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true */
@@ -131,7 +131,7 @@ export class GameHSurferComponent {
       this.handleSecondaryAudio('assets/audios/error.mp3')
       //this.intents--
     }
-    
+
     /* Determinar si finaliza */
     if (this.sizeCorrectItems == 0 && this.intents > 0) {
       this.restart()
@@ -140,7 +140,7 @@ export class GameHSurferComponent {
         this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
       }, 700);
 
-      console.log('>> >>: aquí no debe entrar a la primera q', );
+      console.log('>> >>: aquí no debe entrar a la primera q',);
       this.isCompleted = true
       this._toastGameService.toast.set({
         type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
@@ -150,13 +150,12 @@ export class GameHSurferComponent {
     } else if (this.intents == 0) {
       this.restart()
       this._toastService.toast.set({
-        type: 'w', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo", end: () => {
+        type: 'w', timeS: 3, title: "Perdiste", message: "Vuelve a intentarlo", end: () => {
           this._toastService.toast.set(undefined)
         }
       })
-    }else{
+    } else {
       setTimeout(() => {
-        console.log('>> >>: restart grabación:::: ', );
         this.startRecording()
       }, 500);
     }
@@ -169,13 +168,13 @@ export class GameHSurferComponent {
     this.itemsResources.forEach(res => res.completed = false)
     //this.correctItemsResources.forEach(res => res.completed = false)
     this.intents = this.itemsResources.length
-    this.sizeCorrectItems = this.itemsResources.filter(res=>res.isCorrect).length
+    this.sizeCorrectItems = this.itemsResources.filter(res => res.isCorrect).length
     this.audio = ''
     this.muerteAlFurfista = false
     this.i = -1
     this.posCurrentLeft = 0
-    this.stopRecording()
     setTimeout(() => {
+      this.stopRecording();
       this.isRuning = false;
     }, 1000);
   }
@@ -186,7 +185,7 @@ export class GameHSurferComponent {
       (document.getElementById('audio') as HTMLAudioElement).play();
     }, 4);
   }
-  
+
   handleSecondaryAudio(_audio: string) {
     this.audioAux = _audio;
     setTimeout(() => {
@@ -228,31 +227,12 @@ export class GameHSurferComponent {
   }
 
   intervalArc: any;
-  i:number = -1;
+  i: number = -1;
   async stopRecording() {
-      this.isRecording = false;
-      this.countRecording = 0;
-      this.wavRecorder.stop();
-      console.log('>> >>: stop');
-
-      if(this.i == 0 || this.i == 3){
-        /* this.handleClick(this.i) */
-        /* this.i++; */
-        /* setTimeout(() => {
-          this.i++;
-          this._toastService.toast.set({ type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => { 
-            this._toastService.toast.set(undefined)
-          }})
-        }, 1500); */
-      }/* else{
-        console.log('>> >>: 2', );
-        setTimeout(() => {
-          this.i = 0;
-          this._toastService.toast.set({ type: 's', timeS: 3, title: "Perdiste!", message: "Vuelve a intentarlo!", end: () => { 
-            this._toastService.toast.set(undefined)
-          }})
-        }, 1500);
-      } */
+    console.log('>> >>: stop', );
+    this.isRecording = false;
+    this.countRecording = 0;
+    this.wavRecorder.stop();
   }
 
   async startRecording() {
@@ -265,8 +245,7 @@ export class GameHSurferComponent {
       console.error('No se pudo iniciar la grabación');
       return
     }
-    
-    console.log('>> >>: startRecording', );
+
     const stream = this.wavRecorder.stream
     this.mediaRecorder = new MediaRecorder(stream);
 
@@ -278,18 +257,21 @@ export class GameHSurferComponent {
     this.mediaRecorder.start();
     this.isRecording = true;
     this.setArc({ target: { value: 0, min: 0, max: 100 } })
-
+    
     setTimeout(() => {
       this.stopRecording()
       this.countRecording = 0
+      this.ref.detectChanges();
     }, 3000);
-
+    
     this.countRecording = 1
+    console.log('>> >>: start', this.isRecording);
+    this.ref.detectChanges();
     this.intervalArc = setInterval(() => {
       if (this.countRecording === 0) { return }
-      this.countRecording++
+      this.countRecording += 2
       this.setArc({ target: { value: 16.66666666 * (this.countRecording / 100), min: 0, max: 100 } })
-    }, 8)
+    }, 10)
   }
 
   sendFile(buffer: ArrayBuffer) {
@@ -300,26 +282,10 @@ export class GameHSurferComponent {
     body += `Content-Type: audio/wav\r\n\r\n`;
 
     const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
-    this._gameService.sendAudio(blobBody, 'a').pipe(takeUntil(this._unsubscribeAll)) .subscribe({ //FIXME: a
+    this._gameService.sendAudio(blobBody, 'a').pipe(takeUntil(this._unsubscribeAll)).subscribe({ //FIXME: a
       next: (res: any) => {
-
         this.i++
         this.handleClick(this.i, res.score > 70)
-
-        /* const islandLevel = this._gameService._islandLevels.getValue()?.find(res => res.isl_lev_str_id === this._gameService.structure?.isl_lev_str_id)
-        if(!islandLevel) throw new Error('')
-        islandLevel.best_accuracy_ia  = res.score
-        islandLevel.worst_accuracy_ia = res.score
-        this._gameService.updateIslandLevel(islandLevel).subscribe({
-          next: (resScoreUpdate: any) => {
-            this.i++
-            this.handleClick(this.i, resScoreUpdate.score > 80)
-          },
-          error: (error: any) => {
-            this.i++
-            console.error('>> >> geterror1:', error);
-          }
-        }) */
       },
       error: (error: any) => {
         this.i++
@@ -332,10 +298,10 @@ export class GameHSurferComponent {
     // Convertir texto a ArrayBuffer utilizando el encoding especificado
     const textBeforeBuffer = new TextEncoder().encode(textBefore);
     const textAfterBuffer = new TextEncoder().encode(textAfter);
-  
+
     // Calcular el tamaño total del nuevo buffer
     const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
-  
+
     // Crear un nuevo ArrayBuffer
     const newBuffer = new ArrayBuffer(totalLength);
     const newUint8Array = new Uint8Array(newBuffer);
@@ -345,7 +311,7 @@ export class GameHSurferComponent {
     newUint8Array.set(textBeforeBuffer);
     newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
     newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
-  
+
     return newBuffer;
   }
 

@@ -100,36 +100,37 @@ export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, sta
       { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
     ],
     [
-      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 0, end: 3.4 },
+      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 3.4, end: 5.1 },
+      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 5.1, end: 10 },
     ],
     [
-      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 0, end: 3.7 },
+      { audio: 'assets/audios/historia-1-003.mp3', myRecord: null, approved: false, start: 3.7, end: 9 },
     ],
     [
-      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 0, end: 3.8 },
+      { audio: 'assets/audios/historia-1-004.mp3', myRecord: null, approved: false, start: 3.8, end: 10 },
     ],
     [
-      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 0, end: 3.7 },
+      { audio: 'assets/audios/historia-1-005.mp3', myRecord: null, approved: false, start: 3.7, end: 10 },
     ],
     [
-      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 0, end: 3.99 },
+      { audio: 'assets/audios/historia-1-006.mp3', myRecord: null, approved: false, start: 3.99, end: 12 },
     ],
     [
-      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 0, end: 4.8 },
+      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 4.8, end: 12 },
     ],
     [
-      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 0, end: 3.8 },
+      { audio: 'assets/audios/historia-1-008.mp3', myRecord: null, approved: false, start: 3.8, end: 9 },
     ],
     [
-      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 0, end: 3.6 },
-      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 3.6, end: 8 },
+      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 0, end: 3.3 },
+      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 3.3, end: 9 },
     ],
     
   ]

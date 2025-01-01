@@ -71,9 +71,9 @@
                                     @for (item of items; track $index;) {
                                         <div [class]="'frame_initial '+item.class+' w-full h-full relative gap-2'">
                                             @if ($odd) {
-                                                <img [src]="item.img" alt="" class="parallax-move" [style]="item.styles" (click)="handleClick($index)">
+                                                <img [src]="item.img" alt="" class="parallax-move" [style]="item.styles">
                                             }@else {
-                                                <img [src]="item.img" alt="" class="parallax-move-reverse" [style]="item.styles" (click)="handleClick($index)">
+                                                <img [src]="item.img" alt="" class="parallax-move-reverse" [style]="item.styles">
                                             }
                                         </div>
                                     }

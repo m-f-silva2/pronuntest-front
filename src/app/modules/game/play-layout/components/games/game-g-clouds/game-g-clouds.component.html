@@ -24,9 +24,9 @@
                                     <div (click)="handleClick(index)" 
                                     [style]="'top:' + resource.top+'%; left:'+resource.left+'%'"
 
-                                    class="{{resource.completed?'hidden':''}} bg-[url('/assets/images/cloud.svg')] absolute  bg-contain bg-no-repeat bg-bottom w-44 flex justify-center items-center">
+                                    class=" bg-[url('/assets/images/cloud.svg')] absolute  bg-contain bg-no-repeat bg-bottom w-44 min-h-12 flex justify-center items-center">
 
-                                        <img [src]="resource.img" alt="" class="w-16">
+                                        <img [src]="resource.img" alt="" class="{{resource.completed?'invisible':''}} w-16">
                                     </div>
                                 }
                             </div>
