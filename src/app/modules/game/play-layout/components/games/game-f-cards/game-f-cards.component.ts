@@ -296,7 +296,7 @@ export class GameFCardsComponent {
 
         this.i++
         /* this.handleClick(this.i, res.score > 80) */
-        if(res.score > 80){
+        if(res.score > -1){
           this.openMicrophone = false;
           
           

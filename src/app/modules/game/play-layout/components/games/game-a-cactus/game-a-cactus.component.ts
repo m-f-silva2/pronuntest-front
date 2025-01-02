@@ -101,7 +101,6 @@ export class GameACactusComponent {
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
-
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {

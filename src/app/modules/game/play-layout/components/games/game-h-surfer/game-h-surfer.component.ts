@@ -285,7 +285,7 @@ export class GameHSurferComponent {
     this._gameService.sendAudio(blobBody, 'a').pipe(takeUntil(this._unsubscribeAll)).subscribe({ //FIXME: a
       next: (res: any) => {
         this.i++
-        this.handleClick(this.i, res.score > 70)
+        this.handleClick(this.i, res.score > -1)
       },
       error: (error: any) => {
         this.i++

@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
 import { MapComponent } from '../../components/map/map.component';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserModalComponent } from '../../components/user-modal/user-modal.component';
+import * as XLSX from 'xlsx';
+
+
 
 @Component({
   selector: 'app-speech-therapy',
@@ -131,7 +134,54 @@ export class SpeechTherapyComponent {
     { key: 'dataTotalIntent', data: this.dataTotalIntent },
   ];
   
-  // Opciones de filtros
+  generateExcel() {
+    
+    // Convertir los datos filtrados a hojas de trabajo
+    const worksheetData: any[][] = [];
+
+    this.filteredChartsData.forEach(chart => {
+      // Agregar la descripción en la primera fila
+      worksheetData.push([`Descripción: ${chart.key || 'Sin descripción'}`]);
+
+      // Agregar encabezados de columnas
+      worksheetData.push(['Categoría', 'Valor']);
+
+      // Agregar datos del gráfico
+      const rows = chart.data.chart.xaxis.categories.map((category: any, i: string | number) => [
+        category,
+        chart.data.chart.series[0].data[i],
+      ]);
+      worksheetData.push(...rows);
+
+      // Agregar una fila vacía para separar los gráficos
+      worksheetData.push([]);
+    });
+
+    // Crear hoja de trabajo
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+    // Agregar un gráfico a los datos
+    const chart = {
+      type: 'line', // Tipo de gráfico: line, bar, pie, etc.
+      series: this.filteredChartsData.map(chart => ({
+        name: chart.key,
+        data: chart.data.chart.series[0].data,
+      })),
+      categories: this.filteredChartsData[0]?.data.chart.xaxis.categories || [],
+    };
+
+    // Enviar datos del gráfico como metadatos (opcional y personalizado)
+    worksheet['chart'] = chart;
+
+    // Crear el libro de trabajo
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+
+    // Exportar a un archivo Excel
+    const nameReportExcel = "pronun excel";
+    XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
+  }
+
 // Opciones de filtros
 filterOptions = [
   { key: 'dataCompletPhonemes', label: 'Fonemas Completos', active: true },
