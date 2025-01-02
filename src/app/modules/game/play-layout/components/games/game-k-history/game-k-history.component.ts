@@ -10,6 +10,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
 import { allItemsResourcesHistory, RECORDS_ALL } from './history-data';
 import { WavRecorder } from "webm-to-wav-converter";
+import { SupabaseService } from 'src/app/core/services/supabase/supabase.service';
 
 @Component({
   selector: 'app-game-k-history',
@@ -42,7 +43,7 @@ export class GameKHistoryComponent {
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService
-, private ref: ChangeDetectorRef) {
+, private ref: ChangeDetectorRef, private supabaseService: SupabaseService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a contar una historia.',
@@ -56,6 +57,19 @@ export class GameKHistoryComponent {
       this.sumaryActivity = res
     })
 
+  }
+
+  async uploadAudio(): Promise<void> {
+    if (this.currentRecord?.myRecord) {
+      try {
+        const audioBlob = await fetch(this.currentRecord.myRecord).then(res => res.blob());
+        const audioFile = new File([audioBlob], 'audio_record.wav', { type: 'audio/wav' });
+        const uploadResponse = await this.supabaseService.uploadAudio(audioFile);
+        console.log('Audio uploaded successfully:', uploadResponse);
+      } catch (error) {
+        console.error('Error uploading audio:', error);
+      }
+    }
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
