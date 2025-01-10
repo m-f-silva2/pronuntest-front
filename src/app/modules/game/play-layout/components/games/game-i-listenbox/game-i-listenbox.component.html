@@ -10,7 +10,11 @@
                 
                 @if (!isRuning) {
                     <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
-                        <iframe width="760" height="315" class="h-full max-w-full max-h-full object-contain block" src="https://www.youtube.com/embed/-N2CsTZ_UDg?si=sFDZtXtdbipl73PI&amp;start=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        @if (autoplay) {
+                            <iframe width="760" height="315" class="h-full max-w-full max-h-full object-contain block" src="https://www.youtube.com/embed/-N2CsTZ_UDg?si=sFDZtXtdbipl73PI&amp;start=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        }@else {
+                            <iframe width="760" height="315" class="h-full max-w-full max-h-full object-contain block" src="https://www.youtube.com/embed/-N2CsTZ_UDg?si=sFDZtXtdbipl73PI&amp;start=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        }
                         <btn-img class="w-fit block blur-none text-4xl absolute {{isCompleted?'top-0':'bottom-0'}}" (eventClick)="play()" [title]="isCompleted?'Volver a jugar':'Jugar'"
                         [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
                     </div>

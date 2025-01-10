@@ -21,6 +21,7 @@ import { SupabaseService } from 'src/app/core/services/supabase/supabase.service
 })
 export class GameKHistoryComponent {
   /* history */
+  autoplay = true
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -33,17 +34,20 @@ export class GameKHistoryComponent {
   audio: string = '';
   audioAux: string = '';
   wavRecorder = new WavRecorder();
-  
   itemsResources: { img: string, class: string, styles: string }[] = []
   allItemsResources: { img: string, class: string, styles: string }[][] = allItemsResourcesHistory
   recordsAll = RECORDS_ALL
   records: { audio: string, myRecord: any, approved: boolean, start: number, end: number }[] = []
   currentRecord: { audio: string, myRecord: any, approved: boolean, start: number, end: number } | undefined
-
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService
-, private ref: ChangeDetectorRef, private supabaseService: SupabaseService) {
+  constructor(
+    private readonly _toastGameService: ToastGameService,
+    public _gameService: GameService,
+    private readonly _toastService: ToastService,
+    private readonly ref: ChangeDetectorRef,
+    private readonly supabaseService: SupabaseService
+  ) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a contar una historia.',
@@ -60,12 +64,14 @@ export class GameKHistoryComponent {
   }
 
   async uploadAudio(): Promise<void> {
+    this.handleApproved(true);
     if (this.currentRecord?.myRecord) {
       try {
         const audioBlob = await fetch(this.currentRecord.myRecord).then(res => res.blob());
         const audioFile = new File([audioBlob], 'audio_record.wav', { type: 'audio/wav' });
         const uploadResponse = await this.supabaseService.uploadAudio(audioFile);
         console.log('Audio uploaded successfully:', uploadResponse);
+        this.handleApproved(true);
       } catch (error) {
         console.error('Error uploading audio:', error);
       }
@@ -107,10 +113,11 @@ export class GameKHistoryComponent {
     setTimeout(() => {
       this.itemsResources[0].class = 'exitLeft';
       this.itemsResources[1].class = 'exitRight';
-      this.handleClickNextAudio('assets/audios/historia-1-001.mp3');
+      this.rangeAudio(this.currentRecord!.audio, this.currentRecord!.start, this.currentRecord!.end);
     }, 180)
   }
   restart() {
+    this.autoplay = false;
     clearInterval(this.intervalTopo)
     this.initData()
     setTimeout(() => {
@@ -126,14 +133,13 @@ export class GameKHistoryComponent {
     });
     this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
     this.records = this.recordsAll[this.allItemsResources.length - this.sizeCorrectItems]
-    this.currentRecord = this.records.find(r => !r.approved)
-    
+    this.currentRecord = this.records?.find(r => !r.approved)
+
     if (this.sizeCorrectItems != 0) {
       this.itemsResources.forEach((res, i) => res.class = 'entryAbove');
       setTimeout(() => {
-        console.log('>> >>: siguiente audio', (this.allItemsResources.length - this.sizeCorrectItems));
-        this.audio='';
-        this.handleClickNextAudio('assets/audios/historia-1-00'+(this.allItemsResources.length - this.sizeCorrectItems)+'.mp3');
+        this.audio = '';
+        this.rangeAudio(this.currentRecord!.audio, this.currentRecord!.start, this.currentRecord!.end);      
       }, 50);
     }
 
@@ -149,6 +155,7 @@ export class GameKHistoryComponent {
             this._toastGameService.toast.set(undefined)
           }
         })
+        this.restart();
       }, 500);
 
     }
@@ -187,14 +194,16 @@ export class GameKHistoryComponent {
     }, 5);
   }
 
-  handleApproved(validation: boolean){
+  handleApproved(validation: boolean) {
     this.currentRecord!.approved = validation
-    if(!validation){
+    if (!validation) {
       this.currentRecord!.myRecord = null
-    }else{
+    } else {
       this.currentRecord = this.records.find(r => !r.approved)
-      if(!this.currentRecord){
+      if (!this.currentRecord) {
         this.handleClick(0);
+      }else{
+        this.rangeAudio(this.currentRecord!.audio, this.currentRecord!.start, this.currentRecord!.end);
       }
       this.ref.detectChanges();
     }
@@ -203,7 +212,7 @@ export class GameKHistoryComponent {
   /* Grabar */
   private mediaRecorder: MediaRecorder | null = null;
   public isRecording = false;
-  
+
   async getFileToArrayBuffer(file: File): Promise<ArrayBuffer> {
     return new Promise((resolve, reject) => {
       try {
@@ -229,10 +238,10 @@ export class GameKHistoryComponent {
   }
 
   intervalArc: any;
-  i:number = 0;
+  i: number = 0;
   async stopRecording() {
-      this.isRecording = false;
-      this.wavRecorder.stop();
+    this.isRecording = false;
+    this.wavRecorder.stop();
   }
 
   async getWavBlob() {
@@ -275,7 +284,7 @@ export class GameKHistoryComponent {
     this.mediaRecorder.onstop = () => {
       this.getWavBlob()
     };
-    
+
     this.mediaRecorder.start();
     this.isRecording = true;
     this.ref.detectChanges();
@@ -285,10 +294,10 @@ export class GameKHistoryComponent {
     // Convertir texto a ArrayBuffer utilizando el encoding especificado
     const textBeforeBuffer = new TextEncoder().encode(textBefore);
     const textAfterBuffer = new TextEncoder().encode(textAfter);
-  
+
     // Calcular el tamaño total del nuevo buffer
     const totalLength = textBeforeBuffer.byteLength + buffer.byteLength + textAfterBuffer.byteLength;
-  
+
     // Crear un nuevo ArrayBuffer
     const newBuffer = new ArrayBuffer(totalLength);
     const newUint8Array = new Uint8Array(newBuffer);
@@ -298,7 +307,7 @@ export class GameKHistoryComponent {
     newUint8Array.set(textBeforeBuffer);
     newUint8Array.set(originalBuffer, textBeforeBuffer.byteLength);
     newUint8Array.set(textAfterBuffer, textBeforeBuffer.byteLength + buffer.byteLength);
-  
+
     return newBuffer;
   }
 }

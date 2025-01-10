@@ -21,6 +21,7 @@ export class GameHSurferComponent {
   /* Nubes saltos */
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   @ViewChild('surfitaIMG') surfitaIMG!: ElementRef<HTMLDivElement>;
+  autoplay = true;
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
@@ -140,7 +141,6 @@ export class GameHSurferComponent {
         this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
       }, 700);
 
-      console.log('>> >>: aquí no debe entrar a la primera q',);
       this.isCompleted = true
       this._toastGameService.toast.set({
         type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
@@ -162,6 +162,7 @@ export class GameHSurferComponent {
   }
 
   restart() {
+    this.autoplay = false;
     this.isCompleted = false
     clearInterval(this.interval)
     this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);
@@ -229,7 +230,6 @@ export class GameHSurferComponent {
   intervalArc: any;
   i: number = -1;
   async stopRecording() {
-    console.log('>> >>: stop', );
     this.isRecording = false;
     this.countRecording = 0;
     this.wavRecorder.stop();
@@ -265,7 +265,6 @@ export class GameHSurferComponent {
     }, 3000);
     
     this.countRecording = 1
-    console.log('>> >>: start', this.isRecording);
     this.ref.detectChanges();
     this.intervalArc = setInterval(() => {
       if (this.countRecording === 0) { return }

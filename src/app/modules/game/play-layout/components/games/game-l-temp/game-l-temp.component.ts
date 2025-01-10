@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 export class GameLTempComponent {
     /* Cartas 2 */
     @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+    autoplay = true
     sumaryActivity: SumaryActivities | undefined
     sections: any[] = []
     section = 0
@@ -106,6 +107,7 @@ export class GameLTempComponent {
       }, 300);
     }
     restart() {
+    this.autoplay = false;
       clearInterval(this.intervalTopo)
       this.initData()
       setTimeout(() => {

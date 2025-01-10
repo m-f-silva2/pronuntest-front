@@ -18,6 +18,7 @@ import { LevelInfoComponent } from '../../level-info/level-info.component';
 })
 export class GameJPanelComponent {
   /* Panel barco */
+  autoplay = true
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -74,6 +75,7 @@ export class GameJPanelComponent {
   }
 
   private restart() {
+    this.autoplay = false;
     this.initData()
     setTimeout(() => {
       this.isRuning = false;

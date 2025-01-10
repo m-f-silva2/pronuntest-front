@@ -19,6 +19,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameBFaceComponent {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+  autoplay = true
   sections: any[] = []
   dataGames: IDataGame
   sounds = [false, false, false]
@@ -118,6 +119,7 @@ export class GameBFaceComponent {
           setTimeout(() => {
             this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
             this.isCompletedAux = true;
+            this.autoplay = false
             this._toastGameService.toast.set({
               type: 's', timeS: 3, title: "¡Ganaste!", message: "Nivel completado con éxito!", end: () => {
                 this._toastGameService.toast.set(undefined);

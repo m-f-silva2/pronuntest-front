@@ -20,6 +20,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameEMoleComponent {
   /* TOPO - Mole*/
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  autoplay = true
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -110,6 +111,7 @@ export class GameEMoleComponent {
     }, 300);
   }
   restart() {
+    this.autoplay = false;
     clearInterval(this.intervalTopo)
     this.initData()
     setTimeout(() => {

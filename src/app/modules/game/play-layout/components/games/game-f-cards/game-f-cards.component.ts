@@ -20,6 +20,7 @@ import { WavRecorder } from "webm-to-wav-converter";
 export class GameFCardsComponent {
   /* Cartas */
   sumaryActivity: SumaryActivities | undefined
+  autoplay = true
   sections: any[] = []
   section = 0
   dataGames: IDataGame
@@ -121,6 +122,7 @@ export class GameFCardsComponent {
     }, 300); */
   }
   restart() {
+    this.autoplay = false;
     clearInterval(this.intervalTopo)
     this.initData()
     setTimeout(() => {
@@ -256,7 +258,6 @@ export class GameFCardsComponent {
       return
     }
     
-    console.log('>> >>: startRecording', );
     const stream = this.wavRecorder.stream
     this.mediaRecorder = new MediaRecorder(stream);
 

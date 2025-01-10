@@ -20,6 +20,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameGCloudsComponent {
   /* Nubes saltos */
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  autoplay = true
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
@@ -156,6 +157,7 @@ export class GameGCloudsComponent {
   }
 
   restart() {
+    this.autoplay = false;
     this.isCompleted = false
     clearInterval(this.interval)
     this.renderer.setStyle(this.containerIMG.nativeElement, 'transform', `translateY(0px)`);

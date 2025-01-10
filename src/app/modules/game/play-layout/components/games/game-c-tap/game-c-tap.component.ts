@@ -19,6 +19,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 })
 export class GameCTapComponent {
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  autoplay = true
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -101,6 +102,7 @@ export class GameCTapComponent {
     }, 380)
   }
   restart() {
+    this.autoplay = false;
     this.initData()
     setTimeout(() => {
       this.isRuning = false;

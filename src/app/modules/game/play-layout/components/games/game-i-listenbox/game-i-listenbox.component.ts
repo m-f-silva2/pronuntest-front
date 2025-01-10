@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, KeyValueDiffers, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
 import { LevelInfoComponent } from '../../level-info/level-info.component';
@@ -19,7 +19,8 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameIListenboxComponent {
   /* box - selecciona caja */
   sumaryActivity: SumaryActivities | undefined
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
+  autoplay = true
   sections: any[] = []
   dataGames: IDataGame
   sounds = [false, false, false]
@@ -43,7 +44,7 @@ export class GameIListenboxComponent {
   audioAux: string = '';
   isRuning = false
 
-  constructor(private _toastGameService: ToastGameService, public _gameService: GameService, private _toastService: ToastService) {
+  constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
     this.sections.push({
       title: 'Vamos a ubicar en que posición se haya la explosión en la palabra.',
@@ -77,6 +78,7 @@ export class GameIListenboxComponent {
   }
 
   reset() {
+    this.autoplay = false
     this.itemsResources = this.shuffleArray(this.itemsResources);
     this.itemsResourcesPos = 0;
     const imgsEl = document.querySelectorAll('.boxDrop > img');

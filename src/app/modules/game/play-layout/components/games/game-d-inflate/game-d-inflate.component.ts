@@ -19,6 +19,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 })
 export class GameDInflateComponent {
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
+  autoplay = true
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -80,6 +81,7 @@ export class GameDInflateComponent {
     }, 380)
   }
   restart() {
+    this.autoplay = false;
     this.stopRecording()
     this.initData()
     setTimeout(() => {
