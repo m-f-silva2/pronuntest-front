@@ -1,13 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../auth/auth.service';
+import { Table } from '../../models/interfaces-graphics';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpeechTherapyService {
+  public selectedUser = signal<Table | null>(null);
+
+  setSelectedUser(user: Table): void {
+    this.selectedUser.set(user);
+  }
 
   apiUrl = environment.baseApiBD;
   /* apimxHeader: HttpHeaders; */

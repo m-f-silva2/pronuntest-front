@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NftAuctionsTableItemComponent } from '../nft-auctions-table-item/nft-auctions-table-item.component';
 import { CommonModule } from '@angular/common';
 import { Table } from 'src/app/core/models/interfaces-graphics';
+import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
 
 @Component({
     selector: '[nft-auctions-table]',
@@ -13,6 +14,7 @@ export class NftAuctionsTableComponent implements OnInit {
   @Input('data') data: Table[] = <any>{};
   @Input() isAssignUser = <Boolean> false;
   @Input() isUnAssignUser = <Boolean> false;
+  @Output() userSelected = new EventEmitter<Table>();
   // Lista que se muestra en la tabla, filtrada por el buscador
   public filteredData: Table[] = this.data;
 
@@ -29,7 +31,7 @@ export class NftAuctionsTableComponent implements OnInit {
     progress_now: string
   }[] = [];
 
-  constructor() {
+  constructor(private _speechTherapyService: SpeechTherapyService) {
   }
 
   ngOnInit(): void {
@@ -46,5 +48,12 @@ export class NftAuctionsTableComponent implements OnInit {
       auction.condition.toLowerCase().includes(searchTerm)
     );
     console.log('Filtered data:', this.filteredData);
+  }
+
+  // Método para seleccionar un usuario
+  selectUser(event: Event, auction: any): void {
+    event.preventDefault(); // Evita el comportamiento predeterminado
+    //console.log('Usuario seleccionado:', auction);
+    this.userSelected.emit(auction);
   }
 }

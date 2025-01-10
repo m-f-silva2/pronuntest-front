@@ -105,7 +105,11 @@
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
+  .button-green:hover {
     background-color: #38a169;
+  }
+
+  .button-red:hover {
+    background-color: rgb(234, 130, 130);
   }
   

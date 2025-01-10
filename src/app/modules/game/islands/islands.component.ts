@@ -84,6 +84,7 @@ export class IslandsComponent {
   public logoup(){
     localStorage.removeItem('token')
     localStorage.removeItem('role')
+    location.reload();
   }
 
   handleBtnLevel(event: { state: 'block'|'unlock', island?: number, level?: number }){

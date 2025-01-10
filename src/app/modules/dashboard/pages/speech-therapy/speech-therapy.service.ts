@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, effect, signal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { Table } from 'src/app/core/models/interfaces-graphics';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,11 @@ export class SpeechTherapyService {
 
   public async getTest(): Promise<any> {
     return await lastValueFrom(this.httpClient.get<any>(this.url));
+  }
+  public selectedUser = signal<Table | null>(null);
+
+  setSelectedUser(user: Table): void {
+    this.selectedUser.set(user);
   }
 
 }

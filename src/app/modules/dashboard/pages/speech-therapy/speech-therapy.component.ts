@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { NftHeaderComponent } from '../nft/nft-header/nft-header.component';
 import { NftDualCardComponent } from '../nft/nft-dual-card/nft-dual-card.component';
 import { NftSingleCardComponent } from '../nft/nft-single-card/nft-single-card.component';
@@ -133,108 +133,130 @@ export class SpeechTherapyComponent {
     { key: 'dataGameTime', data: this.dataGameTime },
     { key: 'dataTotalIntent', data: this.dataTotalIntent },
   ];
+  public selectedUser: any = null;
+
+  // Manejar el evento de selección de usuario
+  onUserSelected(user: any): void {
+    this.selectedUser = user;
+    console.log('Usuario seleccionado speech:', this.selectedUser);
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }
+  clearSelectedUser(): void {
+    this.selectedUser = null;
+    console.log('Usuario deseleccionado');
+  }
+  
   
   generateExcel() {
-    
+    // Mapeo de descripciones por clave
+    const descriptions: { [key: string]: string } = {
+      dataCompletPhonemes: 'Cantidad de pacientes que completaron y la categoría que completaron',
+      dataPhonemeVS: 'Comparación general entre mejor y peor porcentaje del usuario al usar la inteligencia artificial',
+      precisionUserVS: 'Comparación del porcentaje de precisión de los usuarios en distintos fonemas',
+      dataCompletGames: 'Cantidad de pacientes que completaron cada juego',
+      dataCompletGamesLevel: 'Cantidad de pacientes que completaron cada nivel',
+      dataGameTime: 'Tiempo promedio invertido en juegos',
+      dataTotalIntent: 'Promedio de intentos totales en los juegos',
+    };
+  
     // Convertir los datos filtrados a hojas de trabajo
     const worksheetData: any[][] = [];
-
+  
+    // Agregar datos del usuario seleccionado (si existe)
+    if (this.selectedUser) {
+      worksheetData.push(['Información del Usuario']);
+      worksheetData.push(['Nombre', 'Identificación', 'Género', 'Edad', 'Condición']);
+      worksheetData.push([
+        this.selectedUser.user_name,
+        this.selectedUser.identification,
+        this.selectedUser.gender,
+        this.selectedUser.age,
+        this.selectedUser.condition,
+      ]);
+      worksheetData.push([]); // Fila vacía para separar
+    }
+  
+    // Agregar datos de gráficos
     this.filteredChartsData.forEach(chart => {
-      // Agregar la descripción en la primera fila
-      worksheetData.push([`Descripción: ${chart.key || 'Sin descripción'}`]);
-
-      // Agregar encabezados de columnas
+      const description = descriptions[chart.key] || 'Sin descripción';
+  
+      // Agregar descripción y datos del gráfico
+      worksheetData.push([`Descripción: ${description}`]);
       worksheetData.push(['Categoría', 'Valor']);
-
-      // Agregar datos del gráfico
-      const rows = chart.data.chart.xaxis.categories.map((category: any, i: string | number) => [
+      const rows = chart.data.chart.xaxis.categories.map((category: any, i: number) => [
         category,
         chart.data.chart.series[0].data[i],
       ]);
       worksheetData.push(...rows);
-
-      // Agregar una fila vacía para separar los gráficos
-      worksheetData.push([]);
+      worksheetData.push([]); // Fila vacía para separar
     });
-
+  
     // Crear hoja de trabajo
     const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-
-    // Agregar un gráfico a los datos
-    const chart = {
-      type: 'line', // Tipo de gráfico: line, bar, pie, etc.
-      series: this.filteredChartsData.map(chart => ({
-        name: chart.key,
-        data: chart.data.chart.series[0].data,
-      })),
-      categories: this.filteredChartsData[0]?.data.chart.xaxis.categories || [],
-    };
-
-    // Enviar datos del gráfico como metadatos (opcional y personalizado)
-    worksheet['chart'] = chart;
-
+  
     // Crear el libro de trabajo
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
-
+  
     // Exportar a un archivo Excel
-    const nameReportExcel = "pronun excel";
+    const nameReportExcel = 'pronun_excel';
     XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
   }
+  
+  
+  // Opciones de filtros
+  filterOptions = [
+    { key: 'dataCompletPhonemes', label: 'Fonemas Completos', active: true },
+    { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: true },
+    { key: 'precisionUserVS', label: 'Precisión de Usuarios', active: true },
+    { key: 'dataCompletGames', label: 'Juegos Completos', active: true },
+    { key: 'dataCompletGamesLevel', label: 'Niveles Completos', active: true },
+    { key: 'dataGameTime', label: 'Tiempo de Juegos', active: true },
+    { key: 'dataTotalIntent', label: 'Intentos Totales', active: true },
+    { key: 'map', label: 'Mapa', active: true },
+    { key: 'table', label: 'Tabla', active: true },
+    // Nuevos filtros de progreso en juegos
+    /*{ key: 'gameLevel', label: 'Nivel de Juego', active: true },
+    { key: 'attemptsPerLevel', label: 'Intentos por Nivel', active: true },
+    { key: 'totalProgress', label: 'Porcentaje de Avance Total', active: true },
+    { key: 'precisionResults', label: 'Precisión por Nivel', active: true },*/
+  ];
 
-// Opciones de filtros
-filterOptions = [
-  { key: 'dataCompletPhonemes', label: 'Fonemas Completos', active: true },
-  { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: true },
-  { key: 'precisionUserVS', label: 'Precisión de Usuarios', active: true },
-  { key: 'dataCompletGames', label: 'Juegos Completos', active: true },
-  { key: 'dataCompletGamesLevel', label: 'Niveles Completos', active: true },
-  { key: 'dataGameTime', label: 'Tiempo de Juegos', active: true },
-  { key: 'dataTotalIntent', label: 'Intentos Totales', active: true },
-  { key: 'map', label: 'Mapa', active: true },
-  { key: 'table', label: 'Tabla', active: true },
-  // Nuevos filtros de progreso en juegos
-  /*{ key: 'gameLevel', label: 'Nivel de Juego', active: true },
-  { key: 'attemptsPerLevel', label: 'Intentos por Nivel', active: true },
-  { key: 'totalProgress', label: 'Porcentaje de Avance Total', active: true },
-  { key: 'precisionResults', label: 'Precisión por Nivel', active: true },*/
-];
+  // Datos filtrados
+  filteredChartsData = this.chartsData;
 
-// Datos filtrados
-filteredChartsData = this.chartsData;
+  // Visibilidad del mapa y tabla
+  isMapVisible = true;
+  isTableVisible = true;
 
-// Visibilidad del mapa y tabla
-isMapVisible = true;
-isTableVisible = true;
+  // Alternar filtros
+  toggleFilter(key: string): void {
+    // Buscar el filtro por clave
+    const filter = this.filterOptions.find(f => f.key === key);
+    if (filter) {
+      filter.active = !filter.active;
 
-// Alternar filtros
-toggleFilter(key: string): void {
-  // Buscar el filtro por clave
-  const filter = this.filterOptions.find(f => f.key === key);
-  if (filter) {
-    filter.active = !filter.active;
-
-    if (key === 'map') {
-      this.isMapVisible = filter.active;
-    } else if (key === 'table') {
-      this.isTableVisible = filter.active;
-    } else {
-      this.updateFilteredCharts();
+      if (key === 'map') {
+        this.isMapVisible = filter.active;
+      } else if (key === 'table') {
+        this.isTableVisible = filter.active;
+      } else {
+        this.updateFilteredCharts();
+      }
     }
   }
-}
 
-// Actualizar datos filtrados
-updateFilteredCharts(): void {
-  const activeFilters = this.filterOptions
-    .filter(filter => filter.active)
-    .map(filter => filter.key);
+  // Actualizar datos filtrados
+  updateFilteredCharts(): void {
+    const activeFilters = this.filterOptions
+      .filter(filter => filter.active)
+      .map(filter => filter.key);
 
-  this.filteredChartsData = this.chartsData.filter(chart => activeFilters.includes(chart.key));
-}
-
-
-
+    this.filteredChartsData = this.chartsData.filter(chart => activeFilters.includes(chart.key));
+  }
   
   createChartConfig(series: any[], categories: string[], title: string, isGroups = false): any {
     return {
