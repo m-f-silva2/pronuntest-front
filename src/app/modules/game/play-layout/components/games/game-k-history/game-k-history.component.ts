@@ -37,8 +37,8 @@ export class GameKHistoryComponent {
   itemsResources: { img: string, class: string, styles: string }[] = []
   allItemsResources: { img: string, class: string, styles: string }[][] = allItemsResourcesHistory
   recordsAll = RECORDS_ALL
-  records: { audio: string, myRecord: any, approved: boolean, start: number, end: number }[] = []
-  currentRecord: { audio: string, myRecord: any, approved: boolean, start: number, end: number } | undefined
+  records: { audio: string, myRecord: any, approved: boolean, start: number, end: number, text: string }[] = []
+  currentRecord: { audio: string, myRecord: any, approved: boolean, start: number, end: number, text: string } | undefined
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(
