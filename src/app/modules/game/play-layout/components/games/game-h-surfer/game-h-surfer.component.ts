@@ -56,7 +56,7 @@ export class GameHSurferComponent {
     this.sections.push({
       title: 'Pronuncia las silabas para que los globos no tumben al surfista.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/CpvXeSzUf6Y?si=TCDYbcjoS3xhhNAb&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

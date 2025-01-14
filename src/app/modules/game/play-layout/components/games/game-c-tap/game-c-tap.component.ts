@@ -67,7 +67,7 @@ export class GameCTapComponent {
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/GFOsqsO5Oy0?si=l8o2exXiExXaZSnG&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

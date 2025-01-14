@@ -97,7 +97,9 @@ export class GameACactusComponent {
       resource: '/assets/video/explosion.mp4',
       next: '1',
       previous: undefined
-    })
+    },
+    { resource: 'https://www.youtube.com/embed/825QofXHyC0?si=hHzXJdg-Eh0wfYWN&amp;start=0&autoplay=1' },
+  )
 
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res

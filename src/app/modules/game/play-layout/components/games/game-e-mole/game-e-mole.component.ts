@@ -64,7 +64,7 @@ export class GameEMoleComponent {
     this.sections.push({
       title: 'Vamos a reventar bombas con las silabas.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/fcfqLQagFmI?si=VPbPWj_F1H5QQAVn&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

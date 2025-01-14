@@ -40,7 +40,7 @@ export class GameBFaceComponent {
     this.sections.push({
       title: 'Escucha el sonido de la imagen y repítelo tú mismo. Luego, observa el dibujo y decide si el sonido se produce en la nariz, la boca o la garganta.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: 'https://www.youtube.com/embed/BZeRRb7SPtI?si=XYD1-JHj_TngnOaO&amp;start=0&autoplay=1',
       next: '1',
       previous: undefined
     })

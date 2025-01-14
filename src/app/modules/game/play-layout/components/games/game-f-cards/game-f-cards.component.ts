@@ -65,7 +65,7 @@ export class GameFCardsComponent {
     this.sections.push({
       title: 'Encuentra la pareja que coincida con el sonido.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/srwExUfTfM0?si=HsRl7h23iOUd17XM&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

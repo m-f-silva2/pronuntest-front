@@ -49,7 +49,7 @@ export class GameJPanelComponent {
     this.sections.push({
       title: 'Descubre la palabra que se escucha.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/jevxR3CK3Ak?si=PlZfw-uIkjwgyoTf&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

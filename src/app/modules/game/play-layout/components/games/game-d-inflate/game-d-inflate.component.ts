@@ -46,7 +46,7 @@ export class GameDInflateComponent {
     this.sections.push({
       title: 'Vamos a escuchar sonidos de la letra ' + this._gameService.structure?.phoneme_type + ' \n\nToca las burbujas que más se parezcan al sonido que escuches',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/42SjtrTtBjk?si=k7II4KUNu6y4TNik&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

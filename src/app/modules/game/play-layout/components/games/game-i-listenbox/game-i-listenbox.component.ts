@@ -49,7 +49,7 @@ export class GameIListenboxComponent {
     this.sections.push({
       title: 'Vamos a ubicar en que posición se haya la explosión en la palabra.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/-N2CsTZ_UDg?si=sFDZtXtdbipl73PI&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })

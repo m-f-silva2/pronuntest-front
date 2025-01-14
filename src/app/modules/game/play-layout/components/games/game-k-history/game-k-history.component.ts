@@ -52,7 +52,7 @@ export class GameKHistoryComponent {
     this.sections.push({
       title: 'Vamos a contar una historia.',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: "https://www.youtube.com/embed/hYT9W2XC4D4?si=kwbnX9i6o5p250F0&amp;start=0&autoplay=1",
       next: '1',
       previous: undefined
     })
