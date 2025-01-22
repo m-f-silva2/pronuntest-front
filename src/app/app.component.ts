@@ -9,7 +9,7 @@ import { TextToAudioComponent } from './text-to-audio/text-to-audio.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgApexchartsModule, ToastComponent, TextToAudioComponent],
+  imports: [RouterOutlet, NgApexchartsModule, ToastComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

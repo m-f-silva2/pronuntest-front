@@ -11,7 +11,7 @@ export class Menu {
           label: 'Inicio',
           route: '/',
         },
-        {
+        /*{
           //icon: 'assets/icons/heroicons/outline/chart-pie.svg',
           icon: 'assets/icons/heroicons/outline/users.svg',
           label: 'Pacientes',
@@ -19,7 +19,7 @@ export class Menu {
           /*children: [
             { label: 'Nfts', route: '/dashboard/nfts' },
             // { label: 'Podcast', route: '/dashboard/podcast' },
-          ],*/
+          ],*
         },
         /*{
           icon: 'assets/icons/heroicons/outline/lock-closed.svg',
