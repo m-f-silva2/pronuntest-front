@@ -35,7 +35,7 @@ export class TextToAudioComponent  implements OnInit {
 
     // Insert title
     const title = this.renderer.createElement('title');
-    const titleText = this.renderer.createText('PronunTest');
+    const titleText = this.renderer.createText('SpeakCheck');
     title.appendChild(titleText);
     document.head.appendChild(title);
 

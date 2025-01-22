@@ -14,7 +14,7 @@ import { TextToAudioComponent } from './text-to-audio/text-to-audio.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'pronuntest-front';
+  title = 'speak-check-front';
   chartOptions : ApexOptions;
 
   constructor(public themeService: ThemeService, public _toastService: ToastService) {
