@@ -39,10 +39,10 @@ export class ProfileMenuComponent implements OnInit {
   public isOpen = false;
   public profileMenu = [
     {
-      title: 'Your Profile',
+      title: localStorage.getItem('email')?.split('@')[0],
       icon: './assets/icons/heroicons/outline/user-circle.svg',
       link: '/profile',
-      email: 'youemail@gmail.com',
+      email: localStorage.getItem('email'),
     },
     /*{
       title: 'Settings',
@@ -50,14 +50,14 @@ export class ProfileMenuComponent implements OnInit {
       link: '/settings',
     },*/
     {
-      title: 'Log out',
+      title: 'Cerrar sesión',
       icon: './assets/icons/heroicons/outline/logout.svg',
       link: '/auth',
     },
   ];
 
   public themeColors = [
-    {
+    /*{
       name: 'base',
       code: '#e11d48',
     },
@@ -68,12 +68,12 @@ export class ProfileMenuComponent implements OnInit {
     {
       name: 'green',
       code: '#22c55e',
-    },
+    },*/
     {
       name: 'blue',
       code: '#3b82f6',
     },
-    {
+    /*{
       name: 'orange',
       code: '#ea580c',
     },
@@ -84,7 +84,7 @@ export class ProfileMenuComponent implements OnInit {
     {
       name: 'violet',
       code: '#6d28d9',
-    },
+    },*/
   ];
 
   public themeMode = ['light', 'dark'];
@@ -96,6 +96,7 @@ export class ProfileMenuComponent implements OnInit {
   public logoup(){
     localStorage.removeItem('token')
     localStorage.removeItem('role')
+    localStorage.removeItem('email')
   }
 
   public toggleMenu(): void {

@@ -100,8 +100,10 @@ export class SignInComponent {
     this._authService.login(data).subscribe({
       next: (res) => {
         if (!res.token) return
+        
         this._authService.setToken(res.token)
         this._authService.setRole(res.role)
+        this._authService.setEmail(res.email)
 
         if (ROLES.professional == res.role) {
           this._router.navigate(['/dashboard']);

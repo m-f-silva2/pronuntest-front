@@ -33,6 +33,13 @@ export class AuthService {
     return localStorage.getItem('token') ?? undefined
   }
 
+  setEmail(email: string) {
+    localStorage.setItem('email', email )
+  }
+  getEmail(): Observable<any> {
+    return of(localStorage.getItem('email') ?? undefined)
+  }
+
   
   login(login: any): Observable<any> {
       return this._httpClient.post<any>(`${this.apiUrl}/login`, login,
