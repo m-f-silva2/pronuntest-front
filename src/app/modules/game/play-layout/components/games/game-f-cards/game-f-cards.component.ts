@@ -37,6 +37,8 @@ export class GameFCardsComponent {
     [
       { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
       { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false },
     ],
     [
       { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pa', correctItem: false},
