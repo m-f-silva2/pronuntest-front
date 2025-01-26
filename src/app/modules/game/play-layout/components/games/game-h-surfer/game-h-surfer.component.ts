@@ -21,7 +21,7 @@ export class GameHSurferComponent {
   /* Nubes saltos */
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
   @ViewChild('surfitaIMG') surfitaIMG!: ElementRef<HTMLDivElement>;
-  autoplay = true;
+  autoplay = false;
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []

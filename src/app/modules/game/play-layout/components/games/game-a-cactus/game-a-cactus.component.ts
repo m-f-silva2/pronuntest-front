@@ -18,7 +18,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 })
 export class GameACactusComponent {
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  autoplay = true
+  autoplay = false
   interval: any
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []

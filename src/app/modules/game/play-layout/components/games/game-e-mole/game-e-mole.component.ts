@@ -20,7 +20,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameEMoleComponent {
   /* TOPO - Mole*/
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  autoplay = true
+  autoplay = false
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0

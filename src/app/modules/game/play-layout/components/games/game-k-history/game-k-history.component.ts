@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SumaryActivities } from '../../../../../../core/models/sumary_activities';
@@ -21,7 +21,8 @@ import { SupabaseService } from 'src/app/core/services/supabase/supabase.service
 })
 export class GameKHistoryComponent {
   /* history */
-  autoplay = true
+  @ViewChild('textHirory') textHirory!: ElementRef<HTMLDivElement>;
+  autoplay = false
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0
@@ -98,11 +99,10 @@ export class GameKHistoryComponent {
     });
 
     this.sizeCorrectItems = this.allItemsResources.length - 1 //this.correctItemResource?.sizeCorrectItems || 0
-    this.itemsResources = this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]
+    this.itemsResources = [...this.allItemsResources[this.allItemsResources.length - this.sizeCorrectItems]]
     this.records = this.recordsAll[this.allItemsResources.length - this.sizeCorrectItems]
     this.currentRecord = this.records[0]
     this.audio = ''
-    /* this.itemsResources.forEach(res => res.completed = false) */
   }
 
   intervalTopo: any
@@ -115,6 +115,7 @@ export class GameKHistoryComponent {
       this.itemsResources[1].class = 'exitRight';
       this.rangeAudio(this.currentRecord!.audio, this.currentRecord!.start, this.currentRecord!.end);
     }, 180)
+    this.setTextHirtoy()
   }
   restart() {
     this.autoplay = false;
@@ -122,11 +123,13 @@ export class GameKHistoryComponent {
     this.initData()
     setTimeout(() => {
       this.isRuning = false;
+      this.ref.detectChanges();
     }, 1000);
   }
 
   handleClick(btn: number) {
     this.sizeCorrectItems--;
+
     //Calcular tiempo del sonido del objeto tocado y las felicitaciones
     this.itemsResources.forEach((res, i) => {
       res.class = i % 2 === 0 ? 'exitLeft' : 'exitRight'
@@ -159,6 +162,24 @@ export class GameKHistoryComponent {
       }, 500);
 
     }
+  }
+
+  setTextHirtoy(){
+    let newHtml = '';
+    //reemplazar (texto) por <span class="highlight">(texto)</span> solamente las que esten dentro de parentesis
+    this.currentRecord?.text.split(' ').forEach((word) => {
+      if (word.includes('(') && word.includes(')')) {
+        newHtml += `<span class="text-cyan-100">${
+          word.replace('(', '').replace(')', '')
+        }</span> `;
+      } else {
+        newHtml += `${word} `;
+      }
+    });
+
+    this.textHirory.nativeElement.innerHTML =  newHtml || '';
+    this.ref.detectChanges();
+
   }
 
   handleClickNextAudio(_audio: string) {
@@ -207,6 +228,7 @@ export class GameKHistoryComponent {
       }
       this.ref.detectChanges();
     }
+    this.setTextHirtoy()
   }
 
   /* Grabar */

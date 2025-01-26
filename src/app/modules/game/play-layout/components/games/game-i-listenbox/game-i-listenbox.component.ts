@@ -20,7 +20,7 @@ export class GameIListenboxComponent {
   /* box - selecciona caja */
   sumaryActivity: SumaryActivities | undefined
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
-  autoplay = true
+  autoplay = false
   sections: any[] = []
   dataGames: IDataGame
   sounds = [false, false, false]

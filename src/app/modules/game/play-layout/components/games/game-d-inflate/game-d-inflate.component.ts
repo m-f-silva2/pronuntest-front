@@ -19,7 +19,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 })
 export class GameDInflateComponent {
   @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-  autoplay = true
+  autoplay = false
   sumaryActivity: SumaryActivities | undefined
   sections: any[] = []
   section = 0

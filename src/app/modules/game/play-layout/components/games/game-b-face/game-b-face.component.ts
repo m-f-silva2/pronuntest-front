@@ -19,7 +19,7 @@ import { ConffetyComponent } from '../../conffety/conffety.component';
 export class GameBFaceComponent {
   sumaryActivity: SumaryActivities | undefined
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  autoplay = true
+  autoplay = false
   sections: any[] = []
   dataGames: IDataGame
   sounds = [false, false, false]

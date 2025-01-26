@@ -20,7 +20,7 @@ import { WavRecorder } from "webm-to-wav-converter";
 export class GameFCardsComponent {
   /* Cartas */
   sumaryActivity: SumaryActivities | undefined
-  autoplay = true
+  autoplay = false
   sections: any[] = []
   section = 0
   dataGames: IDataGame

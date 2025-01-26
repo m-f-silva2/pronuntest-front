@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 export class GameLTempComponent {
     /* Cartas 2 */
     @ViewChild('containerIMG') containerIMG!: ElementRef<HTMLDivElement>;
-    autoplay = true
+    autoplay = false
     sumaryActivity: SumaryActivities | undefined
     sections: any[] = []
     section = 0
