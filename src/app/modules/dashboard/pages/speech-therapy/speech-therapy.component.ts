@@ -150,61 +150,119 @@ export class SpeechTherapyComponent {
   }
   
   
-  generateExcel() {
-    // Mapeo de descripciones por clave
-    const descriptions: { [key: string]: string } = {
-      dataCompletPhonemes: 'Cantidad de pacientes que completaron y la categoría que completaron',
-      dataPhonemeVS: 'Comparación general entre mejor y peor porcentaje del usuario al usar la inteligencia artificial',
-      precisionUserVS: 'Comparación del porcentaje de precisión de los usuarios en distintos fonemas',
-      dataCompletGames: 'Cantidad de pacientes que completaron cada juego',
-      dataCompletGamesLevel: 'Cantidad de pacientes que completaron cada nivel',
-      dataGameTime: 'Tiempo promedio invertido en juegos',
-      dataTotalIntent: 'Promedio de intentos totales en los juegos',
-    };
-  
-    // Convertir los datos filtrados a hojas de trabajo
-    const worksheetData: any[][] = [];
-  
-    // Agregar datos del usuario seleccionado (si existe)
-    if (this.selectedUser) {
-      worksheetData.push(['Información del Usuario']);
-      worksheetData.push(['Nombre', 'Identificación', 'Género', 'Edad', 'Condición']);
-      worksheetData.push([
-        this.selectedUser.user_name,
-        this.selectedUser.identification,
-        this.selectedUser.gender,
-        this.selectedUser.age,
-        this.selectedUser.condition,
-      ]);
-      worksheetData.push([]); // Fila vacía para separar
-    }
-  
-    // Agregar datos de gráficos
-    this.filteredChartsData.forEach(chart => {
-      const description = descriptions[chart.key] || 'Sin descripción';
-  
-      // Agregar descripción y datos del gráfico
-      worksheetData.push([`Descripción: ${description}`]);
-      worksheetData.push(['Categoría', 'Valor']);
-      const rows = chart.data.chart.xaxis.categories.map((category: any, i: number) => [
-        category,
-        chart.data.chart.series[0].data[i],
-      ]);
-      worksheetData.push(...rows);
-      worksheetData.push([]); // Fila vacía para separar
-    });
-  
-    // Crear hoja de trabajo
-    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
-  
-    // Crear el libro de trabajo
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
-  
-    // Exportar a un archivo Excel
-    const nameReportExcel = 'pronun_excel';
-    XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
+
+generateExcel() {
+  const descriptions: { 
+    [key: string]: { 
+      singular: string; 
+      plural: string; 
+      columnNames: { singular: string[]; plural: string[] } 
+    } 
+  } = {
+    dataCompletPhonemes: {
+      singular: 'Cantidad de ejercicios de fonemas completados por el paciente, detallando las categorías finalizadas.',
+      plural: 'Número de pacientes que han completado ejercicios de fonemas, incluyendo las categorías finalizadas.',
+      columnNames: { singular: ['Categoría de Fonema', 'Ejercicios Completados'], plural: ['Categoría de Fonema', 'Pacientes Completados'] },
+    },
+    dataPhonemeVS: {
+      singular: 'Comparación del rendimiento del paciente en diferentes fonemas, destacando el mejor y peor porcentaje de precisión con la inteligencia artificial.',
+      plural: 'Comparación del rendimiento de los pacientes en distintos fonemas, resaltando los mejores y peores porcentajes de precisión con la inteligencia artificial.',
+      columnNames: { singular: ['Fonema', 'Porcentaje de Precisión'], plural: ['Fonema', 'Precisión Promedio de Pacientes'] },
+    },
+    precisionUserVS: {
+      singular: 'Nivel de precisión del paciente en la pronunciación de distintos fonemas.',
+      plural: 'Análisis comparativo de la precisión de varios pacientes en la pronunciación de diferentes fonemas.',
+      columnNames: { singular: ['Fonema', 'Precisión del Paciente'], plural: ['Fonema', 'Precisión Promedio'] },
+    },
+    dataCompletGames: {
+      singular: 'Cantidad de juegos completados por el paciente, permitiendo evaluar su progreso en la terapia.',
+      plural: 'Cantidad de juegos completados por los pacientes, permitiendo evaluar su progreso en la terapia.',
+      columnNames: { singular: ['Juego', 'Completado por el Paciente'], plural: ['Juego', 'Pacientes que lo Completaron'] },
+    },
+    dataCompletGamesLevel: {
+      singular: 'Número de niveles de juego completados por el paciente, mostrando su evolución en cada actividad.',
+      plural: 'Número de niveles completados en los juegos, diferenciando el desempeño de cada paciente o el avance general del grupo.',
+      columnNames: { singular: ['Nivel del Juego', 'Completado por el Paciente'], plural: ['Nivel del Juego', 'Pacientes que lo Completaron'] },
+    },
+    dataGameTime: {
+      singular: 'Tiempo promedio dedicado por el paciente en los juegos de terapia.',
+      plural: 'Tiempo promedio invertido en juegos por los pacientes.',
+      columnNames: { singular: ['Juego', 'Tiempo Invertido (min)'], plural: ['Juego', 'Tiempo Promedio (min)'] },
+    },
+    dataTotalIntent: {
+      singular: 'Promedio de intentos realizados por el paciente en los juegos, útil para medir su perseverancia y evolución.',
+      plural: 'Promedio de intentos realizados en los juegos por los pacientes, útil para medir la perseverancia y evolución grupal.',
+      columnNames: { singular: ['Juego', 'Intentos del Paciente'], plural: ['Juego', 'Intentos Promedio'] },
+    },
+  };
+
+  const isSinglePatient = !!this.selectedUser;
+  const worksheetData: any[][] = [];
+
+  if (isSinglePatient) {
+    worksheetData.push([{ v: 'Paciente', s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
+    worksheetData.push([
+      { v: 'Nombre', s: { font: { bold: true } } },
+      { v: 'ID', s: { font: { bold: true } } },
+      { v: 'Género', s: { font: { bold: true } } },
+      { v: 'Edad', s: { font: { bold: true } } },
+      { v: 'Condición', s: { font: { bold: true } } },
+    ]);
+    worksheetData.push([
+      this.selectedUser.user_name,
+      this.selectedUser.identification,
+      this.selectedUser.gender,
+      this.selectedUser.age,
+      this.selectedUser.condition,
+    ]);
+    worksheetData.push([]); // Separador
   }
+
+  this.filteredChartsData.forEach(chart => {
+    const descriptionData = descriptions[chart.key] || {
+      singular: 'Sin descripción',
+      plural: 'Sin descripción',
+      columnNames: { singular: ['Categoría', 'Valor'], plural: ['Categoría', 'Valor'] }
+    };
+
+    const description = isSinglePatient ? descriptionData.singular : descriptionData.plural;
+    const columnNames = isSinglePatient ? descriptionData.columnNames.singular : descriptionData.columnNames.plural;
+
+    // Descripción con fondo gris
+    worksheetData.push([{ v: `Descripción: ${description}`, s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
+    // Encabezados en negrita
+    worksheetData.push(columnNames.map(name => ({ v: name, s: { font: { bold: true } } })));
+
+    const rows = chart.data.chart.xaxis.categories.map((category: any, i: number) => [
+      { v: category },
+      { v: chart.data.chart.series[0].data[i], s: { numFmt: chart.key.includes('Time') ? '0.00' : '0.0%' } } // Formato de número
+    ]);
+    worksheetData.push(...rows);
+    worksheetData.push([]); // Separador
+  });
+
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+
+  // Autoajustar columnas
+  const columnWidths = worksheetData.reduce((acc, row) => {
+    row.forEach((cell, i) => {
+      const cellValue = typeof cell === 'object' ? cell.v : cell;
+      acc[i] = Math.max(acc[i] || 1, cellValue ? 18 : 18);
+    });
+    return acc;
+  }, [] as number[]);
+
+  worksheet['!cols'] = columnWidths.map(w => ({ wch: w }));
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+
+  const nameReportExcel = isSinglePatient ? `reporte_${this.selectedUser.user_name}` : 'reporte_pacientes';
+  XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
+}
+
+  
+  
   
   
   // Opciones de filtros
