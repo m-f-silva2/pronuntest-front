@@ -169,7 +169,7 @@ export class GameKHistoryComponent {
     //reemplazar (texto) por <span class="highlight">(texto)</span> solamente las que esten dentro de parentesis
     this.currentRecord?.text.split(' ').forEach((word) => {
       if (word.includes('(') && word.includes(')')) {
-        newHtml += `<span class="text-cyan-100">${
+        newHtml += `<span class="text-black">${
           word.replace('(', '').replace(')', '')
         }</span> `;
       } else {

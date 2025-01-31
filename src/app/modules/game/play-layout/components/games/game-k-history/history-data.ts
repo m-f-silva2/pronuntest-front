@@ -96,7 +96,7 @@ export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, sta
   [],
   [
       /* El es nuestro amigo pepe, Un día, (Pepe) encontró un (mapa). */
-      { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 0, end: 3.6, text: 'El es nuestro amigo Pepe, Un día, (Pepe) encontró un (mapa).' },
+      { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 0, end: 3.6, text: 'El es nuestro amigo (Pepe), Un día, (Pepe) encontró un (mapa).' },
       /* Con curiosidad se fué a pasear buscando el tesoro encontrar */
       { audio: 'assets/audios/historia-1-001.mp3', myRecord: null, approved: false, start: 3.6, end: 8, text: 'Con curiosidad se fué a pasear buscando el tesoro por encontrar.' },
     ],
@@ -104,9 +104,9 @@ export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, sta
       /* Llegó  a un bosque y vió un (pino) y otro (pino) y otro (pino)... */
       { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 0, end: 3.625, text: 'Llegó a un bosque y vió un (pino) y otro (pino) y otro (pino)...' },
       /* así como en su (mapa). Le parecían muy bonitos, */
-      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 3.625, end: 6.740, text: 'Así como en su (mapa). Le parecían muy bonitos,' },
+      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 3.625, end: 6.740, text: 'Así como en su (mapa), le parecían muy bonitos.' },
       /* así que se acercó mucho más... y encontró una (papa), */ 
-      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 6.745, end: 9.573, text: 'Así que se acercó mucho más... y encontró una (papa), ' },
+      { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 6.745, end: 9.573, text: 'Así que se acercó mucho más y encontró una (papa), ' },
       /*  ¡tal como aparecía en el (mapa)! */
       { audio: 'assets/audios/historia-1-002.mp3', myRecord: null, approved: false, start: 9.573, end: 12, text: '¡tal como aparecía en el (mapa)!' },
     ],
@@ -158,7 +158,7 @@ export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, sta
       /* ¡nunca habia visto un gato de ese tamaño! . */ 
       { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 2.657, end: 4.865, text: '¡nunca habia visto un gato de ese tamaño!' },
       /* Usó su pie para patear una piedra... */
-      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 4.875, end: 7.000, text: 'Usó su pie para patear una piedra...' },
+      { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 4.875, end: 7.000, text: 'Usó su (pie) para patear una piedra...' },
       /* no le pegó al (puma), */ 
       { audio: 'assets/audios/historia-1-007.mp3', myRecord: null, approved: false, start: 7.043, end: 8.321, text: 'No le pegó al (puma), ' },
       /* sólo queria espantarlo. */
@@ -176,7 +176,7 @@ export const RECORDS_ALL: { audio: string, myRecord: any, approved: boolean, sta
     ],
     [
       /* Con sus pies cansados, y su corazón alegre, */ 
-      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 0,  end: 2.341, text: 'Con sus pies cansados, y su corazón alegre, ' },
+      { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 0,  end: 2.341, text: 'Con sus (pies) cansados, y su corazón alegre, ' },
       /* a su casa regresó, lleno de emoción */ 
       { audio: 'assets/audios/historia-1-009.mp3', myRecord: null, approved: false, start: 2.352, end: 4.346, text: 'A su casa regresó, lleno de emoción' },
       /* por la aventura que vivió. */
