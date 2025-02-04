@@ -143,8 +143,9 @@ export class GameHSurferComponent {
 
       this.isCompleted = true
       this._toastGameService.toast.set({
-        type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
+        type: 'finish', timeS: 3, title: "¡ISLA COMPLETADA!", message: "¡Increíble! Has completado toda la isla!", end: () => {
           this._toastGameService.toast.set(undefined)
+          window.history.back();
         }
       })
     } else if (this.intents == 0) {

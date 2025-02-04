@@ -120,18 +120,20 @@ export class GameDInflateComponent {
 
             this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
             this.restart()
+            this.isRuning=true;
             setTimeout(() => {
-              this.isCompleted = true
-              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
+              this.isCompleted = true;
+              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3');
               this._toastGameService.toast.set({
-                type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
+                type: 'finish', timeS: 3, title: "¡ISLA COMPLETADA!", message: "¡Increíble! Has completado toda la isla!", end: () => {
                   this._toastGameService.toast.set(undefined)
+                  window.history.back();
                 }
               })
             }, 500);
 
           }
-        }, 200);
+        }, 400);
 
       }
     }, 200);

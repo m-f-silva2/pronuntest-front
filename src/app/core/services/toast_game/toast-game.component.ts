@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface IToast {type: 's'|'i'|'w'|'loading', timeS?: number, title?: string, message?: string, end?: () => void } 
+export interface IToast {type: 's'|'i'|'w'|'loading'|'finish', timeS?: number, title?: string, message?: string, end?: () => void } 
 
 @Component({
   selector: 'toast-game',

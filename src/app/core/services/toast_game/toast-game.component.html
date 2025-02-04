@@ -1,27 +1,54 @@
 @if(data){
-<div class="container_fixed pointer-events-none">
+    <div class="container_fixed pointer-events-none">
+        
+        <div class="toast__container pointer-events-none" [ngClass]="'update'+data.timeS" [style]="'animation: popup '+data.timeS+'s linear both'">
+            <div class="toast" [ngClass]="(data.type=='s' ? 'toast__green' : '') || (data.type=='i' ? 'toast__blue' : '') || (data.type=='w' ? 'toast__yellow' : '')">
     
-    <div class="toast__container pointer-events-none" [ngClass]="'update'+data.timeS" [style]="'animation: popup '+data.timeS+'s linear both'">
-        <div class="toast" [ngClass]="(data.type=='s' ? 'toast__green' : '') || (data.type=='i' ? 'toast__blue' : '') || (data.type=='w' ? 'toast__yellow' : '')">
-
-            <div class='toast__header'>
-                <div class="icon">
-                    <img src="assets/images/star.svg" alt="" srcset="">
-                    <img src="assets/images/star.svg" alt="" srcset="">
-                    <img src="assets/images/star.svg" alt="" srcset="">
-                </div>
-
-                <div class="cinta">
-                    GANASTE!!!
-                </div>
+                <!-- Si el usuario ganó -->
+                @if(data.type !== 'finish'){
+                    <div class='toast__header'>
+                        <div class="icon">
+                            <img src="assets/images/star.svg" alt="">
+                            <img src="assets/images/star.svg" alt="">
+                            <img src="assets/images/star.svg" alt="">
+                        </div>
+                        <div class="cinta">
+                            ¡GANASTE!
+                        </div>
+                    </div>
+    
+                    <div class='toast__content'>
+                        ¡Felicitaciones, sigue así!
+                    </div>
+                }
+    
+                <!-- Si el usuario completó la isla -->
+                @if(data.type === 'finish'){
+                    <!-- Animación de cortinas --
+                    <div class="exitLeft" style="bottom: 0%; left: 0%; width: auto; height: 100%; z-index: 4">
+                        <img src="assets/images/isla3/telon.webp" alt="">
+                    </div>
+                    <div class="exitRight" style="bottom: 0%; right: 0%; width: auto; height: 100%; z-index: 4">
+                        <img src="assets/images/isla3/telon-r.webp" alt="">
+                    </div>-->
+    
+                    <div class='toast__header'>
+                        <div class="cinta">
+                            ¡ISLA COMPLETADA!
+                        </div>
+                    </div>
+                    
+                    <div class='toast__content'>
+                        <div class="icon">
+                            <img src="assets/images/end-island/trophy.png" alt=""> <!-- Ícono de trofeo -->
+                        </div>
+                        ¡Increíble! Has completado toda la isla.
+                    </div>
+                }
+    
             </div>
-
-            <div class='toast__content'>
-                Felicitaciones, sigue así!!
-            </div>
-
         </div>
+    
     </div>
-
-</div>
-}
+    }
+    
