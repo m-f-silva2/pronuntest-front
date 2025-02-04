@@ -68,6 +68,23 @@
         color: #005e0b;
         backdrop-filter: blur(10px);
     }
+    .toast__content__finish {        
+        padding: 1rem 0;
+        background: var(--bg-content);
+        border-radius: 2rem;
+        z-index: 0;
+
+        padding-left: 1rem;
+        padding-right: 1rem;
+        width: 240px;
+        margin-top: -40px;
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding-top: 3rem;
+        text-align: center;
+        color: #005e0b;
+        backdrop-filter: blur(10px);
+    }
 
     .toast__green .toast__content {
 

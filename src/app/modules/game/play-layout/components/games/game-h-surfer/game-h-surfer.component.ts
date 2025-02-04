@@ -145,7 +145,7 @@ export class GameHSurferComponent {
       this._toastGameService.toast.set({
         type: 'finish', timeS: 3, title: "¡ISLA COMPLETADA!", message: "¡Increíble! Has completado toda la isla!", end: () => {
           this._toastGameService.toast.set(undefined)
-          window.history.back();
+          window.location.href = '/games/island';
         }
       })
     } else if (this.intents == 0) {

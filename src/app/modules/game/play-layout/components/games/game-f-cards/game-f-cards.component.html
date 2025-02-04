@@ -29,7 +29,7 @@
                 </div>
                 }
 
-                @if (!isRuning) {
+                @if (!isRuning && mode === 'back') {
                     <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
                         <btn-img class="w-fit block blur-none text-4xl mt-5" (eventClick)="autoplay=true" title="Ver explicación"
                         [type]="'orange'" [imgPath]="'assets/images/play.svg'" />

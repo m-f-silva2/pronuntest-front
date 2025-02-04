@@ -26,7 +26,7 @@ export class ToastGameComponent {
     if(!this.data?.timeS) return
     setTimeout(() => {
       this.data?.end!()
-    }, this.data?.timeS*1800);
+    }, this.data?.timeS*1200);
   }
 }
 /* toast?: IToast 
