@@ -97,7 +97,7 @@ export class GameDInflateComponent {
     source.connect(analyser);
     this.isRecording = true
     const intervalId = setInterval(() => {
-      analyser.smoothingTimeConstant = 0.3;
+      analyser.smoothingTimeConstant = 0.5;
       analyser.fftSize = 1024;
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
@@ -109,7 +109,7 @@ export class GameDInflateComponent {
         values += dataArray[i];
       }
       let average = values / length;
-      if (average > 29) {
+      if (average > 15) {
         const aux = Math.round(average / 10);
         setTimeout(() => {
           this.inflateBalloon(aux)

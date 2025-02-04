@@ -66,6 +66,7 @@
         padding-top: 3rem;
         text-align: center;
         color: #005e0b;
+        backdrop-filter: blur(10px);
     }
 
     .toast__green .toast__content {
@@ -121,3 +122,27 @@
         }
     }
 }
+
+.entryLeft{
+    position: absolute;
+    left: -100%;
+    width: auto; 
+    height: 100vh;
+    animation: entryLeft 3s linear both;
+    img {
+        height: 100vh;
+    }
+}
+.entryRight{
+    position: absolute;
+    right: -100%;
+    width: auto; 
+    height: 100vh;
+    animation: entryRight 3s linear both;
+    img {
+        height: 100vh;
+    }
+}
+
+@keyframes entryLeft { 0% { left: -100%;  } 100% { left: 0%; } }
+@keyframes entryRight{ 0% { right: -100%; } 100% { right: 0%; } }
