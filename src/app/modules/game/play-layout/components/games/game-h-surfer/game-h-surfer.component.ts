@@ -289,6 +289,7 @@ export class GameHSurferComponent {
       },
       error: (error: any) => {
         this.i++
+        
         console.error('>> >>  getaudio2:', error);
       }
     });
@@ -315,9 +316,20 @@ export class GameHSurferComponent {
     return newBuffer;
   }
 
+  // Función para guardar el archivo
+  saveAudioFile(blob: Blob) {
+    const url = URL.createObjectURL(blob); // Crear URL temporal para el archivo
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'audio-recording.wav'; // Nombre del archivo de descarga
+    link.click(); // Iniciar la descarga
+    URL.revokeObjectURL(url); // Revocar el URL después de la descarga
+  }
+
   async getWavBlob() {
     const wavBlob = await this.wavRecorder.getBlob()!;
     if (wavBlob) {
+      //this.saveAudioFile(wavBlob);
       // Convert Blob to byte array (assuming limited library usage)
       const reader = new FileReader();
       reader.readAsArrayBuffer(wavBlob);

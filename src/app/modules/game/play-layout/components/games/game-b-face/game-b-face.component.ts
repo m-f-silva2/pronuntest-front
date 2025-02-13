@@ -112,26 +112,25 @@ export class GameBFaceComponent {
         ev.stopPropagation();
         // Avanzar a la siguiente imagen
         this.itemsResourcesPos++;
-
+    
         if (this.itemsResourcesPos >= this.itemsResources.length) {
           this.isCompleted = true;
-        
           setTimeout(() => {
             this.handleClickNextAudio('assets/audios/gritos_ganaste.mp3');
             this.isCompletedAux = true;
-            this.autoplay = false
+            this.autoplay = false;
             this._toastGameService.toast.set({
               type: 's', timeS: 3, title: "¡Ganaste!", message: "Nivel completado con éxito!", end: () => {
                 this._toastGameService.toast.set(undefined);
               }
             });
           }, 500);
-      
+    
           setTimeout(() => {
             this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3');
             this.isCompleted = true;
             this.isRuning = false;
-      
+    
             // Avanzar a la siguiente imagen
             this.itemsResourcesPos++;
             if (this.itemsResourcesPos >= this.itemsResources.length) {
@@ -139,7 +138,7 @@ export class GameBFaceComponent {
             }
           }, 3300);
           this.itemsResourcesPos = -1; // Resetea el índice si se completan todas las imágenes
-        }else{
+        } else {
           // Acción cuando el drop es exitoso
           this.handleClickNextAudio('assets/audios/sonido_excelente.mp3');
           this._toastService.toast.set({
@@ -157,6 +156,61 @@ export class GameBFaceComponent {
     
       return false;
     }
+
+    // Variables necesarias para manejar el toque en móviles
+touchStart(ev: any, item: any) {
+  const touch = ev.touches[0];
+  const imgElement = ev.currentTarget;
+
+  // Guardamos las coordenadas iniciales
+  imgElement.setAttribute('data-start-x', touch.clientX);
+  imgElement.setAttribute('data-start-y', touch.clientY);
+
+  // Establecemos el estilo para arrastrar (simula el comportamiento de arrastrar)
+  imgElement.style.position = 'absolute';
+  imgElement.style.zIndex = '1000';
+  imgElement.style.left = touch.clientX - imgElement.clientWidth / 2 + 'px';
+  imgElement.style.top = touch.clientY - imgElement.clientHeight / 2 + 'px';
+
+  // Desactiva la selección de texto durante el arrastre
+  ev.preventDefault();
+}
+
+touchMove(ev: any) {
+  const touch = ev.touches[0];
+  const imgElement = ev.currentTarget;
+
+  // Actualizamos la posición de la imagen en función del movimiento del toque
+  imgElement.style.left = touch.clientX - imgElement.clientWidth / 2 + 'px';
+  imgElement.style.top = touch.clientY - imgElement.clientHeight / 2 + 'px';
+
+  ev.preventDefault();
+}
+
+touchEnd(ev: any) {
+  const touch = ev.changedTouches[0];
+  const imgElement = ev.currentTarget;
+
+  // Aquí, puedes agregar lógica para manejar la caída (drop) en las áreas de destino
+  this.handleDrop(touch.clientX, touch.clientY, imgElement);
+
+  // Restauramos el estilo original después de soltar
+  imgElement.style.position = 'static';
+  imgElement.style.zIndex = '';
+}
+
+handleDrop(clientX: number, clientY: number, imgElement: any) {
+  const dropZones = document.querySelectorAll('.boxDrop');
+  
+  dropZones.forEach(zone => {
+    const rect = zone.getBoundingClientRect();
+    if (clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom) {
+      // Acción cuando la imagen cae en una zona válida
+      zone.appendChild(imgElement);  // Mueve la imagen al área correspondiente
+      this.itemsResourcesPos++;      // Avanza a la siguiente imagen o acción
+    }
+  });
+}
     
     isCompletedAux = false
 
