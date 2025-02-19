@@ -2,7 +2,26 @@
 
     <div class="container_border_content h-full">
         <div class="container_border max-w-7xl flex flex-col justify-center flex-wrap bg-white/35 gap-8 backdrop-blur-sm border-slate-500 border-2 rounded-2xl px-8 md:px-16 h-full">
-            
+            @if (this._gameService.currentGame.posLevel == 0 && infoP) {
+                <div class="flex flex-row gap-8 h-fit w-full flex-wrap justify-center items-center">
+                    <div class="w-full max-w-lg">
+                        <h3 class="text-center font-bold text-blue-50 text-2xl md:text-4xl">Descripción</h3>
+                    </div>
+    
+                    <div class="w-full max-w-lg">
+                        <video src="/assets/video/explosion.mp4" controls="true"></video>
+                    </div>
+    
+                    <div class="flex gap-8 w-full justify-center mt-12">
+                        @if (data?.previous) {
+                            <btn-img (eventClick)="handleBtn('previous')" [title]="'Volver'" [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
+                        }
+                        @if (data?.next) {
+                            <btn-img (eventClick)="nextInfoP()" [title]="'Siguiente'" [type]="'orange'" [imgPath]="'assets/images/arrow.svg'" class="animate-wiggle" />
+                        }
+                    </div>
+                </div>
+            } @else {
             <div class="flex flex-row gap-8 h-fit w-full flex-wrap justify-center items-center">
                 <div class="w-full max-w-lg">
                     <h3 class="text-center font-bold text-blue-50 text-2xl md:text-4xl">{{data?.title}}</h3>
@@ -28,6 +47,7 @@
                     }
                 </div>
             </div>
+            }
         </div>
     </div>
 </section>
