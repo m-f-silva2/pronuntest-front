@@ -360,7 +360,9 @@ export class GameService {
     });
 
     const blob = new Blob([audio], { type: 'audio/wav' });
-    return this._httpClient.post<any>(`https://pronuntest-back.onrender.com/api/word/${phoneme}`, blob, { headers: headers }).pipe(
+    const url_base = 'https://pronuntest-back.onrender.com';
+    const url_base2 = 'http://127.0.0.1:5000';
+    return this._httpClient.post<any>(`${url_base}/api/word/${phoneme}`, blob, { headers: headers }).pipe(
       tap((res: unknown) => {
         //TODO: respuesta
         console.info('>> >>  audio res 2:', res);

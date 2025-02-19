@@ -26,18 +26,20 @@
                 <div class="relative w-full h-full flex justify-around items-center">
 
                     <div id="startDrag"
-                        class=" border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
-                        <img 
-                          *ngFor="let item of itemsResources; let i = index" 
-                          class="w-16 drag" 
-                          (click)="handleClickNextAudio(item.audio)" 
-                          [src]="item.img"
-                          (dragstart)="dragStart($event)" 
-                          [hidden]="itemsResourcesPos !== i" 
-                          id="boxA{{i}}" 
-                          draggable="true">
-                      </div>
-
+                        class="border-cyan-200 border-4 w-24 h-24 rounded-full bg-cyan-500 flex justify-center items-center">
+                        <img *ngFor="let item of itemsResources; let i = index" 
+                            class="w-16 drag" 
+                            (click)="handleClickNextAudio(item.audio)" 
+                            [src]="item.img"
+                            (dragstart)="dragStart($event)" 
+                            [hidden]="itemsResourcesPos !== i" 
+                            id="boxA{{i}}"
+                            draggable="true" 
+                            (touchstart)="touchStart($event, item)" 
+                            (touchmove)="touchMove($event)" 
+                            (touchend)="touchEnd($event)">
+                    </div>
+                          
                     <div class="h-fit relative w-full max-w-[500px] flex items-center  ">
 
                         <div>
