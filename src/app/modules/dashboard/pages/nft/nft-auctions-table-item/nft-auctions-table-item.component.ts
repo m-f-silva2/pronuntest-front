@@ -10,17 +10,20 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
     selector: '[nft-auctions-table-item]',
     templateUrl: './nft-auctions-table-item.component.html',
     standalone: true,
-    imports: [AngularSvgIconModule, CurrencyPipe, CommonModule],
+    imports: [AngularSvgIconModule, CommonModule],
+    styleUrl: './nft-auctions-table-item.component.css'
 })
 export class NftAuctionsTableItemComponent implements OnInit {
   @Input() auction = <Table>{};
   @Input() isAssignUser = <Boolean> false;
   @Input() isUnAssignUser = <Boolean> false;
+  @Input() isIslandManager = <Boolean> false;
 
   constructor(private _speechTherapyService: SpeechTherapyService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   getImage(): string {
     return this.auction.image === undefined ? 'assets/icons/heroicons/outline/users.svg' : (this.auction.image === null ? 'assets/icons/heroicons/outline/users.svg' : this.auction.image);
@@ -59,6 +62,40 @@ export class NftAuctionsTableItemComponent implements OnInit {
       error => {
         console.error('Error al desasignar paciente:', error);
         alert('Error al desasignar paciente');
+      }
+    );
+  }
+  // Método para habilitar isla
+  enableIsland(user_id_patient: number, island: number, level: number): void {
+    // Llamar al servicio para insertar los datos en la tabla user_assignment
+    this._speechTherapyService.enableIsland(user_id_patient, island, level).subscribe(
+      response => {
+        console.log('Isla habilitada correctamente:', response);
+        alert('Isla habilitada correctamente');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      error => {
+        console.error('Error al habilitar isla:', error);
+        alert('Error al habilitar isla');
+      }
+    );
+  }
+  // Método para deshabilitar isla
+  disableIsland(user_id_patient: number, island: number, level: number): void {
+    // Llamar al servicio para insertar los datos en la tabla user_unassignment
+    this._speechTherapyService.disableIsland(user_id_patient, island, level).subscribe(
+      response => {
+        console.log('Isla deshabilitada correctamente:', response);
+        alert('Isla deshabilitada correctamente');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      },
+      error => {
+        console.error('Error al deshabilitar isla:', error);
+        alert('Error al deshabilitar isla');
       }
     );
   }

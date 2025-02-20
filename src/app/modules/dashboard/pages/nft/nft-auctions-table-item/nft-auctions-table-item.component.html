@@ -1,3 +1,4 @@
+<!-- tabla gestion de pacientes -->
 <td class="py-2 pr-2">
   <div class="flex items-center">
     <!--<img [src]="auction.users_image" class="mr-2 h-10 w-10 flex-none rounded-sm" alt="" />-->
@@ -11,24 +12,55 @@
 <td class="py-2 pl-2 text-right">
   <span class="text-sm font-semibold text-muted-foreground">{{ this.auction.identification }}</span>
 </td>
-<td class="py-2 pl-2 text-right">
+<td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
   <span class="text-sm font-semibold text-muted-foreground">{{ this.getGenderText() }}</span>
 </td>
-<td class="py-2 pl-2 text-right">
+<td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
   <span class="text-sm font-semibold text-muted-foreground">{{ auction.age }}</span>
 </td>
-<td class="py-2 pl-2 text-right">
+<td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
   <span class="text-sm font-semibold text-muted-foreground">{{ auction.condition }}</span>
 </td>
 <!-- Botón de asignación -->
-<td class="py-3 text-right" *ngIf="isAssignUser == true">
-  <button (click)="assignPatient(auction.user_id)" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+<td class="py-3 text-right" *ngIf="isAssignUser">
+  <button (click)="assignPatient(auction.user_id)" class="button button-assign">
     Asignar Paciente
   </button>
 </td>
+
 <!-- Botón de desasignación -->
-<td class="py-3 text-right" *ngIf="isUnAssignUser == true">
-  <button (click)="unassignPatient(auction.user_id)" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+<td class="py-3 text-right" *ngIf="isUnAssignUser">
+  <button (click)="unassignPatient(auction.user_id)" class="button button-unassign">
     Desasignar Paciente
   </button>
 </td>
+
+<!-- Botón de habilitar isla -->
+<ng-container *ngIf="isIslandManager">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+    <!-- Islas 1, 2 y 3 con 4 niveles -->
+    <div *ngFor="let island of [1, 2, 3]" class="p-2">
+      <h3 class="text-sm font-semibold text-center">Isla {{ island }}</h3>
+      <div class="flex flex-wrap justify-center gap-1 mt-2">
+        <button *ngFor="let level of [1, 2, 3, 4]" 
+                (click)="enableIsland(auction.user_id, island, level)" 
+                class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">
+          N{{ level }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Isla 4 con solo 1 nivel -->
+    <div class="p-2">
+      <h3 class="text-sm font-semibold text-center">Isla 4</h3>
+      <div class="flex justify-center mt-1">
+        <button (click)="enableIsland(auction.user_id, 4, 1)" 
+                class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">
+          Nivel 1
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+

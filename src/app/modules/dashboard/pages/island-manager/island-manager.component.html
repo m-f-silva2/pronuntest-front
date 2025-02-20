@@ -1,0 +1,33 @@
+<div class="mx-auto px-4 py-4 sm:px-8 lg:container">
+    <!-- Header -->
+    <div id="header-dashboard" class="flex space-x-4 mx-2">
+      <!-- Columna 1 -->
+      <div class="flex-1">
+        <app-nft-header></app-nft-header>
+      </div>
+    </div>
+    <!-- End Header -->
+  
+    <!-- Menu de Filtros -->
+    <div class="flex flex-wrap justify-start gap-2 my-4">
+      
+    </div>
+    <!-- End Menu de Filtros -->
+
+    <!-- Contenido -->
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+  
+      <!-- Tabla -->
+      <div nft-auctions-table
+        *ngIf="isTableVisible" 
+        class="md:col-span-4 xl:col-span-4 w-full" 
+        [data]="table" 
+        [isAssignUser]="false" 
+        [isUnAssignUser]="false"
+        [isIslandManager]="true"
+        (userSelected)="onUserSelected($event)">
+      </div>
+      
+    </div>
+  </div>
+  

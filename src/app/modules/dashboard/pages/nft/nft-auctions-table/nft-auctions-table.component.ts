@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NftAuctionsTableItemComponent } from '../nft-auctions-table-item/nft-auctions-table-item.component';
 import { CommonModule } from '@angular/common';
 import { Table } from 'src/app/core/models/interfaces-graphics';
-import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
 
 @Component({
     selector: '[nft-auctions-table]',
@@ -14,6 +13,7 @@ export class NftAuctionsTableComponent implements OnInit {
   @Input('data') data: Table[] = <any>{};
   @Input() isAssignUser = <Boolean> false;
   @Input() isUnAssignUser = <Boolean> false;
+  @Input() isIslandManager = <Boolean> false;
   @Output() userSelected = new EventEmitter<Table>();
   // Lista que se muestra en la tabla, filtrada por el buscador
   public filteredData: Table[] = this.data;
@@ -31,7 +31,7 @@ export class NftAuctionsTableComponent implements OnInit {
     progress_now: string
   }[] = [];
 
-  constructor(private _speechTherapyService: SpeechTherapyService) {
+  constructor() {
   }
 
   ngOnInit(): void {

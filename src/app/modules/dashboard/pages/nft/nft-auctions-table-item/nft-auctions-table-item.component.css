@@ -1,0 +1,19 @@
+/* Estilos generales para los botones*/
+.button {
+  @apply px-4 py-2 text-white rounded-md transition-all duration-200;
+}
+
+/* Botón de asignar*/
+.button-assign {
+  @apply bg-blue-500 hover:bg-blue-600;
+}
+
+/* Botón de desasignar*/
+.button-unassign {
+  @apply bg-red-500 hover:bg-red-600;
+}
+
+/* Botón de islas*/
+.button-island {
+  @apply bg-blue-500 hover:bg-blue-600;
+}
