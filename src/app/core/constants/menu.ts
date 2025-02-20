@@ -11,6 +11,11 @@ export class Menu {
           label: 'Inicio',
           route: '/',
         },
+        {
+          icon: 'assets/icons/heroicons/outline/cog.svg',
+          label: 'Gestionar islas',
+          route: '/dashboard/island-manager',
+        },
         /*{
           //icon: 'assets/icons/heroicons/outline/chart-pie.svg',
           icon: 'assets/icons/heroicons/outline/users.svg',
