@@ -245,7 +245,6 @@ export class GameService {
   }
 
   getDataGame(island: number, level: number, gamePos: number): Observable<{ isError: boolean, res: unknown }> {
-
     const phoneme = localStorage.getItem('phoneme')
     if (!phoneme) {
       this.router.navigateByUrl(`/games`)

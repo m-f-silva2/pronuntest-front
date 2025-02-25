@@ -7,4 +7,5 @@ export interface SumaryActivities extends IslandLevel {
   user_id?: number
   score_game?: number
   date_created?: string
+  therapy_status?: 'inactive'|'active'
 }

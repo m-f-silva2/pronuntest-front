@@ -25,10 +25,10 @@ export class IslandsComponent {
   dataGames: IDataGame
   islad: string = 'Isla 0'
   posIslad: number = 0
-  private _unsubscribeAll: Subject<any> = new Subject<any>();
+  private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
 
   
-  constructor(private _route: Router, public _gameService: GameService){
+  constructor(private readonly _route: Router, public _gameService: GameService){
     this.dataGames = this._gameService.dataGames
     /* FIXME bloquear niveles */
     
@@ -37,9 +37,13 @@ export class IslandsComponent {
       for (const btn of this.btns) {
         const resIslandFull = resIL?.find(resIslandFull=>resIslandFull.code_pos_level ==  btn.level && resIslandFull.code_island ==  btn.island)
         if(resIslandFull){
-          btn.state = 'unlock'
+          if(resIslandFull?.manual_status == 'active' && resIslandFull?.therapy_status === 'active'){
+            btn.state = 'unlock'
+          }else{
+            btn.state = 'block'
+          }
         }
-        if(btn.state == 'block' && previousBtn.state == 'unlock' && (btn.island > previousBtn.island)){
+        if(btn?.state == 'block' && previousBtn?.state == 'unlock' && (btn.island > previousBtn.island)){
           btn.state = 'unlock'
         }
         previousBtn = btn
@@ -89,5 +93,10 @@ export class IslandsComponent {
 
   handleBtnLevel(event: { state: 'block'|'unlock', island?: number, level?: number }){
     this._route.navigateByUrl(`/games/island/${event.island}/level/${event.level}/gamePos/1`)
+    /* if(event.state === 'unlock'){
+      this._route.navigateByUrl(`/games/island/${event.island}/level/${event.level}/gamePos/1`)
+    }else{
+      this._route.navigateByUrl(`/games/island/${event.island}/`)
+    } */
   }
 }

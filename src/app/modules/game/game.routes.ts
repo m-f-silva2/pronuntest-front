@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { IslandsComponent } from './islands/islands.component';
 import { inject } from '@angular/core';
-import { catchError } from 'rxjs';
+import { catchError, tap } from 'rxjs';
 import { GameService } from './play-layout/game.service';
 import { PlayLayoutComponent } from './play-layout/play-layout.component';
 import { HomeComponent } from './home/home.component';
@@ -24,8 +24,18 @@ const gameResolver = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   const island = params[3]
   const level = params[5]
   const gamePos  = params[7]
-
+  
   return levelService.getDataGame(Number(island??0), Number(level??1), Number(gamePos??1)).pipe(
+      tap(res =>{
+        if(res?.res){
+          const levelData = (res?.res as any[]).find(res => res.code_pos_level == level && res.code_island == island)
+          if(levelData){
+            if(levelData.manual_status == 'inactive' && levelData.therapy_status === 'active'){
+              throw new Error('Nivel bloqueado')
+            }
+          }
+        }
+      }),
       catchError((error) => {
           console.error(error);
           const parentUrl = state.url.split('/').slice(0, -1).join('/');
