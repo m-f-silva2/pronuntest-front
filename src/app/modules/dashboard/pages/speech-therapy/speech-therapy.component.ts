@@ -16,8 +16,6 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { UserModalComponent } from '../../components/user-modal/user-modal.component';
 import * as XLSX from 'xlsx';
 
-
-
 @Component({
   selector: 'app-speech-therapy',
   standalone: true,

@@ -14,7 +14,7 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
     styleUrl: './nft-auctions-table-item.component.css'
 })
 export class NftAuctionsTableItemComponent implements OnInit {
-  @Input() auction = <Table>{};
+  @Input() table = <Table>{};
   @Input() isAssignUser = <Boolean> false;
   @Input() isUnAssignUser = <Boolean> false;
   @Input() isIslandManager = <Boolean> false;
@@ -26,10 +26,10 @@ export class NftAuctionsTableItemComponent implements OnInit {
   }
 
   getImage(): string {
-    return this.auction.image === undefined ? 'assets/icons/heroicons/outline/users.svg' : (this.auction.image === null ? 'assets/icons/heroicons/outline/users.svg' : this.auction.image);
+    return this.table.image === undefined ? 'assets/icons/heroicons/outline/users.svg' : (this.table.image === null ? 'assets/icons/heroicons/outline/users.svg' : this.table.image);
   }
   getGenderText(): string {
-    return this.auction.gender === 'm' ? 'Masculino' : (this.auction.gender === 'f' ? 'Femenino' : '');
+    return this.table.gender === 'm' ? 'Masculino' : (this.table.gender === 'f' ? 'Femenino' : '');
   }
   // Método para asignar paciente
   assignPatient(user_id_patient: number): void {
@@ -65,38 +65,36 @@ export class NftAuctionsTableItemComponent implements OnInit {
       }
     );
   }
-  // Método para habilitar isla
-  enableIsland(user_id_patient: number, island: number, level: number): void {
+  // Método para habilitar nivel
+  updateLevelStatus(isl_lev_id: number, code_pos_level: number, manual_status: string): void {
     // Llamar al servicio para insertar los datos en la tabla user_assignment
-    this._speechTherapyService.enableIsland(user_id_patient, island, level).subscribe(
+    this._speechTherapyService.updateLevelManualStatus(isl_lev_id, manual_status).subscribe(
       response => {
-        console.log('Isla habilitada correctamente:', response);
-        alert('Isla habilitada correctamente');
-        setTimeout(() => {
+        alert('Nivel '+code_pos_level+' habilitada correctamente');
+        /*setTimeout(() => {
           window.location.reload();
-        }, 1000);
+        }, 1000);*/
       },
       error => {
-        console.error('Error al habilitar isla:', error);
-        alert('Error al habilitar isla');
+        console.error('Error al habilitar Nivel: '+code_pos_level, error);
+        alert('Error al habilitar Nivel '+code_pos_level);
       }
     );
   }
-  // Método para deshabilitar isla
-  disableIsland(user_id_patient: number, island: number, level: number): void {
-    // Llamar al servicio para insertar los datos en la tabla user_unassignment
-    this._speechTherapyService.disableIsland(user_id_patient, island, level).subscribe(
-      response => {
-        console.log('Isla deshabilitada correctamente:', response);
-        alert('Isla deshabilitada correctamente');
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      },
-      error => {
-        console.error('Error al deshabilitar isla:', error);
-        alert('Error al deshabilitar isla');
-      }
-    );
+  toggleStatus(code_pos_level: number, level: any) {
+    // Cambiar el estado de 'manual_status' entre 'active' e 'inactive'
+    level.manual_status = level.manual_status === 'active' ? 'inactive' : 'active';
+    
+    // Aquí puedes hacer una llamada HTTP para actualizar en la BD
+    this.updateLevelStatus(level.isl_lev_id, code_pos_level, level.manual_status);
   }
+  
+  // Método para obtener los niveles de la isla específica (ej: Isla 4)
+  getLevels(userId: number, codeIsland: number) {
+    if (this.table.user_id === userId && Array.isArray(this.table.levels)) {
+      return this.table.levels.filter(level => level.code_island === codeIsland);
+    }
+    return [];
+  }
+  
 }

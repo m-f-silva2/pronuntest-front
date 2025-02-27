@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -40,7 +40,30 @@ export class SpeechTherapyService {
       .pipe(
         catchError(this.handleError)
       );
-    
+  }
+  
+  dataLevels(_data: {id_sumary: number, valueToSearch: any}): Observable<any>{
+    const url = `${this.apiUrl}/games/island_level_by_user?id_user=${_data.id_sumary}`;
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${_data.valueToSearch}` // Enviar el token en el header
+    });
+
+    return this._httpClient.get<any>(url, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  dataSumary(graphic: {id_user: number, valueToSearch: any}): Observable<any>{
+    const url = `${this.apiUrl}/games/island_level_by_user?id_user=${graphic.id_user}`;
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${graphic.valueToSearch}` // Enviar el token en el header
+    });
+
+    return this._httpClient.get<any>(url, { headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   validate(token: any): Observable<any> {
@@ -75,32 +98,29 @@ export class SpeechTherapyService {
         catchError(this.handleError)
       );
   }
-
-  enableIsland( user_id_patient: number, island: number, level: number): Observable<any> {
+  
+  updateLevelManualStatus( isl_lev_id: number, manual_status: string): Observable<any> {
     const body = {
-      user_id_patient: user_id_patient,
-      island: island,
-      level: level,
+      isl_lev_id: isl_lev_id,
+      manual_status: manual_status,
       token: this._authService.getToken() // Asegúrate de pasar el token si es necesario
     };
-  
     // Realiza una solicitud POST para habilitar la isla
-    return this._httpClient.post(`${this.apiUrl}/user_enable_island/update`, body)
+    return this._httpClient.put(`${this.apiUrl}/games/island_levels/update_level`, body)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  disableIsland( user_id_patient: number, island: number, level: number): Observable<any> {
+  disableIsland( isl_lev_id: number, manual_status: number): Observable<any> {
     const body = {
-      user_id_patient: user_id_patient.toString(),
-      island: island,
-      level: level,
+      isl_lev_id: isl_lev_id.toString(),
+      manual_status: manual_status,
       token: this._authService.getToken() // Asegúrate de pasar el token si es necesario
     };
   
     // Realiza una solicitud POST para deshabilitar la isla
-    return this._httpClient.delete(`${this.apiUrl}/user_disable_island/update`, {body})
+    return this._httpClient.delete(`${this.apiUrl}//games/island_levels/update_level`, {body})
       .pipe(
         catchError(this.handleError)
       );

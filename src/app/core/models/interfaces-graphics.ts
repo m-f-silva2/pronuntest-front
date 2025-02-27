@@ -31,4 +31,16 @@ export interface OrganizedData {
     condition: string;
     date_admission: string;
     progress_now: string;
+    levels: {
+      isl_lev_id: number,
+      code_island: number,
+      code_pos_level: number,
+      manual_status: string
+    }[];
+  }
+
+  export interface User {
+    id: number;
+    name: string;
+    enabled: boolean;
   }

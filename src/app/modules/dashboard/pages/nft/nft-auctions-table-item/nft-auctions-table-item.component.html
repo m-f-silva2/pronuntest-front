@@ -4,33 +4,33 @@
     <!--<img [src]="auction.users_image" class="mr-2 h-10 w-10 flex-none rounded-sm" alt="" />-->
     <svg-icon [src]="this.getImage()" [svgClass]="'h-5 w-5'"> </svg-icon>
     <div class="flex flex-col justify-items-start">
-      <a href="#" class="mb-1 text-sm font-semibold text-foreground">{{ auction.user_name }}</a>
-      <span class="text-xs font-semibold text-muted-foreground/50">{{ auction.other }}</span>
+      <a href="#" class="mb-1 text-sm font-semibold text-foreground">{{ table.user_name }}</a>
+      <span class="text-xs font-semibold text-muted-foreground/50">{{ table.other }}</span>
     </div>
   </div>
 </td>
 <td class="py-2 pl-2 text-right">
-  <span class="text-sm font-semibold text-muted-foreground">{{ this.auction.identification }}</span>
+  <span class="text-sm font-semibold text-muted-foreground">{{ this.table.identification }}</span>
 </td>
 <td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
   <span class="text-sm font-semibold text-muted-foreground">{{ this.getGenderText() }}</span>
 </td>
 <td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
-  <span class="text-sm font-semibold text-muted-foreground">{{ auction.age }}</span>
+  <span class="text-sm font-semibold text-muted-foreground">{{ table.age }}</span>
 </td>
 <td class="py-2 pl-2 text-right" *ngIf="!isIslandManager">
-  <span class="text-sm font-semibold text-muted-foreground">{{ auction.condition }}</span>
+  <span class="text-sm font-semibold text-muted-foreground">{{ table.condition }}</span>
 </td>
 <!-- Botón de asignación -->
 <td class="py-3 text-right" *ngIf="isAssignUser">
-  <button (click)="assignPatient(auction.user_id)" class="button button-assign">
+  <button (click)="assignPatient(table.user_id)" class="button button-assign">
     Asignar Paciente
   </button>
 </td>
 
 <!-- Botón de desasignación -->
 <td class="py-3 text-right" *ngIf="isUnAssignUser">
-  <button (click)="unassignPatient(auction.user_id)" class="button button-unassign">
+  <button (click)="unassignPatient(table.user_id)" class="button button-unassign">
     Desasignar Paciente
   </button>
 </td>
@@ -38,29 +38,37 @@
 <!-- Botón de habilitar isla -->
 <ng-container *ngIf="isIslandManager">
   <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
-    <!-- Islas 1, 2 y 3 con 4 niveles -->
-    <div *ngFor="let island of [1, 2, 3]" class="p-2">
+    
+    <!-- Islas 1, 2 y 3 con niveles dinámicos -->
+    <div *ngFor="let island of [0,1,2]" class="p-2">
       <h3 class="text-sm font-semibold text-center">Isla {{ island }}</h3>
       <div class="flex flex-wrap justify-center gap-1 mt-2">
-        <button *ngFor="let level of [1, 2, 3, 4]" 
-                (click)="enableIsland(auction.user_id, island, level)" 
-                class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">
-          N{{ level }}
+        <button *ngFor="let level of getLevels(table.user_id, island)" 
+                (click)="toggleStatus(level.code_pos_level, level)"
+                [class.bg-gray-500]="level.manual_status === 'inactive'"
+                [class.bg-green-500]="level.manual_status === 'active'"
+                class="px-2 py-1 text-white text-xs rounded hover:opacity-75 transition-all">
+          N{{ level.code_pos_level }}
         </button>
       </div>
     </div>
 
-    <!-- Isla 4 con solo 1 nivel -->
+    <!-- Isla 4 con solo 1 nivel dinámico -->
     <div class="p-2">
       <h3 class="text-sm font-semibold text-center">Isla 4</h3>
-      <div class="flex justify-center mt-1">
-        <button (click)="enableIsland(auction.user_id, 4, 1)" 
-                class="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">
-          Nivel 1
+      <div class="flex justify-center mt-1 space-x-2">
+        <button *ngFor="let level of getLevels(table.user_id, 3)" 
+                (click)="toggleStatus(level.code_pos_level, level)"
+                [class.bg-gray-500]="level.manual_status === 'inactive'"
+                [class.bg-green-500]="level.manual_status === 'active'"
+                class="px-2 py-1 text-white text-xs rounded hover:opacity-75 transition-all">
+          Nivel {{ level.code_pos_level }}
         </button>
       </div>
     </div>
+    
   </div>
 </ng-container>
+
 
 
