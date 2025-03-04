@@ -75,7 +75,6 @@ export class AudiosManagerComponent {
   }
 
   filterPatients() {
-    console.log('>>', this.patients);
     this.filteredPatients = this.patients.filter(patient =>
       patient.user_name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );

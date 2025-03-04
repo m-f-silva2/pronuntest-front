@@ -28,6 +28,8 @@
           Tu navegador no soporta el elemento de audio.
         </audio>
 
+        <p>{{ audio.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+
         <button 
           (click)="downloadAudio(audio.url, audio.name.split('-').slice(1).join('-'))" 
           class="mt-2 px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">

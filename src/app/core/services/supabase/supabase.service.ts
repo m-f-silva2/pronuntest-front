@@ -54,13 +54,17 @@ export class SupabaseService {
           .storage
           .from('pronunt-storage')
           .createSignedUrl(`raw/app/${file.name}`, 60 * 60); // 1 hora de validez
-      
+          
         if (error) {
           console.error('Error obteniendo URL firmada:', error);
           return { name: file.name, url: '' }; // Retornar con URL vacía si hay error
         }
       
-        return { name: file.name, url: data.signedUrl };
+        return { 
+          name: file.name, 
+          url: data.signedUrl,
+          createdAt: file.created_at || 'Fecha desconocida'
+        };
       }));
 
     } catch (error) {
