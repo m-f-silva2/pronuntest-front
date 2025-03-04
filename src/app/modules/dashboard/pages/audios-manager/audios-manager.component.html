@@ -23,7 +23,7 @@
       <div *ngFor="let audio of patient.audios" class="p-2 border rounded-lg flex flex-col items-center">
         <p class="text-sm text-gray-600">{{ audio.name.split('-').slice(2).join('-') }}</p>
         
-        <audio controls class="w-full mt-1">
+        <audio controls class="w-full mt-1" preload="none">
           <source [src]="audio.url" type="audio/mpeg">
           Tu navegador no soporta el elemento de audio.
         </audio>
