@@ -1,0 +1,39 @@
+<div class="p-4">
+  <!-- Título -->
+  <h2 class="text-xl font-semibold text-center mb-4">Descargar Audios de Pacientes</h2>
+
+  <!-- Buscador -->
+  <div class="mb-4 flex justify-center">
+    <input 
+      [(ngModel)]="searchTerm" 
+      (input)="filterPatients()"
+      type="text" 
+      placeholder="Buscar paciente..." 
+      class="p-2 border rounded-lg w-full max-w-md"
+    />
+  </div>
+
+  <!-- Lista de pacientes filtrados -->
+  <div *ngFor="let patient of filteredPatients" class="p-4 border rounded-lg shadow-md mb-4">
+    <!-- Nombre del Paciente -->
+    <h3 class="text-lg font-semibold text-gray-700">{{ patient.user_name }}</h3>
+    
+    <!-- Lista de Audios -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
+      <div *ngFor="let audio of patient.audios" class="p-2 border rounded-lg flex flex-col items-center">
+        <p class="text-sm text-gray-600">{{ audio.name.split('-').slice(2).join('-') }}</p>
+        
+        <audio controls class="w-full mt-1">
+          <source [src]="audio.url" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+
+        <button 
+          (click)="downloadAudio(audio.url, audio.name.split('-').slice(1).join('-'))" 
+          class="mt-2 px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-all">
+          Descargar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

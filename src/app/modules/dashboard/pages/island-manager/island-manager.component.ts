@@ -13,7 +13,6 @@ import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-the
     CommonModule,
     NftHeaderComponent, 
     NftAuctionsTableComponent,
-    
   ],
   templateUrl: './island-manager.component.html',
   styleUrl: './island-manager.component.css'

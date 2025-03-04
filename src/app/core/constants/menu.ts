@@ -16,6 +16,11 @@ export class Menu {
           label: 'Gestionar islas',
           route: '/dashboard/island-manager',
         },
+        {
+          icon: 'assets/icons/heroicons/outline/download.svg',
+          label: 'Gestionar audios',
+          route: '/dashboard/audios-manager',
+        },
         /*{
           //icon: 'assets/icons/heroicons/outline/chart-pie.svg',
           icon: 'assets/icons/heroicons/outline/users.svg',

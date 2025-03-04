@@ -1,0 +1,9 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+  }
+  button {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  

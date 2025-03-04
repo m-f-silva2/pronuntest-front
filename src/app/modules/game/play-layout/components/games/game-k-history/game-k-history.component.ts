@@ -64,7 +64,41 @@ export class GameKHistoryComponent {
 
   }
 
-  async uploadAudio(): Promise<void> {
+  async uploadAudio(currentRecord: any): Promise<void> {
+    this.handleApproved(true);
+
+    if (currentRecord?.myRecord) {
+      try {
+        // Obtener la identificación desde localStorage
+        const identification = localStorage.getItem('identification') || 'unknown';
+
+        // Extraer el nombre base del archivo de audio (historia-1-002)
+        const audioName = currentRecord.audio.split('/').pop()?.replace('.mp3', '') || 'audio_default';
+
+        // Construir el nombre de archivo con la identificación
+        const fileName = `${identification}-${audioName}.wav`;
+
+        // Descargar el Blob del audio grabado
+        const audioBlob = await fetch(currentRecord.myRecord).then(res => res.blob());
+
+        // Crear el archivo de audio
+        const audioFile = new File([audioBlob], fileName, { type: 'audio/wav' });
+
+        // Subir el archivo a Supabase
+        const uploadResponse = await this.supabaseService.uploadAudio(audioFile);
+
+        this.handleApproved(true);
+      } catch (error) {
+        console.error('Error uploading audio:', error);
+      }
+    }
+  }
+
+
+
+  /*
+  async uploadAudio(currentRecord: any): Promise<void> {
+    console.log('>>', currentRecord, typeof currentRecord);
     this.handleApproved(true);
     if (this.currentRecord?.myRecord) {
       try {
@@ -78,6 +112,7 @@ export class GameKHistoryComponent {
       }
     }
   }
+  */
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
     const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1

@@ -39,6 +39,12 @@ export class AuthService {
   getEmail(): Observable<any> {
     return of(localStorage.getItem('email') ?? undefined)
   }
+  setIdentification(identification: string) {
+    localStorage.setItem('identification', identification )
+  }
+  getIdentification(): Observable<any> {
+    return of(localStorage.getItem('identification') ?? undefined)
+  }
 
   
   login(login: any): Observable<any> {
