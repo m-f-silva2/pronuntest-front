@@ -33,8 +33,8 @@ export class GameEMoleComponent {
   allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, top: number, left: number, w: number}[][] = [
     [],
     [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 65, left: 18 },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 28, left: 35  },
+      { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 65, left: 18 },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_ch.wav', w:10, active: false,  top: 28, left: 35  },
     ],
     [
       { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_ch.wav',     w:10, active: false, top: 61, left: 37 },
