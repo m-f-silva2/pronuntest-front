@@ -20,4 +20,23 @@ export class HomeComponent {
   selectPhoneme(phoneme: string){
     localStorage.setItem('phoneme', phoneme)
   }
+  downloadFile() {
+    const fileUrl = "https://drive.google.com/uc?export=download&id=1L8VLdm0XfjlsEVKM8C5dTZI0pQMgiZzW";
+    const fileName = "speakCheckVocales.zip"; // Puedes cambiar el nombre del archivo
+  
+    fetch(fileUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      })
+      .catch(error => console.error("Error descargando el archivo:", error));
+  }
+  
 }

@@ -16,13 +16,14 @@
 
             <div class="container_border_content items-center backdrop-blur-sm h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 flex-wrap">
 
-                <div class="card-level min-w-32  rotate-1 rounded-2xl w-fit px-3 py-4  text-white h-fit">
+                <div class="card-level min-w-32 rotate-1 rounded-2xl w-fit px-3 py-4 text-white h-fit">
                     <p class="font-bold text-3xl text-center mb-4">Vocales</p>
-                    <a class="block h-fit z-10 text-2xl relative w-fit"
-                        href="https://itch.io/embed-upload/12804007?color=333333">
-                        <btn-img [title]="'Jugar'" [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
-                    </a>
+                    <button (click)="downloadFile()" class="block h-fit z-10 text-2xl relative w-fit">
+                        <btn-img [title]="'Descargar'" [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
+                    </button>
                 </div>
+                
+                
 
                 @for (item of phonemes; track $index; let odd = $odd) {
                 <div
