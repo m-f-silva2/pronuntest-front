@@ -390,7 +390,7 @@ generateExcel() {
           );
         }
       }
-      console.log('>>', this.precisionUserVS);
+      
     });
 
     /* GRAFICA 4 */

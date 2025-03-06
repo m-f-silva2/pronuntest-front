@@ -32,20 +32,20 @@ export class GameLTempComponent {
     allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string }[][] = [
       [],
       [
-        { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', active: false, phonema: 'po' },
-        { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_pe.wav', active: false, phonema: 'pe' },
+        { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po' },
+        { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe' },
       ],
       [
-        { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_pu.wav', active: false, phonema: 'pa' },
-        { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', active: false, phonema: 'po' },
+        { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pu.mp3', active: false, phonema: 'pa' },
+        { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po' },
       ],
     ]
   
     correctItemResource?: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }
     allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number, phonema: string }[] = [
       { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1, phonema: '' },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
-      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_po.wav', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
+      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
+      { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', sizeCorrectItems: 1, intents: 2, phonema: 'po' },
     ]
   
     /* sizeCorrectItems = 0; */

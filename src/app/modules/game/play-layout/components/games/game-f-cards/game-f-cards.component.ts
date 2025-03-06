@@ -35,18 +35,18 @@ export class GameFCardsComponent {
   allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string, correctItem: boolean }[][] = [
     [],
     [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false },
+      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: false },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: false },
     ],
     [
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pa', correctItem: false},
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pe', correctItem: false},
-      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pi', correctItem: true},
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: false},
-      { id: 6, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'pu', correctItem: false},
-      { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', active: false, phonema: 'po', correctItem: true},
+      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', active: false, phonema: 'pa', correctItem: false},
+      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: false},
+      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: true},
+      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: false},
+      { id: 6, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pu.mp3', active: false, phonema: 'pu', correctItem: false},
+      { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true},
     ],
     [
       { id: 8, completed: false,  img: 'assets/images/isla2/pelo.webp', audio: 'assets/audios/pelo.mp3', active: false, phonema: 'pelo', correctItem: true },

@@ -34,13 +34,13 @@ export class GameHSurferComponent {
   allItemsResources: { id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, top: number, right: number }[][] = [
     [],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42, right: 29 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44, right: 0 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 42, right: 29 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 44, right: 0 },
     ],
     [
-      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 47, right: -38 },
-      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 42, right: 20 },
-      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', top: 44, right: 0 },
+      { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 47, right: -38 },
+      { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 42, right: 20 },
+      { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 44, right: 0 },
     ],
   ]
   /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
@@ -282,7 +282,7 @@ export class GameHSurferComponent {
     body += `Content-Type: audio/wav\r\n\r\n`;
 
     const blobBody = this.concatTextToBuffer(buffer, body, `\r\n--${boundary}--\r\n`)
-    this._gameService.sendAudio(blobBody, 'a').pipe(takeUntil(this._unsubscribeAll)).subscribe({ //FIXME: a
+    this._gameService.sendAudio(blobBody, 'pa').pipe(takeUntil(this._unsubscribeAll)).subscribe({ //FIXME: a
       next: (res: any) => {
         this.i++
         this.handleClick(this.i, res.score > -1)
