@@ -44,7 +44,7 @@
                 <div class="w-full flex flex-row flex-wrap justify-center gap-5	h-full">
                     <div class="flex flex-col h-full w-full items-center ">
                         <div class="relative  w-full h-full overflow-hidden select-none flex justify-center">
-                            <div class="relative flex flex-wrap gap-2 xl:gap-20 justify-center items-center w-full h-full xl:max-w-3xl">
+                            <div class="relative flex flex-wrap gap-2 xl:gap-8 justify-center items-center w-full h-full xl:max-w-3xl">
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
                                     <a class="flip-container" [style]="{'order': randomOrder[index]}" (click)="handleClick(index)">    
                                     @if(mode === 'back'){
