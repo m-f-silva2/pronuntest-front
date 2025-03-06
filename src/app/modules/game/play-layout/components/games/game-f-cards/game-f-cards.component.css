@@ -321,6 +321,10 @@
   transform: rotateY(180deg);
 }
 
+.flipmeHover:hover .flippable {
+  transform: rotateY(180deg) !important; 
+}
+
 .flip-container:hover > .flippable {
   animation: wiggle 1s ease-in-out infinite;
 }
