@@ -33,14 +33,14 @@ export class GameEMoleComponent {
   allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, top: number, left: number, w: number}[][] = [
     [],
     [
-      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 65, left: 18 },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_p.wav', w:10, active: false,  top: 28, left: 35  },
+      { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pa.mp3', w:10, active: false,  top: 65, left: 18 },
+      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pa.mp3', w:10, active: false,  top: 28, left: 35  },
     ],
     [
       { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_ch.wav',     w:10, active: false, top: 61, left: 37 },
       { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/fonema_s.wav',      w:10, active: false, top: 41, left: 30 },
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     w:10, active: false, top: 31, left: 60 },
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav',     w:10, active: false, top: 16, left: 8 },
+      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3',     w:10, active: false, top: 31, left: 60 },
+      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3',     w:10, active: false, top: 16, left: 8 },
     ],
   ]
 
@@ -48,8 +48,8 @@ export class GameEMoleComponent {
   
   allCorrectItemBySection: { id: number, completed: boolean, img: string, audio: string, sizeCorrectItems: number, intents: number }[] = [
     { id: -1, completed: false, img: '', audio: '', sizeCorrectItems: -1, intents: -1 },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2 },
-    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 2, intents: 2 },
+    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', sizeCorrectItems: 2, intents: 2 },
+    { id: 1, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', sizeCorrectItems: 2, intents: 2 },
   ]
 
 
