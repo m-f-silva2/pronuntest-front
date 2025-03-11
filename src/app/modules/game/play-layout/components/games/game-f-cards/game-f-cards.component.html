@@ -9,13 +9,15 @@
 
                 @if(isRecording && mode === 'front' || openMicrophone){
                 <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center backdrop-blur-md z-50">
-                    <div class="w-36 h-36 relateive">
+                    <div class="w-64 h-60 relative">
                         <div class="relative">
-                            <svg viewBox="-25 -25 50 50" class="spinner absolute top-0 left-0 drop-shadow-md">
+                            
+                            <svg viewBox="-25 -25 50 50" class="spinner absolute top-0 left-12 drop-shadow-md">
                                 <circle class="ring" cx="0" cy="0" r="22" />
                                 <circle class="line" cx="0" cy="0" r="22" pathLength="1" />
                             </svg>
-                            <div class="bg-white/50 animate-wiggle rounded-full absolute top-2 left-2 drop-shadow-md">
+                            
+                            <div class="bg-white/50 animate-wiggle rounded-full absolute top-2 left-14 drop-shadow-md">
                                 <img src="assets/images/microphone.svg" alt="" srcset="" (click)="startRecording()">
                             </div>
                         </div>
@@ -24,6 +26,10 @@
                                 <btn-img (eventClick)="omit()" [title]="'Omitir'" [type]="'red'"
                                     [imgPath]="'assets/images/arrow-back.svg'" />
                             }
+                            <p class="text-center text-lg text-white mt-3 bg-blue-600 p-2 rounded-xl shadow-xl flex items-center gap-1">
+                                <img src="assets/icons/heroicons/outline/information-circle.svg" alt="Advertencia" class="w-10 h-10 invert">
+                                Para grabar, recuerda estar acompañado de tus padres.
+                            </p>
                         </div>
                     </div>
                 </div>
