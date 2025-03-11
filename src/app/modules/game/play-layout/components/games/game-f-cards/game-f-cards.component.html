@@ -52,7 +52,7 @@
                         <div class="relative  w-full h-full overflow-hidden select-none flex justify-center">
                             <div class="relative flex flex-wrap gap-2 xl:gap-8 justify-center items-center w-full h-full xl:max-w-3xl">
                                 @for (resource of itemsResources; track resource.id; let index = $index) {
-                                    <a class="flip-container {{mode === 'back' && 'flipmeHover'}}" [style]="{'order': randomOrder[index]}" (click)="handleClick(index)">    
+                                    <a class="flip-container {{mode === 'back' && 'flipmeHover'}}" [style]="{'order': randomOrder[index]}" (click)="handleClick(index)" (mouseenter)="playHoverSound(index)" (touchstart)="playHoverSound(index)">    
                                         @if(mode === 'back'){
                                         <div class="flippable {{resource.completed? 'flipme':''}}">
                                             <div class="front bg-[url('/assets/images/isla1/pregunta.svg')]">

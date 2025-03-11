@@ -34,27 +34,29 @@ export class GameFCardsComponent {
   itemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string   , correctItem: boolean }[] = []
   allItemsResources: { id: number, completed: boolean, img: string, audio: string, active: boolean, phonema: string, correctItem: boolean }[][] = [
     [],
+    // las parejas correctas siempre seran los dos primeros del array:
     [
       { id: 0, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: false },
-      { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: false },
       { id: 1, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true },
+      { id: 2, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: false },
+      { id: 3, completed: false, img: 'assets/images/isla1/topo.webp', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: false },
     ],
     [
-      { id: 2, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', active: false, phonema: 'pa', correctItem: false},
-      { id: 3, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: false},
-      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: false},
-      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true},
-      { id: 6, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pu.mp3', active: false, phonema: 'pu', correctItem: false},
-      { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: true},
+      { id: 4, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: true},
+      { id: 5, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pe.mp3', active: false, phonema: 'pe', correctItem: true},
+      { id: 6, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', active: false, phonema: 'pa', correctItem: false},
+      { id: 7, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/po.mp3', active: false, phonema: 'po', correctItem: false},
+      { id: 8, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pi.mp3', active: false, phonema: 'pi', correctItem: false},
+      { id: 9, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pu.mp3', active: false, phonema: 'pu', correctItem: false},
     ],
+    // Aca no importa el orden de las cartas correctas:
     [
-      { id: 8, completed: false,  img: 'assets/images/isla2/pelo.webp', audio: 'assets/audios/pelo.mp3', active: false, phonema: 'pelo', correctItem: true },
-      { id: 9, completed: false,  img: 'assets/images/isla2/pila.webp', audio: 'assets/audios/pila.mp3', active: false, phonema: 'pila', correctItem: true },
-      { id: 10, completed: false, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/pino.mp3', active: false, phonema: 'pino', correctItem: true },
-      { id: 11, completed: false, img: 'assets/images/isla2/pollo.webp', audio:'assets/audios/pollo.mp3',active: false, phonema: 'pollo', correctItem: true },
-      { id: 12, completed: false, img: 'assets/images/isla2/puma.webp', audio: 'assets/audios/puma.mp3', active: false, phonema: 'puma', correctItem: true },
-      { id: 13, completed: false, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/palo.mp3', active: false, phonema: 'palo', correctItem: true },
+      { id: 10, completed: false,  img: 'assets/images/isla2/pelo.webp', audio: 'assets/audios/pelo.mp3', active: false, phonema: 'pelo', correctItem: true },
+      { id: 11, completed: false,  img: 'assets/images/isla2/pila.webp', audio: 'assets/audios/pila.mp3', active: false, phonema: 'pila', correctItem: true },
+      { id: 12, completed: false, img: 'assets/images/isla2/pino.webp', audio: 'assets/audios/pino.mp3', active: false, phonema: 'pino', correctItem: true },
+      { id: 13, completed: false, img: 'assets/images/isla2/pollo.webp', audio:'assets/audios/pollo.mp3',active: false, phonema: 'pollo', correctItem: true },
+      { id: 14, completed: false, img: 'assets/images/isla2/puma.webp', audio: 'assets/audios/puma.mp3', active: false, phonema: 'puma', correctItem: true },
+      { id: 15, completed: false, img: 'assets/images/isla2/palo.webp', audio: 'assets/audios/palo.mp3', active: false, phonema: 'palo', correctItem: true },
     ],
   ]
   //TODO: audio: Que imagen suena como [variable]
@@ -132,6 +134,13 @@ export class GameFCardsComponent {
     }, 1000);
   }
 
+  playHoverSound(btn: number) {
+    if(this.mode === 'back'){
+      const audioCart = this.itemsResources[btn].audio;
+      this.handleClickNextAudio(audioCart);
+    }
+  }
+
   openMicrophone = false
   handleClick(btn: number) {
     if ((this.itemsResources[btn].correctItem && this.mode === 'back') 
@@ -198,7 +207,7 @@ export class GameFCardsComponent {
     this.audioAux = _audio;
     setTimeout(() => {
       (document.getElementById('audioAux') as HTMLAudioElement).play();
-    }, 2);
+    }, 8);
   }
 
 
