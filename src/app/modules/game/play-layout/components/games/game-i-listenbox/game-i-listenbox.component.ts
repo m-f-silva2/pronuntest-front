@@ -43,6 +43,7 @@ export class GameIListenboxComponent {
   audio: string = '';
   audioAux: string = '';
   isRuning = false
+  explosion = false
 
   constructor(private readonly _toastGameService: ToastGameService, public _gameService: GameService, private readonly _toastService: ToastService) {
     this.dataGames = this._gameService.dataGames
@@ -121,6 +122,13 @@ export class GameIListenboxComponent {
     const boxCode = ['boxA','boxB']
 
     if (boxCode[this.itemsResources[this.itemsResourcesPos].boxExplosion] === box) {
+      this.explosion = true
+
+      this.handleSecondaryAudio('assets/audios/balloon-pop.mp3');
+      setTimeout(() => {
+        this.explosion = false
+      }, 1000);
+
       ev.target.appendChild(document.getElementById(data));
       ev.stopPropagation();
       // Avanzar a la siguiente imagen

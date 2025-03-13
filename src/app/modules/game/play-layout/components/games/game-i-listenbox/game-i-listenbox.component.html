@@ -22,20 +22,31 @@
 
                 <div class="relative w-full h-full flex flex-col justify-around items-center">
 
-                    <div id="startDrag" class="hover:brightness-125 border-cyan-200 border-4 w-36 h-36 rounded-full bg-cyan-500 flex justify-center items-center p-4">
+                    <div id="startDrag">
+                        @for (item of itemsResources; track $index) {
+                        <a  class="
+                        {{itemsResourcesPos !== $index? 'none': 'flex'}} 
+                        items-center justify-center hover:brightness-125 bg-[url(/assets/images/isla2/globo-plano.svg)] bg-no-repeat bg-contain h-56 w-36 relative bg-center
+                        "
+                        (click)="onAudioEnded()" 
+                        (dragstart)="dragStart($event)" 
+                        draggable="true"
+                        id="box{{$index}}" 
+                        [hidden]="itemsResourcesPos !== $index" 
+                        >
                         <!-- Imagen mover -->
-                        <img 
-                          *ngFor="let item of itemsResources; let i = index" 
-                          [src]="item.img"
-                          class="w-full h-auto drag cursor-pointer" 
-                          (click)="onAudioEnded()" 
-                          (dragstart)="dragStart($event)" 
-                          [hidden]="itemsResourcesPos !== i" 
-                          id="box{{i}}" 
-                          draggable="true">
+                        <img [src]="item.img" class=" drag cursor-pointer w-[calc(100%-2.4rem)] -mt-10 opacity-75" alt="">
+                        </a>
+                        }
                     </div>
 
                     <div class="h-fit relative w-full flex justify-center items-center gap-8">
+                        @if(explosion){
+                            <div class="absolute top-0 left-0 h-56 w-56">
+                                <app-conffety />
+                            </div>
+                        }
+
                         <!-- Caja 1 -->
                         <div (click)="handleClickBox(0)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover hover:brightness-125"
                             (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boxA')"
