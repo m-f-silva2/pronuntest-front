@@ -36,7 +36,7 @@ export class NftAuctionsTableItemComponent implements OnInit {
     // Llamar al servicio para insertar los datos en la tabla user_assignment
     this._speechTherapyService.assignPatient(user_id_patient).subscribe(
       response => {
-        console.log('Paciente asignado correctamente:', response);
+        //console.log('Paciente asignado correctamente:', response);
         alert('Paciente asignado correctamente');
         setTimeout(() => {
           window.location.reload();
@@ -70,7 +70,8 @@ export class NftAuctionsTableItemComponent implements OnInit {
     // Llamar al servicio para insertar los datos en la tabla user_assignment
     this._speechTherapyService.updateLevelManualStatus(isl_lev_id, manual_status).subscribe(
       response => {
-        alert('Nivel '+code_pos_level+' habilitada correctamente');
+        const mensaje = manual_status == 'active' ? 'habilitada' : 'deshabilitada';
+        alert('Nivel '+code_pos_level+' '+mensaje+' correctamente');
         /*setTimeout(() => {
           window.location.reload();
         }, 1000);*/
