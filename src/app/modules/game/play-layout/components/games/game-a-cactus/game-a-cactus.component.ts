@@ -94,7 +94,7 @@ export class GameACactusComponent {
     this.sections.push({
       title: 'Cada vez que haces una explosión, el micrófono graba el sonido y el globo crece más. ¡Sigue haciendo explosiones hasta que el globo estalle!',
       subtitle: undefined,
-      resource: '/assets/video/explosion.mp4',
+      resource: 'https://www.youtube.com/embed/825QofXHyC0?si=hHzXJdg-Eh0wfYWN&amp;start=0&autoplay=1',
       next: '1',
       previous: undefined
     },
