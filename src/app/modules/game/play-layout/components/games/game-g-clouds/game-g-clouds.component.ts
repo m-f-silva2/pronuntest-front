@@ -47,8 +47,8 @@ export class GameGCloudsComponent {
       { id: 1, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', yEnd: 805, top: -31, left: 70 },
       { id: 2, isCorrect: false, completed: false, img: 'assets/images/isla0/serpiente.png', audio: 'assets/audios/fonema_s.wav', yEnd: 916, top: -41, left: 30 },
       { id: 3, isCorrect: false, completed: false, img: 'assets/images/isla0/tren.png', audio: 'assets/audios/fonema_ch.wav', yEnd: 1022, top: -61, left: 67 },
-      { id: 4, isCorrect: false, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m.wav', yEnd: 1138, top: -81, left: 20 },
-      { id: 5, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', yEnd: 1287, top: -91, left: 65 },
+      { id: 4, isCorrect: true, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', yEnd: 1138, top: -81, left: 20 },
+      { id: 5, isCorrect: false, completed: false, img: 'assets/images/isla0/vaca.png', audio: 'assets/audios/fonema_m_2.wav', yEnd: 1287, top: -91, left: 65 },
     ],
   ]
 
@@ -86,6 +86,7 @@ export class GameGCloudsComponent {
 
   play() {
     setTimeout(() => {
+      console.log('>>', this.itemsResources.length - this.sizeCorrectItems);
       this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
     }, 380)
     this.isRuning = true

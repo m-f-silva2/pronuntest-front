@@ -27,9 +27,9 @@ export class GameBFaceComponent {
   section = 0
   countRecording = 0
   itemsResources = [
-    { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m.wav' , part: 'nariz'   },
-    { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', part: 'boca'    },
-    { img: 'assets/images/isla1/pregunta.svg', audio: 'assets/audios/fonema_ch.wav', part: 'garganta'},
+    { img: 'assets/images/isla0/vaca.png',  audio: 'assets/audios/fonema_m_2.wav' , part: 'nariz'   },
+    { img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p_2.wav', part: 'boca'    },
+    { img: 'assets/images/isla1/pregunta.svg', audio: 'assets/audios/fonema_interrogante.wav', part: 'garganta'},
   ]
   itemsResourcesPos = -1
   audio: string = '';
@@ -64,6 +64,7 @@ export class GameBFaceComponent {
   }
 
   play() {
+    
     this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audio)
     this.isRuning = true
     document.getElementById('startDrag')!.appendChild(document.getElementById('boxA')!);
@@ -146,6 +147,8 @@ export class GameBFaceComponent {
               this._toastService.toast.set(undefined);
             }
           });
+          //Realiza el sonido de la siguiente imagen
+          this.handleClickNextAudio(this.itemsResources[this.itemsResourcesPos].audio);
         }
       } else {
         this.handleClickNextAudio('assets/audios/error.mp3');

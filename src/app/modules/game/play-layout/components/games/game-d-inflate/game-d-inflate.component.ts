@@ -71,7 +71,7 @@ export class GameDInflateComponent {
     /* this.intents = this.correctItemResource?.intents || 0 */
     this.frequency = 0
     this.audio = ''
-    this.correctItemResource = { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p.wav', sizeCorrectItems: 80, intents: 50 }
+    this.correctItemResource = { id: 0, completed: false, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/fonema_p_2.wav', sizeCorrectItems: 80, intents: 50 }
   }
   play() {
     this.initData()
