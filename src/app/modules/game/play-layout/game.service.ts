@@ -34,42 +34,37 @@ export class GameService {
     islands: [
       {//Isla 0
         levels: [
-          { games: [ { gameNum: 1,  sections: [{ type: 'info' }, { type: 'game' }, { type: 'game' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 2,  sections: [{ type: 'info' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 4,  sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }, { type: 'game' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },] },
         ]
       },
       {//Isla 1
         levels: [
-          {games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          {games: [{ gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          {games: [{ gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          {games: [{ gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },] },
         ]
       },
       {//Isla 2
         levels: [
-          { games: [ { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },]},
-          { games: [ { gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 2, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 3, sections: [{ type: 'info' }, { type: 'game' }] },] },
+          { games: [{ gameNum: 4, sections: [{ type: 'info' }, { type: 'game' }] },] },
         ]
       },
       {//Isla 3
         levels: [
-          { games: [ { gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },]},
+          { games: [{ gameNum: 1, sections: [{ type: 'info' }, { type: 'game' }] },] },
         ]
       },
     ]
   }
 
-  constructor(private _httpClient: HttpClient, private router: Router) {
-    /* this.apimxHeader = new HttpHeaders({
-      'Ocp-Apim-Subscription-Key':
-      environment.apimxKeys.xkeyx,
-    }); */
-  }
+  constructor(private readonly _httpClient: HttpClient, private readonly router: Router) { }
 
   get sumaryActivities$() {
     return this._sumaryActivities.asObservable()
@@ -110,12 +105,12 @@ export class GameService {
 
       //TODO ======== ACTUALIZAR NIEVEL ACTUAL Y PASAR AL NIEVEL SIGUIENTE ======
       if (direction > 0) {
-        const _currentGame = {...this.currentGame}
-        let island = this._islandLevels.getValue()?.find(res => res.code_island == _currentGame.posIsland && res.code_pos_level == (_currentGame.posLevel+1))
-        
-        
+        const _currentGame = { ...this.currentGame }
+        let island = this._islandLevels.getValue()?.find(res => res.code_island == _currentGame.posIsland && res.code_pos_level == (_currentGame.posLevel + 1))
+
+
         const currentStructure = this.structures.find(res =>
-          res.code_pos_level == (_currentGame.posLevel+1) && res.code_island == _currentGame.posIsland
+          res.code_pos_level == (_currentGame.posLevel + 1) && res.code_island == _currentGame.posIsland
         )
         if (island) {
           island.score = currentStructure?.level_goal_score
@@ -133,10 +128,10 @@ export class GameService {
             worst_accuracy_ia: 0,
             date_created: new Date().toISOString().slice(0, 19).replace('T', ' '),
             sum_act_id: this._sumaryActivity.getValue()?.sum_act_id,
-          }).subscribe(res=>{
+          }).subscribe(res => {
             //TODO: Añadir nuevo island level al observable
             let islandNew = this._islandLevels.getValue()
-            islandNew?.push({...res, ...currentStructure})
+            islandNew?.push({ ...res, ...currentStructure })
             this.islandLevels$ = islandNew
           })
         }
@@ -256,11 +251,10 @@ export class GameService {
     let aux_sum_act_id
     return structuresObservers.pipe(
       concatMap((structuresRes: { isError: boolean, res: LevelStructure[] }) => {
-        this.structures = structuresRes.res
-
-
+        this.structures = structuresRes.res;
         this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme_type === phoneme)
 
+        console.log('>> >>: ', this.structure);
         //Si no existe el resumen local traerlo de la nube
         if (!this._sumaryActivity.getValue()) {
           return this._httpClient.get<any>(`${this.apiUrl}/sumary_activity_by_user`)
@@ -300,7 +294,11 @@ export class GameService {
       concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
         //Si la isla no existe, crearla
-        if (resIslandLevel.res.length === 0) {
+
+      const existIslandLevel = resIslandLevel.res?.find(res => res.isl_lev_str_id === this.structure?.isl_lev_str_id);
+      console.log('>> >>: ', resIslandLevel.res, this.structure, existIslandLevel);
+
+        if (resIslandLevel.res.length === 0 || !existIslandLevel) {
           return this.createIslandLevel({
             isl_lev_str_id: this.structure?.isl_lev_str_id,
             intents: 0,
@@ -317,13 +315,14 @@ export class GameService {
       }),
 
 
-      concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[]|IslandLevel }) => {
+      concatMap((resIslandLevel: { isError: boolean, res: IslandLevel[] | IslandLevel }) => {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
 
         //Niveles jugados
         const islandLevels = Array.isArray(resIslandLevel.res)
-        ? resIslandLevel.res
-        : [{...this.structure, ...resIslandLevel.res}].flat();
+          ? resIslandLevel.res
+          : [{ ...this.structure, ...resIslandLevel.res }].flat();
+
         this._islandLevels.next(islandLevels)
 
 
