@@ -254,7 +254,7 @@ export class GameService {
         this.structures = structuresRes.res;
         this.structure = this.structures.find(res => res.code_island === island && res.code_pos_level === level && res.phoneme_type === phoneme)
 
-        console.log('>> >>: ', this.structure);
+        
         //Si no existe el resumen local traerlo de la nube
         if (!this._sumaryActivity.getValue()) {
           return this._httpClient.get<any>(`${this.apiUrl}/sumary_activity_by_user`)
@@ -296,7 +296,7 @@ export class GameService {
         //Si la isla no existe, crearla
 
       const existIslandLevel = resIslandLevel.res?.find(res => res.isl_lev_str_id === this.structure?.isl_lev_str_id);
-      console.log('>> >>: ', resIslandLevel.res, this.structure, existIslandLevel);
+      
 
         if (resIslandLevel.res.length === 0 || !existIslandLevel) {
           return this.createIslandLevel({

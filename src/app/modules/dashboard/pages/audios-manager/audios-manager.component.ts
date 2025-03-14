@@ -38,7 +38,21 @@ export class AudiosManagerComponent {
   }
 
   updateTable(data: any[]) {
-    this.table = [...data];
+    //this.table = [...data];
+    if (Array.isArray(data)) {
+      const validData: any[] = [];
+      for (let i = 0; i < data.length; i++) {
+          const item = data[i];
+          if (item && typeof item === 'object' && 'user_id' in item) {
+              validData.push(item);
+          }
+      }
+      if (validData.length) {
+          this.table = validData; // Solo asigna si hay datos válidos
+      }
+    } else if (data && typeof data === 'object' && 'user_id' in data) {
+        this.table = [data]; // Convierte en array si es un objeto válido
+    }
     this.loadAudios();
   }
 
