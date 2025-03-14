@@ -295,10 +295,8 @@ export class GameService {
         if (resIslandLevel.isError) throw new Error(resIslandLevel.res.toString())
         //Si la isla no existe, crearla
 
-      const existIslandLevel = resIslandLevel.res?.find(res => res.isl_lev_str_id === this.structure?.isl_lev_str_id);
-      console.log('>> >>: ', resIslandLevel.res, this.structure, existIslandLevel);
-
-        if (resIslandLevel.res.length === 0 || !existIslandLevel) {
+        const existIslandLevel = resIslandLevel.res?.find(res => res.isl_lev_str_id === this.structure?.isl_lev_str_id);
+        if (resIslandLevel.res.length === 0 || (!existIslandLevel  && island == 3)) {
           return this.createIslandLevel({
             isl_lev_str_id: this.structure?.isl_lev_str_id,
             intents: 0,
