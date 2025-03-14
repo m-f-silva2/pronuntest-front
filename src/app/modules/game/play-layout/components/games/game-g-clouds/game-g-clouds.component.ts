@@ -86,7 +86,6 @@ export class GameGCloudsComponent {
 
   play() {
     setTimeout(() => {
-      console.log('>>', this.itemsResources.length - this.sizeCorrectItems);
       this.handleClickNextAudio(this.itemsResources[this.itemsResources.length - this.sizeCorrectItems].audio)
     }, 380)
     this.isRuning = true
