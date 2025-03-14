@@ -346,7 +346,20 @@ generateExcel() {
   }
   
   updateTable(target: string, data: any[]) {
-    this[target] = [...data];
+    if (Array.isArray(data)) {
+      const validData: any[] = [];
+      for (let i = 0; i < data.length; i++) {
+          const item = data[i];
+          if (item && typeof item === 'object' && 'user_id' in item) {
+              validData.push(item);
+          }
+      }
+      if (validData.length) {
+          this[target] = validData; // Solo asigna si hay datos válidos
+      }
+    } else if (data && typeof data === 'object' && 'user_id' in data) {
+        this[target] = [data]; // Convierte en array si es un objeto válido
+    }
   }
 
   fetchData(graphic: string, callback: (res: any) => void) {
@@ -415,7 +428,7 @@ generateExcel() {
     this.fetchData('g-5', (res: any[]) => {
       this.updateTable('table', res);
     });
-  
+    
     /* TABLA 2 MODAL */
     this.fetchData('g-7', (res: any[]) => {
       this.updateTable('tableModal', res);
@@ -429,7 +442,6 @@ generateExcel() {
         }
       });
     });
-    
   }
 
   organizeData(data: DataItem[], keyField: keyof DataItem): OrganizedData  | undefined {

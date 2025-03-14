@@ -47,7 +47,7 @@ export class NftAuctionsTableComponent implements OnInit {
       auction.gender.toLowerCase().includes(searchTerm) ||
       auction.condition.toLowerCase().includes(searchTerm)
     );
-    
+    console.log('>>', this.filteredData);
   }
 
   // Método para seleccionar un usuario

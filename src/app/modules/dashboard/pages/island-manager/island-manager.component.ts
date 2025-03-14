@@ -34,7 +34,8 @@ export class IslandManagerComponent {
   }
 
   updateTable(data: any[]) {
-    this.table   = [...data];
+    // Si data no es un array, lo convertimos en uno
+    this.table = Array.isArray(data) ? [...data] : [data];
     const userIds = this.table.map(user => user.user_id);
     
     // Iterar sobre cada user_id y llamar a fetchDataSumary
