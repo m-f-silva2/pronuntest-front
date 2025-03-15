@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Feature, Map, View } from 'ol';
 import { createEmpty, extend, getHeight, getWidth } from 'ol/extent';
 import { Point } from 'ol/geom';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import { fromLonLat } from 'ol/proj';
-import { Cluster, OSM, Vector } from 'ol/source';
+import { Cluster, OSM } from 'ol/source';
 import VectorSource from 'ol/source/Vector';
 import Fill from 'ol/style/Fill';
 import { Circle as CircleStyle, Text } from 'ol/style.js';
@@ -21,14 +21,12 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './map.component.css'
 })
 export class MapComponent implements OnInit{
-  @Input('data') data: { points: [[number, number]] } = <any>{};
+  @Input('data') data: { points: [number, number][] } = <any>{};
   private map: Map = new Map;
-  private center: [number, number][] = this.data.points;//capital bogota
+  private center: [number, number][] = [[-74.0722, 4.7111]];//capital bogota
   private maxFeatureCount = 0;
   private vector :any;
   private color = [[138, 93, 80, 0.7], [180, 63, 80, 0.7]];
-  private vectorLayer!: Vector;
-  private vectorSource!: VectorSource;
   private textFill = new Fill({
     color: '#fff',
   });
@@ -45,11 +43,6 @@ export class MapComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.center == undefined){
-      this.center = this.data.points;
-      
-      console.log("pont",this.center);
-    }
     //this.generateRandomPoints(this.center,10);
     setTimeout(() => {
       this.renderMap();
@@ -59,16 +52,10 @@ export class MapComponent implements OnInit{
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       const current: [number, number][] = changes['data'].currentValue.points;
-      
       if (Array.isArray(current)) {
-        this.center = current;
         current.map((coord: any) => {
           const [lat, lng] = coord;
           this.center.push([lng, lat]);
-          // Aquí puedes realizar otras acciones con coord
-          // Por ejemplo, si coord es un array de [lat, lng], podrías hacer lo siguiente:
-          // const [lat, lng] = coord;
-          // console.log(`Latitud: ${lat}, Longitud: ${lng}`);
         });
       } else {
         console.error('Data is not an array:', current);
@@ -97,13 +84,11 @@ export class MapComponent implements OnInit{
       source: new OSM(),
     });
 
-    
-    //console.log(">>>", this.center)
     this.vector = new VectorLayer({
       source: new Cluster({
         distance: 4,
         source: new VectorSource({
-          features: this.center.map((coord) => new Feature({
+          features: this.data.points.map((coord) => new Feature({
             geometry: new Point(fromLonLat(coord)),
             properties: {
               magnitude: Math.random() * 5, // Ejemplo de propiedad adicional
@@ -120,7 +105,7 @@ export class MapComponent implements OnInit{
       target: 'ol-map',
       view: new View({
         center: [...fromLonLat(this.center[0])],
-        zoom: 6.5,
+        zoom: 5,
       }),
     });
 
@@ -149,9 +134,6 @@ export class MapComponent implements OnInit{
         let layers = this.map.getLayers().getArray();
         layers[1] = updatedLayer;
         this.map.render();
-      } else {
-        
-        //this.renderMap(); // Render map initially if not already done
       }
   }
 

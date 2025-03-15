@@ -35,7 +35,7 @@ export class SpeechTherapyComponent {
   nft: Array<any> = [];
   fonemas: string[] = ['a', 'e', 'i', 'o', 'u', 'p']; // Lista de items
   activo: string = 'a'; // Inicialmente activo el primer ítem (a)
-  points: { points: [[number, number]] } = {points: [[-74.0722, 4.7111]]};
+  points: { points: [number, number][] } = {points: []};
   table: Table[] = [];
   tableModal: Table[] = [];
   isModalOpen = false;
@@ -437,9 +437,11 @@ generateExcel() {
     /* MAPA 1 */
     this.fetchData('g-6', (res: { lng: any; lat: any }[]) => {
       const data = Array.isArray(res) ? res : [res];
+      //console.log('>>data', this.points);
       data.forEach((point) => {
         if (point.lat !== 0 && point.lng !== 0) {
           this.points.points.push([point.lng, point.lat]);
+          //console.log('>>fetch', this.points);
         }
       });
     });
