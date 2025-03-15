@@ -44,3 +44,8 @@ export interface OrganizedData {
     name: string;
     enabled: boolean;
   }
+
+  export interface Cities{
+    city_id: number;
+    city_name: string;
+  }

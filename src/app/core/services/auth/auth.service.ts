@@ -74,4 +74,11 @@ export class AuthService {
       )
   }
 
+  getCities(): Observable<any> {
+    return this._httpClient.get<any>(`${environment.baseApiBD}/cities`,
+    {
+      /* headers: this.apimxHeader, */
+    });
+  }
+
 }

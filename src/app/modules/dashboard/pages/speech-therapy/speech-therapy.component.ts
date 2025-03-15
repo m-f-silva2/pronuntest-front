@@ -79,7 +79,7 @@ export class SpeechTherapyComponent {
     [], // ['pa', 'pe', ...],
     'Fonemas completados'
   );
-  dataPhonemeVS = this.createChartConfig(
+  /*dataPhonemeVS = this.createChartConfig(
     [
       { name: '', data: [] },
       { name: '', data: [] },
@@ -96,7 +96,7 @@ export class SpeechTherapyComponent {
     [], // Add categories here
     '',
     true
-  );
+  );*/
   dataCompletGames = this.createChartConfig(
     [{ name: 'Juegos', data: [] }],
     [], // ['pa', 'pe', ...],
@@ -120,8 +120,8 @@ export class SpeechTherapyComponent {
 
   chartsData = [
     { key: 'dataCompletPhonemes', data: this.dataCompletPhonemes },
-    { key: 'dataPhonemeVS', data: this.dataPhonemeVS },
-    { key: 'precisionUserVS', data: this.precisionUserVS },
+    //{ key: 'dataPhonemeVS', data: this.dataPhonemeVS },
+    //{ key: 'precisionUserVS', data: this.precisionUserVS },
     { key: 'dataCompletGames', data: this.dataCompletGames },
     { key: 'dataCompletGamesLevel', data: this.dataCompletGamesLevel },
     { key: 'dataGameTime', data: this.dataGameTime },
@@ -262,8 +262,8 @@ generateExcel() {
   // Opciones de filtros
   filterOptions = [
     { key: 'dataCompletPhonemes', label: 'Fonemas Completos', active: true },
-    { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: true },
-    { key: 'precisionUserVS', label: 'Precisión de Usuarios', active: true },
+    { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: false },
+    { key: 'precisionUserVS', label: 'Precisión de Usuarios', active: false },
     { key: 'dataCompletGames', label: 'Juegos Completos', active: true },
     { key: 'dataCompletGamesLevel', label: 'Niveles Completos', active: true },
     { key: 'dataGameTime', label: 'Tiempo de Juegos', active: true },
@@ -377,7 +377,7 @@ generateExcel() {
       this.updateGraphic(this.dataCompletPhonemes, 'Fonemas completados', [res.num_completed], res.phoneme);
     });
   
-    /* GRAFICAS 2 Y 3 */
+    /* GRAFICAS 2 Y 3 *
     this.fetchData('g-2', (res: any[]) => {
       const dataG2 = this.organizeData(res, 'phoneme');
       const dataG3 = this.organizeData(res, 'user_name');
@@ -404,7 +404,7 @@ generateExcel() {
         }
       }
       
-    });
+    });*/
 
     /* GRAFICA 4 */
     this.fetchData('g-1', (res: { phoneme: string[]; num_completed: number[] }) => {
@@ -436,7 +436,8 @@ generateExcel() {
   
     /* MAPA 1 */
     this.fetchData('g-6', (res: { lng: any; lat: any }[]) => {
-      res.forEach((point) => {
+      const data = Array.isArray(res) ? res : [res];
+      data.forEach((point) => {
         if (point.lat !== 0 && point.lng !== 0) {
           this.points.points.push([point.lng, point.lat]);
         }

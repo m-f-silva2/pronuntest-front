@@ -41,27 +41,29 @@ export class MultiChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const currentValue = changes['data'].currentValue
-    this.data = currentValue
-
-    if (this.data.chart.plotOptions?.bar?.borderRadius) {
-      this.data.chart.plotOptions!.bar!.borderRadius = 9 - ((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options ? 0 : 1))) * 0.2)
-    }
-
-    if (this.data.isGroups) {
-      this.series = this.data.chart.series!
-    } else {
-      this.series = [this.data.chart.series![this.optionSelected]]
-    }
-
-    /** change chart theme */
-    let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-    primaryColor = this.HSLToHex(primaryColor);
-    this.data.chart.tooltip = {
-      theme: this.themeService.theme().mode,
-    };
-    this.data.chart.colors = [this.themeService.theme().color];
-
+    setTimeout(() => {
+      
+      const currentValue = changes['data'].currentValue
+      this.data = currentValue
+      
+      if (this.data.chart.plotOptions?.bar?.borderRadius) {
+        this.data.chart.plotOptions!.bar!.borderRadius = 9 - ((this.data.chart.series![0].data.length * (this.data.chart.series!.length * (this.data.options ? 0 : 1))) * 0.2)
+      }
+      
+      if (this.data.isGroups) {
+        this.series = this.data.chart.series!
+      } else {
+        this.series = [this.data.chart.series![this.optionSelected]]
+      }
+      
+      /** change chart theme */
+      let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+      primaryColor = this.HSLToHex(primaryColor);
+      this.data.chart.tooltip = {
+        theme: this.themeService.theme().mode,
+      };
+      this.data.chart.colors = [this.themeService.theme().color];
+    }, 1000);
   }
 
 

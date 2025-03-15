@@ -5,12 +5,14 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { ToastService } from 'src/app/core/services/toast/toast.service';
+import { CommonModule } from '@angular/common';
+import { Cities } from 'src/app/core/models/interfaces-graphics';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
   encapsulation: ViewEncapsulation.None,
-  imports: [FormsModule, RouterLink, AngularSvgIconModule, ButtonComponent, ReactiveFormsModule],
+  imports: [FormsModule, RouterLink, CommonModule, AngularSvgIconModule, ButtonComponent, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -27,8 +29,11 @@ export class SignUpComponent {
     password: FormControl,
     status: FormControl,
   }>
-  roleId = 4
-  roleTextCode: 'patient'|'professional'|'parent'|'' = ''
+  roleId = 4;
+  roleTextCode: 'patient'|'professional'|'parent'|'' = '';
+  cities: Cities[] = [];
+  filteredCities: Cities[] = [];
+  searchTerm: string = '';
 
 
   constructor(private formBuilder: FormBuilder, private readonly _router: Router, private _authService: AuthService, private _toastService: ToastService) {
@@ -55,6 +60,19 @@ export class SignUpComponent {
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(1500) ]],
       status: ['active', []],
     })
+
+    this._authService.getCities().subscribe((data) => {
+      
+      this.cities = data.res;
+      this.filteredCities = data.res; // Inicialmente, mostrar todas las ciudades
+    });
+  }
+
+  filterCities(event: Event) {
+    const searchTerm = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredCities = this.cities.filter((city) =>
+      city.city_name.toLowerCase().includes(searchTerm)
+    );
   }
   
   ngAfterViewInit(){

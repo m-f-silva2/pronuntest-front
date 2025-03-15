@@ -50,20 +50,21 @@ export class MapComponent implements OnInit{
       
       console.log("pont",this.center);
     }
-    this.generateRandomPoints(this.center,10);
-    this.renderMap();
+    //this.generateRandomPoints(this.center,10);
+    setTimeout(() => {
+      this.renderMap();
+    }, 1000);
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       const current: [number, number][] = changes['data'].currentValue.points;
-
+      
       if (Array.isArray(current)) {
         this.center = current;
         current.map((coord: any) => {
           const [lat, lng] = coord;
-          //console.log("2", current);
-          //this.center.push([lng, lat]);
+          this.center.push([lng, lat]);
           // Aquí puedes realizar otras acciones con coord
           // Por ejemplo, si coord es un array de [lat, lng], podrías hacer lo siguiente:
           // const [lat, lng] = coord;
@@ -127,8 +128,8 @@ export class MapComponent implements OnInit{
   }
 
   updateMap() {
-      if (this.map && this.vectorLayer) {
-        /*let updatedLayer = new VectorLayer({
+      if (this.map && this.vector) {
+        let updatedLayer = new VectorLayer({
           source: new Cluster({
             distance: 10,
             source: new VectorSource({
@@ -147,7 +148,7 @@ export class MapComponent implements OnInit{
         // Actualiza las capas en el mapa
         let layers = this.map.getLayers().getArray();
         layers[1] = updatedLayer;
-        this.map.render();*/
+        this.map.render();
       } else {
         
         //this.renderMap(); // Render map initially if not already done
