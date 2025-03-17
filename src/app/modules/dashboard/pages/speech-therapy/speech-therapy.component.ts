@@ -1,11 +1,6 @@
-import { Component, effect } from '@angular/core';
+import { Component} from '@angular/core';
 import { NftHeaderComponent } from '../nft/nft-header/nft-header.component';
-import { NftDualCardComponent } from '../nft/nft-dual-card/nft-dual-card.component';
-import { NftSingleCardComponent } from '../nft/nft-single-card/nft-single-card.component';
 import { NftAuctionsTableComponent } from '../nft/nft-auctions-table/nft-auctions-table.component';
-import { NftChartCardComponent } from '../nft/nft-chart-card/nft-chart-card.component';
-
-import { PieChartComponent } from '../nft/pie-chart/pie-chart.component';
 import { MultiChartComponent } from '../nft/multi-chart/multi-chart.component';
 import { ChartOptions } from 'src/app/shared/models/chart-options';
 import { SpeechTherapyService } from 'src/app/core/services/dashboard/speech-therapy.service';
@@ -79,7 +74,7 @@ export class SpeechTherapyComponent {
     [], // ['pa', 'pe', ...],
     'Fonemas completados'
   );
-  /*dataPhonemeVS = this.createChartConfig(
+  dataPhonemeVS = this.createChartConfig(
     [
       { name: '', data: [] },
       { name: '', data: [] },
@@ -88,7 +83,7 @@ export class SpeechTherapyComponent {
     '',
     true
   );
-  precisionUserVS = this.createChartConfig(
+  /*precisionUserVS = this.createChartConfig(
     [
       { name: '', data: [] },
       { name: '', data: [] },
@@ -120,7 +115,7 @@ export class SpeechTherapyComponent {
 
   chartsData = [
     { key: 'dataCompletPhonemes', data: this.dataCompletPhonemes },
-    //{ key: 'dataPhonemeVS', data: this.dataPhonemeVS },
+    { key: 'dataPhonemeVS', data: this.dataPhonemeVS },
     //{ key: 'precisionUserVS', data: this.precisionUserVS },
     { key: 'dataCompletGames', data: this.dataCompletGames },
     { key: 'dataCompletGamesLevel', data: this.dataCompletGamesLevel },
@@ -142,128 +137,122 @@ export class SpeechTherapyComponent {
     this.selectedUser = null;
     console.log('Usuario deseleccionado');
   }
-  
-  
 
-generateExcel() {
-  const descriptions: { 
-    [key: string]: { 
-      singular: string; 
-      plural: string; 
-      columnNames: { singular: string[]; plural: string[] } 
-    } 
-  } = {
-    dataCompletPhonemes: {
-      singular: 'Cantidad de ejercicios de fonemas completados por el paciente, detallando las categorías finalizadas.',
-      plural: 'Número de pacientes que han completado ejercicios de fonemas, incluyendo las categorías finalizadas.',
-      columnNames: { singular: ['Categoría de Fonema', 'Ejercicios Completados'], plural: ['Categoría de Fonema', 'Pacientes Completados'] },
-    },
-    dataPhonemeVS: {
-      singular: 'Comparación del rendimiento del paciente en diferentes fonemas, destacando el mejor y peor porcentaje de precisión con la inteligencia artificial.',
-      plural: 'Comparación del rendimiento de los pacientes en distintos fonemas, resaltando los mejores y peores porcentajes de precisión con la inteligencia artificial.',
-      columnNames: { singular: ['Fonema', 'Porcentaje de Precisión'], plural: ['Fonema', 'Precisión Promedio de Pacientes'] },
-    },
-    precisionUserVS: {
-      singular: 'Nivel de precisión del paciente en la pronunciación de distintos fonemas.',
-      plural: 'Análisis comparativo de la precisión de varios pacientes en la pronunciación de diferentes fonemas.',
-      columnNames: { singular: ['Fonema', 'Precisión del Paciente'], plural: ['Fonema', 'Precisión Promedio'] },
-    },
-    dataCompletGames: {
-      singular: 'Cantidad de juegos completados por el paciente, permitiendo evaluar su progreso en la terapia.',
-      plural: 'Cantidad de juegos completados por los pacientes, permitiendo evaluar su progreso en la terapia.',
-      columnNames: { singular: ['Juego', 'Completado por el Paciente'], plural: ['Juego', 'Pacientes que lo Completaron'] },
-    },
-    dataCompletGamesLevel: {
-      singular: 'Número de niveles de juego completados por el paciente, mostrando su evolución en cada actividad.',
-      plural: 'Número de niveles completados en los juegos, diferenciando el desempeño de cada paciente o el avance general del grupo.',
-      columnNames: { singular: ['Nivel del Juego', 'Completado por el Paciente'], plural: ['Nivel del Juego', 'Pacientes que lo Completaron'] },
-    },
-    dataGameTime: {
-      singular: 'Tiempo promedio dedicado por el paciente en los juegos de terapia.',
-      plural: 'Tiempo promedio invertido en juegos por los pacientes.',
-      columnNames: { singular: ['Juego', 'Tiempo Invertido (min)'], plural: ['Juego', 'Tiempo Promedio (min)'] },
-    },
-    dataTotalIntent: {
-      singular: 'Promedio de intentos realizados por el paciente en los juegos, útil para medir su perseverancia y evolución.',
-      plural: 'Promedio de intentos realizados en los juegos por los pacientes, útil para medir la perseverancia y evolución grupal.',
-      columnNames: { singular: ['Juego', 'Intentos del Paciente'], plural: ['Juego', 'Intentos Promedio'] },
-    },
-  };
-
-  const isSinglePatient = !!this.selectedUser;
-  const worksheetData: any[][] = [];
-
-  if (isSinglePatient) {
-    worksheetData.push([{ v: 'Paciente', s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
-    worksheetData.push([
-      { v: 'Nombre', s: { font: { bold: true } } },
-      { v: 'ID', s: { font: { bold: true } } },
-      { v: 'Género', s: { font: { bold: true } } },
-      { v: 'Edad', s: { font: { bold: true } } },
-      { v: 'Condición', s: { font: { bold: true } } },
-    ]);
-    worksheetData.push([
-      this.selectedUser.user_name,
-      this.selectedUser.identification,
-      this.selectedUser.gender,
-      this.selectedUser.age,
-      this.selectedUser.condition,
-    ]);
-    worksheetData.push([]); // Separador
-  }
-
-  this.filteredChartsData.forEach(chart => {
-    const descriptionData = descriptions[chart.key] || {
-      singular: 'Sin descripción',
-      plural: 'Sin descripción',
-      columnNames: { singular: ['Categoría', 'Valor'], plural: ['Categoría', 'Valor'] }
+  generateExcel() {
+    const descriptions: { 
+      [key: string]: { 
+        singular: string; 
+        plural: string; 
+        columnNames: { singular: string[]; plural: string[] } 
+      } 
+    } = {
+      dataCompletPhonemes: {
+        singular: 'Cantidad de ejercicios de fonemas completados por el paciente, detallando las categorías finalizadas.',
+        plural: 'Número de pacientes que han completado ejercicios de fonemas, incluyendo las categorías finalizadas.',
+        columnNames: { singular: ['Categoría de Fonema', 'Ejercicios Completados'], plural: ['Categoría de Fonema', 'Pacientes Completados'] },
+      },
+      dataPhonemeVS: {
+        singular: 'Comparación del rendimiento del paciente en diferentes fonemas, destacando el mejor y peor porcentaje de precisión con la inteligencia artificial.',
+        plural: 'Comparación del rendimiento de los pacientes en distintos fonemas, resaltando los mejores y peores porcentajes de precisión con la inteligencia artificial.',
+        columnNames: { singular: ['Fonema', 'Porcentaje de Precisión'], plural: ['Fonema', 'Precisión Promedio de Pacientes'] },
+      },
+      /*precisionUserVS: {
+        singular: 'Nivel de precisión del paciente en la pronunciación de distintos fonemas.',
+        plural: 'Análisis comparativo de la precisión de varios pacientes en la pronunciación de diferentes fonemas.',
+        columnNames: { singular: ['Fonema', 'Precisión del Paciente'], plural: ['Fonema', 'Precisión Promedio'] },
+      },*/
+      dataCompletGames: {
+        singular: 'Cantidad de juegos completados por el paciente, permitiendo evaluar su progreso en la terapia.',
+        plural: 'Cantidad de juegos completados por los pacientes, permitiendo evaluar su progreso en la terapia.',
+        columnNames: { singular: ['Juego', 'Completado por el Paciente'], plural: ['Juego', 'Pacientes que lo Completaron'] },
+      },
+      dataCompletGamesLevel: {
+        singular: 'Número de niveles de juego completados por el paciente, mostrando su evolución en cada actividad.',
+        plural: 'Número de niveles completados en los juegos, diferenciando el desempeño de cada paciente o el avance general del grupo.',
+        columnNames: { singular: ['Nivel del Juego', 'Completado por el Paciente'], plural: ['Nivel del Juego', 'Pacientes que lo Completaron'] },
+      },
+      dataGameTime: {
+        singular: 'Tiempo promedio dedicado por el paciente en los juegos de terapia.',
+        plural: 'Tiempo promedio invertido en juegos por los pacientes.',
+        columnNames: { singular: ['Juego', 'Tiempo Invertido (min)'], plural: ['Juego', 'Tiempo Promedio (min)'] },
+      },
+      dataTotalIntent: {
+        singular: 'Promedio de intentos realizados por el paciente en los juegos, útil para medir su perseverancia y evolución.',
+        plural: 'Promedio de intentos realizados en los juegos por los pacientes, útil para medir la perseverancia y evolución grupal.',
+        columnNames: { singular: ['Juego', 'Intentos del Paciente'], plural: ['Juego', 'Intentos Promedio'] },
+      },
     };
 
-    const description = isSinglePatient ? descriptionData.singular : descriptionData.plural;
-    const columnNames = isSinglePatient ? descriptionData.columnNames.singular : descriptionData.columnNames.plural;
+    const isSinglePatient = !!this.selectedUser;
+    const worksheetData: any[][] = [];
 
-    // Descripción con fondo gris
-    worksheetData.push([{ v: `Descripción: ${description}`, s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
-    // Encabezados en negrita
-    worksheetData.push(columnNames.map(name => ({ v: name, s: { font: { bold: true } } })));
+    if (isSinglePatient) {
+      worksheetData.push([{ v: 'Paciente', s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
+      worksheetData.push([
+        { v: 'Nombre', s: { font: { bold: true } } },
+        { v: 'ID', s: { font: { bold: true } } },
+        { v: 'Género', s: { font: { bold: true } } },
+        { v: 'Edad', s: { font: { bold: true } } },
+        { v: 'Condición', s: { font: { bold: true } } },
+      ]);
+      worksheetData.push([
+        this.selectedUser.user_name,
+        this.selectedUser.identification,
+        this.selectedUser.gender,
+        this.selectedUser.age,
+        this.selectedUser.condition,
+      ]);
+      worksheetData.push([]); // Separador
+    }
 
-    const rows = chart.data.chart.xaxis.categories.map((category: any, i: number) => [
-      { v: category },
-      { v: chart.data.chart.series[0].data[i], s: { numFmt: chart.key.includes('Time') ? '0.00' : '0.0%' } } // Formato de número
-    ]);
-    worksheetData.push(...rows);
-    worksheetData.push([]); // Separador
-  });
+    this.filteredChartsData.forEach(chart => {
+      const descriptionData = descriptions[chart.key] || {
+        singular: 'Sin descripción',
+        plural: 'Sin descripción',
+        columnNames: { singular: ['Categoría', 'Valor'], plural: ['Categoría', 'Valor'] }
+      };
 
-  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+      const description = isSinglePatient ? descriptionData.singular : descriptionData.plural;
+      const columnNames = isSinglePatient ? descriptionData.columnNames.singular : descriptionData.columnNames.plural;
 
-  // Autoajustar columnas
-  const columnWidths = worksheetData.reduce((acc, row) => {
-    row.forEach((cell, i) => {
-      const cellValue = typeof cell === 'object' ? cell.v : cell;
-      acc[i] = Math.max(acc[i] || 1, cellValue ? 18 : 18);
+      // Descripción con fondo gris
+      worksheetData.push([{ v: `Descripción: ${description}`, s: { font: { bold: true }, fill: { fgColor: { rgb: 'D9D9D9' } } } }]);
+      // Encabezados en negrita
+      worksheetData.push(columnNames.map(name => ({ v: name, s: { font: { bold: true } } })));
+
+      const rows = chart.data.chart.xaxis.categories.map((category: any, i: number) => [
+        { v: category },
+        { v: chart.data.chart.series[0].data[i], s: { numFmt: chart.key.includes('Time') ? '0.00' : '0.0%' } } // Formato de número
+      ]);
+      worksheetData.push(...rows);
+      worksheetData.push([]); // Separador
     });
-    return acc;
-  }, [] as number[]);
 
-  worksheet['!cols'] = columnWidths.map(w => ({ wch: w }));
+    const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
 
-  const workbook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+    // Autoajustar columnas
+    const columnWidths = worksheetData.reduce((acc, row) => {
+      row.forEach((cell, i) => {
+        const cellValue = typeof cell === 'object' ? cell.v : cell;
+        acc[i] = Math.max(acc[i] || 1, cellValue ? 18 : 18);
+      });
+      return acc;
+    }, [] as number[]);
 
-  const nameReportExcel = isSinglePatient ? `reporte_${this.selectedUser.user_name}` : 'reporte_pacientes';
-  XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
-}
+    worksheet['!cols'] = columnWidths.map(w => ({ wch: w }));
 
-  
-  
-  
-  
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+
+    const nameReportExcel = isSinglePatient ? `reporte_${this.selectedUser.user_name}` : 'reporte_pacientes';
+    XLSX.writeFile(workbook, `${nameReportExcel}.xlsx`);
+  }
+
   // Opciones de filtros
   filterOptions = [
     { key: 'dataCompletPhonemes', label: 'Fonemas Completos', active: true },
-    { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: false },
-    { key: 'precisionUserVS', label: 'Precisión de Usuarios', active: false },
+    { key: 'dataPhonemeVS', label: 'Fonemas vs Usuarios', active: true },
+    //{ key: 'precisionUserVS', label: 'Precisión de Usuarios', active: false },
     { key: 'dataCompletGames', label: 'Juegos Completos', active: true },
     { key: 'dataCompletGamesLevel', label: 'Niveles Completos', active: true },
     { key: 'dataGameTime', label: 'Tiempo de Juegos', active: true },
@@ -377,21 +366,47 @@ generateExcel() {
       this.updateGraphic(this.dataCompletPhonemes, 'Fonemas completados', [res.num_completed], res.phoneme);
     });
   
-    /* GRAFICAS 2 Y 3 *
+    /* GRAFICAS 2 Y 3 */
     this.fetchData('g-2', (res: any[]) => {
       const dataG2 = this.organizeData(res, 'phoneme');
-      const dataG3 = this.organizeData(res, 'user_name');
+      //const dataG3 = this.organizeData(res, 'user_name');
     
       if (dataG2) {
-        const keys = Object.keys(dataG2);
-        this.updateGraphic(
-          this.dataPhonemeVS,
-          `Exactitud ${keys[0]} por paciente: Mejor vs peor`,
-          [dataG2[keys[0]].best, dataG2[keys[0]].worst],
-          dataG2[keys[0]].user_name
+        // Obtener todos los fonemas
+        const phonemeKeys = Object.keys(dataG2);
+
+        // Encontrar la longitud máxima en best y worst
+        const maxLength = Math.max(
+          ...phonemeKeys.map(key => dataG2[key].best.length),
+          ...phonemeKeys.map(key => dataG2[key].worst.length)
         );
+
+        // Normalizar los arrays
+        phonemeKeys.forEach(key => {
+          const lengthDiff = maxLength - dataG2[key].best.length;
+          if (lengthDiff > 0) {
+            dataG2[key].best.push(...Array(lengthDiff).fill(0));
+          }
+
+          const lengthDiffWorst = maxLength - dataG2[key].worst.length;
+          if (lengthDiffWorst > 0) {
+            dataG2[key].worst.push(...Array(lengthDiffWorst).fill(0));
+          }
+        });
+        // Guardar el objeto normalizado
+        const normalizedData = { ...dataG2 };
+        // Iterar sobre todas las claves en normalizedData y actualizar la gráfica
+        Object.entries(normalizedData).forEach(([key, value]) => {
+          this.updateGraphic(
+            this.dataPhonemeVS,
+            `Exactitud por paciente: Mejor vs peor`,
+            [value.best, value.worst], // Se usa el valor normalizado
+            value.user_name
+          );
+        });
+
       }
-  
+  /*
       if (dataG3) {
         const lastKey = Object.keys(dataG3).pop();
         if (lastKey) {
@@ -402,9 +417,9 @@ generateExcel() {
             dataG3[lastKey].phoneme
           );
         }
-      }
+      }*/
       
-    });*/
+    });
 
     /* GRAFICA 4 */
     this.fetchData('g-1', (res: { phoneme: string[]; num_completed: number[] }) => {
