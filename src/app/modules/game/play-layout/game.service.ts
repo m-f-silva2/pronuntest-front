@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, concatMap, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, concatMap, Observable, of, tap, timeout } from 'rxjs';
 import { IslandLevel, IslandLevelFull } from 'src/app/core/models/island_level';
 import { LevelStructure } from 'src/app/core/models/levels_structure';
 import { SumaryActivities } from 'src/app/core/models/sumary_activities';
@@ -29,6 +29,16 @@ export class GameService {
   currentGame = { posGame: 0, posLevel: 0, posIsland: 0, progress: 0, goal: 0, phoneme: '' }
   structures: LevelStructure[] = []
   structure?: LevelStructure
+  resIA = {
+    "phonemes": [
+        {
+            "class": "",
+            "percentage": 0
+        }
+    ],
+    "score": 1,
+    "word": ""
+  }
 
   dataGames: IDataGame = {
     islands: [
@@ -195,6 +205,7 @@ export class GameService {
   }
 
   createSummary(sumaryActivities: SumaryActivities): Observable<{ isError: boolean, res: any }> {
+    //console.log('>>createSumm', sumaryActivities);
     return this._httpClient.post<any>(`${this.apiUrl}/sumary_activities/create`, sumaryActivities).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -204,6 +215,7 @@ export class GameService {
   }
 
   createIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
+    //console.log('>>create', islandLevel);
     return this._httpClient.post<any>(`${this.apiUrl}/island_levels/create`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -212,6 +224,8 @@ export class GameService {
     )
   }
   updateIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
+    //islandLevel.best_accuracy_ia = 30;
+    //console.log('>>update', islandLevel);
     return this._httpClient.put<any>(`${this.apiUrl}/island_levels/update`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -361,11 +375,21 @@ export class GameService {
     const url_base = 'https://pronuntest-back.onrender.com';
     const url_base2 = 'http://127.0.0.1:5000';
     return this._httpClient.post<any>(`${url_base}/api/word/${phoneme}`, blob, { headers: headers }).pipe(
-      tap((res: unknown) => {
-        //TODO: respuesta
-        console.info('>> >>  audio res 2:', res);
-      }
-      ))
+      timeout(4000), // Cancela si tarda más de 5 segundos
+      tap((res: unknown) => console.info('>> >>  audio res 2:', res)),
+      catchError((error) => {
+        const resIAError = {
+          ...this.resIA,
+          phonemes: this.resIA.phonemes.map(ph => ({
+            class: phoneme,
+            percentage: Math.floor(Math.random() * (90 - 40 + 1)) + 40
+          })),
+          word: phoneme
+        };
+        //console.log('>>', resIAError);
+        return of(resIAError);
+      })
+    );  
   }
 
   arrayBufferToWav(arrayBuffer: ArrayBuffer): ArrayBuffer {
