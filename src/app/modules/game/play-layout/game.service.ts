@@ -100,24 +100,24 @@ export class GameService {
       this.currentGame.progress += direction
       return
     }
-
+    
     // === Si es una sección de los extremos del nivel: avanzar a otro nivel ===
     const nextGameExist = this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel].games[this.currentGame.posGame + direction]
-
+    const posDirection = this.currentGame.posLevel > 2 ? this.currentGame.posLevel : this.currentGame.posLevel + direction;
+    
     //Existe juego siguiente en este nivel?
     if (nextGameExist) {
       this.currentGame.posGame += direction
       this.router.navigateByUrl(`/games/island/${this.currentGame.posIsland}/level/${this.currentGame.posLevel + 1}/gamePos/${this.currentGame.posGame + 1}`)
       return
       //Existe nivel siguiente en esta isla?
-    } else if (this.dataGames.islands[this.currentGame.posIsland].levels[this.currentGame.posLevel + direction]) {
+    } else if (this.dataGames.islands[this.currentGame.posIsland].levels[posDirection]) {
       //Aquí finaliza el nivel si es en dirección +1
-
+      
       //TODO ======== ACTUALIZAR NIEVEL ACTUAL Y PASAR AL NIEVEL SIGUIENTE ======
       if (direction > 0) {
         const _currentGame = { ...this.currentGame }
         let island = this._islandLevels.getValue()?.find(res => res.code_island == _currentGame.posIsland && res.code_pos_level == (_currentGame.posLevel + 1))
-
 
         const currentStructure = this.structures.find(res =>
           res.code_pos_level == (_currentGame.posLevel + 1) && res.code_island == _currentGame.posIsland
@@ -205,7 +205,6 @@ export class GameService {
   }
 
   createSummary(sumaryActivities: SumaryActivities): Observable<{ isError: boolean, res: any }> {
-    //console.log('>>createSumm', sumaryActivities);
     return this._httpClient.post<any>(`${this.apiUrl}/sumary_activities/create`, sumaryActivities).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -215,7 +214,6 @@ export class GameService {
   }
 
   createIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
-    //console.log('>>create', islandLevel);
     return this._httpClient.post<any>(`${this.apiUrl}/island_levels/create`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -225,7 +223,6 @@ export class GameService {
   }
   updateIslandLevel(islandLevel: IslandLevel): Observable<{ isError: boolean, res: any }> {
     //islandLevel.best_accuracy_ia = 30;
-    //console.log('>>update', islandLevel);
     return this._httpClient.put<any>(`${this.apiUrl}/island_levels/update`, islandLevel).pipe(
       tap((_sumaryActivitiesRes: { isError: boolean, res: any }) => {
         if (_sumaryActivitiesRes.isError) throw new Error(_sumaryActivitiesRes.res.toString())
@@ -375,7 +372,7 @@ export class GameService {
     const url_base = 'https://pronuntest-back.onrender.com';
     const url_base2 = 'http://127.0.0.1:5000';
     return this._httpClient.post<any>(`${url_base}/api/word/${phoneme}`, blob, { headers: headers }).pipe(
-      timeout(4000), // Cancela si tarda más de 5 segundos
+      timeout(1000), // Cancela si tarda más de 5 segundos
       tap((res: unknown) => console.info('>> >>  audio res 2:', res)),
       catchError((error) => {
         const resIAError = {
@@ -386,7 +383,20 @@ export class GameService {
           })),
           word: phoneme
         };
-        //console.log('>>', resIAError);
+        
+        const updatedLevels = this._islandLevels.getValue()?.map(level => {
+          const newPercentage = resIAError.phonemes[0].percentage;
+        
+          return {
+            ...level,
+            best_accuracy_ia: level.best_accuracy_ia !== undefined ? Math.max(level.best_accuracy_ia, newPercentage) : newPercentage,
+            worst_accuracy_ia: (level.worst_accuracy_ia === undefined || level.worst_accuracy_ia === 0) 
+              ? newPercentage 
+              : Math.min(level.worst_accuracy_ia, newPercentage),
+          };
+        });
+        
+        this._islandLevels.next(updatedLevels);
         return of(resIAError);
       })
     );  

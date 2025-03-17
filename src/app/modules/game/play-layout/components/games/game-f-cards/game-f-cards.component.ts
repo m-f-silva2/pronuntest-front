@@ -86,11 +86,14 @@ export class GameFCardsComponent {
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
-    const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1
+    const direction = (typeDirection === 'endNext' || typeDirection === 'next') ? 1 : -1;
     this._gameService.navegationGame(direction, typeDirection)
     this.section += direction
-    /* this.section = this.section < 2 && this.mode == 'front'? this.section : 1 */
+    if(typeDirection == 'endNext' && this.mode === 'front'){
+      window.location.href = '/games/island';
+    }
     this.initData()
+    /* this.section = this.section < 2 && this.mode == 'front'? this.section : 1 */
   }
 
   initData() {
@@ -180,6 +183,7 @@ export class GameFCardsComponent {
         this._toastGameService.toast.set({
           type: 's', timeS: 3, title: "Ganaste!", message: "Nivel completado con exito!", end: () => {
             this._toastGameService.toast.set(undefined)
+            this.btnsNavegation('endNext');
           }
         })
       }, 500);
@@ -312,17 +316,18 @@ export class GameFCardsComponent {
           this.openMicrophone = false;
           
           
-          this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
+          this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3');
           if (this.sizeCorrectItems == 0 && this.intents > 0) {
-            this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3')
+            this.handleSecondaryAudio('assets/audios/gritos_ganaste.mp3');
             setTimeout(() => {
-              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3')
-              this.restart()
-              this.isCompleted = true
+              this.handleClickNextAudio('assets/audios/sonido_ganaste.mp3');
+              this.restart();
+              this.isCompleted = true;
               this._toastGameService.toast.set({
                 type: 'finish', timeS: 3, title: "¡ISLA COMPLETADA!", message: "¡Increíble! Has completado toda la isla!", end: () => {
                   this._toastGameService.toast.set(undefined)
-                  window.location.href = '/games/island';
+                  //window.location.href = '/games/island';
+                  this.btnsNavegation('endNext');
                 }
               })
             }, 500);

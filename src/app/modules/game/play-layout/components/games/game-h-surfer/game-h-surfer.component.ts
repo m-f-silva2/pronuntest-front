@@ -37,16 +37,16 @@ export class GameHSurferComponent {
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 42, right: 29 },
       { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 44, right: 0 },
     ],
-    [
+    /*[
       { id: 0, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 47, right: -38 },
       { id: 1, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 42, right: 20 },
       { id: 2, completed: false, isCorrect: true, img: 'assets/images/isla0/globo.svg', audio: 'assets/audios/pa.mp3', top: 44, right: 0 },
-    ],
+    ],*/
   ]
   /*   correctItemsResources: {id: number, completed: boolean, isCorrect: boolean, img: string, audio: string, yEnd: 758,  top: -16, right:number}[] = [] */
 
   sizeCorrectItems = 0;
-  intents = 5;
+  intents = 2;
   audio: string = '';
   audioAux: string = '';
   private readonly _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -60,11 +60,10 @@ export class GameHSurferComponent {
       next: '1',
       previous: undefined
     })
-
+    
     this._gameService.sumaryActivity$.pipe(takeUntil(this._unsubscribeAll)).subscribe(res => {
       this.sumaryActivity = res
     })
-
   }
 
   btnsNavegation(typeDirection: 'endNext' | 'firstPrevious' | 'previous' | 'next') {
@@ -74,6 +73,7 @@ export class GameHSurferComponent {
     this.isCompleted = false
     this.itemsResources = this.allItemsResources[this.section]
     //this.correctItemsResources = this.allCorrectItemsResources[this.section]
+    if(typeDirection == 'endNext'){window.location.href = '/games/island';}
     this.intents = this.itemsResources.length
     this.sizeCorrectItems = this.itemsResources.filter(res => res.isCorrect).length
   }
@@ -116,7 +116,6 @@ export class GameHSurferComponent {
   }
 
   handleClick(btn: number, isCorrect: boolean) {
-
     if (isCorrect) {
       this.itemsResources[btn].completed = true
       /* this.correctItemsResources[this.correctItemsResources.length - this.sizeCorrectItems].completed = true */
@@ -130,7 +129,7 @@ export class GameHSurferComponent {
       }
     } else {
       this.handleSecondaryAudio('assets/audios/error.mp3')
-      //this.intents--
+      this.intents--
     }
 
     /* Determinar si finaliza */
@@ -145,7 +144,8 @@ export class GameHSurferComponent {
       this._toastGameService.toast.set({
         type: 'finish', timeS: 3, title: "¡ISLA COMPLETADA!", message: "¡Increíble! Has completado toda la isla!", end: () => {
           this._toastGameService.toast.set(undefined)
-          window.location.href = '/games/island';
+          //window.location.href = '/games/island';
+          this.btnsNavegation('endNext');
         }
       })
     } else if (this.intents == 0) {
