@@ -1,7 +1,7 @@
 <section class="flex flex-wrap justify-center gap-10 h-full w-full items-center font-Flippinfont ">
 
     <div class="container_border_content h-full">
-        <div class="container_border max-w-7xl flex flex-col justify-center flex-wrap bg-white/35 gap-8 backdrop-blur-sm border-slate-500 border-2 rounded-2xl px-8 md:px-16 h-full">
+        <div class="container_border max-w-7xl flex flex-col pt-16 sm:pt-0 sm:justify-center flex-wrap bg-white/35 gap-8 backdrop-blur-sm border-slate-500 border-2 rounded-2xl px-1 md:px-16 h-full">
             @if (this._gameService.currentGame.posLevel == 0 && infoP) {
                 <div class="flex flex-row gap-8 h-fit w-full flex-wrap justify-center items-center">
                     <div class="w-full max-w-lg">
@@ -12,7 +12,7 @@
                         <video src="/assets/video/explosion.mp4" controls="true"></video>
                     </div>
     
-                    <div class="flex gap-8 w-full justify-center mt-12">
+                    <div class="flex gap-8 w-full justify-center">
                         @if (data?.previous) {
                             <btn-img (eventClick)="handleBtn('previous')" [title]="'Volver'" [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
                         }
@@ -22,23 +22,23 @@
                     </div>
                 </div>
             } @else {
-            <div class="flex flex-row gap-8 h-fit w-full flex-wrap justify-center items-center">
-                <div class="w-full max-w-lg">
+            <div class="flex flex-row gap-4 sm:gap-8 h-full w-full flex-wrap sm:justify-center items-start ">
+                <div class="w-full max-w-lg pt-4 flex-grow-0">
                     <h3 class="text-center font-bold text-blue-50 text-2xl md:text-4xl">{{data?.title}}</h3>
                     <p class="text-3xl md:text-xl">{{data?.subtitle}}</p>
                 </div>
 
                 @if (data?.resource && !this.isExternalSrc) {
-                    <div class="w-full max-w-lg">
+                    <div class="w-full max-w-lg ">
                         <video [src]="data?.resource" controls="true"></video>
                     </div>
                 }@else if(data?.resource && this.isExternalSrc){
-                    <div class="w-full max-w-lg h-full">
+                    <div class="w-full max-w-lg flex-grow self-stretch min-h-72">
                         <iframe width="760" height="315" class="h-full max-w-full max-h-full object-contain block" [src]="resourceUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
                 }
 
-                <div class="flex gap-8 w-full justify-center mt-12">
+                <div class="flex gap-8 justify-center mt-4 lg:mt-0 xl:mt-12 w-full h-fit flex-grow-0">
                     @if (data?.previous) {
                         <btn-img (eventClick)="handleBtn('previous')" [title]="'Volver'" [type]="'orange'" [imgPath]="'assets/images/arrow-back.svg'" />
                     }

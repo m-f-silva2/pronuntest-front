@@ -10,37 +10,38 @@
                 
                 @if (!isRuning) {
                     <div class="absolute animate-fade-in-up m-8 w-full max-w-full h-[80%] backdrop-blur-md border-4 border-dashed border-white/20 rounded-3xl bg-white/20 flex items-center z-30 flex-col p-10 gap-4">
-                        <btn-img class="w-fit block blur-none text-4xl mt-5" (eventClick)="autoplay=true" title="Ver explicación"
-                        [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
-@if (autoplay) {
+                        <btn-img class="w-fit block blur-none text-4xl mt-5" (eventClick)="autoplay=true" title="Ver explicación" [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
+                        @if (autoplay) {
                             <iframe width="760" height="315" class="h-full max-w-full max-h-full object-contain block" src="https://www.youtube.com/embed/-N2CsTZ_UDg?si=sFDZtXtdbipl73PI&amp;start=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         }
-                        <btn-img class="w-fit block blur-none text-4xl absolute {{isCompleted?'top-0':'bottom-0'}}" (eventClick)="play()" [title]="isCompleted?'Volver a jugar':'Jugar'"
+                        <btn-img class="mb-2 w-fit block blur-none text-4xl absolute {{isCompleted?'top-0':'bottom-0'}}" (eventClick)="play()" [title]="isCompleted?'Volver a jugar':'Jugar'"
                         [type]="'orange'" [imgPath]="'assets/images/play.svg'" />
                     </div>
                 }
 
-                <div class="relative w-full h-full flex flex-col justify-around items-center">
+                <div class="relative w-full h-full flex flex-col items-center justify-end">
+                    
+                    @for (item of itemsResources; track $index) {
+                        <!-- Imagen globo -->
+                        <a  class="drag {{itemsResourcesPos !== $index? 'none': 'flex'}} 
+                            items-center justify-center hover:brightness-125 bg-[url(/assets/images/isla2/globo-plano.svg)] bg-no-repeat bg-contain 
+                            h-52 w-32 absolute top-20 bg-center cursor-pointer z-20"
+                            id="box{{$index}}"
+                            [ngStyle]="{
+                                transform: 'translate(' + position.x + 'px, ' + position.y + 'px)', zIndex: 20
+                              }"
+                            [hidden]="itemsResourcesPos !== $index"
+                            (touchstart)="startTouch($event)"
+                            (touchmove)="moveTouch($event)"
+                            (touchend)="endTouch($event)"
 
-                    <div id="startDrag">
-                        @for (item of itemsResources; track $index) {
-                        <a  class="
-                        {{itemsResourcesPos !== $index? 'none': 'flex'}} 
-                        items-center justify-center hover:brightness-125 bg-[url(/assets/images/isla2/globo-plano.svg)] bg-no-repeat bg-contain h-56 w-36 relative bg-center
-                        "
-                        (click)="onAudioEnded()" 
-                        (dragstart)="dragStart($event)" 
-                        draggable="true"
-                        id="box{{$index}}" 
-                        [hidden]="itemsResourcesPos !== $index" 
+                            (mousedown)="startDrag($event)"
                         >
-                        <!-- Imagen mover -->
-                        <img [src]="item.img" class=" drag cursor-pointer w-[calc(100%-2.4rem)] -mt-10 opacity-75" alt="">
+                            <img [src]="item.img" class=" w-[calc(100%-3.1rem)] -mt-10 opacity-70 pointer-events-none select-none" alt="">
                         </a>
-                        }
-                    </div>
+                    }
 
-                    <div class="h-fit relative w-full flex justify-center items-center gap-8">
+                    <div class="container-drops h-fit relative z-0 w-full flex justify-center items-center gap-8 mb-8 xl:mb-20">
                         @if(explosion){
                             <div class="absolute top-0 left-0 h-56 w-56">
                                 <app-conffety />
@@ -48,28 +49,17 @@
                         }
 
                         <!-- Caja 1 -->
-                        <div (click)="handleClickBox(0)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover hover:brightness-125"
-                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boxA')"
-                            (dragover)="dragOver($event)">
-
-                            <div class="arrow-container select-none pointer-events-none w-full h-full">
-                                <div class="arrow-down w-full h-full"></div>
-                            </div>
-
-                            <div class="w-full text-center text-cyan-50 text-4xl -mt-10">{{itemsResources[itemsResourcesPos].l}}</div>
-                        </div>
-
+                        <a (click)="handleClickBox(0)" class="boxDrop hover:brightness-125 relative select-none">
+                            <div class="animate-bounce absolute top-0 left-[42%]"><img src="/assets/images/arrow.svg" alt="" style="rotate: 90deg;" class="w-7 h-7"></div>
+                            <img #boxA src="/assets/images/isla2/caja.png" alt="" class="boxDrop w-36 h-36">
+                            <div class="w-full text-center text-cyan-50 text-4xl ">{{itemsResources[itemsResourcesPos].l}}</div>
+                        </a>
                         <!-- Caja 2 -->
-                        <div (click)="handleClickBox(1)" class="boxDrop w-36 h-36 bg-[url(/assets/images/isla2/caja.png)] bg-cover hover:brightness-125"
-                            (dragenter)="dragEnter($event)" (drop)="dragDrop($event, 'boxB')"
-                            (dragover)="dragOver($event)">
-
-                            <div class="arrow-container select-none pointer-events-none w-full h-full">
-                                <div class="arrow-down w-full h-full"></div>
-                            </div>
-
-                            <div class="w-full text-center text-cyan-50 text-4xl -mt-10">{{itemsResources[itemsResourcesPos].r}}</div>
-                        </div>
+                        <a (click)="handleClickBox(1)" class="boxDrop hover:brightness-125 relative select-none">
+                            <div class="animate-bounce absolute top-0 left-[42%]"><img src="/assets/images/arrow.svg" alt="" style="rotate: 90deg;" class="w-7 h-7"></div>
+                            <img #boxB src="/assets/images/isla2/caja.png" alt="" class="boxDrop w-36 h-36">
+                            <div class="w-full text-center text-cyan-50 text-4xl">{{itemsResources[itemsResourcesPos].r}}</div>
+                        </a>
                     </div>
                 </div>
             </div>
