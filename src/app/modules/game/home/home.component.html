@@ -14,7 +14,10 @@
 
         <div class="container_border flex justify-center flex-col items-center skew-x-1">
 
-            <div class="container_border_content items-center backdrop-blur-sm h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 flex-wrap">
+
+            <!-- width: 623px;
+            height: 404.36px; -->
+            <div class="container_border_content lg:w-[623px] lg:h-[404px] items-center backdrop-blur-sm h-4/5 w-fit rounded-3xl min-w-52 min-h-52 max-w-5xl -skew-x-1 p-8 flex gap-8 justify-center z-0 flex-wrap">
 
                 <div class="card-level min-w-32 rotate-1 rounded-2xl w-fit px-3 py-4 text-white h-fit">
                     <p class="font-bold text-3xl text-center mb-4">Vocales</p>
@@ -23,11 +26,6 @@
                     </button>
                 </div>
                 
-                
-                
-                
-                
-
                 @for (item of phonemes; track $index; let odd = $odd) {
                 <div
                     class="card-level  min-w-32  rounded-2xl w-fit px-4 py-4 skew-x-1 text-white h-fit {{odd?'rotate-2':'-rotate-1'}}">
