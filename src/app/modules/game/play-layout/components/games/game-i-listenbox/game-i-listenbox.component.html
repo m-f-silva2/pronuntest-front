@@ -25,7 +25,7 @@
                         <!-- Imagen globo -->
                         <a  class="drag {{itemsResourcesPos !== $index? 'none': 'flex'}} 
                             items-center justify-center hover:brightness-125 bg-[url(/assets/images/isla2/globo-plano.svg)] bg-no-repeat bg-contain 
-                            h-52 w-32 absolute top-20 bg-center cursor-pointer z-20"
+                            h-52 w-32 absolute top-5 2xl:top-20 bg-center cursor-pointer z-20"
                             id="box{{$index}}"
                             [ngStyle]="{
                                 transform: 'translate(' + position.x + 'px, ' + position.y + 'px)', zIndex: 20
@@ -41,7 +41,7 @@
                         </a>
                     }
 
-                    <div class="container-drops h-fit relative z-0 w-full flex justify-center items-center gap-8 mb-8 xl:mb-20">
+                    <div class="container-drops h-fit relative z-0 w-full flex justify-center items-center gap-8 mb-8 2xl:mb-20">
                         @if(explosion){
                             <div class="absolute top-0 left-0 h-56 w-56">
                                 <app-conffety />

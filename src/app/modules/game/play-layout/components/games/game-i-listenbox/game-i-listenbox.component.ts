@@ -51,7 +51,6 @@ export class GameIListenboxComponent {
   }
   position = { x: 0, y: 0 };
   private touchStart = { x: 0, y: 0 };
-
   mousemoveEvent: any;
   mouseupEvent: any;
   movedElement: any;
@@ -169,9 +168,9 @@ export class GameIListenboxComponent {
     this.curX = this.curX-20
     this.curY = this.curY+12
     if(this.curX >= (this.dropsArea.a.x-15) && this.curX <= (this.dropsArea.a.x + (this.dropsArea.a.w/2)) && this.curY >= (this.dropsArea.a.y-100) && this.curY <= (this.dropsArea.a.y + this.dropsArea.a.h/2)) {
-      this.dragDrop('boxA');
+      this.dropResult('boxA');
     }else if(this.curX >= (this.dropsArea.b.x-15) && this.curX <= (this.dropsArea.b.x + (this.dropsArea.b.w/2)) && this.curY >= (this.dropsArea.b.y-100) && this.curY <= (this.dropsArea.b.y + this.dropsArea.b.h/2)) {
-      this.dragDrop('boxB');
+      this.dropResult('boxB');
     }
     this.position.x = 0;
     this.position.y = 0;
@@ -232,14 +231,7 @@ export class GameIListenboxComponent {
   }
   
   /* DROP */
-  dragStart(ev: any) {
-    ev.dataTransfer.effectAllowed = 'move';
-    ev.dataTransfer.setData("Text", ev.currentTarget.getAttribute('id'));
-    ev.dataTransfer.setDragImage(ev.currentTarget, 50, 50);
-    return true;
-  }
-
-  dragDrop(box: 'boxA' | 'boxB') {                  
+  dropResult(box: 'boxA' | 'boxB') {                  
     const boxCode = ['boxA', 'boxB']
 
     if (boxCode[this.itemsResources[this.itemsResourcesPos].boxExplosion] === box) {
